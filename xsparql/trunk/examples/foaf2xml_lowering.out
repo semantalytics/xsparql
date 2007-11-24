@@ -1,0 +1,8 @@
+<Person name="Alice"> 
+  <know>Bob</knows>
+  <knows>Charles</knows>
+</Person>
+<Person name="Bob">
+   <knows>Charles</knows>
+</Person>
+<Person name="Charles"/>
