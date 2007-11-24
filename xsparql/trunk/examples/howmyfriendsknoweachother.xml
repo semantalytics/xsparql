@@ -1,0 +1,14 @@
+<howmyfriendsknoweachother>
+<knows>
+ <Person name="alice"/>
+ <Person name="bob"/>
+</knows>
+<knows>
+ <Person name="bob"/>
+ <Person name="charles"/>
+</knows>
+<knows>
+ <Person name="bob"/>
+ <Person name="alice"/>
+</knows> 
+</howmyfriendsknoweachother>
