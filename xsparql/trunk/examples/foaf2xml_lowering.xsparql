@@ -6,9 +6,9 @@ return
  <Person name="{$Name}">
    {
     for ?FName in <foaf.rdf>
-    where { $Person knows ?Friend . 
-            $Person name ?Name. 
-            $Friend name ?Fname. } 
+    where { $Person knows $Friend . 
+            $Person name $Name. 
+            $Friend name $Fname. } 
     return <knows>$FName</knows> 
     }
 </Person>
