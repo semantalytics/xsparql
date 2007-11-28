@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:nodeID="r1196263797r706r1">
+    <ns0:name xmlns:ns0="http://xmlns.com/foaf/0.1/">Bob</ns0:name>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="r1196263797r706r1">
+    <ns0:knows xmlns:ns0="http://xmlns.com/foaf/0.1/" rdf:nodeID="r1196263797r706r2"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="r1196263797r706r1">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="r1196263797r706r2">
+    <ns0:name xmlns:ns0="http://xmlns.com/foaf/0.1/">Charles</ns0:name>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="r1196263797r706r2">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://alice.example.org/me">
+    <ns0:name xmlns:ns0="http://xmlns.com/foaf/0.1/">Alice</ns0:name>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://alice.example.org/me">
+    <ns0:knows xmlns:ns0="http://xmlns.com/foaf/0.1/" rdf:nodeID="r1196263797r706r1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://alice.example.org/me">
+    <ns0:knows xmlns:ns0="http://xmlns.com/foaf/0.1/" rdf:nodeID="r1196263797r706r2"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://alice.example.org/me">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  </rdf:Description>
+</rdf:RDF>
