@@ -135,7 +135,7 @@ def main(argv=None):
     # search for all the DECLARE NAMESPACE directives and build a list
     # of mappings using re's grouping pattern
 
-    re_namespace = re.compile(r'declare\s+namespace\s+(\w+)\s*:=\s*\"([^\"]*)\"\s*;',
+    re_namespace = re.compile(r'declare\s+namespace\s+(\w+)\s*=\s*\"([^\"]*)\"\s*;',
                               re.IGNORECASE)
 
     rewriter.namespaces = re_namespace.findall(s)
@@ -145,7 +145,7 @@ def main(argv=None):
     re_return = re.compile('[ \t\n]RETURN[ \t\n\{]', re.IGNORECASE)
 
     # always declare the sparql namespace
-    sys.stdout.write('declare namespace sparql := "http://www.w3.org/2005/sparql-results#";\n')
+    sys.stdout.write('declare namespace sparql = "http://www.w3.org/2005/sparql-results#";\n')
 
     while i < len(s):
 

@@ -4,6 +4,7 @@
 # Thomas Krennwallner <tkren@kr.tuwien.ac.at>
 #
 
+import urllib
 
 #
 # rewriting functions
@@ -30,14 +31,17 @@ def var_rdfterm(var):
 # todo: ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, frm, where, orderby):
     res = '\n'
-    res += 'let ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri("'
-    for p in pfx: res += 'PREFIX ' + p[0] + ': <' + p[1] + '>\n'
-    res += 'SELECT '
-    for v in vars: res += v + ' '
-    res += '\nFROM ' + frm
-    res += '\nWHERE ' + where
-    if len(orderby): res += '\nORDER BY ' + orderby
-    res += '"))\n'
+    res += 'let ' + query_aux(i) + ' := "'
+
+    query = ''
+    for p in pfx: query += 'PREFIX ' + p[0] + ': <' + p[1] + '>\n'
+    query += 'SELECT '
+    for v in vars: query += v + ' '
+    query += '\nFROM ' + frm
+    query += '\nWHERE ' + where
+    if len(orderby): query += '\nORDER BY ' + orderby
+
+    res += urllib.quote(query) + '"\n'
     return res
 
 
@@ -55,11 +59,16 @@ def build_aux_variables(i, vars):
         ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
         ret += '\tlet ' + var_rdfterm(v) + ' := fn_concat(\n' + \
                '\t\tif(' + var_nodetype(v) + ' = "literal") then "\\""\n' + \
-               '\t\telse if(' + var_nodetype(v) + ' = "bnode") then "_:"\n' + \
-               '\t\telse if(' + var_nodetype(v) + ' = "uri") then "<"\n' + \
-               '\t\telse "",\n\t\t' + v + ',\n' + \
+               '\t\telse (\n' + \
+               '\t\t      if(' + var_nodetype(v) + ' = "bnode") then "_:"\n' + \
+               '\t\t      else (\n' + \
+               '\t\t            if(' + var_nodetype(v) + ' = "uri") then "<"\n' + \
+               '\t\t            else ""\n' + \
+               '\t\t      )\n' + \
+               '\t\t),\n\t\t' + v + ',\n' + \
                '\t\tif(' + var_nodetype(v) + ' = "literal") then "\\""\n' + \
-               '\t\telse if(' + var_nodetype(v) + ' = "uri") then ">"\n\t)\n'
+               '\t\telse (\n' + \
+               '\t\t      if(' + var_nodetype(v) + ' = "uri") then ">"\n\t\t)\n'
         
     return ret
 
