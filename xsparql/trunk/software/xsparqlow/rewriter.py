@@ -26,6 +26,8 @@ def var_rdfterm(var):
 
 
 # todo: escape double quotes
+# todo: use urllib instead of fn:encode-for-uri
+# todo: ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, frm, where, orderby):
     res = '\n'
     res += 'let ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri("'
@@ -65,7 +67,7 @@ def build_aux_variables(i, vars):
 
 
 sparql_endpoint = 'http://localhost:2020/sparql?query='
-namespaces = [('foaf', 'http://xmlns.com/foaf/0.1/')]
+namespaces = []
 
 _forcounter = 0
 
