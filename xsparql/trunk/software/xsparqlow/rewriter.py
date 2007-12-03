@@ -7,7 +7,7 @@
 import urllib
 
 #
-# rewriting functions
+# auxiliary variable names
 #
 
 def query_aux(i):
@@ -26,23 +26,22 @@ def var_rdfterm(var):
     return var + '_RDFTerm'
 
 
-# todo: escape double quotes
-# todo: use urllib instead of fn:encode-for-uri
+#
+# rewriting functions
+#
+
 # todo: ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, frm, where, orderby):
-    res = '\n'
-    res += 'let ' + query_aux(i) + ' := "'
+    prefix = '\nlet ' + query_aux(i) + ' := "' + sparqlep
 
-    query = ''
-    for p in pfx: query += 'PREFIX ' + p[0] + ': <' + p[1] + '>\n'
-    query += 'SELECT '
-    for v in vars: query += v + ' '
-    query += '\nFROM ' + frm
-    query += '\nWHERE ' + where
-    if len(orderby): query += '\nORDER BY ' + orderby
+    # build the SPARQL query
+    query = '\n'.join([ 'PREFIX %s: <%s>' % (ns,uri) for (ns,uri) in pfx ])
+    query += '\nSELECT ' + ' '.join(vars)
+    query += ' FROM ' + frm
+    query += ' WHERE ' + where
+    if len(orderby): query += ' ORDER BY ' + orderby
 
-    res += urllib.quote(query) + '"\n'
-    return res
+    return prefix + urllib.quote(query) + '"\n'
 
 
 
@@ -68,7 +67,7 @@ def build_aux_variables(i, vars):
                '\t\t),\n\t\t' + v + ',\n' + \
                '\t\tif(' + var_nodetype(v) + ' = "literal") then "\\""\n' + \
                '\t\telse (\n' + \
-               '\t\t      if(' + var_nodetype(v) + ' = "uri") then ">"\n\t\t)\n'
+               '\t\t      if(' + var_nodetype(v) + ' = "uri") then ">"\n\t\t)\n\t)'
         
     return ret
 
