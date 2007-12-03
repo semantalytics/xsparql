@@ -35,11 +35,11 @@ def build_sparql_query(i, sparqlep, pfx, vars, frm, where, orderby):
     prefix = '\nlet ' + query_aux(i) + ' := "' + sparqlep
 
     # build the SPARQL query
-    query = '\n'.join([ 'PREFIX %s: <%s>' % (ns,uri) for (ns,uri) in pfx ])
-    query += '\nSELECT ' + ' '.join(vars)
-    query += ' FROM ' + frm
-    query += ' WHERE ' + where
-    if len(orderby): query += ' ORDER BY ' + orderby
+    query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ]) + '\n'
+    query += 'select ' + ' '.join(vars)
+    query += ' from ' + frm
+    query += ' where ' + where
+    if len(orderby): query += ' order by ' + orderby
 
     return prefix + urllib.quote(query) + '"\n'
 
@@ -56,18 +56,15 @@ def build_aux_variables(i, vars):
         ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/sparql:binding[@name = "' + v[1:] + '"])\n'
         ret += '\tlet ' + var_nodetype(v) + ' := name(' + var_node(v) + '/*)\n'
         ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
-        ret += '\tlet ' + var_rdfterm(v) + ' := fn_concat(\n' + \
-               '\t\tif(' + var_nodetype(v) + ' = "literal") then "\\""\n' + \
-               '\t\telse (\n' + \
-               '\t\t      if(' + var_nodetype(v) + ' = "bnode") then "_:"\n' + \
-               '\t\t      else (\n' + \
-               '\t\t            if(' + var_nodetype(v) + ' = "uri") then "<"\n' + \
-               '\t\t            else ""\n' + \
-               '\t\t      )\n' + \
-               '\t\t),\n\t\t' + v + ',\n' + \
-               '\t\tif(' + var_nodetype(v) + ' = "literal") then "\\""\n' + \
-               '\t\telse (\n' + \
-               '\t\t      if(' + var_nodetype(v) + ' = "uri") then ">"\n\t\t)\n\t)'
+        ret += '\tlet ' + var_rdfterm(v) + ' := fn:concat(\n' + \
+               '\t\tif (' + var_nodetype(v) + ' = "literal") then """"\n' + \
+               '\t\telse if (' + var_nodetype(v) + ' = "bnode") then "_:"\n' + \
+               '\t\telse if (' + var_nodetype(v) + ' = "uri") then "<"\n' + \
+               '\t\telse "",\n' + \
+               '\t\t' + v + ',\n' + \
+               '\t\tif (' + var_nodetype(v) + ' = "literal") then """"\n' + \
+               '\t\telse if (' + var_nodetype(v) + ' = "uri") then ">"\n' + \
+               '\t\telse ""\n\t)\n'
         
     return ret
 
