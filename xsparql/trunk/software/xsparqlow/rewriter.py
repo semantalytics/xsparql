@@ -31,17 +31,29 @@ def var_rdfterm(var):
 #
 
 # todo: ground input variables? how?
-def build_sparql_query(i, sparqlep, pfx, vars, frm, where, orderby):
-    prefix = '\nlet ' + query_aux(i) + ' := "' + sparqlep
+def build_sparql_query(i, sparqlep, pfx, vars, frm, triples, orderby):
+    prefix = '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat("'
+
+    global scoped_variables
 
     # build the SPARQL query
-    query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ]) + '\n'
-    query += 'select ' + ' '.join(vars)
-    query += ' from ' + frm
-    query += ' where ' + where
+    query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ]) + '\n' + \
+            'select ' + ' '.join(vars) + ' from ' + frm + ' where { '
+
+    for t in triples:
+        if t[0] in scoped_variables: query += '", ' + t[0] + ', " '
+        else:                        query += t[0] + ' '
+        query += t[1] + ' '
+        if t[2] in scoped_variables: query += '", ' + t[2] + ', " . '
+        else:                        query += t[2] + ' . '
+
+    query += '}'
+
     if len(orderby): query += ' order by ' + orderby
 
-    return prefix + urllib.quote(query) + '"\n'
+    scoped_variables.update(vars)
+
+    return prefix + query + '" )))\n'
 
 
 
@@ -73,6 +85,7 @@ def build_aux_variables(i, vars):
 
 sparql_endpoint = 'http://localhost:2020/sparql?query='
 namespaces = []
+scoped_variables = set()
 
 _forcounter = 0
 

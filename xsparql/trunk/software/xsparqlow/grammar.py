@@ -26,15 +26,18 @@ import rewriter
 
 tokens = (
     'FOR', 'FROM', 'WHERE', 'ORDER', 'BY',
-    'VAR', 'IRIREF', 'GRAPHPATTERN'
+    'VAR', 'IRIREF', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING'
     )
 
 states = [
    ('pattern','exclusive')
 ]
 
-t_VAR       = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
-t_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
+literals = '.:^@'
+
+t_ANY_VAR       = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
+t_ANY_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
+
 t_FOR       = r'\bfor'
 t_FROM      = r'\bfrom'
 t_ORDER     = r'\border'
@@ -45,10 +48,15 @@ def t_WHERE(t):
     t.lexer.begin('pattern')
     return t
 
-def t_pattern_GRAPHPATTERN(t):
-    r'\{[^\}]*\}'
+t_pattern_LCURLY  = r'{'
+t_pattern_QSTRING = r'\"[^\"]*\"'
+t_pattern_NCNAME  = r'\w[\w\-\.]*'
+
+def t_pattern_RCURLY(t):
+    r'}'
     t.lexer.begin('INITIAL')
     return t
+
 
 # Ignored characters
 t_ANY_ignore = " \t"
@@ -75,8 +83,8 @@ lex.lex(debug=0, reflags=re.IGNORECASE)
 
 
 def p_sparqlfor(p):
-    '''sparqlfor : FOR sparqlvars FROM IRIREF WHERE GRAPHPATTERN
-                 | FOR sparqlvars FROM IRIREF WHERE GRAPHPATTERN ORDER BY VAR'''
+    '''sparqlfor : FOR sparqlvars FROM IRIREF WHERE graphpattern
+                 | FOR sparqlvars FROM IRIREF WHERE graphpattern ORDER BY VAR'''
     if len(p) == 7:
         p[0] = ''.join([ r  for r in rewriter.build(p[2], p[4], p[6], '') ])
     else:
@@ -88,6 +96,50 @@ def p_sparqlvars(p):
                   | VAR'''
     if len(p) == 2: p[0] = [ p[1] ]
     else:           p[0] = p[2] + [ p[1] ]
+
+
+def p_graphpattern(p):
+    '''graphpattern : LCURLY triples RCURLY'''
+    p[0] = p[2]
+
+
+def p_triples_0(p):
+    '''triples : '''
+    p[0] = []
+
+def p_triples_1(p):
+    '''triples : triple
+               | triple '.' '''
+    p[0] = [ p[1] ]
+    
+def p_triples_2(p):
+    '''triples : triple '.' triples'''
+    p[0] = [ p[1] ] + p[3]
+
+
+def p_triple(p):
+    '''triple : term term term'''
+    p[0] = ( p[1], p[2], p[3] )
+
+
+def p_term(p):
+    '''term : VAR
+            | IRIREF
+            | literal'''
+    p[0] = p[1]
+
+
+def p_literal(p):
+    '''literal : qname
+               | QSTRING '@' NCNAME
+               | QSTRING '^' '^' IRIREF'''
+    p[0] = ''.join(p[1:])
+
+
+def p_qname(p):
+    '''qname : NCNAME
+             | NCNAME ':' NCNAME'''
+    p[0] = ''.join(p[1:])
 
 
 # Error rule for syntax errors -> ignore them gracefully by throwing a SyntaxError
@@ -118,3 +170,15 @@ def rewrite(s):
         
     except SyntaxError:
         return s
+
+
+
+## def rewrite(s):
+##     lexer = lex.lex()
+##     lexer.input(s)
+##     while 1:
+##         tok = lexer.token()
+##         if not tok: break
+##         print tok
+
+##     sys.exit(0)
