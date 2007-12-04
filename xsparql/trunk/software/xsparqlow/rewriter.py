@@ -31,25 +31,23 @@ def var_rdfterm(var):
 #
 
 # todo: ground input variables? how?
-def build_sparql_query(i, sparqlep, pfx, vars, frm, triples, orderby):
+def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
     prefix = '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat("'
 
     global scoped_variables
 
     # build the SPARQL query
     query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ]) + '\n' + \
-            'select ' + ' '.join(vars) + ' from ' + frm + ' where { '
+            'select ' + ' '.join(vars) + ' from ' + from_iri + ' where { '
 
-    for t in triples:
+    for t in graphpattern:
         if t[0] in scoped_variables: query += '", ' + t[0] + ', " '
         else:                        query += t[0] + ' '
         query += t[1] + ' '
         if t[2] in scoped_variables: query += '", ' + t[2] + ', " . '
         else:                        query += t[2] + ' . '
 
-    query += '}'
-
-    if len(orderby): query += ' order by ' + orderby
+    query += '} ' + solutionmodifier
 
     scoped_variables.update(vars)
 
@@ -91,9 +89,10 @@ _forcounter = 0
 
 
 # generator function, keeps track of incrementing the for-counter
-def build(vars, frm, where, orderby):
+def build(vars, from_iri, graphpattern, solutionmodifier):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
-    yield build_sparql_query(_forcounter, sparql_endpoint, namespaces, vars, frm, where, orderby)
+    yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
+                             vars, from_iri, graphpattern, solutionmodifier)
     yield build_for_loop(_forcounter)
     yield build_aux_variables(_forcounter, vars)

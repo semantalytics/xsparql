@@ -16,7 +16,7 @@ import rewriter
 
 
 #
-# the XSPARQL grammar
+# the XSPARQL grammar (very incomplete)
 #
 
 
@@ -25,8 +25,8 @@ import rewriter
 #
 
 tokens = (
-    'FOR', 'FROM', 'WHERE', 'ORDER', 'BY',
-    'VAR', 'IRIREF', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING'
+    'FOR', 'FROM', 'WHERE', 'ORDER', 'BY', 'LIMIT', 'OFFSET',
+    'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING'
     )
 
 states = [
@@ -37,11 +37,14 @@ literals = '.:^@'
 
 t_ANY_VAR       = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
 t_ANY_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
+t_ANY_INTEGER    = r'[0-9]+'
 
 t_FOR       = r'\bfor'
 t_FROM      = r'\bfrom'
 t_ORDER     = r'\border'
 t_BY        = r'\bby'
+t_LIMIT     = r'\blimit'
+t_OFFSET    = r'\boffset'
 
 def t_WHERE(t):
     r'\bwhere'
@@ -83,12 +86,8 @@ lex.lex(debug=0, reflags=re.IGNORECASE)
 
 
 def p_sparqlfor(p):
-    '''sparqlfor : FOR sparqlvars FROM IRIREF WHERE graphpattern
-                 | FOR sparqlvars FROM IRIREF WHERE graphpattern ORDER BY VAR'''
-    if len(p) == 7:
-        p[0] = ''.join([ r  for r in rewriter.build(p[2], p[4], p[6], '') ])
-    else:
-        p[0] = ''.join([ r  for r in rewriter.build(p[2], p[4], p[6], p[9]) ])
+    '''sparqlfor : FOR sparqlvars FROM IRIREF WHERE graphpattern solutionmodifier'''
+    p[0] = ''.join([ r  for r in rewriter.build(p[2], p[4], p[6], p[7]) ])
 
 
 def p_sparqlvars(p):
@@ -101,6 +100,36 @@ def p_sparqlvars(p):
 def p_graphpattern(p):
     '''graphpattern : LCURLY triples RCURLY'''
     p[0] = p[2]
+
+
+def p_solutionmodifier(p):
+    '''solutionmodifier : ORDER BY VAR
+                        | ORDER BY VAR limitoffsetclause
+                        | empty'''
+    p[0] = ' '.join(p[1:])
+
+
+def p_empty(p):
+    'empty : '
+    p[0] = ''
+    
+
+def p_limitoffsetclause(p):
+    '''limitoffsetclause : limitclause
+                         | offsetclause
+                         | limitclause offsetclause
+                         | offsetclause limitclause'''
+    p[0] = ' '.join(p[1:])
+
+
+def p_limitclause(p):
+    '''limitclause : LIMIT INTEGER'''
+    p[0] = ' '.join(p[1:])
+
+
+def p_offsetclause(p):
+    '''offsetclause : OFFSET INTEGER'''
+    p[0] = ' '.join(p[1:])
 
 
 def p_triples_0(p):
@@ -131,6 +160,7 @@ def p_term(p):
 
 def p_literal(p):
     '''literal : qname
+               | INTEGER
                | QSTRING '@' NCNAME
                | QSTRING '^' '^' IRIREF'''
     p[0] = ''.join(p[1:])
