@@ -1,4 +1,4 @@
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
 
 [foaf:name "alice"; a foaf:Person]
 foaf:knows
