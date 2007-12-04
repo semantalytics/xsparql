@@ -3,3 +3,5 @@ grammar.py
 rewriter.py
 setup.py
 xsparqlow.py
+README
+COPYING

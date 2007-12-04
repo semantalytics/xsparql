@@ -20,11 +20,14 @@ py-ply), or download it from http://www.dabeaz.com/ply/.'''
 setup(name='xsparqlow',
       version='0.1',
       description='XSPARQL Lowering',
-      license='GNU General Public License '
+      long_description="""
+An XSPARQL Lowering rewriter.
+""",
+      license='GNU General Public License',
+      platforms='Any',
       author='Thomas Krennwallner',
       author_email='tkren@kr.tuwien.ac.at',
       url='http://axel.deri.ie/xsparql/',
-      description = 'XSPARQL Lowering Rewriter',
       package_dir={'xsparqlow': ''},
       py_modules=['xsparqlow.grammar', 'xsparqlow.rewriter'],
       scripts=['xsparqlow.py']
