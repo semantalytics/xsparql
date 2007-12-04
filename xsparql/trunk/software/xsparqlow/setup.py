@@ -10,10 +10,11 @@ if sys.version < '2.4.0':
 try:
     import ply.lex
     import ply.yacc
+    if ply.lex.__version__ < '2.3' or ply.yacc.__version__ < '2.3': raise ImportError
 except ImportError:
-    print '''Could not find PLY (Python Lex-Yacc). Install it using your OS\'
-package management system (debian/ubuntu: python-ply, macports:
-py-ply), or download it from http://www.dabeaz.com/ply/.'''
+    print '''Could not find Python Lex-Yacc (PLY) 2.3 or higher. Install it using your OS\'
+package management system (debian/ubuntu: python-ply, macports: py-ply), or
+download it from http://www.dabeaz.com/ply/.'''
     sys.exit(1)
 
 
@@ -28,7 +29,6 @@ An XSPARQL Lowering rewriter.
       author='Thomas Krennwallner',
       author_email='tkren@kr.tuwien.ac.at',
       url='http://axel.deri.ie/xsparql/',
-      package_dir={'xsparqlow': ''},
-      py_modules=['xsparqlow.grammar', 'xsparqlow.rewriter'],
+      packages=['xsparql', 'xsparql.low'],
       scripts=['xsparqlow.py']
      )

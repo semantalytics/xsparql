@@ -27,8 +27,9 @@
 import sys
 import re
 
-# our xsparql rewriter
-import xsparqlow
+# our xsparql rewriting module
+import xsparql.low.grammar
+import xsparql.low.rewriter
 
 
 def main(argv=None):
@@ -47,7 +48,7 @@ def main(argv=None):
     re_namespace = re.compile(r'declare\s+namespace\s+(\w+)\s*=\s*\"([^\"]*)\"\s*;',
                               re.IGNORECASE)
 
-    xsparqlow.rewriter.namespaces = re_namespace.findall(s)
+    xsparql.low.rewriter.namespaces = re_namespace.findall(s)
 
     #
     # and now, scan the input for XSPARQL expresssions, and replace
@@ -84,7 +85,7 @@ def main(argv=None):
                 # set start positition of RETURN
                 n = m + return_match.start()
                 # and now parse our expression
-                sys.stdout.write(xsparqlow.grammar.rewrite(s[m:n]))
+                sys.stdout.write(xsparql.low.grammar.rewrite(s[m:n]))
                 # restart with new start position
                 i = n
 

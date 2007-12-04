@@ -1,6 +1,7 @@
-__init__.py
-grammar.py
-rewriter.py
+xsparql/__init__.py
+xsparql/low/__init__.py
+xsparql/low/grammar.py
+xsparql/low/rewriter.py
 setup.py
 xsparqlow.py
 README

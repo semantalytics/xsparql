@@ -43,18 +43,22 @@ import rewriter
 
 tokens = (
     'FOR', 'FROM', 'WHERE', 'ORDER', 'BY', 'LIMIT', 'OFFSET',
-    'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING'
+    'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING',
+    'DOT', 'AT', 'CARROT', 'COLON'
     )
 
 states = [
    ('pattern','exclusive')
 ]
 
-literals = '.:^@'
 
 t_ANY_VAR       = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
 t_ANY_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
-t_ANY_INTEGER    = r'[0-9]+'
+t_ANY_INTEGER   = r'[0-9]+'
+t_ANY_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
+t_ANY_AT        = r'@'
+t_ANY_CARROT    = r'\^'
+t_ANY_COLON     = r'\:'
 
 t_FOR       = r'\bfor'
 t_FROM      = r'\bfrom'
@@ -155,11 +159,11 @@ def p_triples_0(p):
 
 def p_triples_1(p):
     '''triples : triple
-               | triple '.' '''
+               | triple DOT'''
     p[0] = [ p[1] ]
     
 def p_triples_2(p):
-    '''triples : triple '.' triples'''
+    '''triples : triple DOT triples'''
     p[0] = [ p[1] ] + p[3]
 
 
@@ -178,14 +182,14 @@ def p_term(p):
 def p_literal(p):
     '''literal : qname
                | INTEGER
-               | QSTRING '@' NCNAME
-               | QSTRING '^' '^' IRIREF'''
+               | QSTRING AT NCNAME
+               | QSTRING CARROT CARROT IRIREF'''
     p[0] = ''.join(p[1:])
 
 
 def p_qname(p):
     '''qname : NCNAME
-             | NCNAME ':' NCNAME'''
+             | NCNAME COLON NCNAME'''
     p[0] = ''.join(p[1:])
 
 
