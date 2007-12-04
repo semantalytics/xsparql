@@ -1,0 +1,34 @@
+XSPARQL Lowering README -*- org -*-
+
+* Prerequisite
+
+** Python
+You need Python >= 2.4 [[http://www.python.org/]]
+
+** Python Lex-Yacc
+[[http://www.dabeaz.com/ply/]]
+
+** XQuery engine
+E.g., XQilla [[http://xqilla.sourceforge.net/]], or Saxon
+[[http://saxon.sourceforge.net/]]
+
+** SPARQL Endpoint
+E.g., Joseki [[http://www.joseki.org/]]
+
+* Installing
+
+Invoke the following command to install xsparqlow:
+
+  $ python setup.py install
+
+See also [[http://docs.python.org/inst/]].
+
+* Running
+
+xsparqlow.py is a rewriter for XSPARQL Lowering to XQuery. You can
+transform an XSPARQL file to an XQuery file using the following
+command:
+
+  $ cat example.xsparql | xsparqlow.py > out.xquery
+
+Run out.xquery using your favorite XQuery engine.

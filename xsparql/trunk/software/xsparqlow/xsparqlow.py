@@ -1,17 +1,34 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Thomas Krennwallner <tkren@kr.tuwien.ac.at>
 #
-
+# xsparqlow -- XSPARQL Lowering Rewriter
+#
+# Copyright (C) 2007  Thomas Krennwallner  <tkren@kr.tuwien.ac.at>
+#
+# This file is part of xsparqlow.
+#
+# xsparqlow is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# xsparqlow is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with xsparqlow.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
 
 
 import sys
 import re
 
 # our xsparql rewriter
-import grammar
-import rewriter
+import xsparqlow
 
 
 def main(argv=None):
@@ -30,7 +47,7 @@ def main(argv=None):
     re_namespace = re.compile(r'declare\s+namespace\s+(\w+)\s*=\s*\"([^\"]*)\"\s*;',
                               re.IGNORECASE)
 
-    rewriter.namespaces = re_namespace.findall(s)
+    xsparqlow.rewriter.namespaces = re_namespace.findall(s)
 
     #
     # and now, scan the input for XSPARQL expresssions, and replace
@@ -67,7 +84,7 @@ def main(argv=None):
                 # set start positition of RETURN
                 n = m + return_match.start()
                 # and now parse our expression
-                sys.stdout.write(grammar.rewrite(s[m:n]))
+                sys.stdout.write(xsparqlow.grammar.rewrite(s[m:n]))
                 # restart with new start position
                 i = n
 
