@@ -47,7 +47,8 @@ tokens = (
     'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'EMPTY', 'COLLATION',
     'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON', 'CHILD', 'DESCENDANT', 'ATTRIBUTE', 'SELF',
     'DESCENDANTORSELF', 'FOLLOWINGSIBLING', 'FOLLOWING', 'PARENT', 'ANCESTOR', 'PRECEDINGSIBLING', 'PRECEDING',
-    'ANCESTORORSELF', 'STAR', 'ORDERED', 'UNORDERED', 'DOTDOT', 'SLASHSLASH', 'COLONCOLON', 'UNDERSCORE'
+    'ANCESTORORSELF', 'STAR', 'ORDERED', 'UNORDERED', 'DOTDOT', 'SLASHSLASH', 'COLONCOLON', 'UNDERSCORE',
+    'DECLARE', 'NAMESPACE', 'DEFAULT', 'ELEMENT', 'FUNCTION', 'BASEURI'
     )
 
 states = [
@@ -124,7 +125,13 @@ reserved = {
    'preceding' : 'PRECEDING',
    'ancestor-or-self' : 'ANCESTORORSELF',
    'ordered' : 'ORDERED',
-   'unordered' : 'UNORDERED'
+   'unordered' : 'UNORDERED',
+   'declare' : 'DECLARE',
+   'namespace' : 'NAMESPACE',
+   'default' : 'DEFAULT',
+   'element' : 'ELEMENT',
+   'function' : 'FUNCTION',
+   'base-uri' : 'BASEURI'
    
 }
 
@@ -205,7 +212,40 @@ lex.lex(debug=0, reflags=re.IGNORECASE)
 # ply parser
 #
 
+namespaces = []
+
+
 ## first come, first serve
+def p_mainModule(p):
+    '''mainModule : prolog queryBody'''
+    global namespaces
+    p[0] = p[1] + '\n' + ' , '.join([ '"@prefix %s: <%s>"' % (ns,uri[1:-1]) for (ns,uri) in namespaces]) + ',\n' + p[2]
+    
+def p_prolog(p):
+    '''prolog : defaultNamespaceDecl SEMICOLON
+              | namespaceDecl SEMICOLON
+              | baseURIDecl SEMICOLON
+              | empty'''
+    p[0] = ' '.join(p[1:])
+
+def p_defaultNamespaceDecl(p):
+    '''defaultNamespaceDecl : DECLARE DEFAULT ELEMENT NAMESPACE QSTRING
+                            | DECLARE DEFAULT FUNCTION NAMESPACE QSTRING'''
+    p[0] = ' '.join(p[1:])
+    #' '.join([ r  for r in rewriter.build_rewrite_defaultNSDecl(p[1], p[2], p[3], p[4], p[5])])
+    
+def p_namespaceDecl(p):
+    '''namespaceDecl : DECLARE NAMESPACE NCNAME EQUALS QSTRING'''
+    global namespaces
+    namespaces.append((p[3], p[5]))
+    p[0] = ' '.join(p[1:])
+    #' '.join([ r  for r in rewriter.build_rewrite_nsDecl(p[1], p[2], p[3], p[5])])
+
+def p_baseURIDecl(p):
+    '''baseURIDecl  : DECLARE BASEURI QSTRING'''
+    p[0] = ' '.join(p[1:])
+    #' '.join([ r  for r in rewriter.build_rewrite_baseURI(p[1], p[2], p[3])])
+    
 def p_queryBody(p):
     '''queryBody : expr'''
     p[0] = p[1]
@@ -236,8 +276,8 @@ def p_exprSingle(p):
 def p_flworExpr(p):
     '''flworExpr : flworExprs RETURN exprSingle
                  | flworExprs CONSTRUCT graphpattern'''
-    print p[3]
-    p[0] = ' '.join(p[1:2]) + str(p[3])
+   # print p[3]
+    p[0] = ''.join([ r  for r in rewriter.build_rewrite_query(p[1], p[2], p[3])])
 
 
 def p_flworExprs(p):
@@ -248,28 +288,46 @@ def p_flworExprs(p):
     p[0] = ' '.join(p[1:])
 
 
-def p_forletClauses(p):
-    '''forletClauses : forClause
-                     | letClause
-                     | forletClauses forClause
-                     | forletClauses letClause'''
-    p[0] = ' '.join(p[1:])
+# todo: collect variables in let, and build up triples of (expr, variables in scope, position variables in scope)
+
+def p_forletClauses0(p):
+    '''forletClauses : forClause'''
+    p[0] = p[1][0]
+
+
+def p_forletClauses1(p):
+    '''forletClauses : letClause'''
+    p[0] = p[1]
+
+def p_forletClauses2(p):
+    '''forletClauses : forletClauses forClause'''
+    p[0] = p[1] + p[2][0]
+
+def p_forletClauses3(p):
+    '''forletClauses : forletClauses letClause'''
+    p[0] = p[1] + p[2]
 
 
 def p_forClause(p):
     '''forClause : FOR forVars'''
-    p[0] = ' '.join(p[1:])
+    p[0] = (p[1] + ' ' + p[2][0], p[2][1])
 
 
 def p_forVars(p):
-    '''forVars : forVars COMMA forVar
-               | forVar'''
-    p[0] = ' '.join(p[1:])
+    '''forVars : forVars COMMA forVar'''
+    p[0] = (p[1][0] + p[2] + p[3][0] , p[1][1] + [ p[3][1] ])
+
+def p_forVars1(p):
+    '''forVars : forVar'''
+    p[0] = (p[1][0], [ p[1][1] ])
 
 
 def p_forVar(p):
     '''forVar : VAR typeDeclaration positionVar IN exprSingle'''
-    p[0] = ' '.join(p[1:])
+    if len(p[3]) == 0:
+        p[0] = ( p[1] + ' AT ' + p[1] + '_Pos ' + ' '.join(p[2:]), p[1] + '_Pos' )
+    else:
+        p[0] = (' '.join(p[1:]), p[1] )
 
     
 
@@ -517,10 +575,15 @@ def p_triples(p):
     '''triples : subject predicateObjectList'''
     p[0] = (p[1], p[2])
 
+
 def p_subject(p):
-    '''subject : resource
-               | blank '''
+    '''subject : resource'''
+    p[0] = [ p[1] ]
+
+def p_subject1(p):
+    '''subject : blank'''
     p[0] = p[1]
+
 
 def p_predicateObjectList(p):
     '''predicateObjectList : verbObjectLists semicolonYesNo'''
@@ -551,7 +614,7 @@ def p_objectLists(p):
     '''objectLists : COMMA objectList
                    | empty'''
     if len(p) == 2: p[0] = []
-    else:           p[0] = p[1]
+    else:           p[0] = p[2]
 
 
 def p_object(p):
@@ -589,15 +652,15 @@ def p_rdfPredicate(p):
 def p_resource(p):
     '''resource : qname
                 | IRIREF'''
-    p[0] = p[1]    
+    p[0] = p[1]
 
 def p_blank(p):
     '''blank : bnode
              | LBRACKET RBRACKET
              | LBRACKET predicateObjectList RBRACKET'''
-    if len(p) == 2:      p[0] = [ p[1] ]
+    if len(p) == 2:   p[0] = [ p[1] ]
     elif len(p) == 3: p[0] = []
-    else:                p[0] = p[2]
+    else:             p[0] = p[2]
 
 
 def p_bnode(p):
@@ -616,6 +679,7 @@ def p_rdfliteral(p):
 
 def p_qname(p):
     '''qname : NCNAME
+             | COLON NCNAME
              | NCNAME COLON NCNAME'''
     if len(p) == 2: p[0] = p[1]
     else:           p[0] = ''.join(p[1:])
