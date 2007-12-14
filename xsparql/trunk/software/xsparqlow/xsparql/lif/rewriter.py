@@ -56,54 +56,32 @@ import re
 ##   nsdeclare += '"@base &#60;'+ uri + '&#62; .&#xA;",\n\n'
 ##   return nsdeclare            
 ##         
-
-def build_rewrite_query(forletExpr, construct, graphpattern):
+var = ''
+def build_rewrite_query(forletExpr, construct, graphpattern, variable):
     
 
-    
-##    global result
-##
-##    result = ' '
-##    pattern = ''
-    # build the reWrite query
-##    query = forletExpr.split()
-##    variable = ''
-##    stri = ''  
-##    for t in query:
-##      
-##      if t[0] == '$':
-##                  stri = str(t[0:])
-##                  if stri.find('/') != -1:
-##                                      stri = ' '
-##                  else:
-##                                      stri = str(t[0:]) + ' at '+str(t[0:])+'_count'
-##                                      variable += str(t[0:])+ ' '
-##      else:       stri = str(t[0:]) 
-##      
-##    result += stri + ' '
-    #print result
-    #print variable
-##    bnode = ''
-##    predicate = ''
-##    statement = ''
-##    objects = ''
-##    triples = ''
+    global var
+    var = variable
 
-    statement = '"' + build_triples(graphpattern) + '"'
-    statement += ', "")'      
+    statement = ' ' + build_triples(graphpattern) + ' '
+    statement += ')'      
 
     #print str(graphpattern)+ '\n\n'
-    return forletExpr + ' return \n\t  fn:concat( \n\t\t\n ' + statement
+    return forletExpr + '\n return \n\t  fn:concat( \n\t\t\n ' + statement
 
 
 
 def build_triples(gp):
     ret = ''
+    space = ''
+    firstelement = True
     for s, polist in gp:
-     #   print 'triples:', s, polist
-        ret += build_subject(s) + build_predicate(polist) + ' . '
-     #   print 'result:', ret
-    return ret
+        if not firstelement:
+            ret += ','
+            firstelement = False
+                    
+        ret += '\n' + build_subject(s) + build_predicate(polist) + '".&#xA;",'
+    return ret.rstrip(',')
 
 
 def build_subject(s):
@@ -112,15 +90,15 @@ def build_subject(s):
 
 
     if len(s) == 1 and isinstance(s[0], list) and isinstance(s[0][0], str):
-        return build_bnode(s[0][0]) + ' '
+        return build_bnode(s[0][0]) 
     elif len(s) == 1 and isinstance(s[0], str): # blank node or object
-        return build_bnode(s[0]) + ' '
+        return build_bnode(s[0]) 
     elif len(s) == 1 and isinstance(s[0], list): # blank node or object
         return build_predicate(s[0])
     elif len(s) == 0: # single blank node
         return '[]'
     else: # polist
-        return '[ ' + build_predicate([ s[0] ]) + ' ; ' + build_predicate(s[1:]) + ' ] '
+        return '"[", ' + build_predicate([ s[0] ]) + ' ";", ' + build_predicate(s[1:]) + ' "]",\n '
 
 
 
@@ -129,11 +107,17 @@ def build_predicate(p):
    # print 'prd:', p
 
     if len(p) == 1:
-        return p[0][0] + ' ' + build_object(p[0][1])
+        b = p[0][0]
+        if b >= 2 and b[0] == '{' and b[-1] == '}' :
+            strip = str(b).lstrip('{')
+            b = strip.rstrip('}') 
+            return ' '+ b + ',  ' + build_object(p[0][1])+ ' '
+        else:
+             return ' "  '+ b + '  ",  ' + build_object(p[0][1])+ ' '
     elif len(p) == 0:
         return ''
     else:
-        return '[ ' + build_predicate([ p[0] ]) + ' ; ' + build_predicate([ p[1] ]) + ' ] '
+        return '"[", ' + build_predicate([ p[0] ]) + '";", ' + build_predicate([ p[1] ]) + ' "]",\n '
 
 
 def build_object(o):
@@ -141,23 +125,38 @@ def build_object(o):
   #  print 'obj:', o
 
     if len(o) == 1 and isinstance(o[0], list) and isinstance(o[0][0], str):
-        return build_bnode(o[0][0]) + ' '
+        return  build_bnode(o[0][0])
     elif len(o) == 1 and isinstance(o[0], str):
-        return build_bnode(o[0]) + ' '
+        return  build_bnode(o[0]) 
     elif len(o) == 1 and isinstance(o[0], list):
         return build_predicate(o[0])
     elif len(o) == 0:
         return '[]'
     else:
-        return '[ ' + build_predicate([ o[0] ]) + ' ; ' + build_predicate(o[1:]) + ' ] '
+        return '"[", ' + build_predicate([ o[0] ]) + ' ";", ' + build_predicate(o[1:]) + ' "]",\n '
 
 
 def build_bnode(b):
     if b >= 2 and b[0] == '_' and b[1] == ':':
-        return b + 'COUNT'
+        global var
+        v = ''
+        for i in var:
+            v += ' data('+str(i[0:])+ '), '
+        return '"'+ b + '_", ' + v
     else:
-        return b
+        if b >= 2 and b[0] == '{' and b[-1] == '}' :
+            strip = str(b).lstrip('{')
+            b = strip.rstrip('}') 
+            return ' \'"\',  '+ b + ',  \'"\', '
+        else:
+            return '  "  '+ b + '  ",  '
 
+##        if b.find('"') == 0 and b.find('{') == 1 :
+##            rspace = b.lstrip('"{')
+##            rspace = rspace.rstrip('}"')
+##            return rspace + ', '
+##        else:
+##            
 
 ##    for sub, predList in graphpattern:
 ##       #print sub[0:]

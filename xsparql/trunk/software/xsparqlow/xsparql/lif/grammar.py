@@ -51,51 +51,12 @@ tokens = (
     'DECLARE', 'NAMESPACE', 'DEFAULT', 'ELEMENT', 'FUNCTION', 'BASEURI'
     )
 
-states = [
-   ('pattern','exclusive')
-]
-
-##t_FOR       = r'\bfor'
-##t_LET       = r'\blet'
-##t_ORDER     = r'\border'
-##t_BY        = r'\bby'
-##t_ATS        = r'\bat'
-##t_IN        = r'\bin'
-##t_AS        = r'\bas'
-##t_DESCENDING     = r'\bdescending'
-##t_ASCENDING    = r'\bascending'
-##t_STABLE     = r'\bstable'
-##t_IF    = r'\bif'
-##t_THEN    = r'\bthen'
-##t_ELSE    = r'\belse'
-###t_TYPESWITCH = r'\btypeswitch'
-##t_RETURN = r'\breturn'
-##t_WHERE = r'\bwhere'
-##t_GREATEST = r'\bgreatest'
-##t_LEAST = r'\bleast'
-##t_EMPTY = r'\bempty'
-##t_COLLECTION = r'\bcollection'
-##T_CHILD = r'\bchild'
-##T_DESCENDANT = r'\bdescendant'
-##T_ATTRIBUTE = r'\battribute'
-##T_SELF = r'\bself'
-##T_DESCENDANTORSELF = r'\bdescendant-or-self'
-##T_FOLLOWINGSIBLING = r'\bfollowing-sibling'
-##T_FOLLOWING = r'\bfollowing'
-##t_PARENT = r'\bparent'
-##t_ANCESTOR = r'\bancestor'
-##t_PRECEDINGSIBLING = r'\bpreceding-sibling'
-##t_PRECEDING = r'\bpreceding'
-##t_ANCESTORORSELF = r'\bancestor-or-self'
-##t_ORDERED = r'\ordered'
-##t_UNORDERED = r'\unordered'
-
 reserved = {
    'for' : 'FOR',
    'let' : 'LET',
    'order' : 'ORDER',
    'by' : 'BY',
-   'at' : 'AT',
+   'at' : 'ATS',
    'in' : 'IN',
    'as' : 'AS',
    'descending' : 'DESCENDING',
@@ -131,19 +92,14 @@ reserved = {
    'default' : 'DEFAULT',
    'element' : 'ELEMENT',
    'function' : 'FUNCTION',
-   'base-uri' : 'BASEURI'
-   
+   'base-uri' : 'BASEURI',
+   '_' : 'UNDERSCORE'
 }
 
 
 def t_ANY_NCNAME(t):
     r'\w[\w\-]*'
-    if t.value == '_':
-        t.type = 'UNDERSCORE'
-    else:
-        t.type = reserved.get(t.value,'NCNAME')
-        if t.type == 'CONSTRUCT':
-            t.lexer.begin('pattern')
+    t.type = reserved.get(t.value,'NCNAME')
     return t
 
 
@@ -162,17 +118,8 @@ t_ANY_QSTRING = r'\"[^\"]*\"'
 ##    t.lexer.start(pattern)
 ##    return t
 
-t_INITIAL_LCURLY  = r'{'
-t_pattern_LCURLY  = r'{'
-
-t_INITIAL_RCURLY = r'}'
-
-def t_pattern_RCURLY(t):
-    r'}'
-    t.lexer.begin('INITIAL')
-    return t
-
-
+t_LCURLY  = r'{'
+t_RCURLY = r'}'
 
 
 t_ANY_VAR       = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
@@ -219,36 +166,45 @@ namespaces = []
 def p_mainModule(p):
     '''mainModule : prolog queryBody'''
     global namespaces
-    p[0] = p[1] + '\n' + ' , '.join([ '"@prefix %s: <%s>"' % (ns,uri[1:-1]) for (ns,uri) in namespaces]) + ',\n' + p[2]
+    p[0] = ' '+p[1] + '\n ' + ',\n '.join([ '"@%s %s%s &#60;%s&#62; .&#xA;"' % (pre,ns,co,uri[1:-1]) for (pre,ns,co,uri) in namespaces]) + ',\n' + p[2]
     
 def p_prolog(p):
-    '''prolog : defaultNamespaceDecl SEMICOLON
-              | namespaceDecl SEMICOLON
-              | baseURIDecl SEMICOLON
+    '''prolog : defaultNamespaceDecl nsDecl
+              | namespaceDecl nsDecl
+              | baseURIDecl nsDecl
               | empty'''
-    p[0] = ' '.join(p[1:])
+    
+    p[0] = ''.join(p[1:])
+
+def p_nsDecl(p):
+    '''nsDecl : SEMICOLON prolog'''
+    p[0] = '\n '.join(p[1:])    
 
 def p_defaultNamespaceDecl(p):
     '''defaultNamespaceDecl : DECLARE DEFAULT ELEMENT NAMESPACE QSTRING
                             | DECLARE DEFAULT FUNCTION NAMESPACE QSTRING'''
+    global namespaces
+    namespaces.append(('prefix', '',':', p[5]))
     p[0] = ' '.join(p[1:])
     #' '.join([ r  for r in rewriter.build_rewrite_defaultNSDecl(p[1], p[2], p[3], p[4], p[5])])
     
 def p_namespaceDecl(p):
     '''namespaceDecl : DECLARE NAMESPACE NCNAME EQUALS QSTRING'''
     global namespaces
-    namespaces.append((p[3], p[5]))
+    namespaces.append(('prefix', p[3], ':', p[5]))
     p[0] = ' '.join(p[1:])
     #' '.join([ r  for r in rewriter.build_rewrite_nsDecl(p[1], p[2], p[3], p[5])])
 
 def p_baseURIDecl(p):
     '''baseURIDecl  : DECLARE BASEURI QSTRING'''
+    global namespaces
+    namespaces.append(('base', '', '', p[3]))
     p[0] = ' '.join(p[1:])
     #' '.join([ r  for r in rewriter.build_rewrite_baseURI(p[1], p[2], p[3])])
     
 def p_queryBody(p):
     '''queryBody : expr'''
-    p[0] = p[1]
+    p[0] = '\n '+p[1]
 
     
 def p_expr(p):
@@ -256,10 +212,9 @@ def p_expr(p):
              | exprSingle'''
      p[0] = ' '.join(p[1:])
     
-##def p_expres(p):
-##    '''expres : COMMA exprSingle
-##              | empty'''
-##    p[0] = ' '.join(p[1:])
+def p_enclosedExpr(p):
+    '''enclosedExpr : LCURLY expr RCURLY'''
+    p[0] = ' '.join(p[1:])
 
 
 def p_empty(p):
@@ -272,12 +227,14 @@ def p_exprSingle(p):
                   | orExpr'''
     p[0] = p[1]
     
-    
+variable = []    
 def p_flworExpr(p):
     '''flworExpr : flworExprs RETURN exprSingle
-                 | flworExprs CONSTRUCT graphpattern'''
+                 | flworExprs CONSTRUCT liftgraphpattern'''
    # print p[3]
-    p[0] = ''.join([ r  for r in rewriter.build_rewrite_query(p[1], p[2], p[3])])
+    global variable
+       
+    p[0] = ''.join([ r  for r in rewriter.build_rewrite_query(p[1], p[2], p[3], variable)])
 
 
 def p_flworExprs(p):
@@ -299,13 +256,27 @@ def p_forletClauses1(p):
     '''forletClauses : letClause'''
     p[0] = p[1]
 
-def p_forletClauses2(p):
+
+
+##def p_forletClauses2(p):
+##    '''forletClauses : sparqlForClause'''
+##    p[0] = p[1]
+
+
+def p_forletClauses3(p):
     '''forletClauses : forletClauses forClause'''
     p[0] = p[1] + p[2][0]
 
-def p_forletClauses3(p):
+def p_forletClauses4(p):
     '''forletClauses : forletClauses letClause'''
     p[0] = p[1] + p[2]
+
+
+##def p_forletClauses5(p):
+##    '''forletClauses : forletClauses sparqlForClause'''
+##    p[0] = p[1]
+##
+
 
 
 def p_forClause(p):
@@ -315,7 +286,7 @@ def p_forClause(p):
 
 def p_forVars(p):
     '''forVars : forVars COMMA forVar'''
-    p[0] = (p[1][0] + p[2] + p[3][0] , p[1][1] + [ p[3][1] ])
+    p[0] = (p[1][0] + p[2]+ ' \n ' + p[3][0] , p[1][1] + [ p[3][1] ])
 
 def p_forVars1(p):
     '''forVars : forVar'''
@@ -324,10 +295,13 @@ def p_forVars1(p):
 
 def p_forVar(p):
     '''forVar : VAR typeDeclaration positionVar IN exprSingle'''
+    global variable
     if len(p[3]) == 0:
-        p[0] = ( p[1] + ' AT ' + p[1] + '_Pos ' + ' '.join(p[2:]), p[1] + '_Pos' )
+        p[0] = ( p[1] + ' at ' + p[1] + '_Pos' + ' '.join(p[2:]), p[1] + '_Pos' )
+        variable.append(p[1] + '_Pos')
     else:
         p[0] = (' '.join(p[1:]), p[1] )
+         
 
     
 
@@ -354,6 +328,9 @@ def p_typeDeclaration(p):
 def p_positionVar(p):
     '''positionVar : ATS VAR
                    | empty'''
+    global variable
+    if len(p) == 3:
+       variable.append(p[2]) 
     p[0] = ' '.join(p[1:])
 
 def p_orderByClause(p):
@@ -547,8 +524,8 @@ def p_exprSingleses(p):
 
 
 
-def p_graphpattern(p):
-    '''graphpattern : LCURLY statementsYesNo RCURLY'''
+def p_liftgraphpattern(p):
+    '''liftgraphpattern : LCURLY statementsYesNo RCURLY'''
     #p[0] = ' '.join(p[1:])
     p[0] = p[2]
 
@@ -568,20 +545,23 @@ def p_statements(p):
 
 
 def p_statement(p):
-    '''statement : triples DOT'''
+    '''statement : lifttriples DOT'''
     p[0] = p[1]
 
 def p_triples(p):
-    '''triples : subject predicateObjectList'''
+    '''lifttriples : subject predicateObjectList'''
     p[0] = (p[1], p[2])
 
 
-def p_subject(p):
+
+
+def p_subject0(p):
     '''subject : resource'''
     p[0] = [ p[1] ]
 
 def p_subject1(p):
-    '''subject : blank'''
+    '''subject : blank
+               | enclosedExpr'''
     p[0] = p[1]
 
 
@@ -620,11 +600,13 @@ def p_objectLists(p):
 def p_object(p):
     '''object : resource
               | blank
-              | rdfliteral'''
+              | rdfliteral
+              | enclosedExpr'''
     p[0] = p[1]
 
 def p_verb(p):
-    '''verb : rdfPredicate'''
+    '''verb : rdfPredicate
+            | enclosedExpr'''
     p[0] = p[1]
 
 def p_rdfPredicate(p):
@@ -730,6 +712,9 @@ import sys
 
 if __name__ == "__main__":
     instring = ''.join(sys.stdin.readlines())
-   
-    print rewrite(instring)
-    #reLexer(instring)
+    output = rewrite(instring)
+    print output
+    outputfile = open('c:\Documents and Settings\wasakh\My Documents\SaxonB9\XSPARQL\examples\output.xquery', 'w')
+    outputfile.write(output)
+    outputfile.close()
+    #print reLexer(instring)
