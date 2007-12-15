@@ -30,7 +30,7 @@ import re
 
 # our rewriting functions
 import rewriter
-
+import lowrewriter
 
 #
 # the XSPARQL Lifting grammar (very incomplete)
@@ -42,17 +42,20 @@ import rewriter
 #
 
 tokens = (
-    'FOR', 'LET', 'WHERE', 'ORDER', 'BY', 'IN', 'AS', 'RETURN', 'CONSTRUCT', 'STABLE', 'ASCENDING', 'DESCENDING',
-    'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING', 'IF', 'THEN', 'ELSE',
-    'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'EMPTY', 'COLLATION',
+    'FOR', 'FROM', 'LET', 'WHERE', 'ORDER', 'BY', 'IN', 'AS', 'RETURN', 'CONSTRUCT', 'STABLE', 'ASCENDING', 'DESCENDING',
+    'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING', 'IF', 'THEN', 'ELSE', 'LIMIT', 'OFFSET',
+    'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'EMPTY', 'COLLATION', 
     'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON', 'CHILD', 'DESCENDANT', 'ATTRIBUTE', 'SELF',
     'DESCENDANTORSELF', 'FOLLOWINGSIBLING', 'FOLLOWING', 'PARENT', 'ANCESTOR', 'PRECEDINGSIBLING', 'PRECEDING',
     'ANCESTORORSELF', 'STAR', 'ORDERED', 'UNORDERED', 'DOTDOT', 'SLASHSLASH', 'COLONCOLON', 'UNDERSCORE',
-    'DECLARE', 'NAMESPACE', 'DEFAULT', 'ELEMENT', 'FUNCTION', 'BASEURI'
+    'DECLARE', 'NAMESPACE', 'DEFAULT', 'ELEMENT', 'FUNCTION', 'BASEURI', 'LESSTHAN', 'GREATERTHAN', 'SINGLEQUOTS', 'DOUBLEQUOTS'
     )
 
 reserved = {
    'for' : 'FOR',
+   'from' : 'FROM',
+   'limit' : 'LIMIT',
+   'offset' : 'OFFSET',
    'let' : 'LET',
    'order' : 'ORDER',
    'by' : 'BY',
@@ -93,9 +96,13 @@ reserved = {
    'element' : 'ELEMENT',
    'function' : 'FUNCTION',
    'base-uri' : 'BASEURI',
+   
    '_' : 'UNDERSCORE'
 }
 
+states = [
+   ('pattern','exclusive')
+]
 
 def t_ANY_NCNAME(t):
     r'\w[\w\-]*'
@@ -123,7 +130,7 @@ t_RCURLY = r'}'
 
 
 t_ANY_VAR       = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
-t_ANY_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
+#t_ANY_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
 t_ANY_INTEGER   = r'[0-9]+'
 t_ANY_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
 t_ANY_AT        = r'@'
@@ -134,9 +141,32 @@ t_ANY_COMMA     = r'\,'
 t_ANY_EQUALS    = r'='
 t_ANY_STAR    = r'\*'
 t_ANY_DOTDOT    = r'\.\.'
+t_ANY_LESSTHAN = r'<'
+t_ANY_GREATERTHAN = r'>'
+t_ANY_SINGLEQUOTS = r'\''
+t_ANY_DOUBLEQUOTS = r'"'
 
 
+t_FOR       = r'\bfor'
+t_FROM      = r'\bfrom'
+t_ORDER     = r'\border'
+t_BY        = r'\bby'
+t_LIMIT     = r'\blimit'
+t_OFFSET    = r'\boffset'
 
+def t_WHERE(t):
+    r'\bwhere'
+    t.lexer.begin('pattern')
+    return t
+
+t_pattern_LCURLY  = r'{'
+t_pattern_QSTRING = r'\"[^\"]*\"'
+t_pattern_NCNAME  = r'\w[\w\-\.]*'
+
+def t_pattern_RCURLY(t):
+    r'}'
+    t.lexer.begin('INITIAL')
+    return t
 
 # Ignored characters
 t_ANY_ignore = " \t"
@@ -258,9 +288,9 @@ def p_forletClauses1(p):
 
 
 
-##def p_forletClauses2(p):
-##    '''forletClauses : sparqlForClause'''
-##    p[0] = p[1]
+def p_forletClauses2(p):
+    '''forletClauses : sparqlForClause'''
+    p[0] = p[1]
 
 
 def p_forletClauses3(p):
@@ -272,12 +302,134 @@ def p_forletClauses4(p):
     p[0] = p[1] + p[2]
 
 
-##def p_forletClauses5(p):
-##    '''forletClauses : forletClauses sparqlForClause'''
-##    p[0] = p[1]
-##
+def p_forletClauses5(p):
+    '''forletClauses : forletClauses sparqlForClause'''
+    p[0] = p[1]+ p[2]
 
 
+def p_sparqlForClause(p):
+    '''sparqlForClause : FOR sparqlvars FROM iriRef WHERE graphpattern solutionmodifier formalReturnClause'''
+    p[0] = ''.join([ r  for r in lowrewriter.build(p[2], p[4], p[6], p[7]) ])
+
+def p_iriRef(p):
+    '''iriRef : LESSTHAN uri GREATERTHAN'''
+    p[0] = ''.join(p[1:])
+
+
+def p_uri(p):
+    '''uri : NCNAME COLON NCNAME
+           | NCNAME COLON SLASHSLASH NCNAME SLASH NCNAME
+           | NCNAME SLASH NCNAME DOT NCNAME
+           | NCNAME DOT NCNAME
+           | NCNAME'''
+    p[0] = ''.join(p[1:])
+
+
+def p_sparqlvars(p):
+    '''sparqlvars : VAR sparqlvars
+                  | VAR'''
+    if len(p) == 2: p[0] = [ p[1] ]
+    else:           p[0] = p[2] + [ p[1] ]
+
+def p_formalReturnClause(p):
+    '''formalReturnClause : RETURN directConstructor'''
+    p[0] = ' '.join(p[1:])
+
+def p_directConstructor(p):
+    '''directConstructor : directElemConstructor '''
+    p[0] = ' '.join(p[1:])    
+    
+def p_directElemConstructor(p):
+    '''directElemConstructor : LESSTHAN qname directAttributeList SLASH GREATERTHAN
+                             | LESSTHAN qname directAttributeList GREATERTHAN directElemContent LESSTHAN SLASH  qname GREATERTHAN '''
+    p[0] = ' '.join(p[1:])
+
+
+    
+
+def p_directElemContent(p):
+    '''directElemContent : directConstructor 
+                         | enclosedExpr'''
+    p[0] = ' '.join(p[1:])
+
+def p_directAttributeList(p):
+    '''directAttributeList : directAttribute directAttributeList
+                           | empty'''
+    p[0] = ' '.join(p[1:])
+    
+##def p_directAttributeList1(p):
+##    '''directAttributeList1 :  directAttributeList
+##                            | empty'''    
+##    p[0] = ' '.join(p[1:])
+    
+def p_directAttribute(p):
+    '''directAttribute :  qname EQUALS directAttributeValue'''
+    p[0] = ' '.join(p[1:])    
+
+def p_directAttributeValue(p):
+    '''directAttributeValue :  attributeValueContent '''
+    p[0] = ' '.join(p[1:])   
+
+def p_attributeValueContent(p):
+    '''attributeValueContent : enclosedExpr
+                             | QSTRING'''
+    p[0] = ' '.join(p[1:])       
+
+def p_graphpattern(p):
+    '''graphpattern : LCURLY triples RCURLY'''
+    p[0] = p[2]
+
+
+def p_solutionmodifier(p):
+    '''solutionmodifier : ORDER BY VAR
+                        | ORDER BY VAR limitoffsetclause
+                        | empty'''
+    p[0] = ' '.join(p[1:])
+
+def p_limitoffsetclause(p):
+    '''limitoffsetclause : limitclause
+                         | offsetclause
+                         | limitclause offsetclause
+                         | offsetclause limitclause'''
+    p[0] = ' '.join(p[1:])
+
+
+def p_limitclause(p):
+    '''limitclause : LIMIT INTEGER'''
+    p[0] = ' '.join(p[1:])
+
+
+def p_offsetclause(p):
+    '''offsetclause : OFFSET INTEGER'''
+    p[0] = ' '.join(p[1:])
+
+
+##def p_triples_0(p):
+##    '''triples : '''
+##    p[0] = []
+
+def p_triples_1(p):
+    '''triples : triple
+               | triple DOT'''
+    p[0] = [ p[1] ]
+    
+def p_triples_2(p):
+    '''triples : triple DOT triples'''
+    p[0] = [ p[1] ] + p[3]
+
+
+def p_triple(p):
+    '''triple : term term term'''
+    p[0] = ( p[1], p[2], p[3] )
+
+
+def p_term(p):
+    '''term : VAR
+            | IRIREF
+            | literal
+            | qname'''
+    p[0] = p[1]
+    
 
 def p_forClause(p):
     '''forClause : FOR forVars'''
@@ -548,7 +700,7 @@ def p_statement(p):
     '''statement : lifttriples DOT'''
     p[0] = p[1]
 
-def p_triples(p):
+def p_lifttriples(p):
     '''lifttriples : subject predicateObjectList'''
     p[0] = (p[1], p[2])
 
@@ -660,11 +812,13 @@ def p_rdfliteral(p):
 
 
 def p_qname(p):
-    '''qname : NCNAME
+    '''qname : NCNAME 
              | COLON NCNAME
              | NCNAME COLON NCNAME'''
     if len(p) == 2: p[0] = p[1]
     else:           p[0] = ''.join(p[1:])
+
+
 
 
 # Error rule for syntax errors -> ignore them gracefully by throwing a SyntaxError
@@ -717,4 +871,4 @@ if __name__ == "__main__":
     outputfile = open('c:\Documents and Settings\wasakh\My Documents\SaxonB9\XSPARQL\examples\output.xquery', 'w')
     outputfile.write(output)
     outputfile.close()
-    #print reLexer(instring)
+    print reLexer(instring)
