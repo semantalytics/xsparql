@@ -268,14 +268,5 @@ def build_bnode(b):
 ##              
 ##     
 ##     return statement
-## 
-##
-##
-##
-##
-##
-##
-##
-##
-##
-##
+
+

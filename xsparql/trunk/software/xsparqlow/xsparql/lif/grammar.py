@@ -32,6 +32,7 @@ import re
 import rewriter
 import lowrewriter
 
+
 #
 # the XSPARQL Lifting grammar (very incomplete)
 #
@@ -47,8 +48,9 @@ tokens = (
     'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'EMPTY', 'COLLATION', 
     'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON', 'CHILD', 'DESCENDANT', 'ATTRIBUTE', 'SELF',
     'DESCENDANTORSELF', 'FOLLOWINGSIBLING', 'FOLLOWING', 'PARENT', 'ANCESTOR', 'PRECEDINGSIBLING', 'PRECEDING',
-    'ANCESTORORSELF', 'STAR', 'ORDERED', 'UNORDERED', 'DOTDOT', 'SLASHSLASH', 'COLONCOLON', 'UNDERSCORE',
-    'DECLARE', 'NAMESPACE', 'DEFAULT', 'ELEMENT', 'FUNCTION', 'BASEURI', 'LESSTHAN', 'GREATERTHAN', 'SINGLEQUOTS', 'DOUBLEQUOTS'
+    'ANCESTORORSELF', 'STAR', 'ORDERED', 'UNORDERED', 'DOTDOT', 'SLASHSLASH', 'COLONCOLON', 'UNDERSCORE', 
+    'DECLARE', 'NAMESPACE', 'DEFAULT', 'ELEMENT', 'FUNCTION', 'BASEURI', 'LESSTHAN', 'GREATERTHAN', 'SINGLEQUOTS',
+    'DOUBLEQUOTS' 
     )
 
 reserved = {
@@ -96,7 +98,6 @@ reserved = {
    'element' : 'ELEMENT',
    'function' : 'FUNCTION',
    'base-uri' : 'BASEURI',
-   
    '_' : 'UNDERSCORE'
 }
 
@@ -258,13 +259,19 @@ def p_exprSingle(p):
     p[0] = p[1]
     
 variable = []    
-def p_flworExpr(p):
-    '''flworExpr : flworExprs RETURN exprSingle
-                 | flworExprs CONSTRUCT liftgraphpattern'''
+def p_flworExpr0(p):
+    '''flworExpr : flworExprs CONSTRUCT constructTemplate'''
+#                 | flworExprs RETURN directConstructor'''
    # print p[3]
     global variable
        
     p[0] = ''.join([ r  for r in rewriter.build_rewrite_query(p[1], p[2], p[3], variable)])
+
+
+def p_flworExpr1(p):
+    '''flworExpr : flworExprs RETURN exprSingle'''
+                  # | flworExprs RETURN directConstructor'''
+    p[0] = ' '.join(p[1:])
 
 
 def p_flworExprs(p):
@@ -308,8 +315,46 @@ def p_forletClauses5(p):
 
 
 def p_sparqlForClause(p):
-    '''sparqlForClause : FOR sparqlvars FROM iriRef WHERE graphpattern solutionmodifier formalReturnClause'''
+    '''sparqlForClause : FOR sparqlvars FROM iriRef WHERE constructTemplate solutionmodifier '''
     p[0] = ''.join([ r  for r in lowrewriter.build(p[2], p[4], p[6], p[7]) ])
+
+
+##def p_groupgraphpattern(p):
+##    '''groupgraphpattern : LCURLY RCURLY
+##                         | LCURLY triplesBlock RCURLY
+##                         | LCURLY triplesBlock triplesBlockes RCURLY'''
+##    p[0] = p[2]
+##
+##def p_triplesBlockes(p):
+##    '''triplesBlockes : graphPatternNotTriples 
+##                      | filter
+##                      | graphPatternNotTriples DOT
+##                      | filter DOT
+##                      | graphPatternNotTriples triplesBlock
+##                      | filter triplesBlocks
+##                      | graphPatternNotTriples DOT triplesBlock
+##                      | filter DOT triplesBlock'''
+##    p[0] = p[2]
+##     
+##def p_triplesBlock(p):
+##    '''triplesBlock : triplesSameSubject
+##                    | triplesSameSubject DOT triplesBlocks'''
+##    p[0] = p[2]
+##
+##def p_triplesBlocks(p):
+##    '''triplesBlocks : triplesBlock
+##                     | empty'''
+##    p[0] = p[2]     
+##
+##def p_triplesSameSubject(p):
+##    '''triplesSameSubject : VarOrTerm predicateObjectList
+##                          | triplesNode propertyList'''
+##    p[0] = p[2]
+##
+##def p_propertyListNotEmpty(p):
+##    '''propertyListNotEmpty : verb objectList
+##                          | triplesNode propertyList'''
+##    p[0] = p[2]        
 
 def p_iriRef(p):
     '''iriRef : LESSTHAN uri GREATERTHAN'''
@@ -331,22 +376,27 @@ def p_sparqlvars(p):
     if len(p) == 2: p[0] = [ p[1] ]
     else:           p[0] = p[2] + [ p[1] ]
 
-def p_formalReturnClause(p):
-    '''formalReturnClause : RETURN directConstructor'''
-    p[0] = ' '.join(p[1:])
+#def p_formalReturnClause(p):
+#    '''formalReturnClause : RETURN directConstructor'''
+#    p[0] = ' '.join(p[1:])
 
 def p_directConstructor(p):
     '''directConstructor : directElemConstructor '''
     p[0] = ' '.join(p[1:])    
     
 def p_directElemConstructor(p):
-    '''directElemConstructor : LESSTHAN qname directAttributeList SLASH GREATERTHAN
-                             | LESSTHAN qname directAttributeList GREATERTHAN directElemContent LESSTHAN SLASH  qname GREATERTHAN '''
+    '''directElemConstructor : LESSTHAN qname attributProcessing'''
     p[0] = ' '.join(p[1:])
 
-
+def p_attributProcessing(p):
+    '''attributProcessing : directAttributeList SLASH GREATERTHAN
+                          | directAttributeList GREATERTHAN directElemContentProcessing '''
+    p[0] = ' '.join(p[1:])
     
-
+def p_directElemContentProcessing(p):
+    '''directElemContentProcessing : directElemContent LESSTHAN SLASH  qname GREATERTHAN '''
+    p[0] = ' '.join(p[1:])
+    
 def p_directElemContent(p):
     '''directElemContent : directConstructor 
                          | enclosedExpr'''
@@ -357,8 +407,8 @@ def p_directAttributeList(p):
                            | empty'''
     p[0] = ' '.join(p[1:])
     
-##def p_directAttributeList1(p):
-##    '''directAttributeList1 :  directAttributeList
+##def p_directAttributeLists(p):
+##    '''directAttributeLists :  directAttributeList
 ##                            | empty'''    
 ##    p[0] = ' '.join(p[1:])
     
@@ -375,9 +425,9 @@ def p_attributeValueContent(p):
                              | QSTRING'''
     p[0] = ' '.join(p[1:])       
 
-def p_graphpattern(p):
-    '''graphpattern : LCURLY triples RCURLY'''
-    p[0] = p[2]
+##def p_graphpattern(p):
+##    '''graphpattern : LCURLY triples RCURLY'''
+##    p[0] = p[2]
 
 
 def p_solutionmodifier(p):
@@ -408,27 +458,27 @@ def p_offsetclause(p):
 ##    '''triples : '''
 ##    p[0] = []
 
-def p_triples_1(p):
-    '''triples : triple
-               | triple DOT'''
-    p[0] = [ p[1] ]
-    
-def p_triples_2(p):
-    '''triples : triple DOT triples'''
-    p[0] = [ p[1] ] + p[3]
+##def p_triples_1(p):
+##    '''triples : triple
+##               | triple DOT'''
+##    p[0] = [ p[1] ]
+##    
+##def p_triples_2(p):
+##    '''triples : triple DOT triples'''
+##    p[0] = [ p[1] ] + p[3]
+##
+##
+##def p_triple(p):
+##    '''triple : term term term'''
+##    p[0] = ( p[1], p[2], p[3] )
 
 
-def p_triple(p):
-    '''triple : term term term'''
-    p[0] = ( p[1], p[2], p[3] )
-
-
-def p_term(p):
-    '''term : VAR
-            | IRIREF
-            | literal
-            | qname'''
-    p[0] = p[1]
+##def p_term(p):
+##    '''term : VAR
+##            | IRIREF
+##            | literal
+##            | qname'''
+##    p[0] = p[1]
     
 
 def p_forClause(p):
@@ -622,7 +672,8 @@ def p_primaryExpr(p):
                    | contextItemExpr
                    | functionCall
                    | orderedExpr
-                   | unorderedExpr'''
+                   | unorderedExpr
+                   | directConstructor'''
     p[0] = p[1]
 
 
@@ -676,8 +727,8 @@ def p_exprSingleses(p):
 
 
 
-def p_liftgraphpattern(p):
-    '''liftgraphpattern : LCURLY statementsYesNo RCURLY'''
+def p_constructTemplate(p):
+    '''constructTemplate : LCURLY statementsYesNo RCURLY'''
     #p[0] = ' '.join(p[1:])
     p[0] = p[2]
 
@@ -690,18 +741,18 @@ def p_statementsYesNo1(p):
     p[0] = []
 
 def p_statements(p):
-    '''statements : statement statements
-                  | statement'''
+    '''statements : statement  statements
+                  | statement  '''
     if len(p) == 2: p[0] = [ p[1] ]
     else:           p[0] = [ p[1] ] + p[2]
 
 
 def p_statement(p):
     '''statement : lifttriples DOT'''
-    p[0] = p[1]
+    p[0] = p[1] 
 
 def p_lifttriples(p):
-    '''lifttriples : subject predicateObjectList'''
+    '''lifttriples : subject predicateObjectList '''
     p[0] = (p[1], p[2])
 
 
@@ -728,12 +779,15 @@ def p_semicolonYesNo(p):
     p[0] = p[1]
     
 def p_verbObjectLists(p):
-    '''verbObjectLists : verb objectList verbObjectListses'''
+    '''verbObjectLists : verb objectList verbObjectListses '''
     p[0] = [ ( p[1], p[2] ) ] + p[3]
+    
+    
 
 def p_verbObjectListses(p):
     '''verbObjectListses : SEMICOLON verbObjectLists
                          | empty'''
+    #p[0] = p[1]
     if len(p) == 2: p[0] = []
     else :          p[0] = p[2]
     
@@ -785,6 +839,7 @@ def p_rdfPredicate(p):
 
 def p_resource(p):
     '''resource : qname
+                | VAR 
                 | IRIREF'''
     p[0] = p[1]
 
@@ -812,12 +867,14 @@ def p_rdfliteral(p):
 
 
 def p_qname(p):
-    '''qname : NCNAME 
-             | COLON NCNAME
-             | NCNAME COLON NCNAME'''
+    '''qname : NCNAME
+             | NCNAME qnames'''
     if len(p) == 2: p[0] = p[1]
     else:           p[0] = ''.join(p[1:])
-
+   
+def p_qnames(p):
+    '''qnames : COLON NCNAME'''
+    p[0] = ''.join(p[1:])
 
 
 

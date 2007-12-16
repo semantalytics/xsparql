@@ -50,30 +50,37 @@ def var_rdfterm(var):
 # todo: ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
     prefix = '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat("'
-
+    print vars
     global scoped_variables
 
     # build the SPARQL query
     query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ]) + '\n' + \
             'select ' + ' '.join(vars) + ' from ' + from_iri + ' where { '
+    ret = ''
+    for s, polist in graphpattern:
+        ret +=  build_subject(s) + build_predicate(polist) + '.  '
+##        if t[0] in scoped_variables: query += '", ' + t[0] + ', " '
+##        else:                        query += t[0] + ' '
+##        query += t[1] + ' '
+##        if t[2] in scoped_variables: query += '", ' + t[2] + ', " . '
+##        else:                        query += t[2] + ' . '
 
-    for t in graphpattern:
-        if t[0] in scoped_variables: query += '", ' + t[0] + ', " '
-        else:                        query += t[0] + ' '
-        query += t[1] + ' '
-        if t[2] in scoped_variables: query += '", ' + t[2] + ', " . '
-        else:                        query += t[2] + ' . '
-
-    query += '} ' + solutionmodifier
+    query = ret + '} ' + solutionmodifier
 
     scoped_variables.update(vars)
 
-    return prefix + query + '" )))\n'
+    return prefix + query + '", "" )))\n'
 
 
 
-def build_for_loop(i):
-    return 'for ' + query_result_aux(i) + ' in doc(' + query_aux(i) + ')//sparql:result\n'
+def build_for_loop(i, var):
+    variable = ''
+    if len(var) == 1 and isinstance(var[0][0], list) :
+        variable = var[0][0] 
+    elif len(var) == 1 and isinstance(var[0], list): # blank node or object
+        variable = var[0] 
+    
+    return 'for ' + query_result_aux(i) + ' at ' + variable + '_Pos in doc(' + query_aux(i) + ')//sparql:result\n'
 
 
 def build_aux_variables(i, vars):
@@ -111,5 +118,75 @@ def build(vars, from_iri, graphpattern, solutionmodifier):
     _forcounter += 1
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
                              vars, from_iri, graphpattern, solutionmodifier)
-    yield build_for_loop(_forcounter)
+    yield build_for_loop(_forcounter, vars)
     yield build_aux_variables(_forcounter, vars)
+
+
+
+
+def build_subject(s):
+
+    #print 'sub:', s
+
+
+    if len(s) == 1 and isinstance(s[0], list) and isinstance(s[0][0], str):
+        return build_bnode(s[0][0]) 
+    elif len(s) == 1 and isinstance(s[0], str): # blank node or object
+        return build_bnode(s[0]) 
+    elif len(s) == 1 and isinstance(s[0], list): # blank node or object
+        return build_predicate(s[0])
+    elif len(s) == 0: # single blank node
+        return '[]'
+    else: # polist
+        return '[ ' + build_predicate([ s[0] ]) + ' ; ' + build_predicate(s[1:]) + ' ]\n '
+
+
+
+def build_predicate(p):
+
+   # print 'prd:', p
+
+    if len(p) == 1:
+        b = p[0][0]
+        if b >= 2 and b[0] == '{' and b[-1] == '}' :
+            strip = str(b).lstrip('{')
+            b = strip.rstrip('}') 
+            return ' '+ b + ' ' + build_object(p[0][1])+ ' '
+        else:
+             return ' '+ b + ' ' + build_object(p[0][1])+ ' '
+    elif len(p) == 0:
+        return ''
+    else:
+        return '[ ' + build_predicate([ p[0] ]) + '; ' + build_predicate([ p[1] ]) + ' ]\n '
+
+
+def build_object(o):
+
+  #  print 'obj:', o
+
+    if len(o) == 1 and isinstance(o[0], list) and isinstance(o[0][0], str):
+        return  build_bnode(o[0][0])
+    elif len(o) == 1 and isinstance(o[0], str):
+        return  build_bnode(o[0]) 
+    elif len(o) == 1 and isinstance(o[0], list):
+        return build_predicate(o[0])
+    elif len(o) == 0:
+        return '[]'
+    else:
+        return '[ ' + build_predicate([ o[0] ]) + ' ";", ' + build_predicate(o[1:]) + ' ]\n '
+
+
+def build_bnode(b):
+    if b >= 2 and b[0] == '_' and b[1] == ':':
+        global var
+        v = ''
+        for i in var:
+            v += ' data('+str(i[0:])+ ') '
+        return ''+ b + '_' + v
+    else:
+        if b >= 2 and b[0] == '{' and b[-1] == '}' :
+            strip = str(b).lstrip('{')
+            b = strip.rstrip('}') 
+            return ' '+ b + ' '
+        else:
+            return ' '+ b + ' '
