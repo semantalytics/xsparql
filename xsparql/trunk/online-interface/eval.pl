@@ -21,7 +21,7 @@ my $plugindir = '';
 my $error = '';
 my $resultlimit = 60000;
 
-$ENV{'PATH'} = '/usr/local/bin:/opt/SDK/jdk/bin/:/home/axepol/public_html/xsparqltmp';
+$ENV{'PATH'} = '/usr/local/bin:/usr/bin:/bin:/opt/SDK/jdk/bin/:/home/axepol/public_html/xsparql:/home/axepol/public_html/xsparqltmp';
 
 my $cgi = new CGI;
 
@@ -38,7 +38,7 @@ switch ($solver)
 case 'evaluate'
     { $solverexec = './xquery '; }
 case 'rewrite'
-    { $solverexec = './xquery '; }
+    { $solverexec = './xsparqlrewrite '; }
 else
     { $error = 'error: no solver specified!'; }
 }
@@ -48,10 +48,11 @@ my $filename = '';
 if ($error eq '')
 {
     my $salt=join '', (0..9, 'A'..'Z', 'a'..'z')[rand 64, rand 64];
-    $filename = "tempfiles/query$$".time.$salt.".tmp";
+    $filename = "/home/axepol/public_html/xsparqltmp/tempfiles/query$$".time.$salt.".tmp";
 
-    open(FH, "> $filename");
+    open(FH, "> $filename") ||  print "Cannot open file";
     print FH $query;
+    print FH "\n";
     close(FH);
 
     my $finished = 1;
@@ -75,9 +76,9 @@ if ($error eq '')
     else
         { kill 9, $pid; }
 
-        #@result = `echo '$query' | $solverexec -- 2>&1`;
+    #@result = `echo '$query' | $solverexec -- 2>&1`;
 
-    unlink $filename;
+    #unlink $filename;
 }
 
 
@@ -89,16 +90,23 @@ print $cgi->header(-'Cache-Control'=>'no-cache, must-revalidate, max-age=0',
                    -expires=>'Mon, 26 Jul 1997 05:00:00 GMT',
                    -charset=>'utf-8');
 
-print '<h3 style="margin-top: 0px;">Result:</h3>';
 
 #print '<p>call: ' . $solverexec . '</p>';
 #print @result;
 if ($error ne '') { print $error; exit 0; }
 
-#print '<p>solverexec: ' . $solverexec . '</p>'; 
+print '<h3 style="margin-top: 0px;">Rewritten query:</h3> ' . $query. '</p>'; 
+print '<p>call: ' . $solverexec . '</p>'; 
+print '<p>file: ' . $filename. '</p>'; 
 
+print '<h3 style="margin-top: 0px;">Result:</h3>';
+
+
+#print '<pre>';
 foreach my $line (@result)
 {
-        print $line.'<br/>';
+   $line =~ s/\>/&gt;/g;
+   $line =~ s/\</&lt;/g;
+   print $line.'<br/>';
 }
-
+#print '</pre>';
