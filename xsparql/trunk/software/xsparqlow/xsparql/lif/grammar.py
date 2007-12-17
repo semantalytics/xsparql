@@ -225,7 +225,7 @@ def p_namespaceDecl(p):
     global namespaces
     namespaces.append(('prefix', p[3], ':', p[5]))
     p[0] = ' '.join(p[1:])
-    p[0] = ' '.join([ r  for r in lowrewriter.declare_namespaces(namespaces)])
+#    p[0] = ' '.join([ r  for r in lowrewriter.declare_namespaces(namespaces)])
 
 def p_baseURIDecl(p):
     '''baseURIDecl  : DECLARE BASEURI QSTRING'''
@@ -891,8 +891,8 @@ def p_error(p):
     raise SyntaxError
 
 # Build the parser
-yacc.yacc(debug=1)
-
+#yacc.yacc(debug=1)
+yacc.yacc(debug=0)
 
 
 # main part of the XSPARQL lowering rewriter
