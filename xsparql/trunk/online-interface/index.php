@@ -11,7 +11,7 @@
     <script type="text/javascript" src="code/common.js"></script>
 </head>
 
-<!-- body onload="initPosition(document.getElementById('lp'))" -->
+<!-- body onload="initPosition(document.getElementById('query'))" -->
 <body>
    <div>
     <table border="0" cellpadding="10" cellspacing="0" width="100%">
@@ -100,20 +100,18 @@
         <!-- set top margin to 5px for cropped buttons bug on ie! -->
         <p style='margin-top: 5px;'>Do you want to rewrite the Query or Evaluate it?&nbsp;
         <span class="solverbutton" 
-              id="Rewrite"
+              id="rewrite"
               onClick="javascript:togglesolver(this.id);"><a href="#">Rewrite</a></span>
         <span class="solverbutton"
-              id="Evaluate"
-              onClick="javascript:togglesolver(this.id);"><a href="#">Evaluate</a></span>
-	&nbsp;<span id="ont">Load Query from URI:&nbsp;
-              <input id="URI" type="text" style="width: 250px;" /></span>
-	      <br/>
+              id="evaluate"
+              onClick="javascript:togglesolver(this.id);"><a href="#">Evaluate</a></span><br/><br/>
+	<span id="uri">Load Query from URI:&nbsp;
+              <input id="URI" type="text" style="width: 400px;" /></span>
         </p>
 
-        <div style="text-align: right;">[<a href="#" onClick="javascript:clearlp(); return false;">clear</a>]</div>
-        <textarea id="lp"
-                  wrap="off" style="margin-bottom: 10px;">%%% enter your XSPARQL query here %%%</textarea>
-                  <!-- name="lptextarea"
+        <textarea id="query"
+                  wrap="off" style="height: 250px;width: 540px;margin-bottom: 10px;">%%% enter your XSPARQL query here %%%</textarea>
+                  <!-- name="querytextarea"
                   onmouseup="updatePosition(this)"
                   onmousedown="updatePosition(this)"
                   onkeyup="updatePosition(this)"
@@ -127,7 +125,8 @@
         -->
 
         <div style="text-align: left;">
-            <span id="evalbutton"><b><a href="#" onClick="javascript:eval(); return false;">[ Run it! ]</a></b></span>
+            <span id="evalbutton"><b><a href="#" onClick="javascript:evalquery(); return false;">[ Run it! ]</a></b></span>
+	    <a href="#" onClick="javascript:clearquery(); return false;">[clear]</a>
         </div>
 
         <div id="result"></div>
@@ -143,7 +142,7 @@
 </body>
 
 <script type="text/javascript">
-    solverToSet = "Ealuate";
+    solverToSet = "evaluate";
     togglesolver(solverToSet);
 </script>
 

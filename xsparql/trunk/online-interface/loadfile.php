@@ -10,8 +10,7 @@ $lines = file($_POST["filename"]);
 $prologue = true;
 
 $solver="";
-$ontology="";
-$filter="";
+$URI="";
 
 foreach ($lines as $line_num => $line)
 {
