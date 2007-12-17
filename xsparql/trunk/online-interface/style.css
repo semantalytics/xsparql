@@ -1,0 +1,327 @@
+/*-------------------------------------------------
+PAGE BODY
+-------------------------------------------------*/
+
+body {
+    font-size: 10pt;
+    font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
+    background-color: #ffffff;
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+
+/*-------------------------------------------------
+GENERAL
+-------------------------------------------------*/
+
+textarea, input {
+    border: 1px solid #a0a0a0;
+    background-color: #d5d6d7;
+    overflow: auto;
+}
+
+h1, h2, h3 {
+    font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+    font-weight: bold;
+}
+
+h1 {
+    margin: 0px 0px 15px 0px;
+}
+
+h2 {
+    margin: 0px 0px 10px 0px;
+}
+
+h3 {
+    margin: 0px 0px 6px 0px;
+}
+
+p {
+         /* t   r   b    l */
+    margin: 0px 0px 12px 0px;
+}
+
+.code {
+    font-family: courier, fixed, mono;
+/*    font-size: 121%; */
+}
+
+div.code {
+    font-family: courier, fixed, mono;
+/*    font-size: 121%; */
+    margin: 8px 0px 8px 15px;
+}
+
+div.indent {
+    margin: 8px 0px 8px 15px;
+}
+
+div.center {
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+span.solverbutton {
+    border-right:  1px solid #303030;
+    border-bottom: 1px solid #303030;
+    border-top:  1px solid #b0b0b0;
+    border-left: 1px solid #b0b0b0;
+    background-color: #e0e0e0;
+    padding: 4px 8px 4px 8px;
+}
+
+span.buttondown {
+    border-top:    1px solid #303030;
+    border-left:   1px solid #303030;
+    border-bottom: 1px solid #b0b0b0;
+    border-right:  1px solid #b0b0b0;
+    background-color: #b0b0b0;
+    padding: 2px 8px 2px 8px;
+    width: 80px;
+}
+
+.solverbutton a {
+    font-family: Verdana, Arial, Sans-Serif;
+    font-size: 10pt;
+    text-decoration: none; 
+    /*font-weight: bold;*/
+}
+
+.solverbutton a:link {
+    color: #000000;
+    text-decoration: none;
+}
+
+.solverbutton a:active {
+    color: #000000;
+    text-decoration: underline; 
+}
+
+.solverbutton a:visited {
+    color: #000000;
+    text-decoration: none; 
+}
+
+.solverbutton a:hover {
+    color: #000000;
+    text-decoration: underline; 
+}
+
+
+/*-------------------------------------------------
+TOP MENU
+-------------------------------------------------*/
+
+#title {
+    border: 0;
+    text-align: left;
+    font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+    font-size: 36pt;
+    padding: 4px 0px 0px 4px;
+    background-color: #003366;
+    color: #ffaaaa;
+    line-height: 30pt;
+}
+
+#menu {
+    padding: 8px 20px 4px 8px;
+    margin: 0px 0px 0px 0px;
+    background-color: #003366;
+    color: #ffffff;
+    text-align: left;
+}
+
+#menu a {
+    font-family: Verdana, Arial, Sans-Serif;
+    font-size: 10pt;
+    /*font-weight: bold;*/
+}
+
+#menu a:link {
+    color: #bbddff;
+    text-decoration: none;
+}
+
+#menu a:active {
+    color: #ffffff; 
+    text-decoration: underline; 
+}
+
+#menu a:visited {
+    color: #ddeeff; 
+    text-decoration: none; 
+}
+
+#menu a:hover {
+    color: #ffffff; 
+    text-decoration: underline; 
+}
+
+/*-------------------------------------------------
+MAIN STRUCTURE
+-------------------------------------------------*/
+
+#header {
+    text-align: left;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    padding-left: 20px;
+    padding-top: 10px;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+div#Wrapper {
+    padding: 0;
+    margin: 20px 0px 0px 10px;
+    clear: both;
+}
+
+
+.examplecol {
+    padding: 0;
+    text-align: left;
+    position: absolute;
+    width: 200px;
+}
+
+
+.maincol {
+    margin-left: 200px;
+    text-align: left;
+}
+    
+
+
+#Footer {
+    clear: left;
+    font-size: 9px;
+    color: #666;
+    margin: 4px 0 20px 20px;
+    text-align: left;
+    padding-bottom: 15px;
+}
+
+
+.col {
+    text-align: left;
+}
+
+.Left .col
+{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    border: 3px solid #b0b1b2;
+    background-color: #ffffff;
+    line-height: 1.4; /* for IE bug with background-color in a floating div making things disappear! */
+}
+
+.Right .col {
+    min-width: 200px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 23px;
+    padding-bottom: 12px;
+}
+
+
+/*-------------------------------------------------
+EXAMPLE-LIST
+-------------------------------------------------*/
+
+div.stretcher {
+/*    width: 150px; */
+}
+
+div.stretchtoggle {
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.stretchtoggle a {
+    font-family: Verdana, Arial, Sans-Serif;
+    font-size: 10pt;
+}
+
+.stretchtoggle a:link {
+    color: #000000; 
+    text-decoration: none;
+}
+
+.stretchtoggle a:active {
+    color: #000000; 
+    text-decoration: underline; 
+}
+
+.stretchtoggle a:visited {
+    color: #000000; 
+    text-decoration: none; 
+}
+
+.stretchtoggle a:hover {
+    color: #000000; 
+    text-decoration: underline; 
+}
+
+span.examplelink {
+    margin-left: 10px;
+}
+
+/*-------------------------------------------------
+EVALUATION
+-------------------------------------------------*/
+
+textarea#lp {
+    width: 100%;
+    height: 350px;
+    padding: 2px 2px 2px 2px;
+    line-height: 14pt;
+}
+
+input#filter {
+    width: 100%;
+}
+
+#result {
+    border: 1px solid #d0d0d0;
+    background-color: #e0e0e0;
+    display: none;
+    width: 95%;
+    margin: 20px 0px 20px 0px;
+    padding: 10px 0px 10px 10px;
+}
+
+#result a {
+    font-family: Verdana, Arial, Sans-Serif;
+    font-size: 10pt;
+    /*font-weight: bold;*/
+}
+
+#result a:link {
+    color: #000080; 
+    text-decoration: none;
+}
+
+#result a:active {
+    color: #000080; 
+    text-decoration: underline; 
+}
+
+#result a:visited {
+    color: #000080; 
+    text-decoration: none; 
+}
+
+#result a:hover {
+    color: #000080; 
+    text-decoration: underline; 
+}
+
+
