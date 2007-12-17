@@ -43,18 +43,30 @@ def var_rdfterm(var):
     return var + '_RDFTerm'
 
 
+
+
 #
 # rewriting functions
 #
 
+def declare_namespaces(ns):
+  global namespace 
+  namespace = ''
+  namespace = ns
+  
+  print ns
+  return namespace
+    
+
 # todo: ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
-    prefix = '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat("'
-    print vars
+    prefix = 'declare namespace sparql = "http://www.w3.org/2005/sparql-result"; \n'
+    prefix += '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat("'
+    #print namespace
     global scoped_variables
 
     # build the SPARQL query
-    query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ]) + '\n' + \
+    query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ]) + ' ' + \
             'select ' + ' '.join(vars) + ' from ' + from_iri + ' where { '
     ret = ''
     for s, polist in graphpattern:
@@ -65,7 +77,7 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
 ##        if t[2] in scoped_variables: query += '", ' + t[2] + ', " . '
 ##        else:                        query += t[2] + ' . '
 
-    query = ret + '} ' + solutionmodifier
+    query += ret + '} ' + solutionmodifier
 
     scoped_variables.update(vars)
 
@@ -74,13 +86,13 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
 
 
 def build_for_loop(i, var):
-    variable = ''
-    if len(var) == 1 and isinstance(var[0][0], list) :
-        variable = var[0][0] 
-    elif len(var) == 1 and isinstance(var[0], list): # blank node or object
-        variable = var[0] 
+##    variable = ''
+##    if len(var) == 1 and isinstance(var[0][0], list) :
+##        variable = var[0][0] 
+##    elif len(var) == 1 and isinstance(var[0], list): # blank node or object
+##        variable = var[0] 
     
-    return 'for ' + query_result_aux(i) + ' at ' + variable + '_Pos in doc(' + query_aux(i) + ')//sparql:result\n'
+    return 'for ' + query_result_aux(i) + ' in doc(' + query_aux(i) + ')//sparql:result\n'
 
 
 def build_aux_variables(i, vars):

@@ -197,6 +197,7 @@ namespaces = []
 def p_mainModule(p):
     '''mainModule : prolog queryBody'''
     global namespaces
+    #p[0] = ''.join(p[1:])
     p[0] = ' '+p[1] + '\n ' + ',\n '.join([ '"@%s %s%s &#60;%s&#62; .&#xA;"' % (pre,ns,co,uri[1:-1]) for (pre,ns,co,uri) in namespaces]) + ',\n' + p[2]
     
 def p_prolog(p):
@@ -224,7 +225,7 @@ def p_namespaceDecl(p):
     global namespaces
     namespaces.append(('prefix', p[3], ':', p[5]))
     p[0] = ' '.join(p[1:])
-    #' '.join([ r  for r in rewriter.build_rewrite_nsDecl(p[1], p[2], p[3], p[5])])
+    p[0] = ' '.join([ r  for r in lowrewriter.declare_namespaces(namespaces)])
 
 def p_baseURIDecl(p):
     '''baseURIDecl  : DECLARE BASEURI QSTRING'''
@@ -748,7 +749,8 @@ def p_statements(p):
 
 
 def p_statement(p):
-    '''statement : lifttriples DOT'''
+    '''statement : lifttriples DOT
+                 |  lifttriples '''
     p[0] = p[1] 
 
 def p_lifttriples(p):
@@ -865,7 +867,12 @@ def p_rdfliteral(p):
     if len(p) == 2: p[0] = p[1]
     else:           p[0] = ''.join(p[1:])
 
-
+def p_sparqlqname(p):
+    '''sparqlqname : NCNAME COLON NCNAME'''
+    p[0] = ''.join(p[1:])
+##    if len(p) == 2: p[0] = p[1]
+##    else:           p[0] = ''.join(p[1:])
+    
 def p_qname(p):
     '''qname : NCNAME
              | NCNAME qnames'''
@@ -925,7 +932,7 @@ if __name__ == "__main__":
     instring = ''.join(sys.stdin.readlines())
     output = rewrite(instring)
     print output
-    outputfile = open('c:\Documents and Settings\wasakh\My Documents\SaxonB9\XSPARQL\examples\output.xquery', 'w')
-    outputfile.write(output)
-    outputfile.close()
-    print reLexer(instring)
+##    outputfile = open('c:\Documents and Settings\wasakh\My Documents\SaxonB9\XSPARQL\examples\output.xquery', 'w')
+##    outputfile.write(output)
+##    outputfile.close()
+##    print reLexer(instring)
