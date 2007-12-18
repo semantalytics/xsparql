@@ -28,7 +28,7 @@
 #
 
 import re
-
+import lowrewriter
 
 #
 # rewriting functions
@@ -67,7 +67,7 @@ def build_rewrite_query(forletExpr, construct, graphpattern, variable):
     statement += ')'      
 
     #print str(graphpattern)+ '\n\n'
-    return forletExpr + '\n return \n\t  fn:concat( \n\t\t\n ' + statement
+    return '\n fn:concat( "@", '+lowrewriter.dec_var+' "." ),\n '+forletExpr + '\n return \n\t  fn:concat( \n\t\t\n ' + statement
 
 
 
@@ -112,6 +112,8 @@ def build_predicate(p):
             strip = str(b).lstrip('{')
             b = strip.rstrip('}') 
             return ' '+ b + ',  ' + build_object(p[0][1])+ ' '
+        elif b >= 2 and b[0] == '$':
+             return '   '+ b + '  ,  ' + build_object(p[0][1])+ ' '
         else:
              return ' "  '+ b + '  ",  ' + build_object(p[0][1])+ ' '
     elif len(p) == 0:
@@ -148,6 +150,8 @@ def build_bnode(b):
             strip = str(b).lstrip('{')
             b = strip.rstrip('}') 
             return ' \'"\',  '+ b + ',  \'"\', '
+        elif b >= 2 and b[0] == '$':
+            return '   '+ b + '  ,  '
         else:
             return '  "  '+ b + '  ",  '
 

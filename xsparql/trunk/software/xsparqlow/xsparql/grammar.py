@@ -197,8 +197,8 @@ namespaces = []
 def p_mainModule(p):
     '''mainModule : prolog queryBody'''
     global namespaces
-    #p[0] = ''.join(p[1:])
-    p[0] = ' '+p[1] + '\n ' + ',\n '.join([ '"@%s %s%s &#60;%s&#62; .&#xA;"' % (pre,ns,co,uri[1:-1]) for (pre,ns,co,uri) in namespaces]) + ',\n' + p[2]
+    p[0] = ''.join(p[1:])
+    #p[0] = ' '+p[1] + '\n ' + ',\n '.join([ '"@%s %s%s &#60;%s&#62; .&#xA;"' % (pre,ns,co,uri[1:-1]) for (pre,ns,co,uri) in namespaces]) + ',\n' + p[2]
     
 def p_prolog(p):
     '''prolog : defaultNamespaceDecl nsDecl
@@ -216,27 +216,64 @@ def p_defaultNamespaceDecl(p):
     '''defaultNamespaceDecl : DECLARE DEFAULT ELEMENT NAMESPACE QSTRING
                             | DECLARE DEFAULT FUNCTION NAMESPACE QSTRING'''
     global namespaces
+    global count
+    global decl_var_ns
     namespaces.append(('prefix', '',':', p[5]))
-    p[0] = ' '.join(p[1:])
+    count += 1 
+    prefix = ''
+    nsTag = 'prefix'
+    col = ':'
+    url = ''.join(p[5])
+    decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
     #' '.join([ r  for r in lifrewriter.build_rewrite_defaultNSDecl(p[1], p[2], p[3], p[4], p[5])])
-    
+    p[0] = ' '.join(p[1:])
+
+##decl_ns = ''
+decl_var_ns = ''
+count = 0    
 def p_namespaceDecl(p):
     '''namespaceDecl : DECLARE NAMESPACE NCNAME EQUALS QSTRING'''
     global namespaces
+    global count
+    global decl_var_ns
+##    global decl_ns
+    count += 1 
     namespaces.append(('prefix', p[3], ':', p[5]))
+    prefix = ''.join(p[3])
+    url = ''.join(p[5])
+    col = ':'
+    nsTag = 'prefix'
+    decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
+   
+##    decl_ns += ''.join(p[1:])
+##    decl_ns += ';\n'
     p[0] = ' '.join(p[1:])
-#    p[0] = ' '.join([ r  for r in lowrewriter.declare_namespaces(namespaces)])
+    
+    
 
 def p_baseURIDecl(p):
     '''baseURIDecl  : DECLARE BASEURI QSTRING'''
     global namespaces
+    global count
+    global decl_var_ns
     namespaces.append(('base', '', '', p[3]))
+    count += 1 
+    prefix = ''
+    col = ''
+    nsTag = 'base'
+    url = ''.join(p[5])
+    decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
     p[0] = ' '.join(p[1:])
     #' '.join([ r  for r in lifrewriter.build_rewrite_baseURI(p[1], p[2], p[3])])
     
 def p_queryBody(p):
     '''queryBody : expr'''
-    p[0] = '\n '+p[1]
+    prefix = 'declare namespace sparql = "http://www.w3.org/2005/sparql-result"; \n'
+    decl_func = '\ndeclare function local:rdf_term($NS as xs:string, $V as xs:string) as xs:string \n'
+    decl_func += '{ let $rdf_term := if($NS = "literal") then fn:concat("""",$V,"""") \n'
+    decl_func += '  else if ($NS = "bnode") then fn:concat("_:", $V) else if ($NS = "uri") \n'
+    decl_func += '  then fn:concat("<", $V, ">") else "" return $rdf_term  };\n'
+    p[0] = '\n '+prefix+decl_var_ns+decl_func +p[1]
 
     
 def p_expr(p):
@@ -317,6 +354,13 @@ def p_forletClauses5(p):
 
 def p_sparqlForClause(p):
     '''sparqlForClause : FOR sparqlvars FROM iriRef WHERE constructTemplate solutionmodifier '''
+    global variable
+##    if len(p[3]) == 0:
+##        p[0] = ( p[1] + ' at ' + p[1] + '_Pos' + ' '.join(p[2:]), p[1] + '_Pos' )
+##        variable.append(p[1] + '_Pos')
+##    else:
+##        p[0] = (' '.join(p[1:]), p[1] )
+    var = ''.join(str(p[2])+'  '+str(p[2])+ '_Pos')   
     p[0] = ''.join([ r  for r in lowrewriter.build(p[2], p[4], p[6], p[7]) ])
 
 
@@ -374,6 +418,8 @@ def p_uri(p):
 def p_sparqlvars(p):
     '''sparqlvars : VAR sparqlvars
                   | VAR'''
+
+   
     if len(p) == 2: p[0] = [ p[1] ]
     else:           p[0] = p[2] + [ p[1] ]
 
@@ -891,8 +937,8 @@ def p_error(p):
     raise SyntaxError
 
 # Build the parser
-#yacc.yacc(debug=1)
-yacc.yacc(debug=0)
+yacc.yacc(debug=1)
+
 
 
 # main part of the XSPARQL lowering rewriter

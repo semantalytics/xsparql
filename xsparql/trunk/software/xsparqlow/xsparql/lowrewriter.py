@@ -29,6 +29,8 @@
 
 def query_aux(i):
     return '$aux' + str(i)
+def var_decl(i):
+    return '$NS_'+ str(i)
 
 def query_result_aux(i):
     return '$aux_result' + str(i)
@@ -48,20 +50,22 @@ def var_rdfterm(var):
 #
 # rewriting functions
 #
-
-def declare_namespaces(ns):
-  global namespace 
-  namespace = ''
-  namespace = ns
-  
-  print ns
-  return namespace
+dec_var = ''
+def declare_namespaces(nstag, col, pre, uri, i):
+  global dec_var
+  dec_var += var_decl(i)+ ',  '
+  uri = uri.lstrip('"')
+  uri = uri.rstrip('"')
+  decl_ns = 'declare variable '+var_decl(i) +' := "'+ nstag + '  '+pre + col+'  <'+ uri + '>";\n'
+  #print url
+  return  decl_ns
     
 
 # todo: ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
-    prefix = 'declare namespace sparql = "http://www.w3.org/2005/sparql-result"; \n'
-    prefix += '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat("'
+    
+    prefix = ''
+    prefix += '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat(' + dec_var + '"'
     #print namespace
     global scoped_variables
 
@@ -102,15 +106,15 @@ def build_aux_variables(i, vars):
         ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/sparql:binding[@name = "' + v[1:] + '"])\n'
         ret += '\tlet ' + var_nodetype(v) + ' := name(' + var_node(v) + '/*)\n'
         ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
-        ret += '\tlet ' + var_rdfterm(v) + ' := fn:concat(\n' + \
-               '\t\tif (' + var_nodetype(v) + ' = "literal") then """"\n' + \
-               '\t\telse if (' + var_nodetype(v) + ' = "bnode") then "_:"\n' + \
-               '\t\telse if (' + var_nodetype(v) + ' = "uri") then "<"\n' + \
-               '\t\telse "",\n' + \
-               '\t\t' + v + ',\n' + \
-               '\t\tif (' + var_nodetype(v) + ' = "literal") then """"\n' + \
-               '\t\telse if (' + var_nodetype(v) + ' = "uri") then ">"\n' + \
-               '\t\telse ""\n\t)\n'
+        ret += '\tlet ' + var_rdfterm(v) + ' :=  local:rdf_term(' + var_nodetype(v)+', '+v +' )\n'\
+##               '\t\tif (' + var_nodetype(v) + ' = "literal") then """"\n' + \
+##               '\t\telse if (' + var_nodetype(v) + ' = "bnode") then "_:"\n' + \
+##               '\t\telse if (' + var_nodetype(v) + ' = "uri") then "<"\n' + \
+##               '\t\telse "",\n' + \
+##               '\t\t' + v + ',\n' + \
+##               '\t\tif (' + var_nodetype(v) + ' = "literal") then """"\n' + \
+##               '\t\telse if (' + var_nodetype(v) + ' = "uri") then ">"\n' + \
+##               '\t\telse ""\n\t)\n'
         
     return ret
 
