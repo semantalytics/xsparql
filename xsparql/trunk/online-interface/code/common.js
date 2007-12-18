@@ -22,7 +22,7 @@ function evalquery()
 
     window.self.location.hash="#result"
 
-    ajax.StartProgress(500, "solver is processing...");
+    ajax.StartProgress(500, "rewriter/solver is processing... slow machine, sorry ;-)");
 
     togglebutton('off');
 
