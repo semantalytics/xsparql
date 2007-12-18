@@ -1,8 +1,8 @@
 xsparql/__init__.py
-xsparql/low/__init__.py
-xsparql/low/grammar.py
-xsparql/low/rewriter.py
+xsparql/grammar.py
+xsparql/lifrewriter.py
+xsparql/lowrewriter.py
 setup.py
-xsparqlow.py
+xsparqler.py
 README
 COPYING

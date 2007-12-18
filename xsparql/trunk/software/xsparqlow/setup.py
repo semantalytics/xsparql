@@ -3,8 +3,8 @@
 from distutils.core import setup
 
 import sys
-if sys.version < '2.4.0':
-    print 'Only Python 2.4.0 and higher is supported.'
+if sys.version < '2.3.0':
+    print 'Only Python 2.3.0 and higher is supported.'
     sys.exit(1)
 
 try:
@@ -18,17 +18,17 @@ download it from http://www.dabeaz.com/ply/.'''
     sys.exit(1)
 
 
-setup(name='xsparqlow',
+setup(name='xsparql',
       version='0.1',
-      description='XSPARQL Lowering',
+      description='XSPARQL Rewriter',
       long_description="""
-An XSPARQL Lowering rewriter.
+An XSPARQL rewriter.
 """,
       license='GNU General Public License',
       platforms='Any',
       author='Thomas Krennwallner',
       author_email='tkren@kr.tuwien.ac.at',
-      url='http://axel.deri.ie/xsparql/',
-      packages=['xsparql', 'xsparql.low'],
-      scripts=['xsparqlow.py']
+      url='http://www.polleres.net/xsparql/',
+      packages=['xsparql'],
+      scripts=['xsparqler.py']
      )
