@@ -32,6 +32,13 @@ def query_aux(i):
 def var_decl(i):
     return '$NS_'+ str(i)
 
+p_var = []
+def position_var(i):
+    global p_var
+    p_var.append('$aux_result' + str(i)+ '_Pos ')
+   # print p_var
+    return ' at  $aux_result' + str(i)+ '_Pos'
+
 def query_result_aux(i):
     return '$aux_result' + str(i)
 
@@ -44,19 +51,27 @@ def var_nodetype(var):
 def var_rdfterm(var):
     return var + '_RDFTerm'
 
-
+def cnv_lst_str(dec_var, flag):
+    stri = ''    
+    for i in dec_var:
+       if flag : 
+           stri += ' "@", '+i[0:] + ', ".",'
+       else:
+           stri += '  '+i[0:] + ','
+    return stri.rstrip(',')
+       
 
 
 #
 # rewriting functions
 #
-dec_var = ''
+dec_var = []
 def declare_namespaces(nstag, col, pre, uri, i):
   global dec_var
-  dec_var += var_decl(i)+ ',  '
+  dec_var.append(var_decl(i))
   uri = uri.lstrip('"')
   uri = uri.rstrip('"')
-  decl_ns = 'declare variable '+var_decl(i) +' := "'+ nstag + '  '+pre + col+'  <'+ uri + '>";\n'
+  decl_ns = 'declare variable '+var_decl(i) +' := "'+ nstag + '  '+pre + col+'  &#60;'+ uri + '&#62;";\n'
   #print url
   return  decl_ns
     
@@ -65,7 +80,7 @@ def declare_namespaces(nstag, col, pre, uri, i):
 def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
     
     prefix = ''
-    prefix += '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat(' + dec_var + '"'
+    prefix += '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat(' + cnv_lst_str(dec_var, False) + ', "'
     #print namespace
     global scoped_variables
 
@@ -75,12 +90,6 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
     ret = ''
     for s, polist in graphpattern:
         ret +=  build_subject(s) + build_predicate(polist) + '.  '
-##        if t[0] in scoped_variables: query += '", ' + t[0] + ', " '
-##        else:                        query += t[0] + ' '
-##        query += t[1] + ' '
-##        if t[2] in scoped_variables: query += '", ' + t[2] + ', " . '
-##        else:                        query += t[2] + ' . '
-
     query += ret + '} ' + solutionmodifier
 
     scoped_variables.update(vars)
@@ -95,8 +104,8 @@ def build_for_loop(i, var):
 ##        variable = var[0][0] 
 ##    elif len(var) == 1 and isinstance(var[0], list): # blank node or object
 ##        variable = var[0] 
-    
-    return 'for ' + query_result_aux(i) + ' in doc(' + query_aux(i) + ')//sparql:result\n'
+        
+    return 'for ' + query_result_aux(i) + '  '+position_var(i)+ ' in doc(' + query_aux(i) + ')//sparql:result\n'
 
 
 def build_aux_variables(i, vars):
@@ -194,11 +203,12 @@ def build_object(o):
 
 def build_bnode(b):
     if b >= 2 and b[0] == '_' and b[1] == ':':
-        global var
+        global p_var
         v = ''
-        for i in var:
+        for i in p_var:
             v += ' data('+str(i[0:])+ ') '
-        return ''+ b + '_' + v
+            print v
+        return ''+ b + '' + v
     else:
         if b >= 2 and b[0] == '{' and b[-1] == '}' :
             strip = str(b).lstrip('{')

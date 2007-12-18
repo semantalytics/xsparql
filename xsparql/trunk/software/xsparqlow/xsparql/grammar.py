@@ -50,7 +50,7 @@ tokens = (
     'DESCENDANTORSELF', 'FOLLOWINGSIBLING', 'FOLLOWING', 'PARENT', 'ANCESTOR', 'PRECEDINGSIBLING', 'PRECEDING',
     'ANCESTORORSELF', 'STAR', 'ORDERED', 'UNORDERED', 'DOTDOT', 'SLASHSLASH', 'COLONCOLON', 'UNDERSCORE', 
     'DECLARE', 'NAMESPACE', 'DEFAULT', 'ELEMENT', 'FUNCTION', 'BASEURI', 'LESSTHAN', 'GREATERTHAN', 'SINGLEQUOTS',
-    'DOUBLEQUOTS' 
+    'DOUBLEQUOTS', 'PREFIX', 'BASE' 
     )
 
 reserved = {
@@ -98,6 +98,8 @@ reserved = {
    'element' : 'ELEMENT',
    'function' : 'FUNCTION',
    'base-uri' : 'BASEURI',
+   'prefix' : 'PREFIX',
+   'base' :'BASE',
    '_' : 'UNDERSCORE'
 }
 
@@ -201,12 +203,43 @@ def p_mainModule(p):
     #p[0] = ' '+p[1] + '\n ' + ',\n '.join([ '"@%s %s%s &#60;%s&#62; .&#xA;"' % (pre,ns,co,uri[1:-1]) for (pre,ns,co,uri) in namespaces]) + ',\n' + p[2]
     
 def p_prolog(p):
-    '''prolog : defaultNamespaceDecl nsDecl
-              | namespaceDecl nsDecl
-              | baseURIDecl nsDecl
+    '''prolog : xqueryNS
               | empty'''
     
     p[0] = ''.join(p[1:])
+
+def p_xqueryNS(p):
+    '''xqueryNS : defaultNamespaceDecl nsDecl
+                | namespaceDecl nsDecl
+                | baseURIDecl nsDecl'''
+    
+    p[0] = ''.join(p[1:])
+##
+##def p_sparqlNS(p):
+##    '''sparqlNS : directive DOT prolog'''
+##    p[0] = ''.join(p[1:])
+##
+##
+##def p_directive(p):
+##    '''directive : prefixID DOT prolog
+##                 | sbase DOT prolog'''
+##                  
+##    p[0] = ''.join(p[1:])
+##
+##def p_prefixID(p):
+##    '''prefixID : AT PREFIX colRef'''
+##    p[0] = ''.join(p[1:])
+##
+##def p_colRef(p):
+##    '''colRef : NCNAME COLON iriRef
+##              | COLON iriRef'''
+##    p[0] = ''.join(p[1:])
+##
+##
+##def p_sbase(p):
+##    '''sbase : AT BASE iriRef'''
+##                  
+##    p[0] = ''.join(p[1:])        
 
 def p_nsDecl(p):
     '''nsDecl : SEMICOLON prolog'''
@@ -335,6 +368,9 @@ def p_forletClauses1(p):
 
 def p_forletClauses2(p):
     '''forletClauses : sparqlForClause'''
+    global variable
+    variable = lowrewriter.p_var
+   
     p[0] = p[1]
 
 
@@ -354,13 +390,13 @@ def p_forletClauses5(p):
 
 def p_sparqlForClause(p):
     '''sparqlForClause : FOR sparqlvars FROM iriRef WHERE constructTemplate solutionmodifier '''
-    global variable
+    
 ##    if len(p[3]) == 0:
 ##        p[0] = ( p[1] + ' at ' + p[1] + '_Pos' + ' '.join(p[2:]), p[1] + '_Pos' )
 ##        variable.append(p[1] + '_Pos')
 ##    else:
 ##        p[0] = (' '.join(p[1:]), p[1] )
-    var = ''.join(str(p[2])+'  '+str(p[2])+ '_Pos')   
+   # pos_var = ''.join('  at '+str(p[2])+ '_Pos')   
     p[0] = ''.join([ r  for r in lowrewriter.build(p[2], p[4], p[6], p[7]) ])
 
 
@@ -418,8 +454,7 @@ def p_uri(p):
 def p_sparqlvars(p):
     '''sparqlvars : VAR sparqlvars
                   | VAR'''
-
-   
+       
     if len(p) == 2: p[0] = [ p[1] ]
     else:           p[0] = p[2] + [ p[1] ]
 

@@ -62,12 +62,12 @@ def build_rewrite_query(forletExpr, construct, graphpattern, variable):
 
     global var
     var = variable
-
+    print variable
     statement = ' ' + build_triples(graphpattern) + ' '
     statement += ')'      
 
     #print str(graphpattern)+ '\n\n'
-    return '\n fn:concat( "@", '+lowrewriter.dec_var+' "." ),\n '+forletExpr + '\n return \n\t  fn:concat( \n\t\t\n ' + statement
+    return '\n fn:concat( '+lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)+' ),\n '+forletExpr + '\n return \n\t  fn:concat( \n\t\t\n ' + statement
 
 
 
