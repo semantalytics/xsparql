@@ -18,6 +18,7 @@ sub trim
 }
 
 my $plugindir = '';
+my $headstr = '';
 my $error = '';
 my $resultlimit = 60000;
 
@@ -31,14 +32,21 @@ my $solver = $cgi->param('solver');
 
 my $solverexec = '';
 
+
 my @result = ();
 
 switch ($solver)
 {
 case 'evaluate'
-    { $solverexec = './xquery '; }
+    { 
+      $solverexec = './xquery '; 
+      $headstr = 'Result:'; 
+    }
 case 'rewrite'
-    { $solverexec = './xsparqlrewrite '; }
+    { 
+      $solverexec = './xsparqlrewrite '; 
+      $headstr = 'Rewritten Query:'; 
+    }
 else
     { $error = 'error: no solver specified!'; }
 }
@@ -58,7 +66,7 @@ if ($error eq '')
     my $finished = 1;
     my $totalsize = 0;
 
-    my $pid = open(SOLVER, "$solverexec $filename 2>&1 |");
+    my $pid = open(SOLVER, "$solverexec $filename 2>/dev/null |");
     while (<SOLVER>)
     {
         push(@result, $_);
@@ -95,11 +103,11 @@ print $cgi->header(-'Cache-Control'=>'no-cache, must-revalidate, max-age=0',
 #print @result;
 if ($error ne '') { print $error; exit 0; }
 
-print '<h3 style="margin-top: 0px;">Rewritten query:</h3> ' . $query. '</p>'; 
+print '<h3 style="margin-top: 0px;">Original query:</h3> ' . $query. '</p>'; 
 print '<p>call: ' . $solverexec . '</p>'; 
 print '<p>file: ' . $filename. '</p>'; 
 
-print '<h3 style="margin-top: 0px;">Result:</h3>';
+print '<h3 style="margin-top: 0px;">' . $headstr  . '</h3>';
 
 
 #print '<pre>';
