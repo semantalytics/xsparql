@@ -218,7 +218,7 @@ def p_defaultNamespaceDecl(p):
     global namespaces
     namespaces.append(('prefix', '',':', p[5]))
     p[0] = ' '.join(p[1:])
-    #' '.join([ r  for r in rewriter.build_rewrite_defaultNSDecl(p[1], p[2], p[3], p[4], p[5])])
+    #' '.join([ r  for r in lifrewriter.build_rewrite_defaultNSDecl(p[1], p[2], p[3], p[4], p[5])])
     
 def p_namespaceDecl(p):
     '''namespaceDecl : DECLARE NAMESPACE NCNAME EQUALS QSTRING'''
@@ -232,7 +232,7 @@ def p_baseURIDecl(p):
     global namespaces
     namespaces.append(('base', '', '', p[3]))
     p[0] = ' '.join(p[1:])
-    #' '.join([ r  for r in rewriter.build_rewrite_baseURI(p[1], p[2], p[3])])
+    #' '.join([ r  for r in lifrewriter.build_rewrite_baseURI(p[1], p[2], p[3])])
     
 def p_queryBody(p):
     '''queryBody : expr'''
@@ -266,7 +266,7 @@ def p_flworExpr0(p):
    # print p[3]
     global variable
        
-    p[0] = ''.join([ r  for r in rewriter.build_rewrite_query(p[1], p[2], p[3], variable)])
+    p[0] = ''.join([ r  for r in lifrewriter.build_rewrite_query(p[1], p[2], p[3], variable)])
 
 
 def p_flworExpr1(p):
