@@ -22,7 +22,7 @@ my $headstr = '';
 my $error = '';
 my $resultlimit = 60000;
 
-$ENV{'PATH'} = '/usr/local/bin:/usr/bin:/bin:/opt/SDK/jdk/bin/:/home/axepol/public_html/xsparql:/home/axepol/public_html/xsparqltmp';
+$ENV{'PATH'} = '/usr/local/bin:/usr/bin:/bin:/opt/SDK/jdk/bin/:/home/axepol/public_html/xsparql:/home/axepol/public_html/xsparql';
 
 my $cgi = new CGI;
 
@@ -39,13 +39,13 @@ switch ($solver)
 {
 case 'evaluate'
     { 
-      $solverexec = './xquery '; 
+      $solverexec = './xsparql '; 
       $headstr = 'Result:'; 
     }
 case 'rewrite'
     { 
       $solverexec = './xsparqlrewrite '; 
-      $headstr = 'Rewritten Query:'; 
+      $headstr = 'Rewritten XQuery:'; 
     }
 else
     { $error = 'error: no solver specified!'; }
@@ -56,7 +56,7 @@ my $filename = '';
 if ($error eq '')
 {
     my $salt=join '', (0..9, 'A'..'Z', 'a'..'z')[rand 64, rand 64];
-    $filename = "/home/axepol/public_html/xsparqltmp/tempfiles/query$$".time.$salt.".tmp";
+    $filename = "/home/axepol/public_html/xsparql/tempfiles/query$$".time.$salt.".tmp";
 
     open(FH, "> $filename") ||  print "Cannot open file";
     print FH $query;
@@ -66,7 +66,7 @@ if ($error eq '')
     my $finished = 1;
     my $totalsize = 0;
 
-    my $pid = open(SOLVER, "$solverexec $filename 2>/dev/null |");
+    my $pid = open(SOLVER, "$solverexec $filename 2>&1 |");
     while (<SOLVER>)
     {
         push(@result, $_);
@@ -86,7 +86,7 @@ if ($error eq '')
 
     #@result = `echo '$query' | $solverexec -- 2>&1`;
 
-    #unlink $filename;
+    unlink $filename;
 }
 
 

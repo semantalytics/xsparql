@@ -101,16 +101,16 @@
         <p style='margin-top: 5px;'>Do you want to only rewrite the Query or also Evaluate it?&nbsp;
         <span class="solverbutton" 
               id="rewrite"
-              onClick="javascript:togglesolver(this.id);"><a href="#">Rewrite</a></span>
+              onClick="javascript:togglesolver(this.id);"><a href="#">Rewrite only</a></span>
         <span class="solverbutton"
               id="evaluate"
               onClick="javascript:togglesolver(this.id);"><a href="#">Rewrite+Evaluate</a></span><br/><br/>
 	<span id="uri">Load Query from URI:&nbsp;
-              <input id="URI" type="text" style="width: 400px;" /></span>
+              <input id="URI" type="text" style="width: 470px;" /></span>
         </p>
 
         <textarea id="query"
-                  wrap="off" style="height: 250px;width: 540px;margin-bottom: 10px;">%%% enter your XSPARQL query here %%%</textarea>
+                  wrap="off" style="height: 250px;width: 610px;margin-bottom: 10px;">%%% enter your XSPARQL query here %%%</textarea>
                   <!-- name="querytextarea"
                   onmouseup="updatePosition(this)"
                   onmousedown="updatePosition(this)"
@@ -138,7 +138,8 @@
     </div> <!-- maincol -->
 
 </div> <!-- Wrapper -->
-
+<hr/>
+<p align="left"><i>This page is (at the moment) optimized for Firefox, we are working on some known problems with IE....</i></p>
 </body>
 
 <script type="text/javascript">

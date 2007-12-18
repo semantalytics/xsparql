@@ -1,0 +1,1 @@
+cat $1 | xsparqler.py 2>/dev/null
