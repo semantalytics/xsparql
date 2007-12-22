@@ -70,7 +70,9 @@ def declare_namespaces(nstag, col, pre, uri, i):
   global dec_var
   dec_var.append(var_decl(i))
   uri = uri.lstrip('"')
+  uri = uri.lstrip('<')
   uri = uri.rstrip('"')
+  uri = uri.rstrip('>')
   decl_ns = 'declare variable '+var_decl(i) +' := "'+ nstag + '  '+pre + col+'  &#60;'+ uri + '&#62;";\n'
   #print url
   return  decl_ns
