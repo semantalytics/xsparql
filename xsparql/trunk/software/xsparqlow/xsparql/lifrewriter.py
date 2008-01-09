@@ -62,7 +62,7 @@ def build_rewrite_query(forletExpr, construct, graphpattern, variable):
 
     global var
     var = variable
-    print variable
+    #print variable
     statement = ' ' + build_triples(graphpattern) + ' '
     statement += ')'      
 

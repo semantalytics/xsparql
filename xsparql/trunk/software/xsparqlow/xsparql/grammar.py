@@ -168,7 +168,7 @@ t_RCURLY = r'}'
 
 
 t_ANY_VAR       = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
-#t_ANY_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
+##t_ANY_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
 t_ANY_INTEGER   = r'[0-9]+'
 t_ANY_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
 t_ANY_AT        = r'@'
@@ -518,6 +518,8 @@ def p_iriRef(p):
 def p_uri(p):
     '''uri : NCNAME COLON NCNAME
            | NCNAME COLON SLASHSLASH NCNAME SLASH NCNAME
+           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
+           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
            | NCNAME SLASH NCNAME DOT NCNAME
            | NCNAME DOT NCNAME
            | NCNAME'''
@@ -540,27 +542,27 @@ def p_directConstructor(p):
     p[0] = ' '.join(p[1:])    
     
 def p_directElemConstructor(p):
-    '''directElemConstructor : LESSTHAN qname attributProcessing'''
-    p[0] = ' '.join(p[1:])
+    '''directElemConstructor : LESSTHAN NCNAME attributProcessing'''
+    p[0] = ''.join(p[1:])
 
 def p_attributProcessing(p):
     '''attributProcessing : directAttributeList SLASH GREATERTHAN
                           | directAttributeList GREATERTHAN directElemContentProcessing '''
-    p[0] = ' '.join(p[1:])
+    p[0] = ''.join(p[1:])
     
 def p_directElemContentProcessing(p):
-    '''directElemContentProcessing : directElemContent LESSTHAN SLASH  qname GREATERTHAN '''
-    p[0] = ' '.join(p[1:])
+    '''directElemContentProcessing : directElemContent LESSTHAN SLASH  NCNAME GREATERTHAN '''
+    p[0] = ''.join(p[1:])
     
 def p_directElemContent(p):
     '''directElemContent : directConstructor 
                          | enclosedExpr'''
-    p[0] = ' '.join(p[1:])
+    p[0] = ''.join(p[1:])
 
 def p_directAttributeList(p):
     '''directAttributeList : directAttribute directAttributeList
                            | empty'''
-    p[0] = ' '.join(p[1:])
+    p[0] = ''.join(p[1:])
     
 ##def p_directAttributeLists(p):
 ##    '''directAttributeLists :  directAttributeList
@@ -569,16 +571,16 @@ def p_directAttributeList(p):
     
 def p_directAttribute(p):
     '''directAttribute :  qname EQUALS directAttributeValue'''
-    p[0] = ' '.join(p[1:])    
+    p[0] = ''.join(p[1:])    
 
 def p_directAttributeValue(p):
     '''directAttributeValue :  attributeValueContent '''
-    p[0] = ' '.join(p[1:])   
+    p[0] = ''.join(p[1:])   
 
 def p_attributeValueContent(p):
     '''attributeValueContent : enclosedExpr
                              | QSTRING'''
-    p[0] = ' '.join(p[1:])       
+    p[0] = ''.join(p[1:])       
 
 ##def p_graphpattern(p):
 ##    '''graphpattern : LCURLY triples RCURLY'''
@@ -630,7 +632,7 @@ def p_offsetclause(p):
 
 ##def p_term(p):
 ##    '''term : VAR
-##            | IRIREF
+##            | iriRef
 ##            | literal
 ##            | qname'''
 ##    p[0] = p[1]
@@ -675,7 +677,7 @@ def p_letVars(p):
 
 def p_letVar(p):
     '''letVar : VAR typeDeclaration COLON EQUALS exprSingle'''
-    p[0] = ' '.join(p[1:])
+    p[0] = ''.join(p[1:])
 
     
 def p_typeDeclaration(p):
@@ -788,12 +790,12 @@ def p_nodeComp(p):
 
 def p_rangeExpr(p):
     '''rangeExpr : additiveExpr rangeAddiExpr'''
-    p[0] = ''.join(p[1:]) 
+    p[0] = ' '.join(p[1:]) 
     
 def p_rangeAddiExpr(p):
     '''rangeAddiExpr : TO additiveExpr
                    | empty'''
-    p[0] = ''.join(p[1:])
+    p[0] = ' '.join(p[1:])
 
   
 
@@ -1309,7 +1311,8 @@ def p_rdfPredicate(p):
 def p_resource(p):
     '''resource : qname
                 | VAR 
-                | IRIREF'''
+                | iriRef'''
+#    print p.value
     p[0] = p[1]
 
 def p_blank(p):
@@ -1330,7 +1333,7 @@ def p_rdfliteral(p):
     '''rdfliteral : INTEGER
                   | QSTRING
                   | QSTRING AT NCNAME
-                  | QSTRING CARROT CARROT IRIREF'''
+                  | QSTRING CARROT CARROT iriRef'''
     if len(p) == 2: p[0] = p[1]
     else:           p[0] = ''.join(p[1:])
 
@@ -1388,7 +1391,7 @@ def reLexer(s):
     while 1:
          tok = lexer.token()
          if not tok: break
-         print tok
+         print tok.type
 
     sys.exit(0)
 
