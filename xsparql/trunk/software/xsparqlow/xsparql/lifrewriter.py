@@ -62,16 +62,18 @@ def build_rewrite_query(forletExpr, construct, graphpattern, variable):
 
     global var
     var = variable
-    #print variable
+    #print graphpattern
     statement = ' ' + build_triples(graphpattern) + ' '
     statement += ')'      
 
     #print str(graphpattern)+ '\n\n'
-    return '\n fn:concat( '+lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)+' ),\n '+forletExpr + '\n return \n\t  fn:concat( \n\t\t\n ' + statement
+    return '\n  '+forletExpr + '\n return \n\t  fn:concat( \n\t\t\n ' + statement
 
 
-
+f = False
 def build_triples(gp):
+    
+    global f
     ret = ''
     space = ''
     firstelement = True
@@ -79,8 +81,15 @@ def build_triples(gp):
         if not firstelement:
             ret += ','
             firstelement = False
-                    
-        ret += '\n' + build_subject(s) + build_predicate(polist) + '".&#xA;",'
+        if isinstance(s, str):
+            s = s.lstrip('{')
+            s = s.rstrip('}')
+            #print s
+            ret += '\n' + s + ','
+        #print polist
+        else:
+            f = True
+            ret += '\n' + build_subject(s) + build_predicate(polist) + '".&#xA;",'
     return ret.rstrip(',')
 
 
@@ -94,10 +103,12 @@ def build_subject(s):
     elif len(s) == 1 and isinstance(s[0], str): # blank node or object
         return build_bnode(s[0]) 
     elif len(s) == 1 and isinstance(s[0], list): # blank node or object
+        f = False
         return build_predicate(s[0])
     elif len(s) == 0: # single blank node
         return '[]'
     else: # polist
+        f = False
         return '"[", ' + build_predicate([ s[0] ]) + ' ";", ' + build_predicate(s[1:]) + ' "]",\n '
 
 
@@ -105,7 +116,7 @@ def build_subject(s):
 def build_predicate(p):
 
    # print 'prd:', p
-
+    global f
     if len(p) == 1:
         b = p[0][0]
         if b >= 2 and b[0] == '{' and b[-1] == '}' :
@@ -119,7 +130,13 @@ def build_predicate(p):
     elif len(p) == 0:
         return ''
     else:
-        return '"[", ' + build_predicate([ p[0] ]) + '";", ' + build_predicate([ p[1] ]) + ' "]",\n '
+        #print f
+        if f :
+            f = False
+            return ' ' + build_predicate([ p[0] ]) + ' ";", ' + build_predicate([ p[1] ]) + ' \n '
+        else:
+            f = False
+            return '"[", ' + build_predicate([ p[0] ]) + '";", ' + build_predicate([ p[1] ]) + ' "]",\n '
 
 
 def build_object(o):
@@ -131,10 +148,12 @@ def build_object(o):
     elif len(o) == 1 and isinstance(o[0], str):
         return  build_bnode(o[0]) 
     elif len(o) == 1 and isinstance(o[0], list):
+        f = False
         return build_predicate(o[0])
     elif len(o) == 0:
         return '[]'
     else:
+        f = False
         return '"[", ' + build_predicate([ o[0] ]) + ' ";", ' + build_predicate(o[1:]) + ' "]",\n '
 
 
@@ -144,7 +163,14 @@ def build_bnode(b):
         v = ''
         for i in var:
             v += ' data('+str(i[0:])+ '), '
-        return '"'+ b + '_", ' + v
+        if b.find('{') == -1 and b.find('}') == -1:
+            return '"'+ b + '_", ' + v
+        else:
+            bExpr =  b.split('{')
+            bNode = bExpr[0]
+            expr = bExpr[1].rstrip('}')
+            #print expr
+            return '"'+ bNode + '_",  data('+expr+'), ' 
     else:
         if b >= 2 and b[0] == '{' and b[-1] == '}' :
             strip = str(b).lstrip('{')

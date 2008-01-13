@@ -14,7 +14,7 @@ return
      where $kn = data(//*[@name=$n]/knows) and 
                  not(exists($kn/../following::*[@name=$kn or data(.)=$kn])) 
      construct 
-     { _:b{$id}  foaf:knows :b{$kid}. 
+     { _:b{$id}  foaf:knows _:b{$kid}. 
        _:b{$kid} a foaf:Person. }
    } 
  }

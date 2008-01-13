@@ -53,7 +53,8 @@ tokens = (
     'DOUBLEQUOTS', 'PREFIX', 'BASE', 'AND', 'OR', 'TO', 'PLUS', 'MINUS', 'DIV', 'IDIV', 'MOD', 'UNION', 'INTERSECT',
     'EXCEPT', 'INSTANCE', 'TREAT', 'CASTABLE', 'CAST', 'OF', 'LAX', 'STRICT', 'UNIONSYMBOL', 'QUESTIONMARK', 'EMPTYSEQUENCE',
     'LESSTHANLESSTHAN', 'GREATERTHANGREATERTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'NODE', 'DOCUMENTNODE',
-    'TEXT', 'COMMENT', 'PROCESSINGINSTRUCTION', 'SCHEMAATTRIBUTE', 'SCHEMAELEMENT'
+    'TEXT', 'COMMENT', 'PROCESSINGINSTRUCTION', 'SCHEMAATTRIBUTE', 'SCHEMAELEMENT', 'DOCUMENT', 'BIGU', 'SMALLU', 'BACKSLASH',
+    'HEXI', 'HEXII', 'OTHERHEXI', 'OTHERHEXII', 'BACKSLASHGT', 'CHEX', 'STRI' 
     )
 
 reserved = {
@@ -135,7 +136,8 @@ reserved = {
    'comment' : 'COMMENT',
    'processing-instruction' : 'PROCESSINGINSTRUCTION',
    'schema-attribute' : 'SCHEMAATTRIBUTE',
-   'schema-element' : 'SCHEMAELEMENT'
+   'schema-element' : 'SCHEMAELEMENT',
+   'document' : 'DOCUMENT'
 }
 
 states = [
@@ -155,6 +157,9 @@ t_ANY_RBRACKET = r'\]'
 t_ANY_LPAR = r'\('
 t_ANY_RPAR = r'\)'
 t_ANY_SEMICOLON = r';'
+##t_ANY_BIGU = r'\U'
+##t_ANY_SMALLU = r'\u'
+##t_ANY_BACKSLASH = r'\\'
 
 t_ANY_QSTRING = r'\"[^\"]*\"'
 
@@ -167,8 +172,15 @@ t_LCURLY  = r'{'
 t_RCURLY = r'}'
 
 
-t_ANY_VAR       = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
+t_ANY_VAR = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
+##t_ANY_STRI = r'.[0-9]+'
+##t_ANY_HEXI = r'[\x30-\x39]'
+##t_ANY_HEXII = r'[\x41-\x46]'
+##t_ANY_OTHERHEXI = r'[\x20-\x5B]'
+##t_ANY_OTHERHEXII =r'[x5D-x10FFFF]'
+##t_ANY_CHEX = r'-\x3E'
 ##t_ANY_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
+##t_ANY_IRIREF    = r'\([^<>\'\{\}\|\^`\x00-\x20]\)*'
 t_ANY_INTEGER   = r'[0-9]+'
 t_ANY_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
 t_ANY_AT        = r'@'
@@ -180,6 +192,7 @@ t_ANY_EQUALS    = r'='
 t_ANY_STAR    = r'\*'
 t_ANY_DOTDOT    = r'\.\.'
 t_ANY_LESSTHAN = r'<'
+##t_ANY_BACKSLASHGT = r'\>'
 t_ANY_GREATERTHAN = r'>'
 t_ANY_SINGLEQUOTS = r'\''
 t_ANY_DOUBLEQUOTS = r'"'
@@ -249,18 +262,23 @@ def p_mainModule(p):
     
 def p_prolog(p):
     '''prolog : xqueryNS
-              | sparqlNS  
+              | sparqlNS
               | empty'''
     
     p[0] = ''.join(p[1:])
 
 def p_xqueryNS(p):
-    '''xqueryNS : defaultNamespaceDecl nsDecl
-                | namespaceDecl nsDecl
-                | baseURIDecl nsDecl'''
+    '''xqueryNS : DECLARE xqueryNSs nsDecl'''
+    p[0] = ' '.join(p[1:])
+
+
+def p_xqueryNSs(p):
+    '''xqueryNSs : defaultNamespaceDecl 
+                 | namespaceDecl 
+                 | baseURIDecl'''
     
-    p[0] = ''.join(p[1:])
-##
+    p[0] = ' '.join(p[1:])
+
 def p_sparqlNS(p):
     '''sparqlNS : directive  prolog'''
     p[0] = ''.join(p[1:])
@@ -273,20 +291,24 @@ def p_directive(p):
     p[0] = ''.join(p[1:])
 
 def p_prefixID(p):
-    '''prefixID : AT PREFIX NCNAME COLON iriRef DOT
-                | AT PREFIX COLON iriRef DOT'''
+    '''prefixID : PREFIX prefixIDs'''
+    p[0] = ''
+
+def p_prefixIDs(p):
+    '''prefixIDs :  NCNAME COLON iriRef 
+                 |  COLON iriRef'''
     #global namespaces
     global count
     global decl_var_ns
 
     count += 1 
-    #namespaces.append(('prefix', p[3], ':', p[5]))
-    if len(p) == 7 :
-        prefix = ''.join(p[3])
-        url = ''.join(p[5])
-    elif len(p) == 6:
+    #namespaces.append(('prefix', p[2], ':', p[4]))
+    if len(p) == 4 :
+        prefix = ''.join(p[1])
+        url = ''.join(p[3])
+    elif len(p) == 3:
         prefix = ''
-        url = ''.join(p[4])
+        url = ''.join(p[2])
     
     col = ':'
     nsTag = 'prefix'
@@ -301,13 +323,13 @@ def p_prefixID(p):
 
 
 def p_sbase(p):
-    '''sbase : AT BASE iriRef DOT'''
+    '''sbase : BASE iriRef'''
     global count
     global decl_var_ns
 
     count += 1 
     prefix = ''
-    url = ''.join(p[3])
+    url = ''.join(p[2])
     col = ''
     nsTag = 'base'
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
@@ -316,20 +338,24 @@ def p_sbase(p):
 
 def p_nsDecl(p):
     '''nsDecl : SEMICOLON prolog'''
-    p[0] = '\n '.join(p[1:])    
+    p[0] = '\n '.join(p[1:])
 
 def p_defaultNamespaceDecl(p):
-    '''defaultNamespaceDecl : DECLARE DEFAULT ELEMENT NAMESPACE QSTRING
-                            | DECLARE DEFAULT FUNCTION NAMESPACE QSTRING'''
+    '''defaultNamespaceDecl :  DEFAULT defaultNamespaceDecls'''
+    p[0] = ' '.join(p[1:])
+
+def p_defaultNamespaceDecls(p):
+    '''defaultNamespaceDecls :  ELEMENT NAMESPACE QSTRING
+                             |  FUNCTION NAMESPACE QSTRING'''
     global namespaces
     global count
     global decl_var_ns
-    namespaces.append(('prefix', '',':', p[5]))
+    namespaces.append(('prefix', '',':', p[3]))
     count += 1 
     prefix = ''
     nsTag = 'prefix'
     col = ':'
-    url = ''.join(p[5])
+    url = ''.join(p[3])
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
     #' '.join([ r  for r in lifrewriter.build_rewrite_defaultNSDecl(p[1], p[2], p[3], p[4], p[5])])
     p[0] = ' '.join(p[1:])
@@ -338,15 +364,15 @@ def p_defaultNamespaceDecl(p):
 decl_var_ns = ''
 count = 0    
 def p_namespaceDecl(p):
-    '''namespaceDecl : DECLARE NAMESPACE NCNAME EQUALS QSTRING'''
+    '''namespaceDecl : NAMESPACE NCNAME EQUALS QSTRING'''
     global namespaces
     global count
     global decl_var_ns
 ##    global decl_ns
     count += 1 
-    namespaces.append(('prefix', p[3], ':', p[5]))
-    prefix = ''.join(p[3])
-    url = ''.join(p[5])
+    namespaces.append(('prefix', p[2], ':', p[4]))
+    prefix = ''.join(p[2])
+    url = ''.join(p[4])
     col = ':'
     nsTag = 'prefix'
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
@@ -358,11 +384,11 @@ def p_namespaceDecl(p):
     
 
 def p_baseURIDecl(p):
-    '''baseURIDecl  : DECLARE BASEURI QSTRING'''
+    '''baseURIDecl  : BASEURI QSTRING'''
     global namespaces
     global count
     global decl_var_ns
-    namespaces.append(('base', '', '', p[3]))
+    namespaces.append(('base', '', '', p[2]))
     count += 1 
     prefix = ''
     col = ''
@@ -379,13 +405,14 @@ def p_queryBody(p):
     decl_func += '{ let $rdf_term := if($NS = "literal") then fn:concat("""",$V,"""") \n'
     decl_func += '  else if ($NS = "bnode") then fn:concat("_:", $V) else if ($NS = "uri") \n'
     decl_func += '  then fn:concat("<", $V, ">") else "" return $rdf_term  };\n'
-    p[0] = '\n '+prefix+decl_var_ns+decl_func +p[1]
+    p[0] = '\n '+prefix+decl_var_ns+decl_func +'\n fn:concat( '+lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)+' ),\n'+p[1]
 
     
 def p_expr(p):
      '''expr : expr COMMA exprSingle
              | exprSingle'''
      p[0] = ' '.join(p[1:])
+     
     
 def p_enclosedExpr(p):
     '''enclosedExpr : LCURLY expr RCURLY'''
@@ -399,8 +426,26 @@ def p_empty(p):
 
 def p_exprSingle(p):
     '''exprSingle : flworExpr
-                  | orExpr'''
+                  | constructQuery
+                  | orExpr
+                  | ifExpr'''
     p[0] = p[1]
+
+def p_constructQuery(p):
+    '''constructQuery : CONSTRUCT constructTemplate datasetClause whereSPARQLClause solutionmodifier'''
+    p[0] = ''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[4], p[5]) ])
+
+def p_datasetClause(p):
+    '''datasetClause : FROM iriRef'''
+    p[0] = p[2]
+    
+def p_whereSPARQLClause(p):
+    '''whereSPARQLClause : WHERE constructTemplate'''
+    p[0] = p[2]  
+
+def p_ifExpr(p):
+    '''ifExpr : IF LPAR expr RPAR THEN exprSingle ELSE exprSingle'''
+    p[0] = ' '.join(p[1:])
     
 variable = []    
 def p_flworExpr0(p):
@@ -469,7 +514,8 @@ def p_sparqlForClause(p):
 ##        variable.append(p[1] + '_Pos')
 ##    else:
 ##        p[0] = (' '.join(p[1:]), p[1] )
-   # pos_var = ''.join('  at '+str(p[2])+ '_Pos')   
+   # pos_var = ''.join('  at '+str(p[2])+ '_Pos')
+    #constGraph = []
     p[0] = ''.join([ r  for r in lowrewriter.build(p[2], p[4], p[6], p[7]) ])
 
 
@@ -514,12 +560,41 @@ def p_iriRef(p):
     '''iriRef : LESSTHAN uri GREATERTHAN'''
     p[0] = ''.join(p[1:])
 
-
+##def p_relativeURI(p):
+##    '''relativeURI : uCharacters
+##                   | empty'''
+##    p[0] = ''.join(p[1:])
+##
+##def p_uCharacters(p):
+##    '''uCharacters : uCharacter relativeURI'''
+##    p[0] = ''.join(p[1:])    
+##
+##def p_uCharacter(p):
+##    '''uCharacter : character CHEX
+##                  | BACKSLASHGT'''
+##    p[0] = ''.join(p[1:])    
+##
+##def p_character(p):
+##    '''character : SMALLU hex hex hex hex
+##                 | BIGU hex hex hex hex hex hex hex hex
+##                 | BACKSLASH
+##                 | OTHERHEXI
+##                 | OTHERHEXII'''
+##    p[0] = ''.join(p[1:])    
+##
+##def p_hex(p):
+##    '''hex : HEXI
+##           | HEXII'''
+##    p[0] = ''.join(p[1:])
+    
 def p_uri(p):
     '''uri : NCNAME COLON NCNAME
            | NCNAME COLON SLASHSLASH NCNAME SLASH NCNAME
+           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME SLASH NCNAME SLASH 
            | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
+           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH 
            | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
+           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH NCNAME DOT NCNAME
            | NCNAME SLASH NCNAME DOT NCNAME
            | NCNAME DOT NCNAME
            | NCNAME'''
@@ -537,13 +612,69 @@ def p_sparqlvars(p):
 #    '''formalReturnClause : RETURN directConstructor'''
 #    p[0] = ' '.join(p[1:])
 
+def p_constructor(p):
+    '''constructor : directConstructor
+                   | computedConstructor'''
+    p[0] = ' '.join(p[1:])
+    
+                           
+   
+    
+def p_computedConstructor(p):
+    '''computedConstructor : compDocConstructor
+                           | compElemConstructor
+                           | compAttrConstructor
+                           | compTextConstructor
+                           | compCommentConstructor
+                           | compPIConstructor'''
+    p[0] = ' '.join(p[1:])
+
+def p_compDocConstructor(p):
+    '''compDocConstructor : DOCUMENT LCURLY expr RCURLY'''
+    p[0] = ' '.join(p[1:])
+
+def p_compElemConstructor(p):
+    '''compElemConstructor : ELEMENT qname LCURLY contentExpr RCURLY
+                           | ELEMENT LCURLY expr RCURLY LCURLY contentExpr RCURLY
+                           | ELEMENT qname LCURLY RCURLY
+                           | ELEMENT LCURLY expr RCURLY LCURLY RCURLY'''
+    p[0] = ' '.join(p[1:])
+
+    
+
+def p_contentExpr(p):
+    '''contentExpr : expr'''
+    p[0] = ' '.join(p[1:])    
+    
+def p_compAttrConstructor(p):
+    '''compAttrConstructor : ATTRIBUTE qname LCURLY expr RCURLY
+                           | ATTRIBUTE LCURLY expr RCURLY LCURLY expr RCURLY
+                           | ATTRIBUTE qname LCURLY RCURLY
+                           | ATTRIBUTE LCURLY expr RCURLY LCURLY RCURLY'''
+    p[0] = ' '.join(p[1:])
+
+def p_compTextConstructor(p):
+    '''compTextConstructor : TEXT LCURLY expr RCURLY'''
+    p[0] = ' '.join(p[1:])
+
+def p_compCommentConstructor(p):
+    '''compCommentConstructor : COMMENT LCURLY expr RCURLY'''
+    p[0] = ' '.join(p[1:])
+
+def p_compPIConstructor(p):
+    '''compPIConstructor : PROCESSINGINSTRUCTION NCNAME LCURLY expr RCURLY
+                         | PROCESSINGINSTRUCTION LCURLY expr RCURLY LCURLY expr RCURLY
+                         | PROCESSINGINSTRUCTION NCNAME LCURLY RCURLY
+                         | PROCESSINGINSTRUCTION LCURLY expr RCURLY LCURLY RCURLY'''
+    p[0] = ' '.join(p[1:])    
+    
 def p_directConstructor(p):
     '''directConstructor : directElemConstructor '''
     p[0] = ' '.join(p[1:])    
     
 def p_directElemConstructor(p):
     '''directElemConstructor : LESSTHAN NCNAME attributProcessing'''
-    p[0] = ''.join(p[1:])
+    p[0] = ''.join(p[1]+p[2]+" "+p[3])
 
 def p_attributProcessing(p):
     '''attributProcessing : directAttributeList SLASH GREATERTHAN
@@ -571,7 +702,7 @@ def p_directAttributeList(p):
     
 def p_directAttribute(p):
     '''directAttribute :  qname EQUALS directAttributeValue'''
-    p[0] = ''.join(p[1:])    
+    p[0] = ' '.join(p[1:])    
 
 def p_directAttributeValue(p):
     '''directAttributeValue :  attributeValueContent '''
@@ -750,7 +881,7 @@ def p_andExpr(p):
 def p_andCompExpr(p):
     '''andCompExpr : AND andCompExpress
                    | empty'''
-    p[0] = ''.join(p[1:])
+    p[0] = ' '.join(p[1:])
 
 def p_andCompExpress(p):
     '''andCompExpress : comparisonExpr andCompExpr'''
@@ -773,7 +904,8 @@ def p_valueComp(p):
                  | LT
                  | LE
                  | GT
-                 | GE'''    
+                 | GE'''
+    p[0] = ''.join(p[1:])
 
 def p_generalComp(p):
     '''generalComp : EQUALS
@@ -782,11 +914,13 @@ def p_generalComp(p):
                    | LESSTHANEQUALS
                    | GREATERTHANEQUALS
                    | HAFENEQUALS'''
+    p[0] = ''.join(p[1:])
 
 def p_nodeComp(p):
     '''nodeComp : LESSTHANLESSTHAN
                 | GREATERTHAN GREATERTHAN
                 | IS'''
+    p[0] = ''.join(p[1:])
 
 def p_rangeExpr(p):
     '''rangeExpr : additiveExpr rangeAddiExpr'''
@@ -1143,7 +1277,7 @@ def p_primaryExpr(p):
                    | functionCall
                    | orderedExpr
                    | unorderedExpr
-                   | directConstructor'''
+                   | constructor'''
     p[0] = p[1]
 
 
@@ -1191,7 +1325,7 @@ def p_exprSingles(p):
     p[0] = ''.join(p[1:])
 
 def p_exprSingleses(p):
-    '''exprSingleses : COMMA exprSingle
+    '''exprSingleses : COMMA exprSingles
                      | empty'''
     p[0] = ' '.join(p[1:])
 
@@ -1219,7 +1353,7 @@ def p_statements(p):
 
 def p_statement(p):
     '''statement : lifttriples DOT
-                 |  lifttriples '''
+                 | lifttriples '''
     p[0] = p[1] 
 
 def p_lifttriples(p):
@@ -1240,7 +1374,8 @@ def p_subject1(p):
 
 
 def p_predicateObjectList(p):
-    '''predicateObjectList : verbObjectLists semicolonYesNo'''
+    '''predicateObjectList : verbObjectLists semicolonYesNo
+                           | empty'''
     p[0] = p[1]
 
 
@@ -1316,13 +1451,21 @@ def p_resource(p):
     p[0] = p[1]
 
 def p_blank(p):
-    '''blank : bnode
+    '''blank : bnodeWithExpr
              | LBRACKET RBRACKET
              | LBRACKET predicateObjectList RBRACKET'''
     if len(p) == 2:   p[0] = [ p[1] ]
     elif len(p) == 3: p[0] = []
     else:             p[0] = p[2]
 
+def p_bnodeWithExpr(p):
+    '''bnodeWithExpr : bnode enclosedExprWithNull'''
+    p[0] = ''.join(p[1:])
+
+def p_enclosedExprWithNull(p):
+    '''enclosedExprWithNull : enclosedExpr
+                            | empty'''
+    p[0] = ''.join(p[1:])    
 
 def p_bnode(p):
     '''bnode : UNDERSCORE COLON NCNAME'''
@@ -1391,7 +1534,7 @@ def reLexer(s):
     while 1:
          tok = lexer.token()
          if not tok: break
-         print tok.type
+         print tok
 
     sys.exit(0)
 
@@ -1401,7 +1544,7 @@ import sys
 if __name__ == "__main__":
     instring = ''.join(sys.stdin.readlines())
     output = rewrite(instring)
-    print output
+    #print output
     outputfile = open('c:\Documents and Settings\wasakh\My Documents\SaxonB9\XSPARQL\examples\output.xquery', 'w')
     outputfile.write(output)
     outputfile.close()

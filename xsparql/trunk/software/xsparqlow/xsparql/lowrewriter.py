@@ -21,7 +21,7 @@
 # along with xsparqlow.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
+import lifrewriter
 
 #
 # auxiliary variable names
@@ -74,6 +74,7 @@ def declare_namespaces(nstag, col, pre, uri, i):
   uri = uri.rstrip('"')
   uri = uri.rstrip('>')
   decl_ns = 'declare variable '+var_decl(i) +' := "'+ nstag + '  '+pre + col+'  &#60;'+ uri + '&#62;";\n'
+##  decl_ns = 'declare variable '+var_decl(i) +' := "'+ nstag + '  '+pre + col+'  <'+ uri + '>";\n'
   #print url
   return  decl_ns
     
@@ -91,7 +92,7 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
             'select ' + ' '.join(vars) + ' from ' + from_iri + ' where { '
     ret = ''
     for s, polist in graphpattern:
-        ret +=  build_subject(s) + build_predicate(polist) + '.  '
+        ret +=  build_subject(s, False) + build_predicate(polist, False) + '.  '
     query += ret + '} ' + solutionmodifier
 
     scoped_variables.update(vars)
@@ -138,38 +139,110 @@ scoped_variables = set()
 
 _forcounter = 0
 
+def buildConstruct(constGraphpattern, from_iri, graphpattern, solutionmodifier):
+    global _forcounter, sparql_endpoint, namespaces
+    _forcounter += 1
+    
+   # print constGraphpattern 
+    find_vars(graphpattern)
+    #print variables
+    yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
+                             variables, from_iri, graphpattern, solutionmodifier)
+    yield build_for_loop(_forcounter, variables)
+    yield build_aux_variables(_forcounter, variables)
+    yield graphOutput(constGraphpattern)
+    
 
+
+def graphOutput(constGraphpattern):
+    statement = ' ' + lifrewriter.build_triples(constGraphpattern) + ' '
+    statement += ')'      
+    return '\n return \n\t  fn:concat( \n\t\t\n ' + statement
+    
 # generator function, keeps track of incrementing the for-counter
 def build(vars, from_iri, graphpattern, solutionmodifier):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
+    
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
                              vars, from_iri, graphpattern, solutionmodifier)
     yield build_for_loop(_forcounter, vars)
     yield build_aux_variables(_forcounter, vars)
 
+variables = []
+def find_vars(p):
+    global variables
+    for s, polist in p:
+        build_subject(s, True)
+        build_predicate(polist, True )
+    
+    var = []
+    temp = variables[0]  
+    for v in variables:
+       n = 0
+       
+       for nv in variables:
+          #print v  
+          if temp.lstrip('$') == nv.lstrip('?') or temp.lstrip('?') == nv.lstrip('$') or temp == nv :
+##          if  temp == nv :
+              n += 1  
+
+              if n == 2 :    
+                  
+                  var += [temp]
+       for j in var:
+           
+           if j != v:
+               
+               temp = v
+           else:
+               temp = ''
+                 
+                 
+                  
+              
+                  
+                  
+                  
 
 
+         
+#    print var
+    for i in var:
+        variables.remove(i)
 
-def build_subject(s):
+    for v in variables:    
+        if v[0] == '?':
+            variables.remove(v)
+            v = v.lstrip('?')
+            v = '$'+ v
+            variables.append(v)
+
+
+def build_subject(s, f):
+    
 
     #print 'sub:', s
 
 
     if len(s) == 1 and isinstance(s[0], list) and isinstance(s[0][0], str):
-        return build_bnode(s[0][0]) 
+        return build_bnode(s[0][0], f) 
     elif len(s) == 1 and isinstance(s[0], str): # blank node or object
-        return build_bnode(s[0]) 
+        return build_bnode(s[0], f) 
     elif len(s) == 1 and isinstance(s[0], list): # blank node or object
-        return build_predicate(s[0])
+        return build_predicate(s[0], f)
     elif len(s) == 0: # single blank node
         return '[]'
     else: # polist
-        return '[ ' + build_predicate([ s[0] ]) + ' ; ' + build_predicate(s[1:]) + ' ]\n '
+        return '[ ' + build_predicate([ s[0] ], f) + ' ; ' + build_predicate(s[1:], f) + ' ]\n '
 
 
 
-def build_predicate(p):
+    
+
+
+
+def build_predicate(p, f):
 
    # print 'prd:', p
 
@@ -178,38 +251,39 @@ def build_predicate(p):
         if b >= 2 and b[0] == '{' and b[-1] == '}' :
             strip = str(b).lstrip('{')
             b = strip.rstrip('}') 
-            return ' '+ b + ' ' + build_object(p[0][1])+ ' '
+            return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
         else:
-             return ' '+ b + ' ' + build_object(p[0][1])+ ' '
+             return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
     elif len(p) == 0:
         return ''
     else:
-        return '[ ' + build_predicate([ p[0] ]) + '; ' + build_predicate([ p[1] ]) + ' ]\n '
+        return '[ ' + build_predicate([ p[0] ], f) + '; ' + build_predicate([ p[1] ], f) + ' ]\n '
 
 
-def build_object(o):
+def build_object(o, f):
 
   #  print 'obj:', o
 
     if len(o) == 1 and isinstance(o[0], list) and isinstance(o[0][0], str):
-        return  build_bnode(o[0][0])
+        return  build_bnode(o[0][0], f)
     elif len(o) == 1 and isinstance(o[0], str):
-        return  build_bnode(o[0]) 
+        return  build_bnode(o[0], f) 
     elif len(o) == 1 and isinstance(o[0], list):
-        return build_predicate(o[0])
+        return build_predicate(o[0], f)
     elif len(o) == 0:
         return '[]'
     else:
-        return '[ ' + build_predicate([ o[0] ]) + ' ";", ' + build_predicate(o[1:]) + ' ]\n '
+        return '[ ' + build_predicate([ o[0] ], f) + ' ";", ' + build_predicate(o[1:], f) + ' ]\n '
 
 
-def build_bnode(b):
+def build_bnode(b, f):
+    global variables
     if b >= 2 and b[0] == '_' and b[1] == ':':
         global p_var
         v = ''
         for i in p_var:
             v += ' data('+str(i[0:])+ ') '
-            print v
+            #print v
         return ''+ b + '' + v
     else:
         if b >= 2 and b[0] == '{' and b[-1] == '}' :
@@ -217,4 +291,7 @@ def build_bnode(b):
             b = strip.rstrip('}') 
             return ' '+ b + ' '
         else:
+            if f:
+                if b[0] == '$' or b[0] == '?':
+                    variables += [ b ]
             return ' '+ b + ' '
