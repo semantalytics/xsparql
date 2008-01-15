@@ -55,7 +55,7 @@ def cnv_lst_str(dec_var, flag):
     stri = ''    
     for i in dec_var:
        if flag : 
-           stri += ' "@", '+i[0:] + ', ".",'
+           stri += ' "  \n@", '+i[0:] + ', ".",'
        else:
            stri += '  '+i[0:] + ','
     return stri.rstrip(',')
@@ -155,7 +155,7 @@ def buildConstruct(constGraphpattern, from_iri, graphpattern, solutionmodifier):
 
 
 def graphOutput(constGraphpattern):
-    statement = ' ' + lifrewriter.build_triples(constGraphpattern) + ' '
+    statement = ' ' + lifrewriter.build_triples(constGraphpattern, p_var) + ' '
     statement += ')'      
     return '\n return \n\t  fn:concat( \n\t\t\n ' + statement
     
@@ -176,6 +176,12 @@ def find_vars(p):
         build_subject(s, True)
         build_predicate(polist, True )
     
+##    for v in variables:    
+##        if v[0] == '?':
+##            variables.remove(v)
+##            v = v.lstrip('?')
+##            v = '$'+ v
+##            variables.append(v)
     var = []
     temp = variables[0]  
     for v in variables:
@@ -186,7 +192,7 @@ def find_vars(p):
           if temp.lstrip('$') == nv.lstrip('?') or temp.lstrip('?') == nv.lstrip('$') or temp == nv :
 ##          if  temp == nv :
               n += 1  
-
+              #print temp  
               if n == 2 :    
                   
                   var += [temp]
@@ -199,24 +205,12 @@ def find_vars(p):
                temp = ''
                  
                  
-                  
-              
-                  
-                  
-                  
-
-
-         
-#    print var
+       
+    #print var
     for i in var:
         variables.remove(i)
-
-    for v in variables:    
-        if v[0] == '?':
-            variables.remove(v)
-            v = v.lstrip('?')
-            v = '$'+ v
-            variables.append(v)
+    #print variables
+    
 
 
 def build_subject(s, f):
@@ -234,7 +228,14 @@ def build_subject(s, f):
     elif len(s) == 0: # single blank node
         return '[]'
     else: # polist
-        return '[ ' + build_predicate([ s[0] ], f) + ' ; ' + build_predicate(s[1:], f) + ' ]\n '
+        d =  s
+        if d[0] == '[' :
+            d.remove('[')
+            #print d
+            return '"[", ' + build_predicate([ d[0] ], f) + ' ";", ' + build_predicate(d[1:], f) + ' "]",\n '
+        else:
+            return ' ' + build_predicate([ d[0] ], f) + ' ";", ' + build_predicate(d[1:], f) + ' \n '
+
 
 
 
@@ -245,7 +246,7 @@ def build_subject(s, f):
 def build_predicate(p, f):
 
    # print 'prd:', p
-
+    global variables
     if len(p) == 1:
         b = p[0][0]
         if b >= 2 and b[0] == '{' and b[-1] == '}' :
@@ -253,11 +254,24 @@ def build_predicate(p, f):
             b = strip.rstrip('}') 
             return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
         else:
-             return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
+            if f:
+                if b[0] == '$' or b[0] == '?':
+                    if b[0] == '?':
+                        b = b.lstrip('?')
+                        b = '$'+ b
+                    variables += [ b ]
+            return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
     elif len(p) == 0:
         return ''
     else:
-        return '[ ' + build_predicate([ p[0] ], f) + '; ' + build_predicate([ p[1] ], f) + ' ]\n '
+        d =  p
+        if d[0] == '[' :
+            d.remove('[')
+            #print d
+            return '"[", ' + build_predicate([ d[0] ], f) + '";", ' + build_predicate([ d[1] ], f) + ' "]",\n '           
+        else:
+            return ' ' + build_predicate([ d[0] ], f) + ' ";", ' + build_predicate([ d[1] ], f) + ' \n '
+       
 
 
 def build_object(o, f):
@@ -265,7 +279,13 @@ def build_object(o, f):
   #  print 'obj:', o
 
     if len(o) == 1 and isinstance(o[0], list) and isinstance(o[0][0], str):
-        return  build_bnode(o[0][0], f)
+        d =  o[0]
+        if d[0] == '[' :
+            d.remove('[')
+            #print d
+            return '"[", ' + build_predicate(d, f) + ' "]",\n '
+        else:
+            return  build_bnode(o[0][0], f)
     elif len(o) == 1 and isinstance(o[0], str):
         return  build_bnode(o[0], f) 
     elif len(o) == 1 and isinstance(o[0], list):
@@ -293,5 +313,8 @@ def build_bnode(b, f):
         else:
             if f:
                 if b[0] == '$' or b[0] == '?':
+                    if b[0] == '?':
+                        b = b.lstrip('?')
+                        b = '$'+ b
                     variables += [ b ]
             return ' '+ b + ' '

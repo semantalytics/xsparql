@@ -397,15 +397,22 @@ def p_baseURIDecl(p):
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
     p[0] = ' '.join(p[1:])
     #' '.join([ r  for r in lifrewriter.build_rewrite_baseURI(p[1], p[2], p[3])])
+
+nsFlag = False
     
 def p_queryBody(p):
     '''queryBody : expr'''
+    global nsFlag
     prefix = 'declare namespace sparql = "http://www.w3.org/2005/sparql-result"; \n'
     decl_func = '\ndeclare function local:rdf_term($NS as xs:string, $V as xs:string) as xs:string \n'
     decl_func += '{ let $rdf_term := if($NS = "literal") then fn:concat("""",$V,"""") \n'
     decl_func += '  else if ($NS = "bnode") then fn:concat("_:", $V) else if ($NS = "uri") \n'
     decl_func += '  then fn:concat("<", $V, ">") else "" return $rdf_term  };\n'
-    p[0] = '\n '+prefix+decl_var_ns+decl_func +'\n fn:concat( '+lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)+' ),\n'+p[1]
+    nsVars = lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)
+    if nsVars != '' and nsFlag:
+        p[0] = '\n '+prefix+decl_var_ns+decl_func +'\n fn:concat( '+ nsVars +', "\n" ),\n'+p[1]
+    else:
+        p[0] = '\n '+prefix+decl_var_ns+decl_func +p[1]        
 
     
 def p_expr(p):
@@ -433,6 +440,8 @@ def p_exprSingle(p):
 
 def p_constructQuery(p):
     '''constructQuery : CONSTRUCT constructTemplate datasetClause whereSPARQLClause solutionmodifier'''
+    global nsFlag
+    nsFlag = True
     p[0] = ''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[4], p[5]) ])
 
 def p_datasetClause(p):
@@ -450,6 +459,8 @@ def p_ifExpr(p):
 variable = []    
 def p_flworExpr0(p):
     '''flworExpr : flworExprs CONSTRUCT constructTemplate'''
+    global nsFlag
+    nsFlag = True
 #                 | flworExprs RETURN directConstructor'''
    # print p[3]
     global variable
@@ -468,7 +479,7 @@ def p_flworExprs(p):
                   | forletClauses whereClause
                   | forletClauses orderByClause
                   | forletClauses whereClause orderByClause'''
-    p[0] = ' '.join(p[1:])
+    p[0] = '\n'.join(p[1:])
 
 
 # todo: collect variables in let, and build up triples of (expr, variables in scope, position variables in scope)
@@ -590,12 +601,14 @@ def p_iriRef(p):
 def p_uri(p):
     '''uri : NCNAME COLON NCNAME
            | NCNAME COLON SLASHSLASH NCNAME SLASH NCNAME
+           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME
            | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME SLASH NCNAME SLASH 
            | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
            | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH 
            | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
            | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH NCNAME DOT NCNAME
            | NCNAME SLASH NCNAME DOT NCNAME
+           | NCNAME COLON NCNAME DOT NCNAME
            | NCNAME DOT NCNAME
            | NCNAME'''
     p[0] = ''.join(p[1:])
@@ -797,7 +810,7 @@ def p_forVar(p):
 
 def p_letClause(p):
     '''letClause : LET letVars'''
-    p[0] = ' '.join(p[1:])
+    p[0] = '\n'+' '.join(p[1:])
 
 
 def p_letVars(p):
@@ -1444,11 +1457,16 @@ def p_rdfPredicate(p):
 
 
 def p_resource(p):
-    '''resource : qname
+    '''resource : sparqlqname
                 | VAR 
                 | iriRef'''
 #    print p.value
-    p[0] = p[1]
+    if p[1].find('?') == -1:
+        p[0] = p[1]
+    else:
+        d = p[1].lstrip('?')
+        p[0] = '$'+d
+        
 
 def p_blank(p):
     '''blank : bnodeWithExpr
@@ -1456,7 +1474,7 @@ def p_blank(p):
              | LBRACKET predicateObjectList RBRACKET'''
     if len(p) == 2:   p[0] = [ p[1] ]
     elif len(p) == 3: p[0] = []
-    else:             p[0] = p[2]
+    else:             p[0] = [p[1]] + p[2] 
 
 def p_bnodeWithExpr(p):
     '''bnodeWithExpr : bnode enclosedExprWithNull'''
@@ -1481,7 +1499,9 @@ def p_rdfliteral(p):
     else:           p[0] = ''.join(p[1:])
 
 def p_sparqlqname(p):
-    '''sparqlqname : NCNAME COLON NCNAME'''
+    '''sparqlqname : NCNAME COLON NCNAME
+                   | COLON NCNAME
+                   | NCNAME'''
     p[0] = ''.join(p[1:])
 ##    if len(p) == 2: p[0] = p[1]
 ##    else:           p[0] = ''.join(p[1:])

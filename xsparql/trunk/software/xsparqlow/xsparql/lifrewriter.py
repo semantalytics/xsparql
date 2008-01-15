@@ -63,19 +63,21 @@ def build_rewrite_query(forletExpr, construct, graphpattern, variable):
     global var
     var = variable
     #print graphpattern
-    statement = ' ' + build_triples(graphpattern) + ' '
+    statement = ' ' + build_triples(graphpattern, []) + ' '
     statement += ')'      
 
     #print str(graphpattern)+ '\n\n'
     return '\n  '+forletExpr + '\n return \n\t  fn:concat( \n\t\t\n ' + statement
 
 
-f = False
-def build_triples(gp):
+
+def build_triples(gp, variable):
     
-    global f
     ret = ''
     space = ''
+    if variable != []:
+        global var
+        var = variable
     firstelement = True
     for s, polist in gp:
         if not firstelement:
@@ -88,7 +90,6 @@ def build_triples(gp):
             ret += '\n' + s + ','
         #print polist
         else:
-            f = True
             ret += '\n' + build_subject(s) + build_predicate(polist) + '".&#xA;",'
     return ret.rstrip(',')
 
@@ -99,44 +100,53 @@ def build_subject(s):
 
 
     if len(s) == 1 and isinstance(s[0], list) and isinstance(s[0][0], str):
+        
         return build_bnode(s[0][0]) 
     elif len(s) == 1 and isinstance(s[0], str): # blank node or object
         return build_bnode(s[0]) 
     elif len(s) == 1 and isinstance(s[0], list): # blank node or object
-        f = False
         return build_predicate(s[0])
     elif len(s) == 0: # single blank node
         return '[]'
     else: # polist
-        f = False
-        return '"[", ' + build_predicate([ s[0] ]) + ' ";", ' + build_predicate(s[1:]) + ' "]",\n '
+        #print s
+        d =  s
+        if d[0] == '[' :
+            d.remove('[')
+            #print d
+            return '"[", ' + build_predicate([ d[0] ]) + ' ";", ' + build_predicate(d[1:]) + ' "]",\n '
+        else:
+            return ' ' + build_predicate([ d[0] ]) + ' ";", ' + build_predicate(d[1:]) + ' \n '
 
 
 
 def build_predicate(p):
 
    # print 'prd:', p
-    global f
     if len(p) == 1:
         b = p[0][0]
         if b >= 2 and b[0] == '{' and b[-1] == '}' :
             strip = str(b).lstrip('{')
             b = strip.rstrip('}') 
             return ' '+ b + ',  ' + build_object(p[0][1])+ ' '
-        elif b >= 2 and b[0] == '$':
+        elif b >= 2 and ( b[0] == '$'or b[0] == '?'):
+             if b[0] == '?':
+                 b = b.lstrip('?')
+                 b = '$'+ b
              return '   '+ b + '  ,  ' + build_object(p[0][1])+ ' '
         else:
              return ' "  '+ b + '  ",  ' + build_object(p[0][1])+ ' '
     elif len(p) == 0:
         return ''
     else:
-        #print f
-        if f :
-            f = False
-            return ' ' + build_predicate([ p[0] ]) + ' ";", ' + build_predicate([ p[1] ]) + ' \n '
+        d =  p
+        if d[0] == '[' :
+            d.remove('[')
+            #print d
+            return '"[", ' + build_predicate([ d[0] ]) + '";", ' + build_predicate([ d[1] ]) + ' "]",\n '           
         else:
-            f = False
-            return '"[", ' + build_predicate([ p[0] ]) + '";", ' + build_predicate([ p[1] ]) + ' "]",\n '
+            return ' ' + build_predicate([ d[0] ]) + ' ";", ' + build_predicate([ d[1] ]) + ' \n '
+
 
 
 def build_object(o):
@@ -144,16 +154,22 @@ def build_object(o):
   #  print 'obj:', o
 
     if len(o) == 1 and isinstance(o[0], list) and isinstance(o[0][0], str):
-        return  build_bnode(o[0][0])
+        d =  o[0]
+        if d[0] == '[' :
+            d.remove('[')
+            #print d
+            return '"[", ' + build_predicate(d) + ' "]",\n '
+        else:
+            return  build_bnode(o[0][0])
     elif len(o) == 1 and isinstance(o[0], str):
+        
         return  build_bnode(o[0]) 
     elif len(o) == 1 and isinstance(o[0], list):
-        f = False
+       
         return build_predicate(o[0])
     elif len(o) == 0:
         return '[]'
     else:
-        f = False
         return '"[", ' + build_predicate([ o[0] ]) + ' ";", ' + build_predicate(o[1:]) + ' "]",\n '
 
 
@@ -164,19 +180,22 @@ def build_bnode(b):
         for i in var:
             v += ' data('+str(i[0:])+ '), '
         if b.find('{') == -1 and b.find('}') == -1:
-            return '"'+ b + '_", ' + v
+            return '"'+ b + '", ' + v
         else:
             bExpr =  b.split('{')
             bNode = bExpr[0]
             expr = bExpr[1].rstrip('}')
             #print expr
-            return '"'+ bNode + '_",  data('+expr+'), ' 
+            return '"'+ bNode + '",  data('+expr+'), ' 
     else:
         if b >= 2 and b[0] == '{' and b[-1] == '}' :
             strip = str(b).lstrip('{')
             b = strip.rstrip('}') 
             return ' \'"\',  '+ b + ',  \'"\', '
-        elif b >= 2 and b[0] == '$':
+        elif b >= 2 and (b[0] == '$' or b[0] == '?'):
+            if b[0] == '?':
+                b = b.lstrip('?')
+                b = '$'+ b
             return '   '+ b + '  ,  '
         else:
             return '  "  '+ b + '  ",  '
