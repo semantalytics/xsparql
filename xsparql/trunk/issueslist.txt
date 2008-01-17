@@ -3,6 +3,8 @@ XSPARQL issues list:
 * IMPLEMENTATION:
 =================
 
+*) repair lifitng example in XSPARQL
+
 *) Should we allow:
    FROM variable or even FROM expressionSingle 
    or only 
@@ -19,7 +21,9 @@ let $aux1 := fn:concat("http://localhost:2020/sparql?query=",
    { $s $p $x . } ", "" ))) 
                    ^^^^^??
   
-*) change saxon to xqilla in the web interface and let's hope that improves speed...
+*) change saxon to xqilla in the web interface and let's hope that 
+   improves speed...
+   Problem for xqilla on the server to access remote files.
 
 *) Problem in output for simple. sparql
 
