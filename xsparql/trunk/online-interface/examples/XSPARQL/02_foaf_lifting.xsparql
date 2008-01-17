@@ -1,5 +1,6 @@
 declare namespace foaf="http://xmlns.com/foaf/0.1/"; 
-let $persons := //*[@name or ../knows] 
+let $doc := doc("http://www.polleres.net/xsparql/data/relations.xml")
+let $persons := $doc//*[@name or ../knows] 
 return 
  for $p in $persons 
  let $n := if( $p[@name] ) then $p/@name else $p 
@@ -11,7 +12,7 @@ return
    { for $k in $persons 
      let $kn := if( $k[@name] ) then $k/@name else $k 
      let $kid :=count($k/preceding::*) + count($k/ancestor::*) 
-     where $kn = data(//*[@name=$n]/knows) and 
+     where $kn = data($doc//*[@name=$n]/knows) and 
                  not(exists($kn/../following::*[@name=$kn or data(.)=$kn])) 
      construct 
      { _:b{$id}  foaf:knows _:b{$kid}. 
