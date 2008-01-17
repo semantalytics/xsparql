@@ -416,15 +416,18 @@ def p_baseURIDecl(p):
     #' '.join([ r  for r in lifrewriter.build_rewrite_baseURI(p[1], p[2], p[3])])
 
 nsFlag = False
-    
+
+# xqilla and saxon behave differently in NodeType variables, it seems like name($x_Node/*) does not work as intended
 def p_queryBody(p):
     '''queryBody : expr'''
     global nsFlag
-    prefix = 'declare namespace sparql = "http://www.w3.org/2005/sparql-results#"; \n'
-    decl_func = '\ndeclare function local:rdf_term($NS as xs:string, $V as xs:string) as xs:string \n'
-    decl_func += '{ let $rdf_term := if($NS = "literal") then fn:concat("""",$V,"""") \n'
-    decl_func += '  else if ($NS = "bnode") then fn:concat("_:", $V) else if ($NS = "uri") \n'
-    decl_func += '  then fn:concat("<", $V, ">") else "" return $rdf_term  };\n'
+    prefix = 'declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#"; \n'
+    decl_func = '\ndeclare function local:rdf_term($NType as xs:string, $V as xs:string) as xs:string \n'
+    decl_func += '{ let $rdf_term := if($NType = "sparql_result:literal" or $NType = "literal") then fn:concat("""",$V,"""") \n'
+    decl_func += '  else if ($NType = "sparql_result:bnode" or $NType = "bnode") then fn:concat("_:", $V) \n'
+    decl_func += '  else if ($NType = "sparql_result:uri" or $NType = "uri") then fn:concat("<", $V, ">") \n'
+    decl_func += '  else "" \n'
+    decl_func += '  return $rdf_term  };\n'
     nsVars = lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)
     if nsVars != '' and nsFlag:
         p[0] = '\n '+prefix+decl_var_ns+decl_func +'\n fn:concat( '+ nsVars +', "\n" ),\n'+p[1]
@@ -1585,4 +1588,4 @@ if __name__ == "__main__":
 ##    outputfile = open('c:\Documents and Settings\wasakh\My Documents\SaxonB9\XSPARQL\examples\output.xquery', 'w')
 ##    outputfile.write(output)
 ##    outputfile.close()
-    print reLexer(instring)
+#    print reLexer(instring)

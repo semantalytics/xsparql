@@ -108,14 +108,14 @@ def build_for_loop(i, var):
 ##    elif len(var) == 1 and isinstance(var[0], list): # blank node or object
 ##        variable = var[0] 
         
-    return 'for ' + query_result_aux(i) + '  '+position_var(i)+ ' in doc(' + query_aux(i) + ')//sparql:result\n'
+    return 'for ' + query_result_aux(i) + '  '+position_var(i)+ ' in doc(' + query_aux(i) + ')//sparql_result:result\n'
 
 
 def build_aux_variables(i, vars):
     ret = ''
     
     for v in vars:
-        ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/sparql:binding[@name = "' + v[1:] + '"])\n'
+        ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/sparql_result:binding[@name = "' + v[1:] + '"])\n'
         ret += '\tlet ' + var_nodetype(v) + ' := name(' + var_node(v) + '/*)\n'
         ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
         ret += '\tlet ' + var_rdfterm(v) + ' :=  local:rdf_term(' + var_nodetype(v)+', '+v +' )\n'\

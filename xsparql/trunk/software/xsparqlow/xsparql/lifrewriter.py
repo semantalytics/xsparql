@@ -133,7 +133,7 @@ def build_predicate(p):
              if b[0] == '?':
                  b = b.lstrip('?')
                  b = '$'+ b
-             return '   '+ b + '  ,  ' + build_object(p[0][1])+ ' '
+             return '   '+ b + '_RDFTerm ,  ' + build_object(p[0][1])+ ' '
         else:
              return ' "  '+ b + '  ",  ' + build_object(p[0][1])+ ' '
     elif len(p) == 0:
@@ -180,7 +180,7 @@ def build_bnode(b):
         for i in var:
             v += ' data('+str(i[0:])+ '), '
         if b.find('{') == -1 and b.find('}') == -1:
-            return '"'+ b + '", ' + v
+            return '"  '+ b + '_", ' + v
         else:
             bExpr =  b.split('{')
             bNode = bExpr[0]
@@ -195,8 +195,8 @@ def build_bnode(b):
         elif b >= 2 and (b[0] == '$' or b[0] == '?'):
             if b[0] == '?':
                 b = b.lstrip('?')
-                b = '$'+ b
-            return '   '+ b + '  ,  '
+                b = '$'+ b + ''
+            return '   '+ b + '_RDFTerm ,  '
         else:
             return '  "  '+ b + '  ",  '
 
