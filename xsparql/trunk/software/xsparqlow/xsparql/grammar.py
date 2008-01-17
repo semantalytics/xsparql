@@ -141,12 +141,15 @@ reserved = {
 }
 
 states = [
-   ('pattern','exclusive')
+   ('pattern','exclusive'),
+   ('iri','inclusive'),
 ]
 
 def t_ANY_NCNAME(t):
     r'\w[\w\-]*'
     t.type = reserved.get(t.value,'NCNAME')
+    if t.type == 'PREFIX' or t.type == 'BASE' or t.type == 'FROM':
+        t.lexer.begin('iri')
     return t
 
 
@@ -179,7 +182,7 @@ t_ANY_VAR = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
 ##t_ANY_OTHERHEXI = r'[\x20-\x5B]'
 ##t_ANY_OTHERHEXII =r'[x5D-x10FFFF]'
 ##t_ANY_CHEX = r'-\x3E'
-##t_ANY_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
+#t_ANY_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
 ##t_ANY_IRIREF    = r'\([^<>\'\{\}\|\^`\x00-\x20]\)*'
 t_ANY_INTEGER   = r'[0-9]+'
 t_ANY_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
@@ -228,6 +231,20 @@ def t_pattern_RCURLY(t):
     r'}'
     t.lexer.begin('INITIAL')
     return t
+
+
+
+t_iri_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
+
+
+
+
+def t_iri_GREATERTHAN(t):
+    r'>'
+    t.lexer.begin('INITIAL')           
+    #return t
+
+    
 
 # Ignored characters
 t_ANY_ignore = " \t"
@@ -295,8 +312,8 @@ def p_prefixID(p):
     p[0] = ''
 
 def p_prefixIDs(p):
-    '''prefixIDs :  NCNAME COLON iriRef 
-                 |  COLON iriRef'''
+    '''prefixIDs :  NCNAME COLON IRIREF 
+                 |  COLON IRIREF'''
     #global namespaces
     global count
     global decl_var_ns
@@ -323,7 +340,7 @@ def p_prefixIDs(p):
 
 
 def p_sbase(p):
-    '''sbase : BASE iriRef'''
+    '''sbase : BASE IRIREF'''
     global count
     global decl_var_ns
 
@@ -403,7 +420,7 @@ nsFlag = False
 def p_queryBody(p):
     '''queryBody : expr'''
     global nsFlag
-    prefix = 'declare namespace sparql = "http://www.w3.org/2005/sparql-result"; \n'
+    prefix = 'declare namespace sparql = "http://www.w3.org/2005/sparql-results#"; \n'
     decl_func = '\ndeclare function local:rdf_term($NS as xs:string, $V as xs:string) as xs:string \n'
     decl_func += '{ let $rdf_term := if($NS = "literal") then fn:concat("""",$V,"""") \n'
     decl_func += '  else if ($NS = "bnode") then fn:concat("_:", $V) else if ($NS = "uri") \n'
@@ -445,7 +462,7 @@ def p_constructQuery(p):
     p[0] = ''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[4], p[5]) ])
 
 def p_datasetClause(p):
-    '''datasetClause : FROM iriRef'''
+    '''datasetClause : FROM IRIREF'''
     p[0] = p[2]
     
 def p_whereSPARQLClause(p):
@@ -518,7 +535,7 @@ def p_forletClauses5(p):
 
 
 def p_sparqlForClause(p):
-    '''sparqlForClause : FOR sparqlvars FROM iriRef WHERE constructTemplate solutionmodifier '''
+    '''sparqlForClause : FOR sparqlvars FROM IRIREF  WHERE constructTemplate solutionmodifier '''
     
 ##    if len(p[3]) == 0:
 ##        p[0] = ( p[1] + ' at ' + p[1] + '_Pos' + ' '.join(p[2:]), p[1] + '_Pos' )
@@ -567,9 +584,9 @@ def p_sparqlForClause(p):
 ##                          | triplesNode propertyList'''
 ##    p[0] = p[2]        
 
-def p_iriRef(p):
-    '''iriRef : LESSTHAN uri GREATERTHAN'''
-    p[0] = ''.join(p[1:])
+##def p_iriRef(p):
+##    '''iriRef : LESSTHAN uri GREATERTHAN'''
+##    p[0] = ''.join(p[1:])
 
 ##def p_relativeURI(p):
 ##    '''relativeURI : uCharacters
@@ -598,20 +615,20 @@ def p_iriRef(p):
 ##           | HEXII'''
 ##    p[0] = ''.join(p[1:])
     
-def p_uri(p):
-    '''uri : NCNAME COLON NCNAME
-           | NCNAME COLON SLASHSLASH NCNAME SLASH NCNAME
-           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME
-           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME SLASH NCNAME SLASH 
-           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
-           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH 
-           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
-           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH NCNAME DOT NCNAME
-           | NCNAME SLASH NCNAME DOT NCNAME
-           | NCNAME COLON NCNAME DOT NCNAME
-           | NCNAME DOT NCNAME
-           | NCNAME'''
-    p[0] = ''.join(p[1:])
+##def p_uri(p):
+##    '''uri : NCNAME COLON NCNAME
+##           | NCNAME COLON SLASHSLASH NCNAME SLASH NCNAME
+##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME
+##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME SLASH NCNAME SLASH 
+##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
+##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH 
+##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
+##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH NCNAME DOT NCNAME
+##           | NCNAME SLASH NCNAME DOT NCNAME
+##           | NCNAME COLON NCNAME DOT NCNAME
+##           | NCNAME DOT NCNAME
+##           | NCNAME'''
+##    p[0] = ''.join(p[1:])
 
 
 def p_sparqlvars(p):
@@ -1459,7 +1476,7 @@ def p_rdfPredicate(p):
 def p_resource(p):
     '''resource : sparqlqname
                 | VAR 
-                | iriRef'''
+                | IRIREF'''
 #    print p.value
     if p[1].find('?') == -1:
         p[0] = p[1]
@@ -1494,7 +1511,7 @@ def p_rdfliteral(p):
     '''rdfliteral : INTEGER
                   | QSTRING
                   | QSTRING AT NCNAME
-                  | QSTRING CARROT CARROT iriRef'''
+                  | QSTRING CARROT CARROT IRIREF'''
     if len(p) == 2: p[0] = p[1]
     else:           p[0] = ''.join(p[1:])
 
@@ -1564,8 +1581,8 @@ import sys
 if __name__ == "__main__":
     instring = ''.join(sys.stdin.readlines())
     output = rewrite(instring)
-    #print output
-    outputfile = open('c:\Documents and Settings\wasakh\My Documents\SaxonB9\XSPARQL\examples\output.xquery', 'w')
-    outputfile.write(output)
-    outputfile.close()
-   # print reLexer(instring)
+    print output
+##    outputfile = open('c:\Documents and Settings\wasakh\My Documents\SaxonB9\XSPARQL\examples\output.xquery', 'w')
+##    outputfile.write(output)
+##    outputfile.close()
+    print reLexer(instring)
