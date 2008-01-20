@@ -81,21 +81,25 @@ def declare_namespaces(nstag, col, pre, uri, i):
 
 # todo: ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
-    
+
+    from_iri = from_iri + '>'
     prefix = ''
     prefix += '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat(' + cnv_lst_str(dec_var, False) + ', "'
-    #print namespace
+    s_vars = ''
+    #print vars
+    for i in vars:
+        s_vars += i + ' '
     global scoped_variables
 
     # build the SPARQL query
     query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ]) + ' ' + \
-            'select ' + ' '.join(vars) + ' from ' + from_iri + ' where { '
+            'select ' + s_vars + ' from ' + from_iri + ' where { '
     ret = ''
     for s, polist in graphpattern:
         ret +=  build_subject(s, False) + build_predicate(polist, False) + '.  '
     query += ret + '} ' + solutionmodifier
 
-    scoped_variables.update(vars)
+    scoped_variables.update(vars[0])
 
     return prefix + query + '", "" )))\n'
 
@@ -113,8 +117,9 @@ def build_for_loop(i, var):
 
 def build_aux_variables(i, vars):
     ret = ''
-    
+    #print vars
     for v in vars:
+        #print v
         ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/sparql_result:binding[@name = "' + v[1:] + '"])\n'
         ret += '\tlet ' + var_nodetype(v) + ' := name(' + var_node(v) + '/*)\n'
         ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
@@ -155,7 +160,9 @@ def buildConstruct(constGraphpattern, from_iri, graphpattern, solutionmodifier):
 
 
 def graphOutput(constGraphpattern):
-    statement = ' ' + lifrewriter.build_triples(constGraphpattern, p_var) + ' '
+    global variables
+    #print variables
+    statement = ' ' + lifrewriter.build_triples(constGraphpattern, p_var, variables) + ' '
     statement += ')'      
     return '\n return \n\t  fn:concat( \n\t\t\n ' + statement
     
@@ -163,7 +170,12 @@ def graphOutput(constGraphpattern):
 def build(vars, from_iri, graphpattern, solutionmodifier):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
-    
+
+   
+    if len(vars) == 1 and isinstance(vars[0], str) and vars[0] == '*':
+        find_vars(graphpattern)
+        vars = variables
+    #print vars
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
                              vars, from_iri, graphpattern, solutionmodifier)
     yield build_for_loop(_forcounter, vars)
@@ -318,3 +330,8 @@ def build_bnode(b, f):
                         b = '$'+ b
                     variables += [ b ]
             return ' '+ b + ' '
+
+
+def getVar():
+    global variables
+    return variables

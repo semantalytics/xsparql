@@ -3,7 +3,7 @@
 #
 # xsparqlow -- XSPARQL Liftinging Rewriter
 #
-# Copyright (C) 2007  
+# Copyright (C) 2007  Waseem Akhtar, Thomas Krennwallner
 #
 # This file is part of xsparqlift.
 #
@@ -234,7 +234,7 @@ def t_pattern_RCURLY(t):
 
 
 
-t_iri_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
+t_iri_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*'
 
 
 
@@ -438,7 +438,10 @@ def p_queryBody(p):
 def p_expr(p):
      '''expr : expr COMMA exprSingle
              | exprSingle'''
-     p[0] = ' '.join(p[1:])
+     if len(p) == 2:
+         p[0] = ''.join(p[1][0])
+     else:
+         p[0] = ''.join(p[1]+' '+p[2]+' '+p[3][0])
      
     
 def p_enclosedExpr(p):
@@ -462,7 +465,7 @@ def p_constructQuery(p):
     '''constructQuery : CONSTRUCT constructTemplate datasetClause whereSPARQLClause solutionmodifier'''
     global nsFlag
     nsFlag = True
-    p[0] = ''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[4], p[5]) ])
+    p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[4], p[5]) ]),[],[])
 
 def p_datasetClause(p):
     '''datasetClause : FROM IRIREF'''
@@ -474,7 +477,7 @@ def p_whereSPARQLClause(p):
 
 def p_ifExpr(p):
     '''ifExpr : IF LPAR expr RPAR THEN exprSingle ELSE exprSingle'''
-    p[0] = ' '.join(p[1:])
+    p[0] = (p[1]+' '+p[2]+' '+p[3]+' '+p[4]+' '+p[5]+' '+p[6][0]+' '+p[7]+' '+p[8][0], [], [])
     
 variable = []    
 def p_flworExpr0(p):
@@ -483,15 +486,14 @@ def p_flworExpr0(p):
     nsFlag = True
 #                 | flworExprs RETURN directConstructor'''
    # print p[3]
-    global variable
-       
-    p[0] = ''.join([ r  for r in lifrewriter.build_rewrite_query(p[1], p[2], p[3], variable)])
+    #global variable
+    p[0] = (''.join([ r  for r in lifrewriter.build_rewrite_query(p[1][0], p[2], p[3], p[1][2], p[1][1])]), p[1][2], p[1][2])
 
 
 def p_flworExpr1(p):
     '''flworExpr : flworExprs RETURN exprSingle'''
                   # | flworExprs RETURN directConstructor'''
-    p[0] = ' '.join(p[1:])
+    p[0] = ( p[1][0] + ' '+p[2]+' '+p[3][0], p[1][1], p[1][2] )
 
 
 def p_flworExprs(p):
@@ -499,55 +501,112 @@ def p_flworExprs(p):
                   | forletClauses whereClause
                   | forletClauses orderByClause
                   | forletClauses whereClause orderByClause'''
-    p[0] = '\n'.join(p[1:])
+    if len(p) == 2:
+        p[0] = ( p[1][0], p[1][1], p[1][2] )
+    else:
+        p[0] = ( p[1][0] + '\n'.join(p[2:]), p[1][1], p[1][2] )
 
 
 # todo: collect variables in let, and build up triples of (expr, variables in scope, position variables in scope)
 
 def p_forletClauses0(p):
     '''forletClauses : forClause'''
-    p[0] = p[1][0]
+    p[0] = ( p[1][0] , p[1][1], p[1][2]  )
 
 
 def p_forletClauses1(p):
     '''forletClauses : letClause'''
-    p[0] = p[1]
+    p[0] = ( p[1][0] , p[1][1], p[1][2]  ) # FIXME: add bound and position variables
 
 
 
 def p_forletClauses2(p):
     '''forletClauses : sparqlForClause'''
-    global variable
-    variable = lowrewriter.p_var
+    #global variable
+    #variable = lowrewriter.p_var
    
-    p[0] = p[1]
+    p[0] = ( p[1][0] , p[1][1], p[1][2]  ) # FIXME: add bound and position variables
 
 
 def p_forletClauses3(p):
     '''forletClauses : forletClauses forClause'''
-    p[0] = p[1] + p[2][0]
+    p[0] = ( p[1][0] + p[2][0], p[1][1] + p[2][1], p[1][2] + p[2][2] )
 
 def p_forletClauses4(p):
     '''forletClauses : forletClauses letClause'''
-    p[0] = p[1] + p[2]
+    p[0] = ( p[1][0] + p[2][0], p[1][1] + p[2][1], p[1][2] + p[2][2] )
 
 
 def p_forletClauses5(p):
     '''forletClauses : forletClauses sparqlForClause'''
-    p[0] = p[1]+ p[2]
+    p[0] = ( p[1][0] + p[2][0], p[1][1] + p[2][1], p[1][2] + p[2][2] )
 
 
 def p_sparqlForClause(p):
-    '''sparqlForClause : FOR sparqlvars FROM IRIREF  WHERE constructTemplate solutionmodifier '''
+    '''sparqlForClause : FOR sparqlvars FROM IRIREF  WHERE constructTemplate solutionmodifier'''
     
 ##    if len(p[3]) == 0:
 ##        p[0] = ( p[1] + ' at ' + p[1] + '_Pos' + ' '.join(p[2:]), p[1] + '_Pos' )
 ##        variable.append(p[1] + '_Pos')
 ##    else:
 ##        p[0] = (' '.join(p[1:]), p[1] )
-   # pos_var = ''.join('  at '+str(p[2])+ '_Pos')
+    #pos_var = ''.join('  at '+str(p[2])+ '_Pos')
     #constGraph = []
-    p[0] = ''.join([ r  for r in lowrewriter.build(p[2], p[4], p[6], p[7]) ])
+    p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[4], p[6], p[7]) ]), p[2][1], p[2][2] )
+
+def p_sparqlvars(p):
+    '''sparqlvars : VAR sparqlvars
+                  | VAR
+                  | STAR'''
+       
+    if len(p) == 2: p[0] = ( p[1] , [p[1]] , [])
+    else:           p[0] = (p[1] + ' '+ p[2][0], [p[1]]+[p[2][0]], [] )
+    
+
+def p_forClause(p):
+    '''forClause : FOR forVars'''
+    p[0] = (p[1] + ' ' + p[2][0], p[2][1], p[2][2] )
+
+
+def p_forVars(p):
+    '''forVars : forVars COMMA forVar'''
+    p[0] = ( p[1][0] + p[2] + ' \n ' + p[3][0] , p[1][1] + [ {p[3][1]:'ns'} ], p[1][2] + [ p[3][2] ] )
+
+def p_forVars1(p):
+    '''forVars : forVar'''
+    p[0] = ( p[1][0], [ {p[1][1]:'ns'} ] , [ p[1][2] ] )
+
+
+def p_forVar(p):
+    '''forVar : VAR typeDeclaration positionVar IN exprSingle'''
+#   global variable
+    if len(p[3][1]) == 0:
+        p[0] = ( p[1] + ' at ' + p[1] + '_Pos' + p[2] + ' ' + p[4] + ' ' + p[5][0], p[1], p[1] + '_Pos' )
+#       variable.append(p[1] + '_Pos')
+    else:
+        p[0] = (p[1] + ' ' + p[2] + ' ' + p[3][0] + ' ' + p[4] + ' ' + p[5][0], p[1], p[3][1] )
+         
+
+    
+
+def p_letClause(p):
+    '''letClause : LET letVars'''
+    p[0] = ('\n'+p[1] + ' ' + p[2][0], p[2][1], p[2][2] )
+
+
+def p_letVars(p):
+    '''letVars : letVars COMMA letVar
+               | letVar'''
+    if len(p) == 2:
+        p[0] = ( p[1][0], [ {p[1][1]:'ns'} ] , [ p[1][2] ] )
+    else:
+        p[0] = ( p[1][0] + p[2] + ' \n ' + p[3][0] , p[1][1] + [ {p[3][1]:'ns'} ], p[1][2] + [ p[3][2] ] )
+        
+
+
+def p_letVar(p):
+    '''letVar : VAR typeDeclaration COLON EQUALS exprSingle'''
+    p[0] = (p[1] + ' ' + p[2] + ' '+ p[3] +  p[4]+ ' '+ p[5][0],  p[1], [])
 
 
 ##def p_groupgraphpattern(p):
@@ -634,12 +693,6 @@ def p_sparqlForClause(p):
 ##    p[0] = ''.join(p[1:])
 
 
-def p_sparqlvars(p):
-    '''sparqlvars : VAR sparqlvars
-                  | VAR'''
-       
-    if len(p) == 2: p[0] = [ p[1] ]
-    else:           p[0] = p[2] + [ p[1] ]
 
 #def p_formalReturnClause(p):
 #    '''formalReturnClause : RETURN directConstructor'''
@@ -802,46 +855,7 @@ def p_offsetclause(p):
 ##    p[0] = p[1]
     
 
-def p_forClause(p):
-    '''forClause : FOR forVars'''
-    p[0] = (p[1] + ' ' + p[2][0], p[2][1])
 
-
-def p_forVars(p):
-    '''forVars : forVars COMMA forVar'''
-    p[0] = (p[1][0] + p[2]+ ' \n ' + p[3][0] , p[1][1] + [ p[3][1] ])
-
-def p_forVars1(p):
-    '''forVars : forVar'''
-    p[0] = (p[1][0], [ p[1][1] ])
-
-
-def p_forVar(p):
-    '''forVar : VAR typeDeclaration positionVar IN exprSingle'''
-    global variable
-    if len(p[3]) == 0:
-        p[0] = ( p[1] + ' at ' + p[1] + '_Pos' + ' '.join(p[2:]), p[1] + '_Pos' )
-        variable.append(p[1] + '_Pos')
-    else:
-        p[0] = (' '.join(p[1:]), p[1] )
-         
-
-    
-
-def p_letClause(p):
-    '''letClause : LET letVars'''
-    p[0] = '\n'+' '.join(p[1:])
-
-
-def p_letVars(p):
-    '''letVars : letVars COMMA letVar
-               | letVar'''
-    p[0] = ' '.join(p[1:])
-
-
-def p_letVar(p):
-    '''letVar : VAR typeDeclaration COLON EQUALS exprSingle'''
-    p[0] = ''.join(p[1:])
 
     
 def p_typeDeclaration(p):
@@ -851,10 +865,11 @@ def p_typeDeclaration(p):
 def p_positionVar(p):
     '''positionVar : ATS VAR
                    | empty'''
-    global variable
+#    global variable
     if len(p) == 3:
-       variable.append(p[2]) 
-    p[0] = ' '.join(p[1:])
+        p[0] = (' '.join(p[1:]), p[2])
+    else:
+        p[0] = ('', '')
 
 def p_orderByClause(p):
     '''orderByClause : ORDER BY orderSpecList
@@ -886,7 +901,7 @@ def p_emptyHandling(p):
 
 def p_whereClause(p):
     '''whereClause : WHERE exprSingle '''
-    p[0] = ' '.join(p[1:])
+    p[0] = ''.join('\n'+p[1]+' '+p[2][0])
     
 
 
@@ -896,12 +911,12 @@ def p_whereClause(p):
 
 def p_orExpr(p):
     '''orExpr : andExpr orAndExpr'''
-    p[0] = p[1]    
+    p[0] = (p[1] +' ' +p[2], [], [])    
     
 def p_orAndExpr(p):
     '''orAndExpr : OR orAndExpress
                  | empty'''
-    p[0] = ''.join(p[1:])
+    p[0] = ' '.join(p[1:])
 
 def p_orAndExpress(p):
     '''orAndExpress : andExpr orAndExpr'''
@@ -1355,7 +1370,7 @@ def p_functionCall(p):
 
 def p_exprSingles(p):
     '''exprSingles : exprSingle exprSingleses'''
-    p[0] = ''.join(p[1:])
+    p[0] = ''.join(p[1][0]+' '+p[2])
 
 def p_exprSingleses(p):
     '''exprSingleses : COMMA exprSingles
@@ -1588,4 +1603,4 @@ if __name__ == "__main__":
 ##    outputfile = open('c:\Documents and Settings\wasakh\My Documents\SaxonB9\XSPARQL\examples\output.xquery', 'w')
 ##    outputfile.write(output)
 ##    outputfile.close()
-#    print reLexer(instring)
+   # print reLexer(instring)

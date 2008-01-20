@@ -56,14 +56,24 @@ import lowrewriter
 ##   nsdeclare += '"@base &#60;'+ uri + '&#62; .&#xA;",\n\n'
 ##   return nsdeclare            
 ##         
+var_p = ''
 var = ''
-def build_rewrite_query(forletExpr, construct, graphpattern, variable):
-    
-
+def build_rewrite_query(forletExpr, construct, graphpattern, variable_p, variable):
+    #print variable
+    #print variable_p
+    #if variable != []:
     global var
-    var = variable
+    
+    if '*' in variable:
+        var = lowrewriter.variables
+    else:
+        var = variable
+##    for i in var:
+##        print i
+    global var_p
+    var_p = variable_p
     #print graphpattern
-    statement = ' ' + build_triples(graphpattern, []) + ' '
+    statement = ' ' + build_triples(graphpattern, [], []) + ' '
     statement += ')'      
 
     #print str(graphpattern)+ '\n\n'
@@ -71,13 +81,18 @@ def build_rewrite_query(forletExpr, construct, graphpattern, variable):
 
 
 
-def build_triples(gp, variable):
+def build_triples(gp, variable_p, variable ):
     
     ret = ''
     space = ''
+    if variable_p != []:
+        global var_p
+        var_p = variable_p
     if variable != []:
         global var
-        var = variable
+        var = variable   
+
+     
     firstelement = True
     for s, polist in gp:
         if not firstelement:
@@ -133,7 +148,10 @@ def build_predicate(p):
              if b[0] == '?':
                  b = b.lstrip('?')
                  b = '$'+ b
-             return '   '+ b + '_RDFTerm ,  ' + build_object(p[0][1])+ ' '
+             if listSearch(b):
+                 return '   '+ b + '_RDFTerm,  ' + build_object(p[0][1])+ ' '
+             else:
+                 return '   '+ b + ' ,  ' + build_object(p[0][1])+ ' '
         else:
              return ' "  '+ b + '  ",  ' + build_object(p[0][1])+ ' '
     elif len(p) == 0:
@@ -175,9 +193,9 @@ def build_object(o):
 
 def build_bnode(b):
     if b >= 2 and b[0] == '_' and b[1] == ':':
-        global var
+        global var_p
         v = ''
-        for i in var:
+        for i in var_p:
             v += ' data('+str(i[0:])+ '), '
         if b.find('{') == -1 and b.find('}') == -1:
             return '"  '+ b + '_", ' + v
@@ -196,9 +214,20 @@ def build_bnode(b):
             if b[0] == '?':
                 b = b.lstrip('?')
                 b = '$'+ b + ''
-            return '   '+ b + '_RDFTerm ,  '
+            if listSearch(b):
+                return '   '+ b + '_RDFTerm ,  '
+            else:
+                return '   '+ b + ',  '
         else:
             return '  "  '+ b + '  ",  '
+
+
+
+def listSearch(list_val):
+    global var
+    #print var
+    return list_val in var
+   
 
 ##        if b.find('"') == 0 and b.find('{') == 1 :
 ##            rspace = b.lstrip('"{')
