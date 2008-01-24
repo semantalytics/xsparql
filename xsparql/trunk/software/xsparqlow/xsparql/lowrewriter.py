@@ -81,8 +81,11 @@ def declare_namespaces(nstag, col, pre, uri, i):
 
 # todo: ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
-
-    from_iri = from_iri + '>'
+    
+    from_iri_str = ' \n'
+    for iri in from_iri:
+        from_iri_str += 'from ' + iri + '>  \n'    
+    
     prefix = ''
     prefix += '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat(' + cnv_lst_str(dec_var, False) + ', "'
     s_vars = ''
@@ -93,7 +96,7 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
 
     # build the SPARQL query
     query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ]) + ' ' + \
-            'select ' + s_vars + ' from ' + from_iri + ' where { '
+            'select ' + s_vars +  from_iri_str + ' where { '
     ret = ''
     for s, polist in graphpattern:
         ret +=  build_subject(s, False) + build_predicate(polist, False) + '.  '
@@ -171,7 +174,7 @@ def build(vars, from_iri, graphpattern, solutionmodifier):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
 
-   
+    
     if len(vars) == 1 and isinstance(vars[0], str) and vars[0] == '*':
         find_vars(graphpattern)
         vars = variables

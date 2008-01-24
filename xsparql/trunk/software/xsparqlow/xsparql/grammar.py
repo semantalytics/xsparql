@@ -54,7 +54,7 @@ tokens = (
     'EXCEPT', 'INSTANCE', 'TREAT', 'CASTABLE', 'CAST', 'OF', 'LAX', 'STRICT', 'UNIONSYMBOL', 'QUESTIONMARK', 'EMPTYSEQUENCE',
     'LESSTHANLESSTHAN', 'GREATERTHANGREATERTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'NODE', 'DOCUMENTNODE',
     'TEXT', 'COMMENT', 'PROCESSINGINSTRUCTION', 'SCHEMAATTRIBUTE', 'SCHEMAELEMENT', 'DOCUMENT', 'BIGU', 'SMALLU', 'BACKSLASH',
-    'HEXI', 'HEXII', 'OTHERHEXI', 'OTHERHEXII', 'BACKSLASHGT', 'CHEX', 'STRI' 
+    'HEXI', 'HEXII', 'OTHERHEXI', 'OTHERHEXII', 'BACKSLASHGT', 'CHEX', 'STRI', 'NAMED' 
     )
 
 reserved = {
@@ -137,7 +137,8 @@ reserved = {
    'processing-instruction' : 'PROCESSINGINSTRUCTION',
    'schema-attribute' : 'SCHEMAATTRIBUTE',
    'schema-element' : 'SCHEMAELEMENT',
-   'document' : 'DOCUMENT'
+   'document' : 'DOCUMENT',
+   'named' : 'NAMED' 
 }
 
 states = [
@@ -462,14 +463,27 @@ def p_exprSingle(p):
     p[0] = p[1]
 
 def p_constructQuery(p):
-    '''constructQuery : CONSTRUCT constructTemplate datasetClause whereSPARQLClause solutionmodifier'''
+    '''constructQuery : CONSTRUCT constructTemplate datasetClauses whereSPARQLClause solutionmodifier'''
     global nsFlag
     nsFlag = True
     p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[4], p[5]) ]),[],[])
 
+
+def p_datasetClauses(p):
+    '''datasetClauses : datasetClauses datasetClause
+                      | datasetClause'''
+    if len(p) == 2: p[0] = p[1]
+    else:           p[0] = p[1] + p[2]
+
 def p_datasetClause(p):
-    '''datasetClause : FROM IRIREF'''
+    '''datasetClause : FROM graphClause'''
     p[0] = p[2]
+
+def p_graphClause(p):
+    '''graphClause : IRIREF
+                   | NAMED IRIREF'''
+    if len(p) == 2: p[0] = [p[1]]
+    else:           p[0] = [p[1] + ' '+ p[2]]    
     
 def p_whereSPARQLClause(p):
     '''whereSPARQLClause : WHERE constructTemplate'''
@@ -543,7 +557,7 @@ def p_forletClauses5(p):
 
 
 def p_sparqlForClause(p):
-    '''sparqlForClause : FOR sparqlvars FROM IRIREF  WHERE constructTemplate solutionmodifier'''
+    '''sparqlForClause : FOR sparqlvars datasetClauses  WHERE constructTemplate solutionmodifier'''
     
 ##    if len(p[3]) == 0:
 ##        p[0] = ( p[1] + ' at ' + p[1] + '_Pos' + ' '.join(p[2:]), p[1] + '_Pos' )
@@ -552,7 +566,7 @@ def p_sparqlForClause(p):
 ##        p[0] = (' '.join(p[1:]), p[1] )
     #pos_var = ''.join('  at '+str(p[2])+ '_Pos')
     #constGraph = []
-    p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[4], p[6], p[7]) ]), p[2][1], p[2][2] )
+    p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[6]) ]), p[2][1], p[2][2] )
 
 def p_sparqlvars(p):
     '''sparqlvars : VAR sparqlvars
@@ -1603,4 +1617,4 @@ if __name__ == "__main__":
 ##    outputfile = open('c:\Documents and Settings\wasakh\My Documents\SaxonB9\XSPARQL\examples\output.xquery', 'w')
 ##    outputfile.write(output)
 ##    outputfile.close()
-   # print reLexer(instring)
+##    print reLexer(instring)
