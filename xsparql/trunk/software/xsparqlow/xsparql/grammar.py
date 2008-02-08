@@ -428,7 +428,13 @@ def p_queryBody(p):
     decl_func += '  else if ($NType = "sparql_result:bnode" or $NType = "bnode") then fn:concat("_:", $V) \n'
     decl_func += '  else if ($NType = "sparql_result:uri" or $NType = "uri") then fn:concat("<", $V, ">") \n'
     decl_func += '  else "" \n'
-    decl_func += '  return $rdf_term  };\n'
+    decl_func += '  return $rdf_term  };\n\n'
+    decl_func += 'declare function local:empty($rdf_Predicate as xs:string,  $rdf_Object as xs:string) as xs:string \n'
+    decl_func += '{ let $output :=  if( fn:substring($rdf_Predicate, 0, 3) = "_:" or substring($rdf_Predicate, 0, 2) = """ or  \n'
+    decl_func += '  substring($rdf_Predicate, fn:string-length($rdf_Predicate), fn:string-length($rdf_Predicate))   = """ ) then   " " \n'
+    decl_func += '  else  fn:concat($rdf_Predicate,  $rdf_Object) \n'
+    decl_func += '  return $output }; \n\n'
+    
     nsVars = lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)
     if nsVars != '' and nsFlag:
         p[0] = '\n '+prefix+decl_var_ns+decl_func +'\n fn:concat( '+ nsVars +', "\n" ),\n'+p[1]

@@ -78,10 +78,11 @@ def declare_namespaces(nstag, col, pre, uri, i):
   #print url
   return  decl_ns
     
-
+scopeVar_count = 0
 # todo: ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
-    
+    global scoped_variables
+    global scopeVar_count
     from_iri_str = ' \n'
     for iri in from_iri:
         from_iri_str += 'from ' + iri + '>  \n'    
@@ -89,11 +90,17 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
     prefix = ''
     prefix += '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat(' + cnv_lst_str(dec_var, False) + ', "'
     s_vars = ''
-    #print vars
-    for i in vars:
-        s_vars += i + ' '
-    global scoped_variables
+    #print scoped_variables
+    for j in vars:
+        if j in scoped_variables:
+            #s_var + j + '_RDFTerm '
+            scoped_variables.remove(j)
+        else:
+            s_vars += j + ' '
+            scoped_variables += [j]
 
+    scopeVar_count = len(vars)
+    
     # build the SPARQL query
     query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ]) + ' ' + \
             'select ' + s_vars +  from_iri_str + ' where { '
@@ -102,9 +109,9 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
         ret +=  build_subject(s, False) + build_predicate(polist, False) + '.  '
     query += ret + '} ' + solutionmodifier
 
-    scoped_variables.update(vars[0])
+    
 
-    return prefix + query + '", "" )))\n'
+    return prefix + query + ' ", "" )))\n'
 
 
 
@@ -143,7 +150,7 @@ def build_aux_variables(i, vars):
 
 sparql_endpoint = 'http://localhost:2020/sparql?query='
 namespaces = []
-scoped_variables = set()
+scoped_variables = []
 
 _forcounter = 0
 
@@ -269,12 +276,17 @@ def build_predicate(p, f):
             b = strip.rstrip('}') 
             return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
         else:
-            if f:
-                if b[0] == '$' or b[0] == '?':
+            
+            if b[0] == '$' or b[0] == '?':
                     if b[0] == '?':
                         b = b.lstrip('?')
                         b = '$'+ b
-                    variables += [ b ]
+                    if f:    
+                        variables += [ b ]
+                    if listSearch(b):
+                         return '   '+ b + '_RDFTerm  ' + build_object(p[0][1], f)+ ' '
+                    else:
+                         return '   '+ b + '  ' + build_object(p[0][1], f)+ ' '
             return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
     elif len(p) == 0:
         return ''
@@ -326,14 +338,32 @@ def build_bnode(b, f):
             b = strip.rstrip('}') 
             return ' '+ b + ' '
         else:
-            if f:
-                if b[0] == '$' or b[0] == '?':
+            
+            if b[0] == '$' or b[0] == '?':
                     if b[0] == '?':
                         b = b.lstrip('?')
                         b = '$'+ b
-                    variables += [ b ]
+                    if f:    
+                        variables += [ b ]
+                    if listSearch(b):
+                        return '   '+ b + '_RDFTerm   '
+                    else:
+                        return '   '+ b + '  '
             return ' '+ b + ' '
 
+
+def listSearch(list_val):
+    global scoped_variables
+    global scopeVar_count
+##    print scoped_variables
+##    print len(scoped_variables)
+##    print scopeVar_count
+    if len(scoped_variables) != scopeVar_count:
+##        print scoped_variables[0:len(scoped_variables)-scopeVar_count]
+        return list_val in scoped_variables[0:len(scoped_variables)-scopeVar_count]
+    elif len(scoped_variables) == scopeVar_count:
+        return False
+   
 
 def getVar():
     global variables

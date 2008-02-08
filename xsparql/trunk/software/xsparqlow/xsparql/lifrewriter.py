@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 #
 #
@@ -140,20 +141,24 @@ def build_predicate(p):
    # print 'prd:', p
     if len(p) == 1:
         b = p[0][0]
-        if b >= 2 and b[0] == '{' and b[-1] == '}' :
+        if len(b) >= 2 and b[0] == '{' and b[-1] == '}' :
             strip = str(b).lstrip('{')
             b = strip.rstrip('}') 
             return ' '+ b + ',  ' + build_object(p[0][1])+ ' '
-        elif b >= 2 and ( b[0] == '$'or b[0] == '?'):
+        elif len(b) >= 2 and ( b[0] == '$'or b[0] == '?'):
              if b[0] == '?':
                  b = b.lstrip('?')
                  b = '$'+ b
              if listSearch(b):
-                 return '   '+ b + '_RDFTerm,  ' + build_object(p[0][1])+ ' '
+                 return '  local:empty( '+ b + '_RDFTerm,  concat(' + build_object(p[0][1])+ '"" )), '
              else:
-                 return '   '+ b + ' ,  ' + build_object(p[0][1])+ ' '
+                 return '  local:empty( '+ b + ',  concat(' + build_object(p[0][1])+ ' "")), '
         else:
-             return ' "  '+ b + '  ",  ' + build_object(p[0][1])+ ' '
+             if len(b) >= 2:
+                 if(b[0] != '_' and b[1] != ':'):
+                      return ' "  '+ b + '  ",  ' + build_object(p[0][1])+ ' '
+             else:
+                 return ' "  '+ b + '  ",  ' + build_object(p[0][1])+ ' '
     elif len(p) == 0:
         return ''
     else:
@@ -196,7 +201,7 @@ def build_bnode(b):
         global var_p
         v = ''
         for i in var_p:
-            v += ' data('+str(i[0:])+ '), '
+            v += ' data('+str(i[0:])+ '),'
         if b.find('{') == -1 and b.find('}') == -1:
             return '"  '+ b + '_", ' + v
         else:
