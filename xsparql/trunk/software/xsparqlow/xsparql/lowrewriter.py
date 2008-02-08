@@ -3,7 +3,8 @@
 #
 # xsparqlow -- XSPARQL Lowering Rewriter
 #
-# Copyright (C) 2007  Thomas Krennwallner  <tkren@kr.tuwien.ac.at>
+# Copyright (C) 2007, 2008  Thomas Krennwallner  <tkren@kr.tuwien.ac.at>
+#               2007, 2008  Waseem Akthar  <waseem.akthar@deri.org>
 #
 # This file is part of xsparqlow.
 #
@@ -284,7 +285,7 @@ def build_predicate(p, f):
                     if f:    
                         variables += [ b ]
                     if listSearch(b):
-                         return '   '+ b + '_RDFTerm  ' + build_object(p[0][1], f)+ ' '
+                         return '   ", '+ b + '_RDFTerm ," ' + build_object(p[0][1], f)+ ' '
                     else:
                          return '   '+ b + '  ' + build_object(p[0][1], f)+ ' '
             return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
@@ -346,7 +347,7 @@ def build_bnode(b, f):
                     if f:    
                         variables += [ b ]
                     if listSearch(b):
-                        return '   '+ b + '_RDFTerm   '
+                        return '   ", '+ b + '_RDFTerm ,"  '
                     else:
                         return '   '+ b + '  '
             return ' '+ b + ' '
