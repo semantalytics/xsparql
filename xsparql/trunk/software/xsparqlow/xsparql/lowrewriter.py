@@ -52,7 +52,7 @@ def query_result_aux(i):
 p_var = []
 def position_var(i):
     global p_var
-    aux_result = query_result_aux + '_Pos'
+    aux_result = query_result_aux(i) + '_Pos'
     p_var.append(aux_result)
     return aux_result
 
