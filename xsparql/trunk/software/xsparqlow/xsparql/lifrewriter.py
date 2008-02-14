@@ -1,25 +1,25 @@
-
 # -*- coding: utf-8 -*-
 #
+# xsparql -- XSPARQL Rewriter
 #
-# xsparqlow -- XSPARQL Lowering Rewriter
+# Copyright (C) 2007, 2008  Thomas Krennwallner  <tkren@kr.tuwien.ac.at>
+#               2007, 2008  Waseem Akhtar  <waseem.akhtar@deri.org>
 #
-# Copyright (C) 2007  Thomas Krennwallner  <tkren@kr.tuwien.ac.at>
+# This file is part of xsparql.
 #
-# This file is part of xsparqlow.
+# xsparql is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
 #
-# xsparqlow is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# xsparql is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
 #
-# xsparqlow is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with xsparqlow.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU Lesser General Public
+# License along with xsparql. If not, see
+# <http://www.gnu.org/licenses/>.
 #
 #
 
@@ -29,6 +29,8 @@
 #
 
 import re
+
+#@todo why?
 import lowrewriter
 
 #
@@ -56,29 +58,24 @@ import lowrewriter
 ##   uri = uri.rstrip('"')
 ##   nsdeclare += '"@base &#60;'+ uri + '&#62; .&#xA;",\n\n'
 ##   return nsdeclare            
-##         
+##
+
 var_p = ''
 var = ''
+
 def build_rewrite_query(forletExpr, construct, graphpattern, variable_p, variable):
-    #print variable
-    #print variable_p
-    #if variable != []:
+
     global var
+    global var_p
     
     if '*' in variable:
         var = lowrewriter.variables
     else:
         var = variable
-##    for i in var:
-##        print i
-    global var_p
-    var_p = variable_p
-    #print graphpattern
-    statement = ' ' + build_triples(graphpattern, [], []) + ' '
-    statement += ')'      
 
-    #print str(graphpattern)+ '\n\n'
-    return '\n  '+forletExpr + '\n return \n\t  fn:concat( \n\t\t\n ' + statement
+    var_p = variable_p
+
+    return '\n  ' + forletExpr + '\n return \n\t  fn:concat( \n\t\t\n ' + build_triples(graphpattern, [], []) + ')'
 
 
 
@@ -112,11 +109,7 @@ def build_triples(gp, variable_p, variable ):
 
 def build_subject(s):
 
-    #print 'sub:', s
-
-
     if len(s) == 1 and isinstance(s[0], list) and isinstance(s[0][0], str):
-        
         return build_bnode(s[0][0]) 
     elif len(s) == 1 and isinstance(s[0], str): # blank node or object
         return build_bnode(s[0]) 
@@ -125,20 +118,15 @@ def build_subject(s):
     elif len(s) == 0: # single blank node
         return '[]'
     else: # polist
-        #print s
-        d =  s
-        if d[0] == '[' :
-            d.remove('[')
-            #print d
-            return '"[", ' + build_predicate([ d[0] ]) + ' ";", ' + build_predicate(d[1:]) + ' "]",\n '
+        if s[0] == '[': # first member is an opening bnode bracket
+            return '"[", ' + build_predicate([ s[1] ]) + ' ";", ' + build_predicate(s[2:]) + ' "]",\n '
         else:
-            return ' ' + build_predicate([ d[0] ]) + ' ";", ' + build_predicate(d[1:]) + ' \n '
+            return ' ' + build_predicate([ s[0] ]) + ' ";", ' + build_predicate(s[1:]) + ' \n '
 
 
 
 def build_predicate(p):
 
-   # print 'prd:', p
     if len(p) == 1:
         b = p[0][0]
         if len(b) >= 2 and b[0] == '{' and b[-1] == '}' :
@@ -165,7 +153,6 @@ def build_predicate(p):
         d =  p
         if d[0] == '[' :
             d.remove('[')
-            #print d
             return '"[", ' + build_predicate([ d[0] ]) + '";", ' + build_predicate([ d[1] ]) + ' "]",\n '           
         else:
             return ' ' + build_predicate([ d[0] ]) + ' ";", ' + build_predicate([ d[1] ]) + ' \n '
@@ -174,13 +161,10 @@ def build_predicate(p):
 
 def build_object(o):
 
-  #  print 'obj:', o
-
     if len(o) == 1 and isinstance(o[0], list) and isinstance(o[0][0], str):
         d =  o[0]
         if d[0] == '[' :
             d.remove('[')
-            #print d
             return '"[", ' + build_predicate(d) + ' "]",\n '
         else:
             return  build_bnode(o[0][0])
@@ -208,7 +192,6 @@ def build_bnode(b):
             bExpr =  b.split('{')
             bNode = bExpr[0]
             expr = bExpr[1].rstrip('}')
-            #print expr
             return '"'+ bNode + '",  data('+expr+'), ' 
     else:
         if b >= 2 and b[0] == '{' and b[-1] == '}' :
@@ -230,7 +213,6 @@ def build_bnode(b):
 
 def listSearch(list_val):
     global var
-    #print var
     return list_val in var
    
 
