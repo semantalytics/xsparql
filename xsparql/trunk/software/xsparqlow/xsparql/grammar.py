@@ -1687,8 +1687,15 @@ def p_error(p):
     raise SyntaxError
 
 
-# Build the parser
-yacc.yacc(debug=1)
+
+def generate_parser():
+    '''called at build time'''
+    yacc.yacc(tabmodule = 'parsetab', outputdir = './xsparql')
+
+
+def get_parser():
+    '''called in rewrite to read the installed parser'''
+    return yacc.yacc(debug = 0, tabmodule = 'xsparql.parsetab', write_tables = 0)
 
 
 
@@ -1697,8 +1704,10 @@ def rewrite(s):
        we bail out and return the original input.'''
 
     try:
+        parser = get_parser()
+
         # parse s, and get rewritten string back
-        result = yacc.parse(s)
+        result = parser.parse(s)
 
         if result:
            return result + '\n'
