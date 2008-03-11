@@ -1,0 +1,7 @@
+-*- org -*-
+
+* TODO rewriter always _needs_ a namespace declaration, fix that.
+
+* TODO rewrite nested CONSTRUCTs properly
+
+* TODO build AST instead of in-place rewriting?
