@@ -95,17 +95,23 @@ def declare_namespaces(nstag, col, pre, uri, i):
 
 
 scopeVar_count = 0
+
+
 # @todo ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
     global scoped_variables
     global scopeVar_count
 
-    from_iri_str = ' \n'
-    for iri in from_iri:
-        from_iri_str += 'from ' + iri + '>  \n'    
-    
-    prefix = '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + '", fn:encode-for-uri( fn:concat(' + cnv_lst_str(dec_var, False) + ', "'
+    # build the SPARQL prefix
+    query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ])
 
+    # build (no/multiple) FROM (NAMED)
+    # @todo FROM NAMED is missing
+    from_iri_str = ''
+    for (fn, iri) in from_iri:
+        from_iri_str += fn + ' ' + iri + '> ' # @todo '>' is ugly
+
+    # build variables (possibly scoped)
     s_vars = ''
     for j in vars:
         if j in scoped_variables:
@@ -116,17 +122,23 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
 
     scopeVar_count = len(vars)
     
-    # build the SPARQL query
-    query = '\n'.join([ 'prefix %s: <%s>' % (ns,uri) for (ns,uri) in pfx ]) + ' ' + \
-            'select ' + s_vars +  from_iri_str + ' where { '
+    # build the SPARQL SELECT Varlist, (no/multiple) FROM (NAMED), WHERE
+    query += '\n' + 'select ' + s_vars + from_iri_str + ' where { '
 
+    # build graph pattern
     for s, polist in graphpattern:
-        query +=  build_subject(s, False) + build_predicate(polist, False) + '.  '
-
+        query +=  build_subject(s, False) + build_predicate(polist, False) + '. '
+        
+    # build the SOLUTION MODIFIERs
     query += '} ' + solutionmodifier
 
+    # return XQuery SPARQL query
+    return '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + \
+             '", fn:encode-for-uri( fn:concat(' + cnv_lst_str(dec_var, False) + ', "' + \
+             query + '")))\n'
+
     # @todo why do we need the last empty string??
-    return prefix + query + ' ", "" )))\n'
+    #return '\n' + prefix + query + ' ", "" )))\n'
 
 
 
@@ -145,8 +157,9 @@ def build_aux_variables(i, vars):
 
 
 
-
+# @todo make this configurizable
 sparql_endpoint = 'http://localhost:2020/sparql?query='
+
 namespaces = []
 scoped_variables = []
 

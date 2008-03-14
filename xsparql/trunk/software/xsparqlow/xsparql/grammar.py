@@ -480,30 +480,33 @@ def p_constructQuery(p):
     '''constructQuery : CONSTRUCT constructTemplate datasetClauses whereSPARQLClause solutionmodifier'''
     global nsFlag
     nsFlag = True
-    p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[4], p[5]) ]),[],[])
+    p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[4], p[5]) ]), [], [])
 
 
-def p_datasetClauses(p):
+def p_datasetClauses(p): # list of (from, iri) tuples
     '''datasetClauses : datasetClauses datasetClause
-                      | datasetClause'''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = p[1] + p[2]
+                      | datasetClause
+                      | empty'''
+    if len(p) == 2 and len(p[1]):
+        p[0] = [ p[1] ]
+    elif len(p) == 3:
+        p[0] = p[1] + [ p[2] ]
+    else: # empty
+        p[0] = []
 
 
 def p_datasetClause(p):
-    '''datasetClause : FROM graphClause'''
-    p[0] = p[2]
+    '''datasetClause : FROM IRIREF
+                     | FROM NAMED IRIREF'''
+    if len(p) == 4: # from named
+        p[0] = (p[1] + ' ' + p[2], p[3])
+    elif len(p) == 3: # from
+        p[0] = (p[1], p[2])
 
 
-def p_graphClause(p):
-    '''graphClause : IRIREF
-                   | NAMED IRIREF'''
-    if len(p) == 2:
-        p[0] = [ p[1] ]
-    else:
-        p[0] = [ p[1] + ' ' + p[2] ]    
+## def p_graphClause(p):
+##     '''graphClause : IRIREF'''
+##     p[0] = p[1]
 
 
 def p_whereSPARQLClause(p):
