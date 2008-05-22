@@ -21,7 +21,7 @@
     <h2>XSPARQL: Smooth transformations between XML and RDF</h2>
     <p>Team: <a href="http://www.polleres.net">Axel Polleres</a>, <a href="http://www.postsubmeta.net">Thomas Krennwallner</a>, <a href="http://www.deri.ie/about/team/member/waseem_akhtar/">Waseem Akhtar</a><br/>
     Technical report available <a href="http://www.polleres.net/TRs/DERI-TR-2007-12-14.pdf">here</a>.<br/><br/>
-    <i>The greatest thing since sliced bread when it comes to slice your data!</i></p>
+    <i>The greatest thing since sliced bread when it comes to slicing your data!</i></p>
       </td>
        <td class="withoutBG" align="left"> 
            <img src="images/XSPARQLLogo.png" alt="XSPARQLLogo"/>
