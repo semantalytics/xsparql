@@ -195,7 +195,7 @@ def build(vars, from_iri, graphpattern, solutionmodifier):
     if len(vars) == 1 and isinstance(vars[0], str) and vars[0] == '*':
         find_vars(graphpattern)
         vars = variables
-    print vars
+    
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
                              vars, from_iri, graphpattern, solutionmodifier)
     yield build_for_loop(_forcounter, vars)
