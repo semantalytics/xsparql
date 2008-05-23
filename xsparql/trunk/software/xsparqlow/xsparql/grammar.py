@@ -577,9 +577,12 @@ def p_forletClauses5(p):
 
 
 def p_sparqlForClause(p):
-    '''sparqlForClause : FOR sparqlvars datasetClauses  WHERE constructTemplate solutionmodifier'''
-    p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[6]) ]), p[2][1], p[2][2] )
-
+    '''sparqlForClause : FOR sparqlvars datasetClauses  WHERE constructTemplate solutionmodifier
+                       | FOR sparqlvars datasetClauses  WHERE constructTemplate letClause solutionmodifier'''
+    if len(p) == 7:
+        p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[6]) ]), p[2][1], p[2][2] )
+    else:    
+        p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[7]) ])+' '+str(p[6][0])+'  \n  ', p[2][1], p[2][2] )
 
 def p_sparqlvars(p):
     '''sparqlvars : VAR sparqlvars
@@ -588,7 +591,17 @@ def p_sparqlvars(p):
     if len(p) == 2:
         p[0] = ( p[1] , [p[1]] , [])
     else:
-        p[0] = (p[1] + ' '+ p[2][0], [p[1]]+[p[2][0]], [] )
+        p[0] = (p[1]+' '+p[2][0], [p[1]+ ' '+p[2][0]], [] )
+
+##def p_sparqlvars(p):
+##    '''sparqlvars : VAR sparqlvars0'''                  
+##    p[0] = (p[1], [p[1]]+[p[2][0]], [] )
+##
+##def p_sparqlvars0(p):
+##    '''sparqlvars0 : sparqlvars
+##                   | VAR
+##                   | STAR'''
+##    p[0] = ( p[1] , [p[1]] , [])
 
 
 def p_forClause(p):
@@ -800,7 +813,8 @@ def p_attributProcessing(p):
     
 
 def p_directElemContentProcessing(p):
-    '''directElemContentProcessing : directElemContent LESSTHAN SLASH  NCNAME GREATERTHAN '''
+    '''directElemContentProcessing : directElemContent LESSTHAN SLASH  NCNAME GREATERTHAN
+                                   | directElemContent LESSTHAN SLASH  NCNAME GREATERTHAN directConstructor'''
     p[0] = ''.join(p[1:])
     
 

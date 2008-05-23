@@ -113,7 +113,7 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
 
     # build variables (possibly scoped)
     s_vars = ''
-    for j in vars:
+    for j in vars[0].split(' '):
         if j in scoped_variables:
             scoped_variables.remove(j)
         else:
@@ -148,7 +148,8 @@ def build_for_loop(i, var):
 
 def build_aux_variables(i, vars):
     ret = ''
-    for v in vars:
+
+    for v in vars[0].split(' '):
         ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/sparql_result:binding[@name = "' + v[1:] + '"])\n'
         ret += '\tlet ' + var_nodetype(v) + ' := name(' + var_node(v) + '/*)\n'
         ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
@@ -194,7 +195,7 @@ def build(vars, from_iri, graphpattern, solutionmodifier):
     if len(vars) == 1 and isinstance(vars[0], str) and vars[0] == '*':
         find_vars(graphpattern)
         vars = variables
-
+    print vars
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
                              vars, from_iri, graphpattern, solutionmodifier)
     yield build_for_loop(_forcounter, vars)
@@ -240,9 +241,9 @@ def build_subject(s, f):
         return '[]'
     else: # polist
         if s[0] == '[': # first member is an opening bnode bracket
-            return '"[", ' + build_predicate([ s[1] ], f) + ' ";", ' + build_predicate(s[2:], f) + ' "]",\n '
+            return ' [  ' + build_predicate([ s[1] ], f) + ';  ' + build_predicate(s[2:], f) + '  ] \n '
         else:
-            return ' ' + build_predicate([ s[0] ], f) + ' ";", ' + build_predicate(s[1:], f) + ' \n '
+            return ' ' + build_predicate([ s[0] ], f) + ';  ' + build_predicate(s[1:], f) + ' \n '
 
 
 
@@ -268,7 +269,7 @@ def build_predicate(p, f):
                     if f:    
                         variables += [ b ]
                     if listSearch(b):
-                         return '   ", '+ b + '_RDFTerm ," ' + build_object(p[0][1], f)+ ' '
+                         return '    '+ b + '_RDFTerm  ' + build_object(p[0][1], f)+ ' '
                     else:
                          return '   '+ b + '  ' + build_object(p[0][1], f)+ ' '
             return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
@@ -278,9 +279,9 @@ def build_predicate(p, f):
         d =  p
         if d[0] == '[' :
             d.remove('[')
-            return '"[", ' + build_predicate([ d[0] ], f) + ' ; ' + build_predicate([ d[1] ], f) + ' "]",\n '           
+            return ' [  ' + build_predicate([ d[0] ], f) + '; ' + build_predicate([ d[1] ], f) + ' ] \n '           
         else:
-            return ' ' + build_predicate([ d[0] ], f) + ' ; ' + build_predicate([ d[1] ], f) + ' \n '
+            return ' ' + build_predicate([ d[0] ], f) + '; ' + build_predicate([ d[1] ], f) + ' \n '
        
 
 
@@ -289,7 +290,7 @@ def build_object(o, f):
         d =  o[0]
         if d[0] == '[' :
             d.remove('[')
-            return '"[", ' + build_predicate(d, f) + ' "]",\n '
+            return '[ ' + build_predicate(d, f) + ' ] \n '
         else:
             return  build_bnode(o[0][0], f)
     elif len(o) == 1 and isinstance(o[0], str):
@@ -299,7 +300,7 @@ def build_object(o, f):
     elif len(o) == 0:
         return '[]'
     else:
-        return '[ ' + build_predicate([ o[0] ], f) + ' ";", ' + build_predicate(o[1:], f) + ' ]\n '
+        return '[ ' + build_predicate([ o[0] ], f) + ' ;  ' + build_predicate(o[1:], f) + ' ]\n '
 
 
 def build_bnode(b, f):
@@ -324,7 +325,7 @@ def build_bnode(b, f):
                     if f:    
                         variables += [ b ]
                     if listSearch(b):
-                        return '   ", '+ b + '_RDFTerm ,"  '
+                        return '    '+ b + '_RDFTerm   '
                     else:
                         return '   '+ b + '  '
             return ' '+ b + ' '
