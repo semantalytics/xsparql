@@ -288,32 +288,32 @@ def p_mainModule(p):
 
 
 def p_prolog(p):
-    '''prolog : xqueryNS
-              | sparqlNS
+    '''prolog : xqueryNS prolog
+              | sparqlNS prolog
               | empty'''
     p[0] = ''.join(p[1:])
 
 
 def p_xqueryNS(p):
-    '''xqueryNS : DECLARE xqueryNSs nsDecl'''
+    '''xqueryNS : DECLARE xqueryNSs SEMICOLON '''
     p[0] = ' '.join(p[1:])
 
 
 def p_xqueryNSs(p):
-    '''xqueryNSs : defaultNamespaceDecl 
-                 | namespaceDecl 
+    '''xqueryNSs : defaultNamespaceDecl
+                 | namespaceDecl
                  | baseURIDecl'''
     p[0] = ' '.join(p[1:])
 
 
 def p_sparqlNS(p):
-    '''sparqlNS : directive  prolog'''
+    '''sparqlNS : directive  '''
     p[0] = ''.join(p[1:])
 
 
 def p_directive(p):
-    '''directive : prefixID prolog
-                 | sbase prolog'''
+    '''directive : prefixID
+                 | sbase '''
     p[0] = ''.join(p[1:])
 
 
@@ -365,9 +365,9 @@ def p_sbase(p):
     p[0] = ''             
            
 
-def p_nsDecl(p):
-    '''nsDecl : SEMICOLON prolog'''
-    p[0] = '\n '.join(p[1:])
+##def p_nsDecl(p):
+##    '''nsDecl : SEMICOLON prolog'''
+##    p[0] = '\n '.join(p[1:])
 
 
 def p_defaultNamespaceDecl(p):
@@ -485,7 +485,6 @@ def p_constructQuery(p):
 
 def p_datasetClauses(p): # list of (from, iri) tuples
     '''datasetClauses : datasetClauses datasetClause
-                      | datasetClause
                       | empty'''
     if len(p) == 2 and len(p[1]):
         p[0] = [ p[1] ]
@@ -860,6 +859,7 @@ def p_attributeValueContent(p):
 def p_solutionmodifier(p):
     '''solutionmodifier : ORDER BY VAR
                         | ORDER BY VAR limitoffsetclause
+                        | limitoffsetclause
                         | empty'''
     p[0] = ' '.join(p[1:])
 
@@ -1641,7 +1641,6 @@ def p_resource(p):
 
 def p_blank(p):
     '''blank : bnodeWithExpr
-             | LBRACKET RBRACKET
              | LBRACKET predicateObjectList RBRACKET'''
     if len(p) == 2: # bnodeWithExpr
         p[0] = [ p[1] ]

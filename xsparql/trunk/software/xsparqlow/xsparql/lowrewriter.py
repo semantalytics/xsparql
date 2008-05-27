@@ -113,7 +113,7 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
 
     # build variables (possibly scoped)
     s_vars = ''
-    for j in vars[0].split(' '):
+    for j in vars:
         if j in scoped_variables:
             scoped_variables.remove(j)
         else:
@@ -148,8 +148,8 @@ def build_for_loop(i, var):
 
 def build_aux_variables(i, vars):
     ret = ''
-
-    for v in vars[0].split(' '):
+    #print vars
+    for v in vars:
         ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/sparql_result:binding[@name = "' + v[1:] + '"])\n'
         ret += '\tlet ' + var_nodetype(v) + ' := name(' + var_node(v) + '/*)\n'
         ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
@@ -191,15 +191,19 @@ def graphOutput(constGraphpattern):
 def build(vars, from_iri, graphpattern, solutionmodifier):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
-
+    #print vars
+    varlist=[]
     if len(vars) == 1 and isinstance(vars[0], str) and vars[0] == '*':
         find_vars(graphpattern)
-        vars = variables
+        varlist = variables
+    else:
+        for k in vars[0].split(' '):
+            varlist += [k]
     
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
-                             vars, from_iri, graphpattern, solutionmodifier)
-    yield build_for_loop(_forcounter, vars)
-    yield build_aux_variables(_forcounter, vars)
+                             varlist, from_iri, graphpattern, solutionmodifier)
+    yield build_for_loop(_forcounter, varlist)
+    yield build_aux_variables(_forcounter, varlist)
 
 
 variables = []
