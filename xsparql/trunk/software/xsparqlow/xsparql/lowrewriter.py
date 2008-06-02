@@ -158,6 +158,20 @@ def build_aux_variables(i, vars):
 
 
 
+def build_aux_copy_variables(i, vars):
+    ret = ''
+    #print vars
+    for v in vars:
+        ret += '\tlet ' + var_node(v) + ' := ' + var_node(i) + ' \n'
+        ret += '\tlet ' + var_nodetype(v) + ' := ' + var_nodetype(i) + ' \n'
+        ret += '\tlet ' + v + ' := ' + i + ' \n'
+        ret += '\tlet ' + var_rdfterm(v) + ' := ' + var_rdfterm(i) +' \n'
+    return ret
+
+
+
+
+
 # @todo make this configurizable
 sparql_endpoint = 'http://localhost:2020/sparql?query='
 
@@ -166,16 +180,21 @@ scoped_variables = []
 
 _forcounter = 0
 
-def buildConstruct(constGraphpattern, from_iri, graphpattern, solutionmodifier):
+
+def buildConstruct(constGraphpattern, from_iri, from_vars, graphpattern, solutionmodifier):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
-    
+##    print from_vars
     find_vars(graphpattern)
 
-    yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
-                             variables, from_iri, graphpattern, solutionmodifier)
-    yield build_for_loop(_forcounter, variables)
-    yield build_aux_variables(_forcounter, variables)
+    if from_vars[0]=='?' or from_vars[0]=='$':
+        yield build_aux_copy_variables(from_vars, varlist)
+    else:
+        yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
+                             varlist, from_iri, graphpattern, solutionmodifier)
+        yield build_for_loop(_forcounter, varlist)
+        yield build_aux_variables(_forcounter, varlist)
+    
     yield graphOutput(constGraphpattern)
     
 
@@ -188,22 +207,27 @@ def graphOutput(constGraphpattern):
 
 
 # generator function, keeps track of incrementing the for-counter
-def build(vars, from_iri, graphpattern, solutionmodifier):
+def build(vars, from_iri, from_vars, graphpattern, solutionmodifier):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
-    #print vars
+##    print from_vars
     varlist=[]
     if len(vars) == 1 and isinstance(vars[0], str) and vars[0] == '*':
         find_vars(graphpattern)
         varlist = variables
     else:
         for k in vars[0].split(' '):
-            varlist += [k]
+            varlist += [k]   
     
-    yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
+    if from_vars[0]=='?' or from_vars[0]=='$':
+        yield build_aux_copy_variables(from_vars, varlist)
+    else:
+        yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
                              varlist, from_iri, graphpattern, solutionmodifier)
-    yield build_for_loop(_forcounter, varlist)
-    yield build_aux_variables(_forcounter, varlist)
+        yield build_for_loop(_forcounter, varlist)
+        yield build_aux_variables(_forcounter, varlist)
+
+       
 
 
 variables = []
@@ -235,6 +259,7 @@ def find_vars(p):
 
 
 def build_subject(s, f):
+##    print s
     if len(s) == 1 and isinstance(s[0], list) and isinstance(s[0][0], str):
         return build_bnode(s[0][0], f) 
     elif len(s) == 1 and isinstance(s[0], str): # blank node or object
@@ -242,7 +267,7 @@ def build_subject(s, f):
     elif len(s) == 1 and isinstance(s[0], list): # blank node or object
         return build_predicate(s[0], f)
     elif len(s) == 0: # single blank node
-        return '[]'
+        return '[ ]'
     else: # polist
         if s[0] == '[': # first member is an opening bnode bracket
             return ' [  ' + build_predicate([ s[1] ], f) + ';  ' + build_predicate(s[2:], f) + '  ] \n '
@@ -313,7 +338,7 @@ def build_bnode(b, f):
         global p_var
         v = ''
         for i in p_var:
-            v += ' data('+str(i[0:])+ ') '
+            v += ' '+str(i[0:])+ ' '
         return ''+ b + '' + v
     else:
         if b >= 2 and b[0] == '{' and b[-1] == '}' :

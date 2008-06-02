@@ -480,22 +480,23 @@ def p_constructQuery(p):
     '''constructQuery : CONSTRUCT constructTemplate datasetClauses whereSPARQLClause solutionmodifier'''
     global nsFlag
     nsFlag = True
-    p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[4], p[5]) ]), [], [])
+    p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3][0], p[3][1], p[4], p[5]) ]), [], [])
 
 
 def p_datasetClauses(p): # list of (from, iri) tuples
     '''datasetClauses : datasetClauses datasetClause
                       | empty'''
-    if len(p) == 2 and len(p[1]):
-        p[0] = [ p[1] ]
-    elif len(p) == 3:
-        p[0] = p[1] + [ p[2] ]
+   ## if len(p) == 2 and len(p[1]):
+   ##     p[0] = [ p[1] ]
+    if len(p) == 3:
+        p[0] = (p[1] + [ p[2] ], p[2][1])
     else: # empty
         p[0] = []
 
 
 def p_datasetClause(p):
     '''datasetClause : FROM IRIREF
+                     | FROM VAR
                      | FROM NAMED IRIREF'''
     if len(p) == 4: # from named
         p[0] = (p[1] + ' ' + p[2], p[3])
@@ -579,9 +580,9 @@ def p_sparqlForClause(p):
     '''sparqlForClause : FOR sparqlvars datasetClauses  WHERE constructTemplate solutionmodifier
                        | FOR sparqlvars datasetClauses  WHERE constructTemplate letClause solutionmodifier'''
     if len(p) == 7:
-        p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[6]) ]), p[2][1], p[2][2] )
+        p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3][0], p[3][1], p[5], p[6]) ]), p[2][1], p[2][2] )
     else:    
-        p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[7]) ])+' '+str(p[6][0])+'  \n  ', p[2][1], p[2][2] )
+        p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3][0], p[3][1], p[5], p[7]) ])+' '+str(p[6][0])+'  \n  ', p[2][1], p[2][2] )
 
 def p_sparqlvars(p):
     '''sparqlvars : VAR sparqlvars
@@ -1553,7 +1554,10 @@ def p_subject1(p):
 def p_predicateObjectList(p):
     '''predicateObjectList : verbObjectLists semicolonYesNo
                            | empty'''
-    p[0] = p[1]
+    if len(p) == 3:
+        p[0] = p[1]
+    else:
+        p[0] = []
 
 
 def p_semicolonYesNo(p):
@@ -1641,7 +1645,8 @@ def p_resource(p):
 
 def p_blank(p):
     '''blank : bnodeWithExpr
-             | LBRACKET predicateObjectList RBRACKET'''
+             | LBRACKET predicateObjectList RBRACKET
+             | LBRACKET RBRACKET'''
     if len(p) == 2: # bnodeWithExpr
         p[0] = [ p[1] ]
     elif len(p) == 3: # empty bracketedExpr
