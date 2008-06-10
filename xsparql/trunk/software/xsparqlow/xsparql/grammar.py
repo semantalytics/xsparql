@@ -48,7 +48,8 @@ import lowrewriter
 tokens = (
     'FOR', 'FROM', 'LET', 'WHERE', 'ORDER', 'BY', 'IN', 'AS', 'RETURN', 'CONSTRUCT', 'STABLE', 'ASCENDING', 'DESCENDING',
     'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING', 'IF', 'THEN', 'ELSE', 'LIMIT', 'OFFSET',
-    'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'EMPTY', 'COLLATION', 
+    #'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'EMPTY', 'COLLATION', 
+    'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'COLLATION', 
     'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON', 'CHILD', 'DESCENDANT', 'ATTRIBUTE', 'SELF', 'IS', 'EQ',
     'DESCENDANTORSELF', 'FOLLOWINGSIBLING', 'FOLLOWING', 'PARENT', 'ANCESTOR', 'PRECEDINGSIBLING', 'PRECEDING', 'NE', 'LT',
     'ANCESTORORSELF', 'STAR', 'ORDERED', 'UNORDERED', 'DOTDOT', 'SLASHSLASH', 'COLONCOLON', 'UNDERSCORE', 'ITEM', 'LE', 'GE',
@@ -57,7 +58,7 @@ tokens = (
     'EXCEPT', 'INSTANCE', 'TREAT', 'CASTABLE', 'CAST', 'OF', 'UNIONSYMBOL', 'QUESTIONMARK', 'EMPTYSEQUENCE',
     'LESSTHANLESSTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'NODE', 'DOCUMENTNODE',
     'TEXT', 'COMMENT', 'PROCESSINGINSTRUCTION', 'SCHEMAATTRIBUTE', 'SCHEMAELEMENT', 'DOCUMENT', 
-    'NAMED'
+    'NAMED', 'OPTIONAL'
 
 ##     'CHEX', 'OTHERHEXI', 'LAX', 'SMALLU', 'GREATERTHANGREATERTHAN', 'STRICT', 'STRI', 'BACKSLASH', 'BIGU',
 ##     'OTHERHEXII', 'HEXII', 'DOUBLEQUOTS', 'SINGLEQUOTS', 'BACKSLASHGT', 'HEXI', 'HAFEN',
@@ -94,7 +95,7 @@ reserved = {
    'where' : 'WHERE',
    'greatest' : 'GREATEST',
    'least' : 'LEAST',
-   'empty' : 'EMPTY',
+#   'empty' : 'EMPTY',
    'collation' : 'COLLATION',
    'child' : 'CHILD',
    'descendant' : 'DESCENDANT',
@@ -145,7 +146,8 @@ reserved = {
    'schema-attribute' : 'SCHEMAATTRIBUTE',
    'schema-element' : 'SCHEMAELEMENT',
    'document' : 'DOCUMENT',
-   'named' : 'NAMED' 
+   'named' : 'NAMED',
+   'optional' : 'OPTIONAL' 
 }
 
 # lexer states
@@ -221,6 +223,7 @@ t_ANY_HAFENEQUALS = r'\!\='
 ##t_ANY_GREATERTHANGREATERTHAN = r'\>\>'
 
 
+curly_brackets = 0
 
 # WHERE token starts the pattern state
 def t_WHERE(t):
@@ -228,15 +231,22 @@ def t_WHERE(t):
     t.lexer.begin('pattern')
     return t
 
-t_pattern_LCURLY  = r'{'
-t_pattern_QSTRING = r'\"[^\"]*\"'
-t_pattern_NCNAME  = r'\w[\w\-\.]*'
+def t_pattern_LCURLY(t):
+    r'{'
+    global curly_brackets
+    curly_brackets += 1
+    return t
 
-# RCURLY token ends the pattern state
+# RCURLY token ends the pattern state iff curly_brackets counter gets 0
 def t_pattern_RCURLY(t):
     r'}'
-    t.lexer.begin('INITIAL')
+    global curly_brackets
+    curly_brackets -= 1
+    if curly_brackets == 0: t.lexer.begin('INITIAL')
     return t
+
+t_pattern_QSTRING = r'\"[^\"]*\"'
+t_pattern_NCNAME  = r'\w[\w\-\.]*'
 
 
 # in iri state, we can match IRIs
@@ -265,7 +275,7 @@ def t_ANY_error(t):
 
     
 # Build the lexer
-lex.lex(debug=0, reflags=re.IGNORECASE)
+lex.lex(debug = 0, reflags = re.IGNORECASE)
 
 
 
@@ -288,32 +298,32 @@ def p_mainModule(p):
 
 
 def p_prolog(p):
-    '''prolog : xqueryNS prolog
-              | sparqlNS prolog
+    '''prolog : xqueryNS
+              | sparqlNS
               | empty'''
     p[0] = ''.join(p[1:])
 
 
 def p_xqueryNS(p):
-    '''xqueryNS : DECLARE xqueryNSs SEMICOLON '''
+    '''xqueryNS : DECLARE xqueryNSs nsDecl'''
     p[0] = ' '.join(p[1:])
 
 
 def p_xqueryNSs(p):
-    '''xqueryNSs : defaultNamespaceDecl
-                 | namespaceDecl
+    '''xqueryNSs : defaultNamespaceDecl 
+                 | namespaceDecl 
                  | baseURIDecl'''
     p[0] = ' '.join(p[1:])
 
 
 def p_sparqlNS(p):
-    '''sparqlNS : directive  '''
+    '''sparqlNS : directive  prolog'''
     p[0] = ''.join(p[1:])
 
 
 def p_directive(p):
-    '''directive : prefixID
-                 | sbase '''
+    '''directive : prefixID prolog
+                 | sbase prolog'''
     p[0] = ''.join(p[1:])
 
 
@@ -365,9 +375,9 @@ def p_sbase(p):
     p[0] = ''             
            
 
-##def p_nsDecl(p):
-##    '''nsDecl : SEMICOLON prolog'''
-##    p[0] = '\n '.join(p[1:])
+def p_nsDecl(p):
+    '''nsDecl : SEMICOLON prolog'''
+    p[0] = '\n '.join(p[1:])
 
 
 def p_defaultNamespaceDecl(p):
@@ -480,23 +490,23 @@ def p_constructQuery(p):
     '''constructQuery : CONSTRUCT constructTemplate datasetClauses whereSPARQLClause solutionmodifier'''
     global nsFlag
     nsFlag = True
-    p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3][0], p[3][1], p[4], p[5]) ]), [], [])
+    p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[4], p[5]) ]), [], [])
 
 
 def p_datasetClauses(p): # list of (from, iri) tuples
     '''datasetClauses : datasetClauses datasetClause
+                      | datasetClause
                       | empty'''
-   ## if len(p) == 2 and len(p[1]):
-   ##     p[0] = [ p[1] ]
-    if len(p) == 3:
-        p[0] = (p[1] + [ p[2] ], p[2][1])
+    if len(p) == 2 and len(p[1]):
+        p[0] = [ p[1] ]
+    elif len(p) == 3:
+        p[0] = p[1] + [ p[2] ]
     else: # empty
         p[0] = []
 
 
 def p_datasetClause(p):
     '''datasetClause : FROM IRIREF
-                     | FROM VAR
                      | FROM NAMED IRIREF'''
     if len(p) == 4: # from named
         p[0] = (p[1] + ' ' + p[2], p[3])
@@ -577,31 +587,18 @@ def p_forletClauses5(p):
 
 
 def p_sparqlForClause(p):
-    '''sparqlForClause : FOR sparqlvars datasetClauses  WHERE constructTemplate solutionmodifier
-                       | FOR sparqlvars datasetClauses  WHERE constructTemplate letClause solutionmodifier'''
-    if len(p) == 7:
-        p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3][0], p[3][1], p[5], p[6]) ]), p[2][1], p[2][2] )
-    else:    
-        p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3][0], p[3][1], p[5], p[7]) ])+' '+str(p[6][0])+'  \n  ', p[2][1], p[2][2] )
+    '''sparqlForClause : FOR sparqlvars datasetClauses WHERE groupGraphPattern solutionmodifier'''
+    p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[6]) ]), p[2][1], p[2][2] )
+
 
 def p_sparqlvars(p):
     '''sparqlvars : VAR sparqlvars
                   | VAR
                   | STAR'''
-    if len(p) == 2:
-        p[0] = ( p[1] , [p[1]] , [])
+    if len(p) == 3:
+        p[0] = (p[1] + ' ' + p[2][0], [ p[1] ] + p[2][1], [] )
     else:
-        p[0] = (p[1]+' '+p[2][0], [p[1]+ ' '+p[2][0]], [] )
-
-##def p_sparqlvars(p):
-##    '''sparqlvars : VAR sparqlvars0'''                  
-##    p[0] = (p[1], [p[1]]+[p[2][0]], [] )
-##
-##def p_sparqlvars0(p):
-##    '''sparqlvars0 : sparqlvars
-##                   | VAR
-##                   | STAR'''
-##    p[0] = ( p[1] , [p[1]] , [])
+        p[0] = ( p[1] , [ p[1] ] , [])
 
 
 def p_forClause(p):
@@ -611,18 +608,18 @@ def p_forClause(p):
 
 def p_forVars(p):
     '''forVars : forVars COMMA forVar'''
-    p[0] = ( p[1][0] + p[2] + ' \n ' + p[3][0] , p[1][1] + [ {p[3][1]:'ns'} ], p[1][2] + [ p[3][2] ] )
+    p[0] = ( p[1][0] + p[2] + ' \n ' + p[3][0] , p[1][1] + [ p[3][1] ], p[1][2] + [ p[3][2] ] )
 
 
 def p_forVars1(p):
     '''forVars : forVar'''
-    p[0] = ( p[1][0], [ {p[1][1]:'ns'} ] , [ p[1][2] ] )
+    p[0] = ( p[1][0], [ p[1][1] ] , [ p[1][2] ] )
 
 
 def p_forVar(p):
     '''forVar : VAR typeDeclaration positionVar IN exprSingle'''
     if len(p[3][1]) == 0:
-        p[0] = ( p[1] + ' at ' + p[1] + '_Pos' + p[2] + ' ' + p[4] + ' ' + p[5][0], p[1], p[1] + '_Pos' )
+        p[0] = ( p[1] + ' at ' + p[1] + '_Pos ' + p[2] + ' ' + p[4] + ' ' + p[5][0], p[1], p[1] + '_Pos' )
     else:
         p[0] = (p[1] + ' ' + p[2] + ' ' + p[3][0] + ' ' + p[4] + ' ' + p[5][0], p[1], p[3][1] )
          
@@ -636,9 +633,9 @@ def p_letVars(p):
     '''letVars : letVars COMMA letVar
                | letVar'''
     if len(p) == 2:
-        p[0] = ( p[1][0], [ {p[1][1]:'ns'} ] , [ p[1][2] ] )
+        p[0] = ( p[1][0], [ p[1][1] ] , [ p[1][2] ] )
     else:
-        p[0] = ( p[1][0] + p[2] + ' \n ' + p[3][0] , p[1][1] + [ {p[3][1]:'ns'} ], p[1][2] + [ p[3][2] ] )
+        p[0] = ( p[1][0] + p[2] + ' \n ' + p[3][0] , p[1][1] + [ p[3][1] ], p[1][2] + [ p[3][2] ] )
         
 
 
@@ -647,94 +644,188 @@ def p_letVar(p):
     p[0] = (p[1] + ' ' + p[2] + ' ' + p[3] + p[4] + ' ' + p[5][0],  p[1], [])
 
 
-##def p_groupgraphpattern(p):
-##    '''groupgraphpattern : LCURLY RCURLY
-##                         | LCURLY triplesBlock RCURLY
-##                         | LCURLY triplesBlock triplesBlockes RCURLY'''
-##    p[0] = p[2]
-##
-##def p_triplesBlockes(p):
-##    '''triplesBlockes : graphPatternNotTriples 
-##                      | filter
-##                      | graphPatternNotTriples DOT
-##                      | filter DOT
-##                      | graphPatternNotTriples triplesBlock
-##                      | filter triplesBlocks
-##                      | graphPatternNotTriples DOT triplesBlock
-##                      | filter DOT triplesBlock'''
-##    p[0] = p[2]
-##     
-##def p_triplesBlock(p):
-##    '''triplesBlock : triplesSameSubject
-##                    | triplesSameSubject DOT triplesBlocks'''
-##    p[0] = p[2]
-##
-##def p_triplesBlocks(p):
-##    '''triplesBlocks : triplesBlock
-##                     | empty'''
-##    p[0] = p[2]     
-##
-##def p_triplesSameSubject(p):
-##    '''triplesSameSubject : VarOrTerm predicateObjectList
-##                          | triplesNode propertyList'''
-##    p[0] = p[2]
-##
-##def p_propertyListNotEmpty(p):
-##    '''propertyListNotEmpty : verb objectList
-##                          | triplesNode propertyList'''
-##    p[0] = p[2]        
 
-##def p_iriRef(p):
-##    '''iriRef : LESSTHAN uri GREATERTHAN'''
-##    p[0] = ''.join(p[1:])
 
-##def p_relativeURI(p):
-##    '''relativeURI : uCharacters
-##                   | empty'''
-##    p[0] = ''.join(p[1:])
-##
-##def p_uCharacters(p):
-##    '''uCharacters : uCharacter relativeURI'''
-##    p[0] = ''.join(p[1:])    
-##
-##def p_uCharacter(p):
-##    '''uCharacter : character CHEX
-##                  | BACKSLASHGT'''
-##    p[0] = ''.join(p[1:])    
-##
-##def p_character(p):
-##    '''character : SMALLU hex hex hex hex
-##                 | BIGU hex hex hex hex hex hex hex hex
-##                 | BACKSLASH
-##                 | OTHERHEXI
-##                 | OTHERHEXII'''
-##    p[0] = ''.join(p[1:])    
-##
-##def p_hex(p):
-##    '''hex : HEXI
-##           | HEXII'''
-##    p[0] = ''.join(p[1:])
+
+
+##################
+
+
+
+## [20]    GroupGraphPattern     ::=     '{' TriplesBlock? ( ( GraphPatternNotTriples | Filter ) '.'? TriplesBlock? )* '}'
+## [21]    TriplesBlock    ::=    TriplesSameSubject ( '.' TriplesBlock? )?
+## [22]    GraphPatternNotTriples    ::=    OptionalGraphPattern | GroupOrUnionGraphPattern | GraphGraphPattern
+## [23]    OptionalGraphPattern    ::=    'OPTIONAL' GroupGraphPattern
+## [24]    GraphGraphPattern    ::=    'GRAPH' VarOrIRIref GroupGraphPattern
+## [25]    GroupOrUnionGraphPattern    ::=    GroupGraphPattern ( 'UNION' GroupGraphPattern )*
+## [26]    Filter    ::=    'FILTER' Constraint
+## [27]    Constraint    ::=    BrackettedExpression | BuiltInCall | FunctionCall
+## [28]    FunctionCall    ::=    IRIref ArgList
+## [29]    ArgList    ::=    ( NIL | '(' Expression ( ',' Expression )* ')' )
+## [30]    ConstructTemplate    ::=    '{' ConstructTriples? '}'
+## [31]    ConstructTriples    ::=    TriplesSameSubject ( '.' ConstructTriples? )?
+## [32]    TriplesSameSubject    ::=    VarOrTerm PropertyListNotEmpty | TriplesNode PropertyList
+## [33]    PropertyListNotEmpty    ::=    Verb ObjectList ( ';' ( Verb ObjectList )? )*
+## [34]    PropertyList    ::=    PropertyListNotEmpty?
+## [35]    ObjectList    ::=    Object ( ',' Object )*
+## [36]    Object    ::=    GraphNode
+## [37]    Verb    ::=    VarOrIRIref | 'a'
+## [38]    TriplesNode    ::=    Collection | BlankNodePropertyList
+## [39]    BlankNodePropertyList    ::=    '[' PropertyListNotEmpty ']'
+## [40]    Collection    ::=    '(' GraphNode+ ')'
+## [41]    GraphNode    ::=    VarOrTerm | TriplesNode
+## [42]    VarOrTerm    ::=    Var | GraphTerm
+## [43]    VarOrIRIref    ::=    Var | IRIref
+## [44]    Var    ::=    VAR1 | VAR2
+## [45]    GraphTerm    ::=    IRIref | RDFLiteral | NumericLiteral | BooleanLiteral | BlankNode | NIL
+
+
+def p_groupGraphPattern(p):
+   '''groupGraphPattern : LCURLY RCURLY
+                        | LCURLY graphPatterns RCURLY'''
+   if len(p) == 3:
+       p[0] = []
+   else:
+       p[0] = p[2]
+
+
+# returns the first non-list element in a possibly deep-nested list
+def flatten(l):
+    if isinstance(l, list):
+        for e in l:
+            return flatten(e)
+    return l
+
+def p_graphPatterns0(p):
+    '''graphPatterns : graphPattern'''
+    # flatten the graphPattern, we need a list of (patterntype, pattern) tuples
+    # this is due to deeply-nested {{{pattern}}}
+    if isinstance(p[1], list):
+        p[0] = [ flatten(e) for e in p[1] ]
+    else:
+        p[0] = [ p[1] ]
+
+def p_graphPatterns1(p):
+    '''graphPatterns : graphPatterns graphPattern'''
+    # flatten the graphPattern, we need a list of (patterntype, pattern) tuples
+    # this is due to deeply-nested {{{pattern}}}
+    if isinstance(p[2], list):
+        p[0] = p[1] + [ flatten(e) for e in p[2] ]
+    else:
+        p[0] = p[1] + [ p[2] ]
     
-##def p_uri(p):
-##    '''uri : NCNAME COLON NCNAME
-##           | NCNAME COLON SLASHSLASH NCNAME SLASH NCNAME
-##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME
-##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME SLASH NCNAME SLASH 
-##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
-##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH 
-##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH
-##           | NCNAME COLON SLASHSLASH NCNAME DOT NCNAME DOT NCNAME SLASH NCNAME SLASH NCNAME SLASH NCNAME DOT NCNAME
-##           | NCNAME SLASH NCNAME DOT NCNAME
-##           | NCNAME COLON NCNAME DOT NCNAME
-##           | NCNAME DOT NCNAME
-##           | NCNAME'''
-##    p[0] = ''.join(p[1:])
+
+def p_graphPattern(p):
+    '''graphPattern : filteredBasicGraphPattern
+                    | graphPatternNotTriples
+                    | graphPatternNotTriples DOT'''
+    p[0] = p[1]
+    
+##     '''graphPatternNotTriples : groupOrUnionPattern
+##                               | optionalPattern
+##                               | namedPattern'''
+def p_graphPatternNotTriples(p):
+    '''graphPatternNotTriples : groupOrUnionPattern
+                              | optionalPattern'''
+    p[0] = p[1]    
+
+
+def p_groupOrUnionPattern0(p):
+    '''groupOrUnionPattern : groupGraphPattern'''
+    p[0] = p[1]
+    
+def p_groupOrUnionPattern1(p):
+    '''groupOrUnionPattern : groupOrUnionPattern unionPattern'''
+    p[0] = p[1] + [ p[2] ]
+
+    
+def p_unionPattern(p):
+    '''unionPattern : UNION groupGraphPattern'''
+    p[0] = ( p[1] , p[2] )
+    
+def p_optionalPattern(p):
+    '''optionalPattern : OPTIONAL groupGraphPattern'''
+    p[0] = ( p[1] , p[2] )
+
+## namedPattern: GRAPH
+## varIriQnLit {  } 
+##               groupGraphPattern 
+##                     { 
+##                     }
+##               ;
+
+def p_filteredBasicGraphPattern(p):
+    '''filteredBasicGraphPattern : triplesPattern
+                                 | triplesPattern DOT'''
+    p[0] = ( '', p[1] )
+
+
+def p_triplesPattern0(p):
+    '''triplesPattern : value predObjs'''
+    p[0] = ( [ p[1] ] , p[2] )
+
+def p_triplesPattern1(p):
+    '''triplesPattern : patternPathExpr predObjs'''
+    p[0] = ( p[1], p[2] )
+
+
+def p_patternPathExpr(p):
+    '''patternPathExpr : LBRACKET predObjs RBRACKET
+                       | LBRACKET RBRACKET'''
+    if len(p) == 3: # empty bracketedExpr
+        p[0] = []
+    else: # non-empty bracketedExpr
+        p[0] = [ p[1] ] + p[2]
 
 
 
-#def p_formalReturnClause(p):
-#    '''formalReturnClause : RETURN directConstructor'''
-#    p[0] = ' '.join(p[1:])
+def p_predObjs0(p):
+    '''predObjs : predObj'''
+    p[0] = [ p[1] ]
+    
+def p_predObjs1(p):
+    '''predObjs : predObjs SEMICOLON predObj'''
+    p[0] = [ p[1] ] + p[3]
+
+
+def p_predObj(p):
+    '''predObj : pred objs'''
+    p[0] = ( p[1], p[2] )
+
+
+def p_pred(p):
+    '''pred :  value'''
+    p[0] = p[1]
+
+
+def p_objs0(p):
+    '''objs : obj'''
+    p[0] = [ p[1] ]
+
+def p_objs1(p):
+    '''objs : objs COMMA obj'''
+    p[0] = p[1] + [ p[2] ]
+
+
+def p_obj(p):
+    '''obj : value
+           | patternPathExpr'''
+    p[0] = p[1]
+
+
+def p_varIriQnLit(p):
+    '''varIriQnLit : resource
+                   | blank
+                   | rdfliteral'''
+    p[0] = p[1]
+
+def p_value(p):
+    '''value : varIriQnLit'''
+    p[0] = p[1]
+    
+
+
+####################
 
 
 def p_constructor(p):
@@ -813,8 +904,7 @@ def p_attributProcessing(p):
     
 
 def p_directElemContentProcessing(p):
-    '''directElemContentProcessing : directElemContent LESSTHAN SLASH  NCNAME GREATERTHAN
-                                   | directElemContent LESSTHAN SLASH  NCNAME GREATERTHAN directConstructor'''
+    '''directElemContentProcessing : directElemContent LESSTHAN SLASH  NCNAME GREATERTHAN '''
     p[0] = ''.join(p[1:])
     
 
@@ -852,15 +942,9 @@ def p_attributeValueContent(p):
     p[0] = ''.join(p[1:])       
 
 
-##def p_graphpattern(p):
-##    '''graphpattern : LCURLY triples RCURLY'''
-##    p[0] = p[2]
-
-
 def p_solutionmodifier(p):
     '''solutionmodifier : ORDER BY VAR
                         | ORDER BY VAR limitoffsetclause
-                        | limitoffsetclause
                         | empty'''
     p[0] = ' '.join(p[1:])
 
@@ -881,33 +965,6 @@ def p_limitclause(p):
 def p_offsetclause(p):
     '''offsetclause : OFFSET INTEGER'''
     p[0] = ' '.join(p[1:])
-
-
-##def p_triples_0(p):
-##    '''triples : '''
-##    p[0] = []
-
-##def p_triples_1(p):
-##    '''triples : triple
-##               | triple DOT'''
-##    p[0] = [ p[1] ]
-##    
-##def p_triples_2(p):
-##    '''triples : triple DOT triples'''
-##    p[0] = [ p[1] ] + p[3]
-##
-##
-##def p_triple(p):
-##    '''triple : term term term'''
-##    p[0] = ( p[1], p[2], p[3] )
-
-
-##def p_term(p):
-##    '''term : VAR
-##            | iriRef
-##            | literal
-##            | qname'''
-##    p[0] = p[1]
     
     
 def p_typeDeclaration(p):
@@ -949,9 +1006,15 @@ def p_orderDirection(p):
     p[0] = p[1]
 
 
+# @todo EMPTY clashes with fn:empty...
+## def p_emptyHandling(p):
+##     '''emptyHandling : EMPTY GREATEST
+##                      | EMPTY LEAST
+##                      | empty'''
+##     p[0] = ' '.join(p[1:])
 def p_emptyHandling(p):
-    '''emptyHandling : EMPTY GREATEST
-                     | EMPTY LEAST
+    '''emptyHandling : GREATEST
+                     | LEAST
                      | empty'''
     p[0] = ' '.join(p[1:])
 
@@ -1554,10 +1617,7 @@ def p_subject1(p):
 def p_predicateObjectList(p):
     '''predicateObjectList : verbObjectLists semicolonYesNo
                            | empty'''
-    if len(p) == 3:
-        p[0] = p[1]
-    else:
-        p[0] = []
+    p[0] = p[1]
 
 
 def p_semicolonYesNo(p):
@@ -1614,24 +1674,6 @@ def p_rdfPredicate(p):
     p[0] = p[1]    
 
 
-##def p_triples_0(p):
-##'''triples : '''
-##p[0] = []
-##
-##def p_triples_1(p):
-##'''triples : triple'''
-##p[0] = [ p[1] ]
-##
-##def p_triples_2(p):
-##'''triples : triples DOT triple'''
-##p[0] = p[1] + [ p[3] ]
-##
-##
-##def p_triple(p):
-##'''triple : term term term'''
-##p[0] = ( p[1], p[2], p[3] )
-
-
 def p_resource(p):
     '''resource : sparqlqname
                 | VAR 
@@ -1645,8 +1687,8 @@ def p_resource(p):
 
 def p_blank(p):
     '''blank : bnodeWithExpr
-             | LBRACKET predicateObjectList RBRACKET
-             | LBRACKET RBRACKET'''
+             | LBRACKET RBRACKET
+             | LBRACKET predicateObjectList RBRACKET'''
     if len(p) == 2: # bnodeWithExpr
         p[0] = [ p[1] ]
     elif len(p) == 3: # empty bracketedExpr

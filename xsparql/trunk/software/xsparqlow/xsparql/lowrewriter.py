@@ -97,6 +97,16 @@ def declare_namespaces(nstag, col, pre, uri, i):
 scopeVar_count = 0
 
 
+# recursively traverse the groupGraphPatterns
+def build_where(typ, pattern):
+    if typ == '':
+        return build_subject(pattern[0], False) + build_predicate(pattern[1], False) + ' . '
+    else:
+        query = typ + ' { '
+        for tp, gp in pattern: query += build_where(tp, gp)
+        return query + ' } '
+    
+
 # @todo ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
     global scoped_variables
@@ -112,6 +122,7 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
         from_iri_str += fn + ' ' + iri + '> ' # @todo '>' is ugly
 
     # build variables (possibly scoped)
+    # @todo this is utter crap
     s_vars = ''
     for j in vars:
         if j in scoped_variables:
@@ -125,9 +136,8 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
     # build the SPARQL SELECT Varlist, (no/multiple) FROM (NAMED), WHERE
     query += '\n' + 'select ' + s_vars + from_iri_str + ' where { '
 
-    # build graph pattern
-    for s, polist in graphpattern:
-        query +=  build_subject(s, False) + build_predicate(polist, False) + '. '
+    # build grouped graph patterns
+    for typ, pattern in graphpattern: query += build_where(typ, pattern)
         
     # build the SOLUTION MODIFIERs
     query += '} ' + solutionmodifier
@@ -148,27 +158,12 @@ def build_for_loop(i, var):
 
 def build_aux_variables(i, vars):
     ret = ''
-    #print vars
     for v in vars:
         ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/sparql_result:binding[@name = "' + v[1:] + '"])\n'
         ret += '\tlet ' + var_nodetype(v) + ' := name(' + var_node(v) + '/*)\n'
         ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
         ret += '\tlet ' + var_rdfterm(v) + ' :=  local:rdf_term(' + var_nodetype(v)+', '+v +' )\n'
     return ret
-
-
-
-def build_aux_copy_variables(i, vars):
-    ret = ''
-    #print vars
-    for v in vars:
-        ret += '\tlet ' + var_node(v) + ' := ' + var_node(i) + ' \n'
-        ret += '\tlet ' + var_nodetype(v) + ' := ' + var_nodetype(i) + ' \n'
-        ret += '\tlet ' + v + ' := ' + i + ' \n'
-        ret += '\tlet ' + var_rdfterm(v) + ' := ' + var_rdfterm(i) +' \n'
-    return ret
-
-
 
 
 
@@ -180,21 +175,16 @@ scoped_variables = []
 
 _forcounter = 0
 
-
-def buildConstruct(constGraphpattern, from_iri, from_vars, graphpattern, solutionmodifier):
+def buildConstruct(constGraphpattern, from_iri, graphpattern, solutionmodifier):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
-##    print from_vars
+    
     find_vars(graphpattern)
 
-    if from_vars[0]=='?' or from_vars[0]=='$':
-        yield build_aux_copy_variables(from_vars, varlist)
-    else:
-        yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
-                             varlist, from_iri, graphpattern, solutionmodifier)
-        yield build_for_loop(_forcounter, varlist)
-        yield build_aux_variables(_forcounter, varlist)
-    
+    yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
+                             variables, from_iri, graphpattern, solutionmodifier)
+    yield build_for_loop(_forcounter, variables)
+    yield build_aux_variables(_forcounter, variables)
     yield graphOutput(constGraphpattern)
     
 
@@ -207,27 +197,18 @@ def graphOutput(constGraphpattern):
 
 
 # generator function, keeps track of incrementing the for-counter
-def build(vars, from_iri, from_vars, graphpattern, solutionmodifier):
+def build(vars, from_iri, graphpattern, solutionmodifier):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
-##    print from_vars
-    varlist=[]
+
     if len(vars) == 1 and isinstance(vars[0], str) and vars[0] == '*':
         find_vars(graphpattern)
-        varlist = variables
-    else:
-        for k in vars[0].split(' '):
-            varlist += [k]   
-    
-    if from_vars[0]=='?' or from_vars[0]=='$':
-        yield build_aux_copy_variables(from_vars, varlist)
-    else:
-        yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
-                             varlist, from_iri, graphpattern, solutionmodifier)
-        yield build_for_loop(_forcounter, varlist)
-        yield build_aux_variables(_forcounter, varlist)
+        vars = variables
 
-       
+    yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
+                             vars, from_iri, graphpattern, solutionmodifier)
+    yield build_for_loop(_forcounter, vars)
+    yield build_aux_variables(_forcounter, vars)
 
 
 variables = []
@@ -259,7 +240,6 @@ def find_vars(p):
 
 
 def build_subject(s, f):
-##    print s
     if len(s) == 1 and isinstance(s[0], list) and isinstance(s[0][0], str):
         return build_bnode(s[0][0], f) 
     elif len(s) == 1 and isinstance(s[0], str): # blank node or object
@@ -267,12 +247,12 @@ def build_subject(s, f):
     elif len(s) == 1 and isinstance(s[0], list): # blank node or object
         return build_predicate(s[0], f)
     elif len(s) == 0: # single blank node
-        return '[ ]'
+        return '[]'
     else: # polist
         if s[0] == '[': # first member is an opening bnode bracket
-            return ' [  ' + build_predicate([ s[1] ], f) + ';  ' + build_predicate(s[2:], f) + '  ] \n '
+            return '"[", ' + build_predicate([ s[1] ], f) + ' ";", ' + build_predicate(s[2:], f) + ' "]",\n '
         else:
-            return ' ' + build_predicate([ s[0] ], f) + ';  ' + build_predicate(s[1:], f) + ' \n '
+            return ' ' + build_predicate([ s[0] ], f) + ' ";", ' + build_predicate(s[1:], f) + ' \n '
 
 
 
@@ -298,7 +278,7 @@ def build_predicate(p, f):
                     if f:    
                         variables += [ b ]
                     if listSearch(b):
-                         return '    '+ b + '_RDFTerm  ' + build_object(p[0][1], f)+ ' '
+                         return '   ", '+ b + '_RDFTerm ," ' + build_object(p[0][1], f)+ ' '
                     else:
                          return '   '+ b + '  ' + build_object(p[0][1], f)+ ' '
             return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
@@ -308,9 +288,9 @@ def build_predicate(p, f):
         d =  p
         if d[0] == '[' :
             d.remove('[')
-            return ' [  ' + build_predicate([ d[0] ], f) + '; ' + build_predicate([ d[1] ], f) + ' ] \n '           
+            return '"[", ' + build_predicate([ d[0] ], f) + '";", ' + build_predicate([ d[1] ], f) + ' "]",\n '           
         else:
-            return ' ' + build_predicate([ d[0] ], f) + '; ' + build_predicate([ d[1] ], f) + ' \n '
+            return ' ' + build_predicate([ d[0] ], f) + ' ";", ' + build_predicate([ d[1] ], f) + ' \n '
        
 
 
@@ -319,7 +299,7 @@ def build_object(o, f):
         d =  o[0]
         if d[0] == '[' :
             d.remove('[')
-            return '[ ' + build_predicate(d, f) + ' ] \n '
+            return '"[", ' + build_predicate(d, f) + ' "]",\n '
         else:
             return  build_bnode(o[0][0], f)
     elif len(o) == 1 and isinstance(o[0], str):
@@ -329,7 +309,7 @@ def build_object(o, f):
     elif len(o) == 0:
         return '[]'
     else:
-        return '[ ' + build_predicate([ o[0] ], f) + ' ;  ' + build_predicate(o[1:], f) + ' ]\n '
+        return '[ ' + build_predicate([ o[0] ], f) + ' ";", ' + build_predicate(o[1:], f) + ' ]\n '
 
 
 def build_bnode(b, f):
@@ -338,7 +318,7 @@ def build_bnode(b, f):
         global p_var
         v = ''
         for i in p_var:
-            v += ' '+str(i[0:])+ ' '
+            v += ' data('+str(i[0:])+ ') '
         return ''+ b + '' + v
     else:
         if b >= 2 and b[0] == '{' and b[-1] == '}' :
@@ -354,7 +334,7 @@ def build_bnode(b, f):
                     if f:    
                         variables += [ b ]
                     if listSearch(b):
-                        return '    '+ b + '_RDFTerm   '
+                        return '   ", '+ b + '_RDFTerm ,"  '
                     else:
                         return '   '+ b + '  '
             return ' '+ b + ' '
