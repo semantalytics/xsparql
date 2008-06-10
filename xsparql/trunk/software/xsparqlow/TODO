@@ -4,4 +4,12 @@
 
 * TODO rewrite nested CONSTRUCTs properly
 
-* TODO build AST instead of in-place rewriting?
+* TODO build abstract syntax tree instead of in-place rewriting
+
+* TODO allow FILTER in GroupGraphPatterns
+
+* TODO EMPTY keyword in XQuery is currently non-functional, clashes with fn:empty
+
+* TODO parsing of bound variables does not work properly (this goes in line with AST representation)
+
+* TODO parsing "... RETURN <foo>bar bar</foo> ..." does not work
