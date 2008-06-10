@@ -13,3 +13,14 @@
 * TODO parsing of bound variables does not work properly (this goes in line with AST representation)
 
 * TODO parsing "... RETURN <foo>bar bar</foo> ..." does not work
+
+* TODO "let $x := ... , $y := ... , $z := ..." is not working
+
+* TODO "declare function" and module stuff is not working
+
+* TODO invent a new comment sequence (I like "-- "); (: :) and # is not working
+
+* TODO fix shift-reduce conflicts in the parser
+
+* TODO "... return <criterion2><name>{$name}</name><weight>{$weight}</weight></criterion2> ..." does not work
+but we can use "... return <criterion2>{(<name>{$name}</name>,<weight>{$weight}</weight>)}</criterion2> ..."
