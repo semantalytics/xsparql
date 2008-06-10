@@ -785,7 +785,7 @@ def p_predObjs0(p):
     
 def p_predObjs1(p):
     '''predObjs : predObjs SEMICOLON predObj'''
-    p[0] = [ p[1] ] + p[3]
+    p[0] = p[1] + [ p[3] ]
 
 
 def p_predObj(p):
