@@ -264,7 +264,7 @@ t_ANY_ignore = " \t"
 
 # newlines increase line numbers (and will be ignored)
 def t_ANY_newline(t):
-    r'\n+'
+    r'(\r?\n)+'
     t.lexer.lineno += t.value.count("\n")
 
 # illegal characters will end up here
