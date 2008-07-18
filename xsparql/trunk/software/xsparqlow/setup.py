@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+try: # first try python's new setuptools
+    from setuptools import setup #http://peak.telecommunity.com/DevCenter/PythonEggs
+except ImportError: # otw. go with native distutils
+    from distutils.core import setup
 
 import sys
 if sys.version < '2.3.0':
@@ -23,9 +26,9 @@ try:
     import os
     from stat import ST_MTIME
     if (len(glob.glob('./xsparql/parsetab.py')) == 0 or
-        os.stat('./xsparql/parsetab.py')[ST_MTIME] < os.stat('./xsparql/grammar.py')[ST_MTIME]):
-        import xsparql.grammar
-        xsparql.grammar.generate_parser()
+	os.stat('./xsparql/parsetab.py')[ST_MTIME] < os.stat('./xsparql/grammar.py')[ST_MTIME]):
+	import xsparql.grammar
+	xsparql.grammar.generate_parser()
 except Exception, e:
     print 'Something went wrong, bailing out:', e
     sys.exit(1)

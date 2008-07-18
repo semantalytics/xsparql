@@ -1,2 +1,0 @@
-cat $1 | xsparqler.py 2>/dev/null > $1.out;
-xqilla $1.out

@@ -1,0 +1,8 @@
+2008-07-18  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql: bring code in CVS to the same state
+	as the web interface.  Some revisions were discarded.  The parser
+	now returns exit code 1 on syntax error.
+	* online-interface: rewrite xsparqlrewrite to handle more
+	cases. If there is a parse error return the original query.
+

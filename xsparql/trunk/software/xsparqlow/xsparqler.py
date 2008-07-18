@@ -36,7 +36,7 @@ def main(argv=None):
     '''parse stdin and output the possibly rewritten XSPARQL query'''
 
     if argv is None:
-        argv = sys.argv
+	argv = sys.argv
 
     s = ' '.join(sys.stdin.readlines())
 
@@ -49,6 +49,3 @@ def main(argv=None):
 
 if __name__ == "__main__":
     sys.exit(main())
-
-
-

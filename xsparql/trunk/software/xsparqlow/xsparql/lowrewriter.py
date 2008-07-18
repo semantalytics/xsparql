@@ -70,14 +70,14 @@ def var_rdfterm(var):
 
 
 def cnv_lst_str(dec_var, flag):
-    stri = ''    
+    stri = ''
     for i in dec_var:
-       if flag : 
-           stri += ' "  \n@", '+i[0:] + ', ".",'
+       if flag :
+	   stri += ' "  \n@", '+i[0:] + ', ".",'
        else:
-           stri += '  '+i[0:] + ','
+	   stri += '  '+i[0:] + ','
     return stri.rstrip(',')
-       
+
 
 
 #
@@ -100,12 +100,12 @@ scopeVar_count = 0
 # recursively traverse the groupGraphPatterns
 def build_where(typ, pattern):
     if typ == '':
-        return build_subject(pattern[0], False) + build_predicate(pattern[1], False) + ' . '
+	return build_subject(pattern[0], False) + build_predicate(pattern[1], False) + ' . '
     else:
-        query = typ + ' { '
-        for tp, gp in pattern: query += build_where(tp, gp)
-        return query + ' } '
-    
+	query = typ + ' { '
+	for tp, gp in pattern: query += build_where(tp, gp)
+	return query + ' } '
+
 
 # @todo ground input variables? how?
 def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
@@ -119,33 +119,34 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
     # @todo FROM NAMED is missing
     from_iri_str = ''
     for (fn, iri) in from_iri:
-        from_iri_str += fn + ' ' + iri + '> ' # @todo '>' is ugly
+	from_iri_str += fn + ' ' + iri + '> ' # @todo '>' is ugly
 
     # build variables (possibly scoped)
     # @todo this is utter crap
     s_vars = ''
     for j in vars:
-        if j in scoped_variables:
-            scoped_variables.remove(j)
-        else:
-            s_vars += j + ' '
-            scoped_variables += [ j ]
+	if j in scoped_variables:
+	    scoped_variables.remove(j)
+	else:
+	    s_vars += j + ' '
+	    scoped_variables += [ j ]
 
     scopeVar_count = len(vars)
-    
+
     # build the SPARQL SELECT Varlist, (no/multiple) FROM (NAMED), WHERE
     query += '\n' + 'select ' + s_vars + from_iri_str + ' where { '
 
-    # build grouped graph patterns
-    for typ, pattern in graphpattern: query += build_where(typ, pattern)
-        
+    # build graph pattern
+    for s, polist in graphpattern:
+	query +=  build_subject(s, False) + build_predicate(polist, False) + '. '
+
     # build the SOLUTION MODIFIERs
     query += '} ' + solutionmodifier
 
     # return XQuery SPARQL query
     return '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + \
-             '", fn:encode-for-uri( fn:concat(' + cnv_lst_str(dec_var, False) + ', "' + \
-             query + '")))\n'
+	     '", fn:encode-for-uri( fn:concat(' + cnv_lst_str(dec_var, False) + ', "' + \
+	     query + '")))\n'
 
     # @todo why do we need the last empty string??
     #return '\n' + prefix + query + ' ", "" )))\n'
@@ -158,11 +159,12 @@ def build_for_loop(i, var):
 
 def build_aux_variables(i, vars):
     ret = ''
+
     for v in vars:
-        ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/sparql_result:binding[@name = "' + v[1:] + '"])\n'
-        ret += '\tlet ' + var_nodetype(v) + ' := name(' + var_node(v) + '/*)\n'
-        ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
-        ret += '\tlet ' + var_rdfterm(v) + ' :=  local:rdf_term(' + var_nodetype(v)+', '+v +' )\n'
+	ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/sparql_result:binding[@name = "' + v[1:] + '"])\n'
+	ret += '\tlet ' + var_nodetype(v) + ' := name(' + var_node(v) + '/*)\n'
+	ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
+	ret += '\tlet ' + var_rdfterm(v) + ' :=  local:rdf_term(' + var_nodetype(v)+', '+v +' )\n'
     return ret
 
 
@@ -178,21 +180,21 @@ _forcounter = 0
 def buildConstruct(constGraphpattern, from_iri, graphpattern, solutionmodifier):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
-    
+
     find_vars(graphpattern)
 
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
-                             variables, from_iri, graphpattern, solutionmodifier)
+			     variables, from_iri, graphpattern, solutionmodifier)
     yield build_for_loop(_forcounter, variables)
     yield build_aux_variables(_forcounter, variables)
     yield graphOutput(constGraphpattern)
-    
+
 
 
 def graphOutput(constGraphpattern):
     global variables
     statement = ' ' + lifrewriter.build_triples(constGraphpattern, p_var, variables) + ' '
-    statement += ')'      
+    statement += ')'
     return '\n return \n\t  fn:concat( \n\t\t\n ' + statement
 
 
@@ -202,11 +204,11 @@ def build(vars, from_iri, graphpattern, solutionmodifier):
     _forcounter += 1
 
     if len(vars) == 1 and isinstance(vars[0], str) and vars[0] == '*':
-        find_vars(graphpattern)
-        vars = variables
+	find_vars(graphpattern)
+	vars = variables
 
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
-                             vars, from_iri, graphpattern, solutionmodifier)
+			     vars, from_iri, graphpattern, solutionmodifier)
     yield build_for_loop(_forcounter, vars)
     yield build_aux_variables(_forcounter, vars)
 
@@ -215,139 +217,139 @@ variables = []
 def find_vars(p):
     global variables
     for s, polist in p:
-        build_subject(s, True)
-        build_predicate(polist, True )
+	build_subject(s, True)
+	build_predicate(polist, True )
 
     var = []
-    temp = variables[0]  
+    temp = variables[0]
     for v in variables:
        n = 0
-       
+
        for nv in variables:
-          if temp.lstrip('$') == nv.lstrip('?') or temp.lstrip('?') == nv.lstrip('$') or temp == nv :
-              n += 1  
-              if n == 2 :    
-                  var += [temp]
+	  if temp.lstrip('$') == nv.lstrip('?') or temp.lstrip('?') == nv.lstrip('$') or temp == nv :
+	      n += 1
+	      if n == 2 :
+		  var += [temp]
        for j in var:
-           if j != v:
-               temp = v
-           else:
-               temp = ''
-                 
+	   if j != v:
+	       temp = v
+	   else:
+	       temp = ''
+
     for i in var:
-        variables.remove(i)
-    
+	variables.remove(i)
+
 
 
 def build_subject(s, f):
     if len(s) == 1 and isinstance(s[0], list) and isinstance(s[0][0], str):
-        return build_bnode(s[0][0], f) 
+	return build_bnode(s[0][0], f)
     elif len(s) == 1 and isinstance(s[0], str): # blank node or object
-        return build_bnode(s[0], f) 
+	return build_bnode(s[0], f)
     elif len(s) == 1 and isinstance(s[0], list): # blank node or object
-        return build_predicate(s[0], f)
+	return build_predicate(s[0], f)
     elif len(s) == 0: # single blank node
-        return '[]'
+	return '[]'
     else: # polist
-        if s[0] == '[': # first member is an opening bnode bracket
-            return '"[", ' + build_predicate([ s[1] ], f) + ' ";", ' + build_predicate(s[2:], f) + ' "]",\n '
-        else:
-            return ' ' + build_predicate([ s[0] ], f) + ' ";", ' + build_predicate(s[1:], f) + ' \n '
+	if s[0] == '[': # first member is an opening bnode bracket
+	    return '"[", ' + build_predicate([ s[1] ], f) + ' ";", ' + build_predicate(s[2:], f) + ' "]",\n '
+	else:
+	    return ' ' + build_predicate([ s[0] ], f) + ' ";", ' + build_predicate(s[1:], f) + ' \n '
 
 
 
 
-    
+
 
 
 
 def build_predicate(p, f):
     global variables
     if len(p) == 1:
-        b = p[0][0]
-        if b >= 2 and b[0] == '{' and b[-1] == '}' :
-            strip = str(b).lstrip('{')
-            b = strip.rstrip('}') 
-            return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
-        else:
-            
-            if b[0] == '$' or b[0] == '?':
-                    if b[0] == '?':
-                        b = b.lstrip('?')
-                        b = '$'+ b
-                    if f:    
-                        variables += [ b ]
-                    if listSearch(b):
-                         return '   ", '+ b + '_RDFTerm ," ' + build_object(p[0][1], f)+ ' '
-                    else:
-                         return '   '+ b + '  ' + build_object(p[0][1], f)+ ' '
-            return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
+	b = p[0][0]
+	if b >= 2 and b[0] == '{' and b[-1] == '}' :
+	    strip = str(b).lstrip('{')
+	    b = strip.rstrip('}')
+	    return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
+	else:
+
+	    if b[0] == '$' or b[0] == '?':
+		    if b[0] == '?':
+			b = b.lstrip('?')
+			b = '$'+ b
+		    if f:
+			variables += [ b ]
+		    if listSearch(b):
+			 return '   ", '+ b + '_RDFTerm ," ' + build_object(p[0][1], f)+ ' '
+		    else:
+			 return '   '+ b + '  ' + build_object(p[0][1], f)+ ' '
+	    return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
     elif len(p) == 0:
-        return ''
+	return ''
     else:
-        d =  p
-        if d[0] == '[' :
-            d.remove('[')
-            return '"[", ' + build_predicate([ d[0] ], f) + '";", ' + build_predicate([ d[1] ], f) + ' "]",\n '           
-        else:
-            return ' ' + build_predicate([ d[0] ], f) + ' ";", ' + build_predicate([ d[1] ], f) + ' \n '
-       
+	d =  p
+	if d[0] == '[' :
+	    d.remove('[')
+	    return '"[", ' + build_predicate([ d[0] ], f) + '";", ' + build_predicate([ d[1] ], f) + ' "]",\n '
+	else:
+	    return ' ' + build_predicate([ d[0] ], f) + ' ";", ' + build_predicate([ d[1] ], f) + ' \n '
+
 
 
 def build_object(o, f):
     if len(o) == 1 and isinstance(o[0], list) and isinstance(o[0][0], str):
-        d =  o[0]
-        if d[0] == '[' :
-            d.remove('[')
-            return '"[", ' + build_predicate(d, f) + ' "]",\n '
-        else:
-            return  build_bnode(o[0][0], f)
+	d =  o[0]
+	if d[0] == '[' :
+	    d.remove('[')
+	    return '"[", ' + build_predicate(d, f) + ' "]",\n '
+	else:
+	    return  build_bnode(o[0][0], f)
     elif len(o) == 1 and isinstance(o[0], str):
-        return  build_bnode(o[0], f) 
+	return  build_bnode(o[0], f)
     elif len(o) == 1 and isinstance(o[0], list):
-        return build_predicate(o[0], f)
+	return build_predicate(o[0], f)
     elif len(o) == 0:
-        return '[]'
+	return '[]'
     else:
-        return '[ ' + build_predicate([ o[0] ], f) + ' ";", ' + build_predicate(o[1:], f) + ' ]\n '
+	return '[ ' + build_predicate([ o[0] ], f) + ' ";", ' + build_predicate(o[1:], f) + ' ]\n '
 
 
 def build_bnode(b, f):
     global variables
     if b >= 2 and b[0] == '_' and b[1] == ':':
-        global p_var
-        v = ''
-        for i in p_var:
-            v += ' data('+str(i[0:])+ ') '
-        return ''+ b + '' + v
+	global p_var
+	v = ''
+	for i in p_var:
+	    v += ' data('+str(i[0:])+ ') '
+	return ''+ b + '' + v
     else:
-        if b >= 2 and b[0] == '{' and b[-1] == '}' :
-            strip = str(b).lstrip('{')
-            b = strip.rstrip('}') 
-            return ' '+ b + ' '
-        else:
-            
-            if b[0] == '$' or b[0] == '?':
-                    if b[0] == '?':
-                        b = b.lstrip('?')
-                        b = '$'+ b
-                    if f:    
-                        variables += [ b ]
-                    if listSearch(b):
-                        return '   ", '+ b + '_RDFTerm ,"  '
-                    else:
-                        return '   '+ b + '  '
-            return ' '+ b + ' '
+	if b >= 2 and b[0] == '{' and b[-1] == '}' :
+	    strip = str(b).lstrip('{')
+	    b = strip.rstrip('}')
+	    return ' '+ b + ' '
+	else:
+
+	    if b[0] == '$' or b[0] == '?':
+		    if b[0] == '?':
+			b = b.lstrip('?')
+			b = '$'+ b
+		    if f:
+			variables += [ b ]
+		    if listSearch(b):
+			return '   ", '+ b + '_RDFTerm ,"  '
+		    else:
+			return '   '+ b + '  '
+	    return ' '+ b + ' '
 
 
 def listSearch(list_val):
     global scoped_variables
     global scopeVar_count
     if len(scoped_variables) != scopeVar_count:
-        return list_val in scoped_variables[0:len(scoped_variables)-scopeVar_count]
+	return list_val in scoped_variables[0:len(scoped_variables)-scopeVar_count]
     else:
-        return False
-   
+	return False
+
 
 def getVar():
     global variables

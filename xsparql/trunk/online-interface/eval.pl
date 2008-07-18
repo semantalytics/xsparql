@@ -11,8 +11,8 @@ sub trim
     my $string = shift;
     for ($string)
     {
-        s/^\s+//;
-        s/\s+$//;
+	s/^\s+//;
+	s/\s+$//;
     }
     return $string;
 }
@@ -38,14 +38,15 @@ my @result = ();
 switch ($solver)
 {
 case 'evaluate'
-    { 
-      $solverexec = './xsparql '; 
-      $headstr = 'Result:'; 
+    {
+#      $solverexec = './xsparql ';
+      $solverexec = './xsparqlrewrite --eval';
+      $headstr = 'Result:';
     }
 case 'rewrite'
-    { 
-      $solverexec = './xsparqlrewrite '; 
-      $headstr = 'Rewritten XQuery:'; 
+    {
+      $solverexec = './xsparqlrewrite ';
+      $headstr = 'Rewritten XQuery:';
     }
 else
     { $error = 'error: no solver specified!'; }
@@ -69,20 +70,20 @@ if ($error eq '')
     my $pid = open(SOLVER, "$solverexec $filename 2>&1 |");
     while (<SOLVER>)
     {
-        push(@result, $_);
-        $totalsize = $totalsize + length($_);
+	push(@result, $_);
+	$totalsize = $totalsize + length($_);
 
-        if ($totalsize > $resultlimit)
-        {
-            push(@result, '<br/>Output too long, cut here!'); 
-            $finished = 0;
-            last;
-        }
+	if ($totalsize > $resultlimit)
+	{
+	    push(@result, '<br/>Output too long, cut here!');
+	    $finished = 0;
+	    last;
+	}
     }
     if ($finished == 1)
-        { close(SOLVER); }
+	{ close(SOLVER); }
     else
-        { kill 9, $pid; }
+	{ kill 9, $pid; }
 
     #@result = `echo '$query' | $solverexec -- 2>&1`;
 
@@ -95,8 +96,8 @@ if ($error eq '')
 #
 
 print $cgi->header(-'Cache-Control'=>'no-cache, must-revalidate, max-age=0',
-                   -expires=>'Mon, 26 Jul 1997 05:00:00 GMT',
-                   -charset=>'utf-8');
+		   -expires=>'Mon, 26 Jul 1997 05:00:00 GMT',
+		   -charset=>'utf-8');
 
 
 #print '<p>call: ' . $solverexec . '</p>';
@@ -104,9 +105,9 @@ print $cgi->header(-'Cache-Control'=>'no-cache, must-revalidate, max-age=0',
 if ($error ne '') { print $error; exit 0; }
 
 $query =~ s/</&lt\;/g;
-print '<h3 style="margin-top: 0px;">Original query:</h3><p> ' .  $query . '</p>'; 
-print '<p>call: ' . $solverexec . '</p>'; 
-print '<p>file: ' . $filename. '</p>'; 
+print '<h3 style="margin-top: 0px;">Original query:</h3><p> ' .  $query . '</p>';
+print '<p>call: ' . $solverexec . '</p>';
+print '<p>file: ' . $filename. '</p>';
 
 print '<h3 style="margin-top: 0px;">' . $headstr  . '</h3>';
 

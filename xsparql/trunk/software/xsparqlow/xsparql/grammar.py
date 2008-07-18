@@ -48,8 +48,7 @@ import lowrewriter
 tokens = (
     'FOR', 'FROM', 'LET', 'WHERE', 'ORDER', 'BY', 'IN', 'AS', 'RETURN', 'CONSTRUCT', 'STABLE', 'ASCENDING', 'DESCENDING',
     'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING', 'IF', 'THEN', 'ELSE', 'LIMIT', 'OFFSET',
-    #'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'EMPTY', 'COLLATION', 
-    'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'COLLATION', 
+    'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'COLLATION',
     'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON', 'CHILD', 'DESCENDANT', 'ATTRIBUTE', 'SELF', 'IS', 'EQ',
     'DESCENDANTORSELF', 'FOLLOWINGSIBLING', 'FOLLOWING', 'PARENT', 'ANCESTOR', 'PRECEDINGSIBLING', 'PRECEDING', 'NE', 'LT',
     'ANCESTORORSELF', 'STAR', 'ORDERED', 'UNORDERED', 'DOTDOT', 'SLASHSLASH', 'COLONCOLON', 'UNDERSCORE', 'ITEM', 'LE', 'GE',
@@ -57,7 +56,7 @@ tokens = (
     'PREFIX', 'BASE', 'AND', 'OR', 'TO', 'PLUS', 'MINUS', 'DIV', 'IDIV', 'MOD', 'UNION', 'INTERSECT',
     'EXCEPT', 'INSTANCE', 'TREAT', 'CASTABLE', 'CAST', 'OF', 'UNIONSYMBOL', 'QUESTIONMARK', 'EMPTYSEQUENCE',
     'LESSTHANLESSTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'NODE', 'DOCUMENTNODE',
-    'TEXT', 'COMMENT', 'PROCESSINGINSTRUCTION', 'SCHEMAATTRIBUTE', 'SCHEMAELEMENT', 'DOCUMENT', 
+    'TEXT', 'COMMENT', 'PROCESSINGINSTRUCTION', 'SCHEMAATTRIBUTE', 'SCHEMAELEMENT', 'DOCUMENT',
     'NAMED', 'OPTIONAL'
 
 ##     'CHEX', 'OTHERHEXI', 'LAX', 'SMALLU', 'GREATERTHANGREATERTHAN', 'STRICT', 'STRI', 'BACKSLASH', 'BIGU',
@@ -95,7 +94,6 @@ reserved = {
    'where' : 'WHERE',
    'greatest' : 'GREATEST',
    'least' : 'LEAST',
-#   'empty' : 'EMPTY',
    'collation' : 'COLLATION',
    'child' : 'CHILD',
    'descendant' : 'DESCENDANT',
@@ -104,7 +102,7 @@ reserved = {
    'descendant-or-self' : 'DESCSENDANTORSELF',
    'following-sibling' : 'FOLLOWINGSIBLING',
    'following' : 'FOLLOWING',
-   'parent' : 'PARENT', 
+   'parent' : 'PARENT',
    'ancestor' : 'ANCESTOR',
    'preceding-sibling' : 'PRECEDINGSIBLING',
    'preceding' : 'PRECEDING',
@@ -147,7 +145,7 @@ reserved = {
    'schema-element' : 'SCHEMAELEMENT',
    'document' : 'DOCUMENT',
    'named' : 'NAMED',
-   'optional' : 'OPTIONAL' 
+   'optional' : 'OPTIONAL'
 }
 
 # lexer states
@@ -161,7 +159,7 @@ def t_ANY_NCNAME(t):
     r'\w[\w\-]*'
     t.type = reserved.get(t.value,'NCNAME')
     if t.type == 'PREFIX' or t.type == 'BASE' or t.type == 'FROM':
-        t.lexer.begin('iri')
+	t.lexer.begin('iri')
     return t
 
 
@@ -255,9 +253,9 @@ t_iri_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*'
 # GREATERTHAN token ends the iri state
 def t_iri_GREATERTHAN(t):
     r'>'
-    t.lexer.begin('INITIAL')           
+    t.lexer.begin('INITIAL')
 
-    
+
 
 # Ignored characters
 t_ANY_ignore = " \t"
@@ -273,9 +271,9 @@ def t_ANY_error(t):
     t.lexer.skip(1)
 
 
-    
+
 # Build the lexer
-lex.lex(debug = 0, reflags = re.IGNORECASE)
+lex.lex(debug=0, reflags=re.IGNORECASE)
 
 
 
@@ -287,7 +285,7 @@ lex.lex(debug = 0, reflags = re.IGNORECASE)
 # namespace list
 namespaces = []
 decl_var_ns = ''
-count = 0    
+count = 0
 nsFlag = False
 
 
@@ -298,32 +296,32 @@ def p_mainModule(p):
 
 
 def p_prolog(p):
-    '''prolog : xqueryNS
-              | sparqlNS
-              | empty'''
+    '''prolog : xqueryNS prolog
+	      | sparqlNS prolog
+	      | empty'''
     p[0] = ''.join(p[1:])
 
 
 def p_xqueryNS(p):
-    '''xqueryNS : DECLARE xqueryNSs nsDecl'''
+    '''xqueryNS : DECLARE xqueryNSs SEMICOLON'''
     p[0] = ' '.join(p[1:])
 
 
 def p_xqueryNSs(p):
-    '''xqueryNSs : defaultNamespaceDecl 
-                 | namespaceDecl 
-                 | baseURIDecl'''
+    '''xqueryNSs : defaultNamespaceDecl
+		 | namespaceDecl
+		 | baseURIDecl'''
     p[0] = ' '.join(p[1:])
 
 
 def p_sparqlNS(p):
-    '''sparqlNS : directive  prolog'''
+    '''sparqlNS : directive  '''
     p[0] = ''.join(p[1:])
 
 
 def p_directive(p):
-    '''directive : prefixID prolog
-                 | sbase prolog'''
+    '''directive : prefixID
+		 | sbase'''
     p[0] = ''.join(p[1:])
 
 
@@ -333,20 +331,20 @@ def p_prefixID(p):
 
 
 def p_prefixIDs(p):
-    '''prefixIDs :  NCNAME COLON IRIREF 
-                 |  COLON IRIREF'''
+    '''prefixIDs :  NCNAME COLON IRIREF
+		 |  COLON IRIREF'''
     global count
     global decl_var_ns
 
-    count += 1 
+    count += 1
     #namespaces.append(('prefix', p[2], ':', p[4]))
     if len(p) == 4 :
-        prefix = ''.join(p[1])
-        url = ''.join(p[3])
+	prefix = ''.join(p[1])
+	url = ''.join(p[3])
     elif len(p) == 3:
-        prefix = ''
-        url = ''.join(p[2])
-    
+	prefix = ''
+	url = ''.join(p[2])
+
     col = ':'
     nsTag = 'prefix'
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
@@ -366,18 +364,14 @@ def p_sbase(p):
     global count
     global decl_var_ns
 
-    count += 1 
+    count += 1
     prefix = ''
     url = ''.join(p[2])
     col = ''
     nsTag = 'base'
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
-    p[0] = ''             
-           
+    p[0] = ''
 
-def p_nsDecl(p):
-    '''nsDecl : SEMICOLON prolog'''
-    p[0] = '\n '.join(p[1:])
 
 
 def p_defaultNamespaceDecl(p):
@@ -387,12 +381,12 @@ def p_defaultNamespaceDecl(p):
 
 def p_defaultNamespaceDecls(p):
     '''defaultNamespaceDecls :  ELEMENT NAMESPACE QSTRING
-                             |  FUNCTION NAMESPACE QSTRING'''
+			     |  FUNCTION NAMESPACE QSTRING'''
     global namespaces
     global count
     global decl_var_ns
     namespaces.append(('prefix', '',':', p[3]))
-    count += 1 
+    count += 1
     prefix = ''
     nsTag = 'prefix'
     col = ':'
@@ -408,14 +402,14 @@ def p_namespaceDecl(p):
     global count
     global decl_var_ns
 
-    count += 1 
+    count += 1
     namespaces.append(('prefix', p[2], ':', p[4]))
     prefix = ''.join(p[2])
     url = ''.join(p[4])
     col = ':'
     nsTag = 'prefix'
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
-   
+
     p[0] = ' '.join(p[1:])
 
 
@@ -425,7 +419,7 @@ def p_baseURIDecl(p):
     global count
     global decl_var_ns
     namespaces.append(('base', '', '', p[2]))
-    count += 1 
+    count += 1
     prefix = ''
     col = ''
     nsTag = 'base'
@@ -451,23 +445,23 @@ def p_queryBody(p):
     decl_func += '  substring($rdf_Predicate, fn:string-length($rdf_Predicate), fn:string-length($rdf_Predicate))   = """ ) then   " " \n'
     decl_func += '  else  fn:concat($rdf_Predicate,  $rdf_Object) \n'
     decl_func += '  return $output }; \n\n'
-    
+
     nsVars = lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)
     if nsVars != '' and nsFlag:
-        p[0] = '\n ' + prefix + decl_var_ns + decl_func + '\n fn:concat( ' + nsVars + ', "\n" ),\n' + p[1]
+	p[0] = '\n ' + prefix + decl_var_ns + decl_func + '\n fn:concat( ' + nsVars + ', "\n" ),\n' + p[1]
     else:
-        p[0] = '\n ' + prefix + decl_var_ns + decl_func + p[1]
+	p[0] = '\n ' + prefix + decl_var_ns + decl_func + p[1]
 
-    
+
 def p_expr(p):
      '''expr : expr COMMA exprSingle
-             | exprSingle'''
+	     | exprSingle'''
      if len(p) == 2:
-         p[0] = ''.join(p[1][0])
+	 p[0] = ''.join(p[1][0])
      else:
-         p[0] = ''.join(p[1]+' '+p[2]+' '+p[3][0])
-     
-    
+	 p[0] = ''.join(p[1]+' '+p[2]+' '+p[3][0])
+
+
 def p_enclosedExpr(p):
     '''enclosedExpr : LCURLY expr RCURLY'''
     p[0] = ' '.join(p[1:])
@@ -476,15 +470,15 @@ def p_enclosedExpr(p):
 def p_empty(p):
     '''empty : '''
     p[0] = ''
-    
+
 
 def p_exprSingle(p):
     '''exprSingle : flworExpr
-                  | constructQuery
-                  | orExpr
-                  | ifExpr'''
+		  | constructQuery
+		  | orExpr
+		  | ifExpr'''
     p[0] = p[1]
-    
+
 
 def p_constructQuery(p):
     '''constructQuery : CONSTRUCT constructTemplate datasetClauses whereSPARQLClause solutionmodifier'''
@@ -495,23 +489,23 @@ def p_constructQuery(p):
 
 def p_datasetClauses(p): # list of (from, iri) tuples
     '''datasetClauses : datasetClauses datasetClause
-                      | datasetClause
-                      | empty'''
+		     | datasetClause
+		      | empty'''
     if len(p) == 2 and len(p[1]):
-        p[0] = [ p[1] ]
+	p[0] = [ p[1] ]
     elif len(p) == 3:
-        p[0] = p[1] + [ p[2] ]
+	p[0] = p[1] + [ p[2] ]
     else: # empty
-        p[0] = []
+	p[0] = []
 
 
 def p_datasetClause(p):
     '''datasetClause : FROM IRIREF
-                     | FROM NAMED IRIREF'''
+		     | FROM NAMED IRIREF'''
     if len(p) == 4: # from named
-        p[0] = (p[1] + ' ' + p[2], p[3])
+	p[0] = (p[1] + ' ' + p[2], p[3])
     elif len(p) == 3: # from
-        p[0] = (p[1], p[2])
+	p[0] = (p[1], p[2])
 
 
 ## def p_graphClause(p):
@@ -521,13 +515,13 @@ def p_datasetClause(p):
 
 def p_whereSPARQLClause(p):
     '''whereSPARQLClause : WHERE constructTemplate'''
-    p[0] = p[2]  
+    p[0] = p[2]
 
 
 def p_ifExpr(p):
     '''ifExpr : IF LPAR expr RPAR THEN exprSingle ELSE exprSingle'''
     p[0] = (p[1]+' '+p[2]+' '+p[3]+' '+p[4]+' '+p[5]+' '+p[6][0]+' '+p[7]+' '+p[8][0], [], [])
-    
+
 
 def p_flworExpr0(p):
     '''flworExpr : flworExprs CONSTRUCT constructTemplate'''
@@ -539,19 +533,19 @@ def p_flworExpr0(p):
 
 def p_flworExpr1(p):
     '''flworExpr : flworExprs RETURN exprSingle'''
-                  # | flworExprs RETURN directConstructor'''
+		  # | flworExprs RETURN directConstructor'''
     p[0] = ( p[1][0] + ' '+p[2]+' '+p[3][0], p[1][1], p[1][2] )
 
 
 def p_flworExprs(p):
     '''flworExprs : forletClauses
-                  | forletClauses whereClause
-                  | forletClauses orderByClause
-                  | forletClauses whereClause orderByClause'''
+		  | forletClauses whereClause
+		  | forletClauses orderByClause
+		  | forletClauses whereClause orderByClause'''
     if len(p) == 2:
-        p[0] = ( p[1][0], p[1][1], p[1][2] )
+	p[0] = ( p[1][0], p[1][1], p[1][2] )
     else:
-        p[0] = ( p[1][0] + '\n'.join(p[2:]), p[1][1], p[1][2] )
+	p[0] = ( p[1][0] + '\n'.join(p[2:]), p[1][1], p[1][2] )
 
 
 # todo: collect variables in let, and build up triples of (expr, variables in scope, position variables in scope)
@@ -587,18 +581,22 @@ def p_forletClauses5(p):
 
 
 def p_sparqlForClause(p):
-    '''sparqlForClause : FOR sparqlvars datasetClauses WHERE groupGraphPattern solutionmodifier'''
-    p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[6]) ]), p[2][1], p[2][2] )
+    '''sparqlForClause : FOR sparqlvars datasetClauses WHERE constructTemplate solutionmodifier
+		       | FOR sparqlvars datasetClauses  WHERE constructTemplate letClause solutionmodifier'''
+    if len(p) == 7:
+	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[6]) ]), p[2][1], p[2][2] )
+    else:
+	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[7]) ])+' '+str(p[6][0])+'  \n  ', p[2][1], p[2][2] )
 
 
 def p_sparqlvars(p):
     '''sparqlvars : VAR sparqlvars
-                  | VAR
-                  | STAR'''
+		  | VAR
+		  | STAR'''
     if len(p) == 3:
-        p[0] = (p[1] + ' ' + p[2][0], [ p[1] ] + p[2][1], [] )
+	p[0] = (p[1] + ' ' + p[2][0], [ p[1] ] + p[2][1], [] )
     else:
-        p[0] = ( p[1] , [ p[1] ] , [])
+	p[0] = ( p[1] , [ p[1] ] , [])
 
 
 def p_forClause(p):
@@ -619,10 +617,10 @@ def p_forVars1(p):
 def p_forVar(p):
     '''forVar : VAR typeDeclaration positionVar IN exprSingle'''
     if len(p[3][1]) == 0:
-        p[0] = ( p[1] + ' at ' + p[1] + '_Pos ' + p[2] + ' ' + p[4] + ' ' + p[5][0], p[1], p[1] + '_Pos' )
+	 p[0] = ( p[1] + ' at ' + p[1] + '_Pos ' + p[2] + ' ' + p[4] + ' ' + p[5][0], p[1], p[1] + '_Pos' )
     else:
-        p[0] = (p[1] + ' ' + p[2] + ' ' + p[3][0] + ' ' + p[4] + ' ' + p[5][0], p[1], p[3][1] )
-         
+	p[0] = (p[1] + ' ' + p[2] + ' ' + p[3][0] + ' ' + p[4] + ' ' + p[5][0], p[1], p[3][1] )
+
 
 def p_letClause(p):
     '''letClause : LET letVars'''
@@ -631,19 +629,17 @@ def p_letClause(p):
 
 def p_letVars(p):
     '''letVars : letVars COMMA letVar
-               | letVar'''
+	       | letVar'''
     if len(p) == 2:
-        p[0] = ( p[1][0], [ p[1][1] ] , [ p[1][2] ] )
+	p[0] = ( p[1][0], [ p[1][1] ] , [ p[1][2] ] )
     else:
-        p[0] = ( p[1][0] + p[2] + ' \n ' + p[3][0] , p[1][1] + [ p[3][1] ], p[1][2] + [ p[3][2] ] )
-        
+	p[0] = ( p[1][0] + p[2] + ' \n ' + p[3][0] , p[1][1] + [ p[3][1] ], p[1][2] + [ p[3][2] ] )
+
 
 
 def p_letVar(p):
     '''letVar : VAR typeDeclaration COLON EQUALS exprSingle'''
     p[0] = (p[1] + ' ' + p[2] + ' ' + p[3] + p[4] + ' ' + p[5][0],  p[1], [])
-
-
 
 
 
@@ -682,7 +678,7 @@ def p_letVar(p):
 
 def p_groupGraphPattern(p):
    '''groupGraphPattern : LCURLY RCURLY
-                        | LCURLY graphPatterns RCURLY'''
+			| LCURLY graphPatterns RCURLY'''
    if len(p) == 3:
        p[0] = []
    else:
@@ -692,8 +688,8 @@ def p_groupGraphPattern(p):
 # returns the first non-list element in a possibly deep-nested list
 def flatten(l):
     if isinstance(l, list):
-        for e in l:
-            return flatten(e)
+	for e in l:
+	    return flatten(e)
     return l
 
 def p_graphPatterns0(p):
@@ -701,62 +697,62 @@ def p_graphPatterns0(p):
     # flatten the graphPattern, we need a list of (patterntype, pattern) tuples
     # this is due to deeply-nested {{{pattern}}}
     if isinstance(p[1], list):
-        p[0] = [ flatten(e) for e in p[1] ]
+	p[0] = [ flatten(e) for e in p[1] ]
     else:
-        p[0] = [ p[1] ]
+	p[0] = [ p[1] ]
 
 def p_graphPatterns1(p):
     '''graphPatterns : graphPatterns graphPattern'''
     # flatten the graphPattern, we need a list of (patterntype, pattern) tuples
     # this is due to deeply-nested {{{pattern}}}
     if isinstance(p[2], list):
-        p[0] = p[1] + [ flatten(e) for e in p[2] ]
+	p[0] = p[1] + [ flatten(e) for e in p[2] ]
     else:
-        p[0] = p[1] + [ p[2] ]
-    
+	p[0] = p[1] + [ p[2] ]
+
 
 def p_graphPattern(p):
     '''graphPattern : filteredBasicGraphPattern
-                    | graphPatternNotTriples
-                    | graphPatternNotTriples DOT'''
+		    | graphPatternNotTriples
+		    | graphPatternNotTriples DOT'''
     p[0] = p[1]
-    
+
 ##     '''graphPatternNotTriples : groupOrUnionPattern
 ##                               | optionalPattern
 ##                               | namedPattern'''
 def p_graphPatternNotTriples(p):
     '''graphPatternNotTriples : groupOrUnionPattern
-                              | optionalPattern'''
-    p[0] = p[1]    
+			      | optionalPattern'''
+    p[0] = p[1]
 
 
 def p_groupOrUnionPattern0(p):
     '''groupOrUnionPattern : groupGraphPattern'''
     p[0] = p[1]
-    
+
 def p_groupOrUnionPattern1(p):
     '''groupOrUnionPattern : groupOrUnionPattern unionPattern'''
     p[0] = p[1] + [ p[2] ]
 
-    
+
 def p_unionPattern(p):
     '''unionPattern : UNION groupGraphPattern'''
     p[0] = ( p[1] , p[2] )
-    
+
 def p_optionalPattern(p):
     '''optionalPattern : OPTIONAL groupGraphPattern'''
     p[0] = ( p[1] , p[2] )
 
 ## namedPattern: GRAPH
-## varIriQnLit {  } 
-##               groupGraphPattern 
-##                     { 
+## varIriQnLit {  }
+##               groupGraphPattern
+##                     {
 ##                     }
 ##               ;
 
 def p_filteredBasicGraphPattern(p):
     '''filteredBasicGraphPattern : triplesPattern
-                                 | triplesPattern DOT'''
+				 | triplesPattern DOT'''
     p[0] = ( '', p[1] )
 
 
@@ -771,18 +767,18 @@ def p_triplesPattern1(p):
 
 def p_patternPathExpr(p):
     '''patternPathExpr : LBRACKET predObjs RBRACKET
-                       | LBRACKET RBRACKET'''
+		       | LBRACKET RBRACKET'''
     if len(p) == 3: # empty bracketedExpr
-        p[0] = []
+	p[0] = []
     else: # non-empty bracketedExpr
-        p[0] = [ p[1] ] + p[2]
+	p[0] = [ p[1] ] + p[2]
 
 
 
 def p_predObjs0(p):
     '''predObjs : predObj'''
     p[0] = [ p[1] ]
-    
+
 def p_predObjs1(p):
     '''predObjs : predObjs SEMICOLON predObj'''
     p[0] = p[1] + [ p[3] ]
@@ -809,20 +805,20 @@ def p_objs1(p):
 
 def p_obj(p):
     '''obj : value
-           | patternPathExpr'''
+	   | patternPathExpr'''
     p[0] = p[1]
 
 
 def p_varIriQnLit(p):
     '''varIriQnLit : resource
-                   | blank
-                   | rdfliteral'''
+		   | blank
+		   | rdfliteral'''
     p[0] = p[1]
 
 def p_value(p):
     '''value : varIriQnLit'''
     p[0] = p[1]
-    
+
 
 
 ####################
@@ -830,17 +826,17 @@ def p_value(p):
 
 def p_constructor(p):
     '''constructor : directConstructor
-                   | computedConstructor'''
+		   | computedConstructor'''
     p[0] = ' '.join(p[1:])
-   
-    
+
+
 def p_computedConstructor(p):
     '''computedConstructor : compDocConstructor
-                           | compElemConstructor
-                           | compAttrConstructor
-                           | compTextConstructor
-                           | compCommentConstructor
-                           | compPIConstructor'''
+			   | compElemConstructor
+			   | compAttrConstructor
+			   | compTextConstructor
+			   | compCommentConstructor
+			   | compPIConstructor'''
     p[0] = ' '.join(p[1:])
 
 
@@ -851,22 +847,22 @@ def p_compDocConstructor(p):
 
 def p_compElemConstructor(p):
     '''compElemConstructor : ELEMENT qname LCURLY contentExpr RCURLY
-                           | ELEMENT LCURLY expr RCURLY LCURLY contentExpr RCURLY
-                           | ELEMENT qname LCURLY RCURLY
-                           | ELEMENT LCURLY expr RCURLY LCURLY RCURLY'''
+			   | ELEMENT LCURLY expr RCURLY LCURLY contentExpr RCURLY
+			   | ELEMENT qname LCURLY RCURLY
+			   | ELEMENT LCURLY expr RCURLY LCURLY RCURLY'''
     p[0] = ' '.join(p[1:])
-    
+
 
 def p_contentExpr(p):
     '''contentExpr : expr'''
-    p[0] = ' '.join(p[1:])    
+    p[0] = ' '.join(p[1:])
 
 
 def p_compAttrConstructor(p):
     '''compAttrConstructor : ATTRIBUTE qname LCURLY expr RCURLY
-                           | ATTRIBUTE LCURLY expr RCURLY LCURLY expr RCURLY
-                           | ATTRIBUTE qname LCURLY RCURLY
-                           | ATTRIBUTE LCURLY expr RCURLY LCURLY RCURLY'''
+			   | ATTRIBUTE LCURLY expr RCURLY LCURLY expr RCURLY
+			   | ATTRIBUTE qname LCURLY RCURLY
+			   | ATTRIBUTE LCURLY expr RCURLY LCURLY RCURLY'''
     p[0] = ' '.join(p[1:])
 
 
@@ -882,15 +878,15 @@ def p_compCommentConstructor(p):
 
 def p_compPIConstructor(p):
     '''compPIConstructor : PROCESSINGINSTRUCTION NCNAME LCURLY expr RCURLY
-                         | PROCESSINGINSTRUCTION LCURLY expr RCURLY LCURLY expr RCURLY
-                         | PROCESSINGINSTRUCTION NCNAME LCURLY RCURLY
-                         | PROCESSINGINSTRUCTION LCURLY expr RCURLY LCURLY RCURLY'''
-    p[0] = ' '.join(p[1:])    
+			 | PROCESSINGINSTRUCTION LCURLY expr RCURLY LCURLY expr RCURLY
+			 | PROCESSINGINSTRUCTION NCNAME LCURLY RCURLY
+			 | PROCESSINGINSTRUCTION LCURLY expr RCURLY LCURLY RCURLY'''
+    p[0] = ' '.join(p[1:])
 
-    
+
 def p_directConstructor(p):
     '''directConstructor : directElemConstructor '''
-    p[0] = ' '.join(p[1:])    
+    p[0] = ' '.join(p[1:])
 
 def p_directElemConstructor(p):
     '''directElemConstructor : LESSTHAN NCNAME attributProcessing'''
@@ -899,61 +895,63 @@ def p_directElemConstructor(p):
 
 def p_attributProcessing(p):
     '''attributProcessing : directAttributeList SLASH GREATERTHAN
-                          | directAttributeList GREATERTHAN directElemContentProcessing '''
+			  | directAttributeList GREATERTHAN directElemContentProcessing '''
     p[0] = ''.join(p[1:])
-    
+
 
 def p_directElemContentProcessing(p):
-    '''directElemContentProcessing : directElemContent LESSTHAN SLASH  NCNAME GREATERTHAN '''
+    '''directElemContentProcessing : directElemContent LESSTHAN SLASH  NCNAME GREATERTHAN
+				   | directElemContent LESSTHAN SLASH  NCNAME GREATERTHAN directConstructor'''
     p[0] = ''.join(p[1:])
-    
+
 
 def p_directElemContent(p):
-    '''directElemContent : directConstructor 
-                         | enclosedExpr'''
+    '''directElemContent : directConstructor
+			 | enclosedExpr'''
     p[0] = ''.join(p[1:])
 
 
 def p_directAttributeList(p):
     '''directAttributeList : directAttribute directAttributeList
-                           | empty'''
+			   | empty'''
     p[0] = ''.join(p[1:])
-    
+
 
 ##def p_directAttributeLists(p):
 ##    '''directAttributeLists :  directAttributeList
-##                            | empty'''    
+##                            | empty'''
 ##    p[0] = ' '.join(p[1:])
-    
+
 
 def p_directAttribute(p):
     '''directAttribute :  qname EQUALS directAttributeValue'''
-    p[0] = ' '.join(p[1:])    
+    p[0] = ' '.join(p[1:])
 
 
 def p_directAttributeValue(p):
     '''directAttributeValue :  attributeValueContent '''
-    p[0] = ''.join(p[1:])   
+    p[0] = ''.join(p[1:])
 
 
 def p_attributeValueContent(p):
     '''attributeValueContent : enclosedExpr
-                             | QSTRING'''
-    p[0] = ''.join(p[1:])       
+			     | QSTRING'''
+    p[0] = ''.join(p[1:])
 
 
 def p_solutionmodifier(p):
     '''solutionmodifier : ORDER BY VAR
-                        | ORDER BY VAR limitoffsetclause
-                        | empty'''
+			| ORDER BY VAR limitoffsetclause
+			| limitoffsetclause
+			| empty'''
     p[0] = ' '.join(p[1:])
 
 
 def p_limitoffsetclause(p):
     '''limitoffsetclause : limitclause
-                         | offsetclause
-                         | limitclause offsetclause
-                         | offsetclause limitclause'''
+			 | offsetclause
+			 | limitclause offsetclause
+			 | offsetclause limitclause'''
     p[0] = ' '.join(p[1:])
 
 
@@ -965,44 +963,44 @@ def p_limitclause(p):
 def p_offsetclause(p):
     '''offsetclause : OFFSET INTEGER'''
     p[0] = ' '.join(p[1:])
-    
-    
+
+
 def p_typeDeclaration(p):
     '''typeDeclaration : empty'''
-    p[0] = p[1] 
+    p[0] = p[1]
 
 
 def p_positionVar(p):
     '''positionVar : ATS VAR
-                   | empty'''
+		   | empty'''
     if len(p) == 3:
-        p[0] = (' '.join(p[1:]), p[2])
+	p[0] = (' '.join(p[1:]), p[2])
     else:
-        p[0] = ('', '')
+	p[0] = ('', '')
 
 
 def p_orderByClause(p):
     '''orderByClause : ORDER BY orderSpecList
-                     | STABLE ORDER BY orderSpecList'''
+		     | STABLE ORDER BY orderSpecList'''
     p[0] = ' '.join(p[1:])
 
 
 def p_orderSpecList(p):
     '''orderSpecList : orderSpecList COMMA orderSpec
-                     | orderSpec'''      
+		     | orderSpec'''
     p[0] = ' '.join(p[1:])
 
 
 def p_orderSpec(p):
     '''orderSpec : exprSingle orderDirection emptyHandling
-                 | exprSingle orderDirection emptyHandling COLLATION uriliteral'''
+		 | exprSingle orderDirection emptyHandling COLLATION uriliteral'''
     p[0] = ' '.join(p[1:])
 
 
 def p_orderDirection(p):
     '''orderDirection : ASCENDING
-                      | DESCENDING
-                      | empty'''
+		      | DESCENDING
+		      | empty'''
     p[0] = p[1]
 
 
@@ -1014,15 +1012,15 @@ def p_orderDirection(p):
 ##     p[0] = ' '.join(p[1:])
 def p_emptyHandling(p):
     '''emptyHandling : GREATEST
-                     | LEAST
-                     | empty'''
+		     | LEAST
+		     | empty'''
     p[0] = ' '.join(p[1:])
 
 
 def p_whereClause(p):
     '''whereClause : WHERE exprSingle '''
     p[0] = ''.join('\n'+p[1]+' '+p[2][0])
-    
+
 
 ##def p_orExpr(p):
 ##    '''orExpr : pathExpr'''
@@ -1031,12 +1029,12 @@ def p_whereClause(p):
 
 def p_orExpr(p):
     '''orExpr : andExpr orAndExpr'''
-    p[0] = (p[1] +' ' +p[2], [], [])    
-    
+    p[0] = (p[1] +' ' +p[2], [], [])
+
 
 def p_orAndExpr(p):
     '''orAndExpr : OR orAndExpress
-                 | empty'''
+		 | empty'''
     p[0] = ' '.join(p[1:])
 
 
@@ -1047,12 +1045,12 @@ def p_orAndExpress(p):
 
 def p_andExpr(p):
     '''andExpr : comparisonExpr andCompExpr'''
-    p[0] = ''.join(p[1:])    
-    
+    p[0] = ''.join(p[1:])
+
 
 def p_andCompExpr(p):
     '''andCompExpr : AND andCompExpress
-                   | empty'''
+		   | empty'''
     p[0] = ' '.join(p[1:])
 
 
@@ -1063,52 +1061,52 @@ def p_andCompExpress(p):
 
 def p_comparisonExpr(p):
     '''comparisonExpr : rangeExpr rangeExpress'''
-    p[0] = ''.join(p[1:])        
+    p[0] = ''.join(p[1:])
 
 
 def p_rangeExpress(p):
-    '''rangeExpress : valueComp rangeExpr 
-                    | generalComp rangeExpr
-                    | nodeComp rangeExpr
-                    | empty'''
+    '''rangeExpress : valueComp rangeExpr
+		    | generalComp rangeExpr
+		    | nodeComp rangeExpr
+		    | empty'''
     p[0] = ''.join(p[1:])
 
 
 def p_valueComp(p):
     '''valueComp : EQ
-                 | NE
-                 | LT
-                 | LE
-                 | GT
-                 | GE'''
+		 | NE
+		 | LT
+		 | LE
+		 | GT
+		 | GE'''
     p[0] = ''.join(p[1:])
 
 
 def p_generalComp(p):
     '''generalComp : EQUALS
-                   | LESSTHAN
-                   | GREATERTHAN
-                   | LESSTHANEQUALS
-                   | GREATERTHANEQUALS
-                   | HAFENEQUALS'''
+		   | LESSTHAN
+		   | GREATERTHAN
+		   | LESSTHANEQUALS
+		   | GREATERTHANEQUALS
+		   | HAFENEQUALS'''
     p[0] = ''.join(p[1:])
 
 
 def p_nodeComp(p):
     '''nodeComp : LESSTHANLESSTHAN
-                | GREATERTHAN GREATERTHAN
-                | IS'''
+		| GREATERTHAN GREATERTHAN
+		| IS'''
     p[0] = ''.join(p[1:])
 
 
 def p_rangeExpr(p):
     '''rangeExpr : additiveExpr rangeAddiExpr'''
-    p[0] = ' '.join(p[1:]) 
-    
+    p[0] = ' '.join(p[1:])
+
 
 def p_rangeAddiExpr(p):
     '''rangeAddiExpr : TO additiveExpr
-                   | empty'''
+		   | empty'''
     p[0] = ' '.join(p[1:])
 
 
@@ -1119,8 +1117,8 @@ def p_additiveExpr(p):
 
 def p_addiMultiExpr(p):
     '''addiMultiExpr : PLUS addiMultiExpress
-                     | MINUS addiMultiExpress
-                     | empty'''
+		     | MINUS addiMultiExpress
+		     | empty'''
     p[0] = ''.join(p[1:])
 
 
@@ -1136,16 +1134,16 @@ def p_multiplicativeExpr(p):
 
 def p_multiUnionExpr(p):
     '''multiUnionExpr : STAR multiUnionExpress
-                      | DIV multiUnionExpress
-                      | IDIV multiUnionExpress
-                      | MOD multiUnionExpress
-                      | empty'''
+		      | DIV multiUnionExpress
+		      | IDIV multiUnionExpress
+		      | MOD multiUnionExpress
+		      | empty'''
     p[0] = ''.join(p[1:])
 
 
 def p_multiUnionExpress(p):
     '''multiUnionExpress : unionExpr multiUnionExpr'''
-    p[0] = ''.join(p[1:])   
+    p[0] = ''.join(p[1:])
 
 
 def p_unionExpr(p):
@@ -1155,14 +1153,14 @@ def p_unionExpr(p):
 
 def p_uniIntersectExcExpr(p):
     '''uniIntersectExcExpr : UNION uniIntersectExcExpress
-                           | UNIONSYMBOL uniIntersectExcExpress
-                           | empty'''
+			   | UNIONSYMBOL uniIntersectExcExpress
+			   | empty'''
     p[0] = ''.join(p[1:])
 
 
 def p_uniIntersectExcExpress(p):
     '''uniIntersectExcExpress : intersectExceptionExpr uniIntersectExcExpr'''
-    p[0] = ''.join(p[1:])      
+    p[0] = ''.join(p[1:])
 
 
 def p_intersectExceptionExpr(p):
@@ -1172,8 +1170,8 @@ def p_intersectExceptionExpr(p):
 
 def p_interInstanceOfExpr(p):
     '''interInstanceOfExpr : INTERSECT interInstanceOfExpress
-                           | EXCEPT interInstanceOfExpress
-                           | empty'''
+			   | EXCEPT interInstanceOfExpress
+			   | empty'''
     p[0] = ''.join(p[1:])
 
 
@@ -1189,7 +1187,7 @@ def p_intanceOfExpr(p):
 
 def p_instanceTreatExpr(p):
     '''instanceTreatExpr : INSTANCE OF sequenceType
-                         | empty'''
+			 | empty'''
     p[0] = ''.join(p[1:])
 
 
@@ -1200,7 +1198,7 @@ def p_treatExpr(p):
 
 def p_treatCastableExpr(p):
     '''treatCastableExpr : TREAT AS sequenceType
-                         | empty'''
+			 | empty'''
     p[0] = ''.join(p[1:])
 
 
@@ -1211,7 +1209,7 @@ def p_castableExpr(p):
 
 def p_castableCastExpr(p):
     '''castableCastExpr : CASTABLE AS singleType
-                        | empty'''
+			| empty'''
     p[0] = ''.join(p[1:])
 
 
@@ -1222,14 +1220,14 @@ def p_castExpr(p):
 
 def p_castUnaryExpr(p):
     '''castUnaryExpr : CAST AS singleType
-                     | empty'''
+		     | empty'''
     p[0] = ''.join(p[1:])
 
 
 def p_unaryExpr(p):
     '''unaryExpr : MINUS valueExpr
-                 | PLUS valueExpr
-                 | valueExpr'''
+		 | PLUS valueExpr
+		 | valueExpr'''
     p[0] = ''.join(p[1:])
 
 
@@ -1240,34 +1238,34 @@ def p_valueExpr(p):
 
 def p_sequenceType(p):
     '''sequenceType : EMPTYSEQUENCE LPAR RPAR
-                    | itemType occurrenceIndicator'''
-    p[0] = ''.join(p[1:])    
+		    | itemType occurrenceIndicator'''
+    p[0] = ''.join(p[1:])
 
 
 def p_occurrenceIndicator(p):
     '''occurrenceIndicator : STAR
-                           | PLUS
-                           | QUESTIONMARK'''
-    p[0] = ''.join(p[1:])  
+			   | PLUS
+			   | QUESTIONMARK'''
+    p[0] = ''.join(p[1:])
 
 
 def p_itemType(p):
     '''itemType : ITEM LPAR RPAR
-                | atomicType
-                | kindTest'''
-    p[0] = ''.join(p[1:]) 
+		| atomicType
+		| kindTest'''
+    p[0] = ''.join(p[1:])
 
 
 def p_kindTest(p):
     '''kindTest : documentTest
-                | elementTest
-                | attributeTest
-                | schemaElementTest
-                | schemaAttributeTest
-                | piTest
-                | commentTest
-                | textTest
-                | anyKindTest'''
+		| elementTest
+		| attributeTest
+		| schemaElementTest
+		| schemaAttributeTest
+		| piTest
+		| commentTest
+		| textTest
+		| anyKindTest'''
     p[0] = ''.join(p[1:])
 
 
@@ -1283,19 +1281,19 @@ def p_documentTest(p):
 
 def p_documentTests(p):
     '''documentTests : elementTest
-                     | schemaElementTest
-                     | empty'''
+		     | schemaElementTest
+		     | empty'''
     p[0] = ''.join(p[1:])
 
 
 def p_textTest(p):
     '''textTest : TEXT LPAR RPAR'''
-    p[0] = ''.join(p[1:])     
+    p[0] = ''.join(p[1:])
 
 
 def p_commentTest(p):
     '''commentTest : COMMENT LPAR RPAR'''
-    p[0] = ''.join(p[1:]) 
+    p[0] = ''.join(p[1:])
 
 
 def p_piTest(p):
@@ -1305,9 +1303,9 @@ def p_piTest(p):
 
 def p_piTests(p):
     '''piTests : NCNAME
-               | QSTRING
-               | empty'''
-    p[0] = ''.join(p[1:])   
+	       | QSTRING
+	       | empty'''
+    p[0] = ''.join(p[1:])
 
 
 def p_attributeTest(p):
@@ -1317,20 +1315,20 @@ def p_attributeTest(p):
 
 def p_attributeTests(p):
     '''attributeTests : attributeNameOrWildcard COMMA typeName
-                      | attributeNameOrWildcard
-                      | empty'''
-    p[0] = ''.join(p[1:])    
+		      | attributeNameOrWildcard
+		      | empty'''
+    p[0] = ''.join(p[1:])
 
-    
+
 def p_attributeNameOrWildcard(p):
     '''attributeNameOrWildcard : attributeName
-                               | STAR'''
-    p[0] = ''.join(p[1:])    
+			       | STAR'''
+    p[0] = ''.join(p[1:])
 
 
 def p_schemaAttributeTest(p):
     '''schemaAttributeTest : SCHEMAATTRIBUTE LPAR attributeDeclaration RPAR'''
-    p[0] = ''.join(p[1:])  
+    p[0] = ''.join(p[1:])
 
 
 def p_attributeDeclaration(p):
@@ -1345,21 +1343,21 @@ def p_elementTest(p):
 
 def p_elementTests(p):
     '''elementTests : elementNameOrWildcard COMMA typeName QUESTIONMARK
-                    | elementNameOrWildcard COMMA typeName
-                    | elementNameOrWildcard
-                    | empty'''
-    p[0] = ''.join(p[1:])    
+		    | elementNameOrWildcard COMMA typeName
+		    | elementNameOrWildcard
+		    | empty'''
+    p[0] = ''.join(p[1:])
 
 
 def p_elementNameOrWildcard(p):
     '''elementNameOrWildcard : elementName
-                             | STAR'''
+			     | STAR'''
     p[0] = ''.join(p[1:])
 
 
 def p_schemaElementTest(p):
     '''schemaElementTest : SCHEMAELEMENT LPAR elementDeclaration RPAR'''
-    p[0] = ''.join(p[1:])  
+    p[0] = ''.join(p[1:])
 
 
 def p_elementDeclaration(p):
@@ -1379,12 +1377,12 @@ def p_elementName(p):
 
 def p_typeName(p):
     '''typeName : qname'''
-    p[0] = ''.join(p[1:])       
+    p[0] = ''.join(p[1:])
 
-    
+
 def p_singleType(p):
     '''singleType : atomicType QUESTIONMARK
-                  | atomicType'''
+		  | atomicType'''
     p[0] = ''.join(p[1:])
 
 
@@ -1395,69 +1393,69 @@ def p_atomicType(p):
 
 def p_pathExpr(p):
     '''pathExpr : SLASH
-                | SLASH relativePathExpr
-                | SLASHSLASH relativePathExpr
-                | relativePathExpr'''
+		| SLASH relativePathExpr
+		| SLASHSLASH relativePathExpr
+		| relativePathExpr'''
     p[0] = ''.join(p[1:])
 
 
 def p_relativePathExpr(p):
     '''relativePathExpr : relativePathExpr SLASH stepExpr
-                        | relativePathExpr SLASHSLASH stepExpr
-                        | stepExpr'''
+			| relativePathExpr SLASHSLASH stepExpr
+			| stepExpr'''
     p[0] = ''.join(p[1:])
 
 
 def p_stepExpr(p):
     '''stepExpr : filterExpr
-                | axisStep'''
+		| axisStep'''
     p[0] = ' '.join(p[1:])
 
 
 def p_axisStep(p):
     '''axisStep : reverseStep predicateList
-                | forwardStep predicateList'''
+		| forwardStep predicateList'''
     p[0] = ''.join(p[1:])
 
 
 def p_forwardStep(p):
     '''forwardStep : forwardAxis nodeTest
-                   | abbrevForwardStep'''
+		   | abbrevForwardStep'''
     p[0] = ''.join(p[1:])
 
 
 def p_forwardAxis(p):
     '''forwardAxis : CHILD COLONCOLON
-                   | DESCENDANT COLONCOLON
-                   | ATTRIBUTE COLONCOLON
-                   | SELF COLONCOLON
-                   | DESCENDANTORSELF COLONCOLON
-                   | FOLLOWINGSIBLING COLONCOLON
-                   | FOLLOWING COLONCOLON'''
+		   | DESCENDANT COLONCOLON
+		   | ATTRIBUTE COLONCOLON
+		   | SELF COLONCOLON
+		   | DESCENDANTORSELF COLONCOLON
+		   | FOLLOWINGSIBLING COLONCOLON
+		   | FOLLOWING COLONCOLON'''
     p[0] = ''.join(p[1:])
 
 
 def p_reverseStep(p):
     '''reverseStep : reverseAxis nodeTest
-                   | abbrevReverseStep'''
+		   | abbrevReverseStep'''
     p[0] = ''.join(p[1:])
 
 
 def p_reverseAxis(p):
     '''reverseAxis : PARENT COLONCOLON
-                   | ANCESTOR COLONCOLON
-                   | PRECEDINGSIBLING COLONCOLON
-                   | PRECEDING COLONCOLON
-                   | ANCESTORORSELF COLONCOLON'''
+		   | ANCESTOR COLONCOLON
+		   | PRECEDINGSIBLING COLONCOLON
+		   | PRECEDING COLONCOLON
+		   | ANCESTORORSELF COLONCOLON'''
     p[0] = ''.join(p[1:])
 
 
 def p_abbrevForwardStep(p):
     '''abbrevForwardStep : AT nodeTest
-                         | nodeTest'''
+			 | nodeTest'''
     p[0] = ''.join(p[1:])
 
-    
+
 def p_abbrevReverseStep(p):
     '''abbrevReverseStep : DOTDOT'''
     p[0] = ''.join(p[1:])
@@ -1465,23 +1463,23 @@ def p_abbrevReverseStep(p):
 
 def p_nodeTest(p):
     '''nodeTest : kindTest
-                | nameTest'''
+		| nameTest'''
     p[0] = p[1]
 
 
 def p_nameTest(p):
     '''nameTest : qname
-                | wildCard'''
+		| wildCard'''
     p[0] = p[1]
 
 
 def p_wildCard(p):
     '''wildCard : STAR
-                | NCNAME COLON STAR
-                | STAR COLON NCNAME'''
-    p[0] = ''.join(p[1:])        
+		| NCNAME COLON STAR
+		| STAR COLON NCNAME'''
+    p[0] = ''.join(p[1:])
 
-    
+
 def p_filterExpr(p):
     '''filterExpr : primaryExpr predicateList'''
     p[0] = ''.join(p[1:])
@@ -1489,7 +1487,7 @@ def p_filterExpr(p):
 
 def p_predicateList(p):
     '''predicateList : predicate
-                     | empty'''
+		     | empty'''
     p[0] = p[1]
 
 
@@ -1500,13 +1498,13 @@ def p_predicate(p):
 
 def p_primaryExpr(p):
     '''primaryExpr : VAR
-                   | literal
-                   | parenthesizedExpr
-                   | contextItemExpr
-                   | functionCall
-                   | orderedExpr
-                   | unorderedExpr
-                   | constructor'''
+		   | literal
+		   | parenthesizedExpr
+		   | contextItemExpr
+		   | functionCall
+		   | orderedExpr
+		   | unorderedExpr
+		   | constructor'''
     p[0] = p[1]
 
 
@@ -1517,7 +1515,7 @@ def p_uriliteral(p):
 
 def p_literal(p):
     '''literal : numericliteral
-               | stringliteral'''
+	       | stringliteral'''
     p[0] = p[1]
 
 
@@ -1533,7 +1531,7 @@ def p_stringliteral(p):
 
 def p_parenthesizedExpr(p):
     '''parenthesizedExpr : LPAR expr RPAR
-                         | LPAR RPAR'''
+			 | LPAR RPAR'''
     p[0] = ''.join(p[1:])
 
 
@@ -1564,7 +1562,7 @@ def p_exprSingles(p):
 
 def p_exprSingleses(p):
     '''exprSingleses : COMMA exprSingles
-                     | empty'''
+		     | empty'''
     p[0] = ' '.join(p[1:])
 
 
@@ -1585,17 +1583,17 @@ def p_statementsYesNo1(p):
 
 def p_statements(p):
     '''statements : statement  statements
-                  | statement  '''
+		  | statement  '''
     if len(p) == 2:
-        p[0] = [ p[1] ]
+	p[0] = [ p[1] ]
     else:
-        p[0] = [ p[1] ] + p[2]
+	p[0] = [ p[1] ] + p[2]
 
 
 def p_statement(p):
     '''statement : lifttriples DOT
-                 | lifttriples '''
-    p[0] = p[1] 
+		 | lifttriples '''
+    p[0] = p[1]
 
 
 def p_lifttriples(p):
@@ -1610,36 +1608,36 @@ def p_subject0(p):
 
 def p_subject1(p):
     '''subject : blank
-               | enclosedExpr'''
+	       | enclosedExpr'''
     p[0] = p[1]
 
 
 def p_predicateObjectList(p):
     '''predicateObjectList : verbObjectLists semicolonYesNo
-                           | empty'''
+			   | empty'''
     p[0] = p[1]
 
 
 def p_semicolonYesNo(p):
     '''semicolonYesNo : SEMICOLON
-                      | empty'''
+		      | empty'''
     p[0] = p[1]
-    
+
 
 def p_verbObjectLists(p):
     '''verbObjectLists : verb objectList verbObjectListses '''
     p[0] = [ ( p[1], p[2] ) ] + p[3]
-    
-    
+
+
 
 def p_verbObjectListses(p):
     '''verbObjectListses : SEMICOLON verbObjectLists
-                         | empty'''
+			 | empty'''
     if len(p) == 2:
-        p[0] = []
+	p[0] = []
     else:
-        p[0] = p[2]
-    
+	p[0] = p[2]
+
 
 def p_objectList(p):
     '''objectList : object objectLists'''
@@ -1648,53 +1646,54 @@ def p_objectList(p):
 
 def p_objectLists(p):
     '''objectLists : COMMA objectList
-                   | empty'''
+		   | empty'''
     if len(p) == 2:
-        p[0] = []
+	p[0] = []
     else:
-        p[0] = p[2]
+	p[0] = p[2]
 
 
 def p_object(p):
     '''object : resource
-              | blank
-              | rdfliteral
-              | enclosedExpr'''
+	      | blank
+	      | rdfliteral
+	      | enclosedExpr'''
     p[0] = p[1]
 
 
 def p_verb(p):
     '''verb : rdfPredicate
-            | enclosedExpr'''
+	    | enclosedExpr'''
     p[0] = p[1]
 
 
 def p_rdfPredicate(p):
     '''rdfPredicate : resource'''
-    p[0] = p[1]    
+    p[0] = p[1]
+
 
 
 def p_resource(p):
     '''resource : sparqlqname
-                | VAR 
-                | IRIREF'''
+		| VAR
+		| IRIREF'''
     #@todo do we have to map '?' to '$'??
     if p[1].startswith('?'):  # translate SPARQL vars "?Var" to "$Var"
-        p[0] = '$' + p[1][1:]
+	p[0] = '$' + p[1][1:]
     else:
-        p[0] = p[1]
-        
+	p[0] = p[1]
+
 
 def p_blank(p):
     '''blank : bnodeWithExpr
-             | LBRACKET RBRACKET
-             | LBRACKET predicateObjectList RBRACKET'''
+	     | LBRACKET RBRACKET
+	     | LBRACKET predicateObjectList RBRACKET'''
     if len(p) == 2: # bnodeWithExpr
-        p[0] = [ p[1] ]
+	p[0] = [ p[1] ]
     elif len(p) == 3: # empty bracketedExpr
-        p[0] = []
+	p[0] = []
     else: # non-empty bracketedExpr
-        p[0] = [ p[1] ] + p[2] 
+	p[0] = [ p[1] ] + p[2]
 
 
 def p_bnodeWithExpr(p):
@@ -1704,36 +1703,36 @@ def p_bnodeWithExpr(p):
 
 def p_enclosedExprWithNull(p):
     '''enclosedExprWithNull : enclosedExpr
-                            | empty'''
-    p[0] = ''.join(p[1:])    
+			    | empty'''
+    p[0] = ''.join(p[1:])
 
 
 def p_bnode(p):
     '''bnode : UNDERSCORE COLON NCNAME'''
     p[0] = ''.join(p[1:])
-    
+
 
 def p_rdfliteral(p):
     '''rdfliteral : INTEGER
-                  | QSTRING
-                  | QSTRING AT NCNAME
-                  | QSTRING CARROT CARROT IRIREF'''
+		  | QSTRING
+		  | QSTRING AT NCNAME
+		  | QSTRING CARROT CARROT IRIREF'''
     p[0] = ''.join(p[1:])
 
 
 def p_sparqlqname(p):
     '''sparqlqname : NCNAME COLON NCNAME
-                   | COLON NCNAME
-                   | NCNAME'''
+		   | COLON NCNAME
+		   | NCNAME'''
     p[0] = ''.join(p[1:])
 
 
 def p_qname(p):
     '''qname : NCNAME
-             | NCNAME qnames'''
+	     | NCNAME qnames'''
     p[0] = ''.join(p[1:])
 
-   
+
 def p_qnames(p):
     '''qnames : COLON NCNAME'''
     p[0] = ''.join(p[1:])
@@ -1767,18 +1766,18 @@ def rewrite(s):
        we bail out and return the original input.'''
 
     try:
-        parser = get_parser()
+	parser = get_parser()
 
-        # parse s, and get rewritten string back
-        result = parser.parse(s)
+	# parse s, and get rewritten string back
+	result = parser.parse(s)
 
-        if result:
-           return result + '\n'
-        else:
-           return ''
-        
+	if result:
+	   return result + '\n'
+	else:
+	   return ''
+
     except SyntaxError:
-       return s
+	sys.exit(1)
 
 
 
@@ -1786,9 +1785,9 @@ def reLexer(s):
     lexer = lex.lex()
     lexer.input(s)
     while 1:
-         tok = lexer.token()
-         if not tok: break
-         print tok
+	 tok = lexer.token()
+	 if not tok: break
+	 print tok
 
     sys.exit(0)
 
