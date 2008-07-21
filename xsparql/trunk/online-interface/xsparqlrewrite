@@ -25,7 +25,7 @@ fi
 
 # store the rewritten query in tempfiles/
 # RESTMP=`mktemp -t xsparql_result_XX`
-$RESTMP=$FILE.out
+RESTMP=$FILE.out
 
 cat $FILE | xsparqler.py 2>/dev/null > $RESTMP
 
