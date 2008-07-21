@@ -3,17 +3,17 @@
 EVAL=rewrite
 
 # parse the arguments
-for i in $* 
+for i in $*
 do
     case $i in
-        --eval)
-            EVAL=$i
-        ;;
-        *)
+	--eval)
+	    EVAL=$i
+	;;
+	*)
 # @todo: check if file is not found. Should not be necessary
 
-    	    FILE=$i
-        ;;
+            FILE=$i
+	;;
     esac
 done
 
@@ -23,25 +23,27 @@ if [ $# -lt 1 ]; then
     exit 1;
 fi
 
-RESTMP=`mktemp -t xsparql_result_XX`
+# store the rewritten query in tempfiles/
+# RESTMP=`mktemp -t xsparql_result_XX`
+$RESTMP=$FILE.out
 
 cat $FILE | xsparqler.py 2>/dev/null > $RESTMP
 
 RETCODE=$?
 
 # if the parse failed return the original query
-if [ $RETCODE -ne 0 ]; then 
+if [ $RETCODE -ne 0 ]; then
     cat $FILE;
 else
     # otherwise evaluate or print the rewritten query
     if [ $EVAL == "--eval" ]; then
-        xqilla $RESTMP;
-        RETCODE=$?;
+	xqilla $RESTMP;
+	RETCODE=$?;
     else
-        cat $RESTMP;
+	cat $RESTMP;
     fi
 fi
 
-rm -f $RESTMP
+# rm -f $RESTMP
 
 exit $RETCODE
