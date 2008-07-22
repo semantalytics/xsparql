@@ -31,8 +31,9 @@ cat $FILE | xsparqler.py 2>/dev/null > $RESTMP
 
 RETCODE=$?
 
-# if the parse failed return the original query
+# if the parse failed return the original query along with the error 
 if [ $RETCODE -ne 0 ]; then
+    cat $RESTMP;
     cat $FILE;
 else
     # otherwise evaluate or print the rewritten query
