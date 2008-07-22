@@ -81,7 +81,11 @@ if ($error eq '')
 	}
     }
     if ($finished == 1)
-	{ close(SOLVER); }
+	{ close(SOLVER);
+	  if ($? != 0) {
+	      $headstr = 'Error found:';
+	  }
+	}
     else
 	{ kill 9, $pid; }
 
@@ -104,10 +108,10 @@ print $cgi->header(-'Cache-Control'=>'no-cache, must-revalidate, max-age=0',
 #print @result;
 if ($error ne '') { print $error; exit 0; }
 
-$query =~ s/</&lt\;/g;
-print '<h3 style="margin-top: 0px;">Original query:</h3><p> ' .  $query . '</p>';
-print '<p>call: ' . $solverexec . '</p>';
-print '<p>file: ' . $filename. '</p>';
+if ($solver eq 'evaluate') {
+    $filename =~ s/\/home\/.*\/tempfiles/tempfiles/g;
+    print '<p><a href="'.$filename.'.out">Rewritten XQuery</a></p>';
+}
 
 print '<h3 style="margin-top: 0px;">' . $headstr  . '</h3>';
 
