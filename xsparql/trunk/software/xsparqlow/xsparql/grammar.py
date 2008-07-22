@@ -152,25 +152,27 @@ reserved = {
 states = [
    ('pattern','exclusive'),
    ('iri','inclusive'),
+   ('comments','exclusive')
 ]
 
 # takes care of keywords and IRIs
-def t_ANY_NCNAME(t):
-    r'\w[\w\-]*'
+def t_INITIAL_pattern_iri_NCNAME(t):
+    # an NCNAME cannot start with a digit: http://www.w3.org/TR/REC-xml-names/#NT-NCName
+    r'[a-zA-Z_][\w\-]*'   
     t.type = reserved.get(t.value,'NCNAME')
     if t.type == 'PREFIX' or t.type == 'BASE' or t.type == 'FROM':
 	t.lexer.begin('iri')
     return t
 
 
-t_ANY_SLASH = r'/'
-t_ANY_SLASHSLASH = r'//'
-t_ANY_LBRACKET = r'\['
-t_ANY_RBRACKET = r'\]'
-t_ANY_LPAR = r'\('
-t_ANY_RPAR = r'\)'
-t_ANY_SEMICOLON = r';'
-t_ANY_QSTRING = r'\"[^\"]*\"'
+t_INITIAL_pattern_iri_SLASH = r'/'
+t_INITIAL_pattern_iri_SLASHSLASH = r'//'
+t_INITIAL_pattern_iri_LBRACKET = r'\['
+t_INITIAL_pattern_iri_RBRACKET = r'\]'
+t_INITIAL_pattern_iri_LPAR = r'\('
+t_INITIAL_pattern_iri_RPAR = r'\)'
+t_INITIAL_pattern_iri_SEMICOLON = r';'
+t_INITIAL_pattern_iri_QSTRING = r'\"[^\"]*\"'
 
 ##def t_CONSTRUCT(t):
 ##    r'\bconstruct'
@@ -181,44 +183,44 @@ t_LCURLY  = r'{'
 t_RCURLY = r'}'
 
 
-t_ANY_VAR = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
-t_ANY_INTEGER   = r'[0-9]+'
-t_ANY_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
-t_ANY_AT        = r'@'
-t_ANY_CARROT    = r'\^'
-t_ANY_COLON     = r'\:'
-t_ANY_COLONCOLON = r'\:\:'
-t_ANY_COMMA     = r'\,'
-t_ANY_EQUALS    = r'='
-t_ANY_STAR    = r'\*'
-t_ANY_DOTDOT    = r'\.\.'
-t_ANY_LESSTHAN = r'<'
-t_ANY_GREATERTHAN = r'>'
-t_ANY_PLUS = r'\+'
-t_ANY_MINUS = r'\-'
-t_ANY_UNIONSYMBOL = r'\|'
-t_ANY_QUESTIONMARK = r'\?'
-t_ANY_LESSTHANLESSTHAN = r'\<\<'
-t_ANY_GREATERTHANEQUALS = r'\>\='
-t_ANY_LESSTHANEQUALS = r'\<\='
-t_ANY_HAFENEQUALS = r'\!\='
+t_INITIAL_pattern_iri_VAR = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
+t_INITIAL_pattern_iri_INTEGER   = r'[0-9]+'
+t_INITIAL_pattern_iri_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
+t_INITIAL_pattern_iri_AT        = r'@'
+t_INITIAL_pattern_iri_CARROT    = r'\^'
+t_INITIAL_pattern_iri_COLON     = r'\:'
+t_INITIAL_pattern_iri_COLONCOLON = r'\:\:'
+t_INITIAL_pattern_iri_COMMA     = r'\,'
+t_INITIAL_pattern_iri_EQUALS    = r'='
+t_INITIAL_pattern_iri_STAR    = r'\*'
+t_INITIAL_pattern_iri_DOTDOT    = r'\.\.'
+t_INITIAL_pattern_iri_LESSTHAN = r'<'
+t_INITIAL_pattern_iri_GREATERTHAN = r'>'
+t_INITIAL_pattern_iri_PLUS = r'\+'
+t_INITIAL_pattern_iri_MINUS = r'\-'
+t_INITIAL_pattern_iri_UNIONSYMBOL = r'\|'
+t_INITIAL_pattern_iri_QUESTIONMARK = r'\?'
+t_INITIAL_pattern_iri_LESSTHANLESSTHAN = r'\<\<'
+t_INITIAL_pattern_iri_GREATERTHANEQUALS = r'\>\='
+t_INITIAL_pattern_iri_LESSTHANEQUALS = r'\<\='
+t_INITIAL_pattern_iri_HAFENEQUALS = r'\!\='
 
-##t_ANY_BIGU = r'\U'
-##t_ANY_SMALLU = r'\u'
-##t_ANY_BACKSLASH = r'\\'
-##t_ANY_STRI = r'.[0-9]+'
-##t_ANY_HEXI = r'[\x30-\x39]'
-##t_ANY_HEXII = r'[\x41-\x46]'
-##t_ANY_OTHERHEXI = r'[\x20-\x5B]'
-##t_ANY_OTHERHEXII =r'[x5D-x10FFFF]'
-##t_ANY_CHEX = r'-\x3E'
-#t_ANY_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
-##t_ANY_IRIREF    = r'\([^<>\'\{\}\|\^`\x00-\x20]\)*'
-##t_ANY_BACKSLASHGT = r'\>'
-##t_ANY_SINGLEQUOTS = r'\''
-##t_ANY_DOUBLEQUOTS = r'"'
-##t_ANY_HAFEN = r'\!'
-##t_ANY_GREATERTHANGREATERTHAN = r'\>\>'
+##t_INITIAL_pattern_iri_BIGU = r'\U'
+##t_INITIAL_pattern_iri_SMALLU = r'\u'
+##t_INITIAL_pattern_iri_BACKSLASH = r'\\'
+##t_INITIAL_pattern_iri_STRI = r'.[0-9]+'
+##t_INITIAL_pattern_iri_HEXI = r'[\x30-\x39]'
+##t_INITIAL_pattern_iri_HEXII = r'[\x41-\x46]'
+##t_INITIAL_pattern_iri_OTHERHEXI = r'[\x20-\x5B]'
+##t_INITIAL_pattern_iri_OTHERHEXII =r'[x5D-x10FFFF]'
+##t_INITIAL_pattern_iri_CHEX = r'-\x3E'
+#t_INITIAL_pattern_iri_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
+##t_INITIAL_pattern_iri_IRIREF    = r'\([^<>\'\{\}\|\^`\x00-\x20]\)*'
+##t_INITIAL_pattern_iri_BACKSLASHGT = r'\>'
+##t_INITIAL_pattern_iri_SINGLEQUOTS = r'\''
+##t_INITIAL_pattern_iri_DOUBLEQUOTS = r'"'
+##t_INITIAL_pattern_iri_HAFEN = r'\!'
+##t_INITIAL_pattern_iri_GREATERTHANGREATERTHAN = r'\>\>'
 
 
 curly_brackets = 0
@@ -255,10 +257,50 @@ def t_iri_GREATERTHAN(t):
     r'>'
     t.lexer.begin('INITIAL')
 
+## ------------------------------ 2.6 Comments
+# http://www.w3.org/TR/xquery/#comments
+
+# Comment        ::=  "(:" (CommentContents | Comment)* ":)"
+# CommentContents        ::=  (Char+ - (Char* ('(:' | ':)') Char*))
+
+
+comment_level = 0
+
+# when it finds the begining of a comment switches to the 'comment'
+# state and adds the comment level by one
+def t_INITIAL_comments_SCOM(t):
+    r'\(:\ '
+    t.lexer.begin('comments')
+#    print t
+    global comment_level
+    comment_level += 1
+    pass
+
+# END_COMMENT token ends the pattern state iff comment_level counter
+# gets 0
+def t_ANY_ECOM(t):
+    r'\ :\)'
+#    print t
+    global comment_level
+    comment_level -= 1
+    if comment_level == 0: t.lexer.begin('INITIAL')
+    pass
+
+# Ignored characters for 'comment' state
+t_comments_ignore = r".*"
+
+# illegal characters will end up here
+def t_comments_error(t):
+#    print t
+    t.lexer.skip(1)
+
+
+
+## -------------
 
 
 # Ignored characters
-t_ANY_ignore = " \t"
+t_INITIAL_pattern_iri_ignore = " \t"
 
 # newlines increase line numbers (and will be ignored)
 def t_ANY_newline(t):
@@ -266,7 +308,7 @@ def t_ANY_newline(t):
     t.lexer.lineno += t.value.count("\n")
 
 # illegal characters will end up here
-def t_ANY_error(t):
+def t_INITIAL_pattern_iri_error(t):
     print "Illegal character '%s'" % t.value[0]
     t.lexer.skip(1)
 
@@ -288,12 +330,15 @@ decl_var_ns = ''
 count = 0
 nsFlag = False
 
+## ------------------------------ main
 
 ## first come, first serve
 def p_mainModule(p):
     '''mainModule : prolog queryBody'''
     p[0] = ''.join(p[1:])
 
+
+## ------------------------------ prolog
 
 def p_prolog(p):
     '''prolog : xqueryNS prolog
@@ -429,7 +474,9 @@ def p_baseURIDecl(p):
     #' '.join([ r  for r in lifrewriter.build_rewrite_baseURI(p[1], p[2], p[3])])
 
 
-# xqilla and saxon behave differently in NodeType variables, it seems like name($x_Node/*) does not work as intended
+## ------------------------------ queryBody
+# xqilla and saxon behave differently in NodeType variables, it seems
+# like name($x_Node/*) does not work as intended
 def p_queryBody(p):
     '''queryBody : expr'''
     global nsFlag
@@ -452,6 +499,7 @@ def p_queryBody(p):
     else:
 	p[0] = '\n ' + prefix + decl_var_ns + decl_func + p[1]
 
+## ------------------------------ Expressions
 
 def p_expr(p):
      '''expr : expr COMMA exprSingle
@@ -467,11 +515,6 @@ def p_enclosedExpr(p):
     p[0] = ' '.join(p[1:])
 
 
-def p_empty(p):
-    '''empty : '''
-    p[0] = ''
-
-
 def p_exprSingle(p):
     '''exprSingle : flworExpr
 		  | constructQuery
@@ -479,6 +522,8 @@ def p_exprSingle(p):
 		  | ifExpr'''
     p[0] = p[1]
 
+
+## ------------------------------ constructQuery
 
 def p_constructQuery(p):
     '''constructQuery : CONSTRUCT constructTemplate datasetClauses whereSPARQLClause solutionmodifier'''
@@ -518,11 +563,14 @@ def p_whereSPARQLClause(p):
     p[0] = p[2]
 
 
+## ------------------------------ ifExpr
+
 def p_ifExpr(p):
     '''ifExpr : IF LPAR expr RPAR THEN exprSingle ELSE exprSingle'''
     p[0] = (p[1]+' '+p[2]+' '+p[3]+' '+p[4]+' '+p[5]+' '+p[6][0]+' '+p[7]+' '+p[8][0], [], [])
 
 
+## ------------------------------ flworExpr
 def p_flworExpr0(p):
     '''flworExpr : flworExprs CONSTRUCT constructTemplate'''
     global nsFlag
@@ -676,6 +724,7 @@ def p_letVar(p):
 ## [45]    GraphTerm    ::=    IRIref | RDFLiteral | NumericLiteral | BooleanLiteral | BlankNode | NIL
 
 
+## ------------------------------ groupGraphPattern
 def p_groupGraphPattern(p):
    '''groupGraphPattern : LCURLY RCURLY
 			| LCURLY graphPatterns RCURLY'''
@@ -1026,6 +1075,8 @@ def p_whereClause(p):
 ##    '''orExpr : pathExpr'''
 ##    p[0] = p[1]
 
+
+## ------------------------------ orExpr
 
 def p_orExpr(p):
     '''orExpr : andExpr orAndExpr'''
@@ -1738,6 +1789,15 @@ def p_qnames(p):
     p[0] = ''.join(p[1:])
 
 
+
+## ------------------------------ empty rule
+
+def p_empty(p):
+    '''empty : '''
+    p[0] = ''
+
+
+
 #
 # XSPARQL Grammar end
 #
@@ -1761,6 +1821,7 @@ def get_parser():
 
 
 
+# ---------------------------- initial function
 def rewrite(s):
     '''Rewrite s using our XSPARQL grammar. If we find a syntax error,
        we bail out and return the original input.'''

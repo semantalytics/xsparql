@@ -1,3 +1,13 @@
+2008-07-22  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py: added comments in the
+	form '(: ' and ' :)'
+	* software/xsparqlow/xsparql/grammar.py: changed the NCNAME
+	definition: according to
+	http://www.w3.org/TR/REC-xml-names/#NT-NCName it cannot start with
+	a digit
+	
+
 2008-07-18  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* software/xsparqlow/xsparql: bring code in CVS to the same state
@@ -5,4 +15,3 @@
 	now returns exit code 1 on syntax error.
 	* online-interface: rewrite xsparqlrewrite to handle more
 	cases. If there is a parse error return the original query.
-
