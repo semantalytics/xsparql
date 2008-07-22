@@ -12,7 +12,7 @@ do
 	*)
 # @todo: check if file is not found. Should not be necessary
 
-            FILE=$i
+	    FILE=$i
 	;;
     esac
 done
@@ -27,14 +27,13 @@ fi
 # RESTMP=`mktemp -t xsparql_result_XX`
 RESTMP=$FILE.out
 
-cat $FILE | xsparqler.py 2>/dev/null > $RESTMP
+cat $FILE | python /home/nunolopes/xsparql/software/xsparqlow/xsparqler.py 2>/dev/null > $RESTMP
 
 RETCODE=$?
 
-# if the parse failed return the original query along with the error 
+# if the parse failed return the original query along with the error
 if [ $RETCODE -ne 0 ]; then
     cat $RESTMP;
-    cat $FILE;
 else
     # otherwise evaluate or print the rewritten query
     if [ $EVAL == "--eval" ]; then
