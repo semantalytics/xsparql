@@ -158,7 +158,7 @@ states = [
 # takes care of keywords and IRIs
 def t_INITIAL_pattern_iri_NCNAME(t):
     # an NCNAME cannot start with a digit: http://www.w3.org/TR/REC-xml-names/#NT-NCName
-    r'[a-zA-Z_][\w\-]*'   
+    r'[a-zA-Z_][\w\-]*'
     t.type = reserved.get(t.value,'NCNAME')
     if t.type == 'PREFIX' or t.type == 'BASE' or t.type == 'FROM':
 	t.lexer.begin('iri')
@@ -605,7 +605,7 @@ def p_forletClauses0(p):
 
 def p_forletClauses1(p):
     '''forletClauses : letClause'''
-    p[0] = ( p[1][0] , p[1][1], p[1][2]  ) # FIXME: add bound and position variables
+    p[0] = ( p[1][0] , [], p[1][2]  ) # FIXME: add bound and position variables
 
 
 def p_forletClauses2(p):
@@ -642,9 +642,10 @@ def p_sparqlvars(p):
 		  | VAR
 		  | STAR'''
     if len(p) == 3:
-	p[0] = (p[1] + ' ' + p[2][0], [ p[1] ] + p[2][1], [] )
+        p[0] = (p[1] + ' ' + p[2][0], [ p[1] ] + p[2][1], [] )
     else:
-	p[0] = ( p[1] , [ p[1] ] , [])
+        p[0] = ( p[1] , [ p[1] ] , [])
+
 
 
 def p_forClause(p):
