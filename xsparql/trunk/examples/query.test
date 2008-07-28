@@ -1,3 +1,4 @@
+query/dawg-testcases.xsparql
 query/fdwlm.xsparql
 query/foaf_lifting.xsparql
 query/foaf_lifting_naive.xsparql

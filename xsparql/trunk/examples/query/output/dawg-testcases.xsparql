@@ -1,0 +1,31 @@
+declare namespace mf = "http://www.w3.org/2001/sw/DataAccess/tests/test-manifest# 
+ " ;declare namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ;declare namespace list = "http://jena.hpl.hp.com/ARQ/list#" ;
+ declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#"; 
+declare variable $NS_1 := "prefix  mf:  &#60;http://www.w3.org/2001/sw/DataAccess/tests/test-manifest# 
+ &#62;";
+declare variable $NS_2 := "prefix  rdf:  &#60;http://www.w3.org/1999/02/22-rdf-syntax-ns#&#62;";
+declare variable $NS_3 := "prefix  list:  &#60;http://jena.hpl.hp.com/ARQ/list#&#62;";
+
+declare function local:rdf_term($NType as xs:string, $V as xs:string) as xs:string 
+{ let $rdf_term := if($NType = "sparql_result:literal" or $NType = "literal") then fn:concat("""",$V,"""") 
+  else if ($NType = "sparql_result:bnode" or $NType = "bnode") then fn:concat("_:", $V) 
+  else if ($NType = "sparql_result:uri" or $NType = "uri") then fn:concat("<", $V, ">") 
+  else "" 
+  return $rdf_term  };
+
+declare function local:empty($rdf_Predicate as xs:string,  $rdf_Object as xs:string) as xs:string 
+{ let $output :=  if( fn:substring($rdf_Predicate, 0, 3) = "_:" or substring($rdf_Predicate, 0, 2) = """ or  
+  substring($rdf_Predicate, fn:string-length($rdf_Predicate), fn:string-length($rdf_Predicate))   = """ ) then   " " 
+  else  fn:concat($rdf_Predicate,  $rdf_Object) 
+  return $output }; 
+
+
+let $aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1,  $NS_2,  $NS_3, "
+select $incl from <http://www.polleres.net/Temp/manifest-syntax.ttl>  where { _:a  rdf:type  mf:Manifest   ";",  mf:include _:b  
+ . _:b list:member    $incl   . } ")))
+for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
+	let $incl_Node := ($aux_result1/sparql_result:binding[@name = "incl"])
+	let $incl_NodeType := name($incl_Node/*)
+	let $incl := data($incl_Node/*)
+	let $incl_RDFTerm :=  local:rdf_term($incl_NodeType, $incl )
+ return $incl  
