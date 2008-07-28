@@ -1,1 +1,0 @@
-rdfproc -n test_temp_rdfxml2turtle parse $1; rdfproc test_temp_rdfxml2turtle serialize ntriples 
