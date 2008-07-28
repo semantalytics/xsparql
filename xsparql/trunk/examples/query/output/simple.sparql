@@ -1,0 +1,44 @@
+
+ declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#"; 
+declare variable $NS_1 := "prefix  :  &#60;http://www.example.org&#62;";
+
+declare function local:rdf_term($NType as xs:string, $V as xs:string) as xs:string 
+{ let $rdf_term := if($NType = "sparql_result:literal" or $NType = "literal") then fn:concat("""",$V,"""") 
+  else if ($NType = "sparql_result:bnode" or $NType = "bnode") then fn:concat("_:", $V) 
+  else if ($NType = "sparql_result:uri" or $NType = "uri") then fn:concat("<", $V, ">") 
+  else "" 
+  return $rdf_term  };
+
+declare function local:empty($rdf_Predicate as xs:string,  $rdf_Object as xs:string) as xs:string 
+{ let $output :=  if( fn:substring($rdf_Predicate, 0, 3) = "_:" or substring($rdf_Predicate, 0, 2) = """ or  
+  substring($rdf_Predicate, fn:string-length($rdf_Predicate), fn:string-length($rdf_Predicate))   = """ ) then   " " 
+  else  fn:concat($rdf_Predicate,  $rdf_Object) 
+  return $output }; 
+
+
+ fn:concat(  "  
+@", $NS_1, ".", "
+" ),
+
+let $aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1, "
+select $s $p $x from <http://www.polleres.net/xsparql/data/alice.ttl>  where {    $s     $p     $x   . } ")))
+for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
+	let $s_Node := ($aux_result1/sparql_result:binding[@name = "s"])
+	let $s_NodeType := name($s_Node/*)
+	let $s := data($s_Node/*)
+	let $s_RDFTerm :=  local:rdf_term($s_NodeType, $s )
+	let $p_Node := ($aux_result1/sparql_result:binding[@name = "p"])
+	let $p_NodeType := name($p_Node/*)
+	let $p := data($p_Node/*)
+	let $p_RDFTerm :=  local:rdf_term($p_NodeType, $p )
+	let $x_Node := ($aux_result1/sparql_result:binding[@name = "x"])
+	let $x_NodeType := name($x_Node/*)
+	let $x := data($x_Node/*)
+	let $x_RDFTerm :=  local:rdf_term($x_NodeType, $x )
+
+ return 
+	  fn:concat( 
+		
+  
+   $x_RDFTerm ,   "  :p  ",  "[",   local:empty( $x_RDFTerm,  concat("  _:a_",  data($aux_result1_Pos),"" )),  "]",
+  ".&#xA;" )
