@@ -1,3 +1,14 @@
+2008-07-29  Nuno Lopes  <nl@unikhorn.ie.deri.local>
+
+	* software/xsparqlow/xsparql/grammar.py: grammar refactoring.
+	There are still 2 shift/reduce and the grammar was restricted in
+	the following ways:
+	1) example query/fdwlm.xsparql: return <user></user><dist></dist>
+	is not allowed.  It needs to be return <node><user></user><dist></dist></node>
+	2) FOR (...) constructTemplate letClause solutionmodifier was
+	removed. To check how to add later.
+
+
 2008-07-22  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* software/xsparqlow/xsparql/grammar.py: added comments in the
@@ -6,7 +17,7 @@
 	definition: according to
 	http://www.w3.org/TR/REC-xml-names/#NT-NCName it cannot start with
 	a digit
-	
+
 
 2008-07-18  Nuno Lopes  <nuno.lopes@deri.org>
 
