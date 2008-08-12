@@ -760,9 +760,9 @@ def p_directAttributeList(p):
     '''directAttributeList : directAttribute directAttributeList
 			   | empty'''
     if len(p) == 3:
-        p[0] = ' ' + ''.join(p[1:])
+	p[0] = ' ' + ''.join(p[1:])
     else:
-        p[0] = ''
+	p[0] = ''
 
 
 def p_directAttribute(p):
@@ -1577,11 +1577,24 @@ def p_empty(p):
 # XSPARQL Grammar end
 #
 
+# Compute column.
+def find_column(token):
+    global instring
+
+    i = token.lexpos
+    while i > 0:
+	if instring[i] == '\n': break
+	i -= 1
+    column = (token.lexpos - i)+1
+    return column
 
 def p_error(p):
     '''Error rule for syntax errors -> ignore them gracefully by
     throwing a SyntaxError.'''
-    print 'Syntax error at ', p
+
+    col = find_column(p)
+    print 'Syntax error: \''+p.value+'\' at line '+`p.lineno`+', column '+`col`
+
     raise SyntaxError
 
 
@@ -1598,9 +1611,17 @@ def get_parser():
 
 
 # ---------------------------- initial function
+
+instring = ''
+
+
 def rewrite(s):
     '''Rewrite s using our XSPARQL grammar. If we find a syntax error,
        we bail out and return the original input.'''
+
+    # store the input string to calculate the column in case of error
+    global instring
+    instring = s
 
     try:
 	parser = get_parser()

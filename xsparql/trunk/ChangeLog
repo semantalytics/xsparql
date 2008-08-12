@@ -5,6 +5,8 @@
 	http://www.w3.org/TR/REC-xml-names/#NT-QName and defining one new
 	terminal.  Removed the rule sparqlqname.
 	(p_blank): removed bnodeWithExpr (to check foaf_lifting)
+	(find_column): new function to calculate the column in case of
+	syntax error.  New error reporting format.
 
 2008-07-29  Nuno Lopes  <nl@unikhorn.ie.deri.local>
 
