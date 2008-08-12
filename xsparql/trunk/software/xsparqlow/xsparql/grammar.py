@@ -759,13 +759,10 @@ def p_directElemContent(p):
 def p_directAttributeList(p):
     '''directAttributeList : directAttribute directAttributeList
 			   | empty'''
-    p[0] = ''.join(p[1:])
-
-
-##def p_directAttributeLists(p):
-##    '''directAttributeLists :  directAttributeList
-##                            | empty'''
-##    p[0] = ' '.join(p[1:])
+    if len(p) == 3:
+        p[0] = ' ' + ''.join(p[1:])
+    else:
+        p[0] = ''
 
 
 def p_directAttribute(p):
@@ -806,7 +803,7 @@ def p_limitoffsetclause(p):
 
 def p_orderclause(p):
     '''orderclause : ORDER BY VAR'''
-    p[0] = ''.join(p[1:])
+    p[0] = ' '.join(p[1:])
 
 def p_limitclause(p):
     '''limitclause : LIMIT INTEGER'''
