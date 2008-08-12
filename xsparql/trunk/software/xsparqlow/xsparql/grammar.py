@@ -47,7 +47,7 @@ import lowrewriter
 # lexer tokens
 tokens = (
     'FOR', 'FROM', 'LET', 'WHERE', 'ORDER', 'BY', 'IN', 'AS', 'RETURN', 'CONSTRUCT', 'STABLE', 'ASCENDING', 'DESCENDING',
-    'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING', 'IF', 'THEN', 'ELSE', 'LIMIT', 'OFFSET',
+    'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'NCNAME_COLON', 'QSTRING', 'IF', 'THEN', 'ELSE', 'LIMIT', 'OFFSET',
     'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'COLLATION',
     'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON', 'CHILD', 'DESCENDANT', 'ATTRIBUTE', 'SELF', 'IS', 'EQ',
     'DESCENDANTORSELF', 'FOLLOWINGSIBLING', 'FOLLOWING', 'PARENT', 'ANCESTOR', 'PRECEDINGSIBLING', 'PRECEDING', 'NE', 'LT',
@@ -162,10 +162,20 @@ precedence = (
 
 
 
+from ply.lex import TOKEN
+# ncname =          r'[a-zA-Z_][\w\-]*'
+ncname =               r'[a-zA-Z_][A-Za-z0-9\.\-_]*'
+ncname_colon =         r'(' + ncname + ')( |\t)*:'
+
+
+@TOKEN(ncname_colon)
+def t_INITIAL_pattern_iri_NCNAME_COLON(t):
+    return t
+
 # takes care of keywords and IRIs
+@TOKEN(ncname)
 def t_INITIAL_pattern_iri_NCNAME(t):
     # an NCNAME cannot start with a digit: http://www.w3.org/TR/REC-xml-names/#NT-NCName
-    r'[a-zA-Z_][\w\-]*'
     t.type = reserved.get(t.value,'NCNAME')
     if t.type == 'PREFIX' or t.type == 'BASE' or t.type == 'FROM':
 	t.lexer.begin('iri')
@@ -181,10 +191,6 @@ t_INITIAL_pattern_iri_RPAR = r'\)'
 t_INITIAL_pattern_iri_SEMICOLON = r';'
 t_INITIAL_pattern_iri_QSTRING = r'\"[^\"]*\"'
 
-##def t_CONSTRUCT(t):
-##    r'\bconstruct'
-##    t.lexer.start(pattern)
-##    return t
 
 t_LCURLY  = r'{'
 t_RCURLY = r'}'
@@ -212,22 +218,6 @@ t_INITIAL_pattern_iri_GREATERTHANEQUALS = r'\>\='
 t_INITIAL_pattern_iri_LESSTHANEQUALS = r'\<\='
 t_INITIAL_pattern_iri_HAFENEQUALS = r'\!\='
 
-##t_INITIAL_pattern_iri_BIGU = r'\U'
-##t_INITIAL_pattern_iri_SMALLU = r'\u'
-##t_INITIAL_pattern_iri_BACKSLASH = r'\\'
-##t_INITIAL_pattern_iri_STRI = r'.[0-9]+'
-##t_INITIAL_pattern_iri_HEXI = r'[\x30-\x39]'
-##t_INITIAL_pattern_iri_HEXII = r'[\x41-\x46]'
-##t_INITIAL_pattern_iri_OTHERHEXI = r'[\x20-\x5B]'
-##t_INITIAL_pattern_iri_OTHERHEXII =r'[x5D-x10FFFF]'
-##t_INITIAL_pattern_iri_CHEX = r'-\x3E'
-#t_INITIAL_pattern_iri_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*\>'
-##t_INITIAL_pattern_iri_IRIREF    = r'\([^<>\'\{\}\|\^`\x00-\x20]\)*'
-##t_INITIAL_pattern_iri_BACKSLASHGT = r'\>'
-##t_INITIAL_pattern_iri_SINGLEQUOTS = r'\''
-##t_INITIAL_pattern_iri_DOUBLEQUOTS = r'"'
-##t_INITIAL_pattern_iri_HAFEN = r'\!'
-##t_INITIAL_pattern_iri_GREATERTHANGREATERTHAN = r'\>\>'
 
 
 curly_brackets = 0
@@ -381,31 +371,21 @@ def p_prefixID(p):
 
 
 def p_prefixIDs(p):
-    '''prefixIDs :  NCNAME COLON IRIREF
+    '''prefixIDs :  NCNAME_COLON IRIREF
 		 |  COLON IRIREF'''
     global count
     global decl_var_ns
 
     count += 1
-    #namespaces.append(('prefix', p[2], ':', p[4]))
-    if len(p) == 4 :
-	prefix = ''.join(p[1])
-	url = ''.join(p[3])
-    elif len(p) == 3:
-	prefix = ''
-	url = ''.join(p[2])
 
-    col = ':'
+    prefix = p[1]
+    url = ''.join(p[2])
+
+    col = ''
     nsTag = 'prefix'
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
     p[0] = ''
-    #.join(p[1:])
 
-
-##def p_colRef(p):
-##    '''colRef : NCNAME COLON iriRef
-##              | COLON iriRef'''
-##    p[0] = ''.join(p[1:])
 
 
 
@@ -442,7 +422,6 @@ def p_defaultNamespaceDecls(p):
     col = ':'
     url = ''.join(p[3])
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
-    #' '.join([ r  for r in lifrewriter.build_rewrite_defaultNSDecl(p[1], p[2], p[3], p[4], p[5])])
     p[0] = ' '.join(p[1:])
 
 
@@ -476,7 +455,6 @@ def p_baseURIDecl(p):
     url = ''.join(p[3])
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
     p[0] = ' '.join(p[1:])
-    #' '.join([ r  for r in lifrewriter.build_rewrite_baseURI(p[1], p[2], p[3])])
 
 
 ## --------------------------------------------------------- queryBody
@@ -553,11 +531,6 @@ def p_datasetClause(p):
 	p[0] = (p[1] + ' ' + p[2], p[3])
     elif len(p) == 3: # from
 	p[0] = (p[1], p[2])
-
-
-## def p_graphClause(p):
-##     '''graphClause : IRIREF'''
-##     p[0] = p[1]
 
 
 def p_whereSPARQLClause(p):
@@ -1358,7 +1331,7 @@ def p_nameTest(p):
 
 def p_wildCard(p):
     '''wildCard : STAR
-		| NCNAME COLON STAR
+		| NCNAME_COLON STAR
 		| STAR COLON NCNAME'''
     p[0] = ''.join(p[1:])
 
@@ -1535,7 +1508,7 @@ def p_rdfPredicate(p):
 
 
 def p_resource(p):
-    '''resource : sparqlqname
+    '''resource : qname
 		| VAR
 		| IRIREF'''
     #@todo do we have to map '?' to '$'??
@@ -1545,21 +1518,12 @@ def p_resource(p):
 	p[0] = p[1]
 
 def p_blank(p):
-    '''blank : bnodeWithExpr
+    '''blank : bnode
 	     | LBRACKET predicateObjectList RBRACKET'''
     if len(p) == 2: # bnodeWithExpr
 	p[0] = [ p[1] ]
     else: # non-empty bracketedExpr
 	p[0] = [ p[1] ] + p[2]
-
-
-# # shift/reduce with enclosedExpr
-# bnode enclosedExpr
-#                      |
-def p_bnodeWithExpr(p):
-    '''bnodeWithExpr : bnode enclosedExpr
-		     | bnode'''
-    p[0] = ''.join(p[1:])
 
 
 
@@ -1576,21 +1540,29 @@ def p_rdfliteral(p):
     p[0] = ''.join(p[1:])
 
 
-# shift/reduce
-def p_sparqlqname(p):
-    '''sparqlqname : NCNAME COLON NCNAME
-		   | COLON NCNAME
-		   | NCNAME'''
+
+
+def p_qname(p):
+    '''qname : prefixedName
+	     | unprefixedName'''
     p[0] = ''.join(p[1:])
 
 
+def p_unprefixedName(p):
+    '''unprefixedName : localPart'''
+    p[0] = ''.join(p[1:])
 
-# Xquery
-# http://www.w3.org/TR/REC-xml-names/#NT-NCName
+def p_prefixedName(p):
+    '''prefixedName : prefix localPart'''
+    p[0] = ''.join(p[1:])
 
-def p_qname(p):
-    '''qname : NCNAME
-	     | NCNAME COLON NCNAME'''
+def p_prefix(p):
+    '''prefix : NCNAME_COLON
+	      | COLON'''
+    p[0] = ''.join(p[1:])
+
+def p_localPart(p):
+    '''localPart : NCNAME'''
     p[0] = ''.join(p[1:])
 
 

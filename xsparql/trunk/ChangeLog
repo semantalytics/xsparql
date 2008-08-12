@@ -1,3 +1,11 @@
+2008-08-12  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py (p_qname): Resolved 1
+	shift/reduce by using the definition from:
+	http://www.w3.org/TR/REC-xml-names/#NT-QName and defining one new
+	terminal.  Removed the rule sparqlqname.
+	(p_blank): removed bnodeWithExpr (to check foaf_lifting)
+
 2008-07-29  Nuno Lopes  <nl@unikhorn.ie.deri.local>
 
 	* software/xsparqlow/xsparql/grammar.py: grammar refactoring.
