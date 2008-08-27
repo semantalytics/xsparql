@@ -1,9 +1,12 @@
 2008-08-27  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* online-interface/tempfiles/backup.sh: shell script to create a
+	backup file of the existing query output files. To add as a cronjob
+
 	* online-interface/xsparqlrewrite: show stderr msgs in interface
 
 	* software/xsparqlow/xsparql/debug.py: aux function to print debug
-	info 
+	info
 
 2008-08-22  Nuno Lopes  <nuno.lopes@deri.org>
 
