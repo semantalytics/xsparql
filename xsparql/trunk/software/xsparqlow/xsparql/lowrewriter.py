@@ -70,6 +70,9 @@ def var_rdfterm(var):
 
 
 def cnv_lst_str(dec_var, flag):
+    if len(dec_var) == 0:
+	return '""'
+
     stri = ''
     for i in dec_var:
        if flag :
@@ -144,12 +147,10 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
     query += '} ' + solutionmodifier
 
     # return XQuery SPARQL query
+    # @todo: fdwlm.xsparql,dawg-testcases
     return '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + \
 	     '", fn:encode-for-uri( fn:concat(' + cnv_lst_str(dec_var, False) + ', "' + \
 	     query + '")))\n'
-
-    # @todo why do we need the last empty string??
-    #return '\n' + prefix + query + ' ", "" )))\n'
 
 
 
@@ -193,9 +194,12 @@ def buildConstruct(constGraphpattern, from_iri, graphpattern, solutionmodifier):
 
 def graphOutput(constGraphpattern):
     global variables
-    statement = ' ' + lifrewriter.build_triples(constGraphpattern, p_var, variables) + ' '
-    statement += ')'
-    return '\n return \n\t  fn:concat( \n\t\t\n ' + statement
+    let, ret = lifrewriter.build_triples(constGraphpattern, p_var, variables)
+#     print '------- graphOutput'
+#     print let
+#     print ret
+
+    return '\n' + let + '\n return \n\t   \n\t\t\n ' + ret
 
 
 # generator function, keeps track of incrementing the for-counter
@@ -221,6 +225,9 @@ def find_vars(p):
 	build_predicate(polist, True )
 
     var = []
+    if len(variables) == 0:
+	return
+
     temp = variables[0]
     for v in variables:
        n = 0
@@ -252,7 +259,7 @@ def build_subject(s, f):
 	return '[]'
     else: # polist
 	if s[0] == '[': # first member is an opening bnode bracket
-	    return '"[", ' + build_predicate([ s[1] ], f) + ' ";", ' + build_predicate(s[2:], f) + ' "]",\n '
+	    return '[ ' + build_predicate([ s[1] ], f) + ' ; ' + build_predicate(s[2:], f) + ' ]\n '
 	else:
 	    return ' ' + build_predicate([ s[0] ], f) + ' ";", ' + build_predicate(s[1:], f) + ' \n '
 
@@ -290,9 +297,9 @@ def build_predicate(p, f):
 	d =  p
 	if d[0] == '[' :
 	    d.remove('[')
-	    return '"[", ' + build_predicate([ d[0] ], f) + '";", ' + build_predicate([ d[1] ], f) + ' "]",\n '
+	    return '[ ' + build_predicate([ d[0] ], f) + '; ' + build_predicate([ d[1] ], f) + ' ]\n '
 	else:
-	    return ' ' + build_predicate([ d[0] ], f) + ' ";", ' + build_predicate([ d[1] ], f) + ' \n '
+	    return ' ' + build_predicate([ d[0] ], f) + ' ; ' + build_predicate([ d[1] ], f) + ' \n '
 
 
 
@@ -301,7 +308,7 @@ def build_object(o, f):
 	d =  o[0]
 	if d[0] == '[' :
 	    d.remove('[')
-	    return '"[", ' + build_predicate(d, f) + ' "]",\n '
+	    return '[ ' + build_predicate(d, f) + ' ]\n '
 	else:
 	    return  build_bnode(o[0][0], f)
     elif len(o) == 1 and isinstance(o[0], str):

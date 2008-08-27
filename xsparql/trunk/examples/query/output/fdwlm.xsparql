@@ -1,26 +1,18 @@
+
 declare namespace foaf = "http://xmlns.com/foaf/0.1/" ;
- declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#"; 
-declare variable $NS_1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+import module namespace local = "http://xsparql.deri.org/xsparql.xquery"
+at "http://xsparql.deri.org/xsparql.xquery";
 
-declare function local:rdf_term($NType as xs:string, $V as xs:string) as xs:string 
-{ let $rdf_term := if($NType = "sparql_result:literal" or $NType = "literal") then fn:concat("""",$V,"""") 
-  else if ($NType = "sparql_result:bnode" or $NType = "bnode") then fn:concat("_:", $V) 
-  else if ($NType = "sparql_result:uri" or $NType = "uri") then fn:concat("<", $V, ">") 
-  else "" 
-  return $rdf_term  };
+declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";
 
-declare function local:empty($rdf_Predicate as xs:string,  $rdf_Object as xs:string) as xs:string 
-{ let $output :=  if( fn:substring($rdf_Predicate, 0, 3) = "_:" or substring($rdf_Predicate, 0, 2) = """ or  
-  substring($rdf_Predicate, fn:string-length($rdf_Predicate), fn:string-length($rdf_Predicate))   = """ ) then   " " 
-  else  fn:concat($rdf_Predicate,  $rdf_Object) 
-  return $output }; 
+declare variable $NS_1 := "prefix  :  &#60;http://xmlns.com/foaf/0.1/&#62;";
+declare variable $NS_2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 
-
-let $aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1, "
-select $UID2 $X2 $Y2 from <http://www.polleres.net/xsparql/data/relations.rdf>  where { "[",  :id    $UID2    ";",  "]",
-  :hasGPSCoordinate "[",   :lat    $X2    ";",  :long    $Y2    
-  "]",
-  . } order by $dist")))
+let $aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1,  $NS_2, "
+select $UID2 $X2 $Y2 from <http://www.polleres.net/xsparql/data/relations.rdf>  where { [  :id    $UID2    ;  ]
+  :hasGPSCoordinate [   :lat    $X2    ;  :long    $Y2    
+  ]
+  . } ")))
 for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
 	let $UID2_Node := ($aux_result1/sparql_result:binding[@name = "UID2"])
 	let $UID2_NodeType := name($UID2_Node/*)
@@ -34,6 +26,5 @@ for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
 	let $Y2_NodeType := name($Y2_Node/*)
 	let $Y2 := data($Y2_Node/*)
 	let $Y2_RDFTerm :=  local:rdf_term($Y2_NodeType, $Y2 )
- 
-let $dist  := $X2    
-   return <user >{ $UID2   }</user><dist >{ $dist   }</dist>  
+
+let $dist  := $X2  order by $dist    return <user><user>{ $UID2   }</user><dist>{ $dist   }</dist></user>  

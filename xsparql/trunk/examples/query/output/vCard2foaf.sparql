@@ -1,21 +1,12 @@
 
- declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#"; 
+
+import module namespace local = "http://xsparql.deri.org/xsparql.xquery"
+at "http://xsparql.deri.org/xsparql.xquery";
+
+declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";
+
 declare variable $NS_1 := "prefix  vc:  &#60;http://www.w3.org/2001/vcard-rdf/3.0#&#62;";
 declare variable $NS_2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
-
-declare function local:rdf_term($NType as xs:string, $V as xs:string) as xs:string 
-{ let $rdf_term := if($NType = "sparql_result:literal" or $NType = "literal") then fn:concat("""",$V,"""") 
-  else if ($NType = "sparql_result:bnode" or $NType = "bnode") then fn:concat("_:", $V) 
-  else if ($NType = "sparql_result:uri" or $NType = "uri") then fn:concat("<", $V, ">") 
-  else "" 
-  return $rdf_term  };
-
-declare function local:empty($rdf_Predicate as xs:string,  $rdf_Object as xs:string) as xs:string 
-{ let $output :=  if( fn:substring($rdf_Predicate, 0, 3) = "_:" or substring($rdf_Predicate, 0, 2) = """ or  
-  substring($rdf_Predicate, fn:string-length($rdf_Predicate), fn:string-length($rdf_Predicate))   = """ ) then   " " 
-  else  fn:concat($rdf_Predicate,  $rdf_Object) 
-  return $output }; 
-
 
  fn:concat(  "  
 @", $NS_1, ".", "  
@@ -34,8 +25,14 @@ for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
 	let $FN := data($FN_Node/*)
 	let $FN_RDFTerm :=  local:rdf_term($FN_NodeType, $FN )
 
+
  return 
-	  fn:concat( 
+	   
 		
-  
-   $X_RDFTerm ,   "  foaf:name  ",     $FN_RDFTerm ,   ".&#xA;" )
+ 
+	 if (local:validSubject( "",  $X_RDFTerm  )
+		 and local:validObject( "",  $FN_RDFTerm  )) then 
+	 fn:concat( 
+		 $X_RDFTerm,  "  foaf:name  ",  $FN_RDFTerm,  ".&#xA;"
+		) 
+ else "" 

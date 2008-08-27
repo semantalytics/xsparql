@@ -29,6 +29,7 @@ import ply.lex as lex
 import ply.yacc as yacc
 import sys
 import re
+import debug
 
 # our rewriting functions
 import lifrewriter
@@ -44,27 +45,9 @@ import lowrewriter
 # =======================================================================
 
 
-# lexer tokens
-tokens = (
-    'FOR', 'FROM', 'LET', 'WHERE', 'ORDER', 'BY', 'IN', 'AS', 'RETURN', 'CONSTRUCT', 'STABLE', 'ASCENDING', 'DESCENDING',
-    'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'NCNAME_COLON', 'QSTRING', 'IF', 'THEN', 'ELSE', 'LIMIT', 'OFFSET',
-    'DOT', 'AT', 'CARROT', 'COLON', 'ATS', 'COMMA', 'EQUALS', 'GREATEST', 'LEAST', 'COLLATION',
-    'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON', 'CHILD', 'DESCENDANT', 'ATTRIBUTE', 'SELF', 'IS', 'EQ',
-    'DESCENDANTORSELF', 'FOLLOWINGSIBLING', 'FOLLOWING', 'PARENT', 'ANCESTOR', 'PRECEDINGSIBLING', 'PRECEDING', 'NE', 'LT',
-    'ANCESTORORSELF', 'STAR', 'ORDERED', 'UNORDERED', 'DOTDOT', 'SLASHSLASH', 'COLONCOLON', 'UNDERSCORE', 'ITEM', 'LE', 'GE',
-    'DECLARE', 'NAMESPACE', 'DEFAULT', 'ELEMENT', 'FUNCTION', 'BASEURI', 'LESSTHAN', 'GREATERTHAN', 'GT',
-    'PREFIX', 'BASE', 'AND', 'OR', 'TO', 'PLUS', 'MINUS', 'DIV', 'IDIV', 'MOD', 'UNION', 'INTERSECT',
-    'EXCEPT', 'INSTANCE', 'TREAT', 'CASTABLE', 'CAST', 'OF', 'UNIONSYMBOL', 'QUESTIONMARK', 'EMPTYSEQUENCE',
-    'LESSTHANLESSTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'NODE', 'DOCUMENTNODE',
-    'TEXT', 'COMMENT', 'PROCESSINGINSTRUCTION', 'SCHEMAATTRIBUTE', 'SCHEMAELEMENT', 'DOCUMENT',
-    'NAMED'#, 'OPTIONAL'
-
-##     'CHEX', 'OTHERHEXI', 'LAX', 'SMALLU', 'GREATERTHANGREATERTHAN', 'STRICT', 'STRI', 'BACKSLASH', 'BIGU',
-##     'OTHERHEXII', 'HEXII', 'DOUBLEQUOTS', 'SINGLEQUOTS', 'BACKSLASHGT', 'HEXI', 'HAFEN',
-    )
-
 # reserved keywords
 reserved = {
+   'a'  : 'A',
    'is' : 'IS',
    'eq' : 'EQ',
    'ne' : 'NE',
@@ -88,7 +71,7 @@ reserved = {
    'if' : 'IF',
    'then' : 'THEN',
    'else' : 'ELSE',
-   'typeswitch' : 'TYPESWITCH',
+#   'typeswitch' : 'TYPESWITCH',
    'return' : 'RETURN',
    'construct' : 'CONSTRUCT',
    'where' : 'WHERE',
@@ -99,7 +82,7 @@ reserved = {
    'descendant' : 'DESCENDANT',
    'attribute' : 'ATTRIBUTE',
    'self' : 'SELF',
-   'descendant-or-self' : 'DESCSENDANTORSELF',
+   'descendant-or-self' : 'DESCENDANTORSELF',
    'following-sibling' : 'FOLLOWINGSIBLING',
    'following' : 'FOLLOWING',
    'parent' : 'PARENT',
@@ -117,7 +100,7 @@ reserved = {
    'base-uri' : 'BASEURI',
    'prefix' : 'PREFIX',
    'base' :'BASE',
-   '_' : 'UNDERSCORE',
+#    '_' : 'UNDERSCORE',
    'and' : 'AND',
    'or' : 'OR',
    'to' : 'TO',
@@ -132,8 +115,8 @@ reserved = {
    'castable' : 'CASTABLE',
    'cast' : 'CAST',
    'of' : 'OF',
-   'lax' : 'LAX',
-   'strict' : 'STRICT',
+#   'lax' : 'LAX',
+#   'strict' : 'STRICT',
    'empty-sequence' : 'EMPTYSEQUENCE',
    'item' : 'ITEM',
    'node' : 'NODE',
@@ -145,8 +128,19 @@ reserved = {
    'schema-element' : 'SCHEMAELEMENT',
    'document' : 'DOCUMENT',
    'named' : 'NAMED',
-   'optional' : 'OPTIONAL'
+#   'optional' : 'OPTIONAL'
 }
+
+
+# lexer tokens
+tokens = [
+    'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING', 'DOT', 'AT',
+    'CARROT', 'COLON', 'COMMA', 'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON',
+    'STAR', 'DOTDOT', 'SLASHSLASH','LESSTHAN', 'GREATERTHAN',  'PLUS', 'MINUS', 'UNIONSYMBOL', 'QUESTIONMARK',
+    'LESSTHANLESSTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'EQUALS', 'COLONCOLON',
+    'STAR_COLON_NCNAME', 'NCNAME_COLON_STAR', 'BNODE', 'BNODE_CONSTRUCT', 'PREFIXED_NAME'
+    ] + reserved.values()
+
 
 # lexer states
 states = [
@@ -163,23 +157,71 @@ precedence = (
 
 
 from ply.lex import TOKEN
-# ncname =          r'[a-zA-Z_][\w\-]*'
-ncname =               r'[a-zA-Z_][A-Za-z0-9\.\-_]*'
-ncname_colon =         r'(' + ncname + ')( |\t)*:'
+
+# http://www.w3.org/TR/REC-xml-names/#NT-NCName
+# [4]   NCName            ::=   NCNameStartChar NCNameChar*      /* An XML Name, minus the ":" */
+# [5]   NCNameChar        ::=   NameChar - ':'
+# [6]   NCNameStartChar   ::=   Letter | '_'
+
+NCNameStartChar   =   r'([A-Za-z]|_)'
+NCNameChar        =   r'([A-Za-z]|[0-9]|\.|-|_)'   # @todo: allow dots?! should be fine.
+NCName            =   r'('+NCNameStartChar+')('+NCNameChar+')*'
+
+# http://www.w3.org/TR/REC-xml/#NT-NameChar
+# [4]   NameChar   ::=    Letter | Digit | '.' | '-' | '_' | ':' | CombiningChar | Extender
+
+PN_CHARS_BASE    =       r'([A-Za-z])'
+PN_CHARS_U       =       r'('+PN_CHARS_BASE+'|_)'
+VARNAME          =       r'('+PN_CHARS_U+'|[0-9])('+PN_CHARS_U+'|[0-9])*'
+PN_CHARS         =       r'('+PN_CHARS_U+'|-|[0-9])'
+PN_PREFIX        =       r''+PN_CHARS_BASE+'(('+PN_CHARS+'|\.)*'+PN_CHARS+')?'
+PN_LOCAL         =       r'(('+PN_CHARS_U+')|[0-9])(('+PN_CHARS+'|\.)*'+PN_CHARS+')?'
+
+PREFIXED_NAME = r'('+PN_PREFIX+')?:'+PN_LOCAL
+
+bnode           =      r'_:(' + NCName + ')'
+bnode_construct =      r'_:(' + NCName + ')?\{'
 
 
-@TOKEN(ncname_colon)
-def t_INITIAL_pattern_iri_NCNAME_COLON(t):
+
+@TOKEN(bnode_construct)
+def t_INITIAL_pattern_iri_BNODE_CONSTRUCT(t):
     return t
 
+@TOKEN(bnode)
+def t_INITIAL_pattern_iri_BNODE(t):
+    return t
+
+@TOKEN(PREFIXED_NAME)
+def t_INITIAL_pattern_iri_PREFIXED_NAME(t):
+    return t
+
+
 # takes care of keywords and IRIs
-@TOKEN(ncname)
+@TOKEN(NCName)
 def t_INITIAL_pattern_iri_NCNAME(t):
     # an NCNAME cannot start with a digit: http://www.w3.org/TR/REC-xml-names/#NT-NCName
     t.type = reserved.get(t.value,'NCNAME')
     if t.type == 'PREFIX' or t.type == 'BASE' or t.type == 'FROM':
 	t.lexer.begin('iri')
     return t
+
+
+
+star_ncname =          r'\*( |\t)*:( |\t)*(' + NCName + ')'
+ncname_star =          r'('+NCName+')( |\t)*:( |\t)*\*'
+# ncname_colon =         r'(' + NCName + ')( |\t)*:'
+# ncname_2colon =        r'(' + NCName + ')::'
+
+@TOKEN(star_ncname)
+def t_INITIAL_pattern_iri_STAR_COLON_NCNAME(t):
+    return t
+
+@TOKEN(ncname_star)
+def t_INITIAL_pattern_iri_NCNAME_COLON_STAR(t):
+    return t
+
+
 
 
 t_INITIAL_pattern_iri_SLASH = r'/'
@@ -303,7 +345,7 @@ def t_ANY_newline(t):
 
 # illegal characters will end up here
 def t_INITIAL_pattern_iri_error(t):
-    print "Illegal character '%s'" % t.value[0]
+    sys.stderr.write("Illegal character '" + t.value[0] + "'\n")
     t.lexer.skip(1)
 
 
@@ -339,7 +381,7 @@ def p_prolog(p):
     '''prolog : xqueryNS prolog
 	      | sparqlNS prolog
 	      | empty'''
-    p[0] = ''.join(p[1:])
+    p[0] = '\n'.join(p[1:])
 
 
 def p_xqueryNS(p):
@@ -371,17 +413,20 @@ def p_prefixID(p):
 
 
 def p_prefixIDs(p):
-    '''prefixIDs :  NCNAME_COLON IRIREF
+    '''prefixIDs :  NCNAME COLON IRIREF
 		 |  COLON IRIREF'''
     global count
     global decl_var_ns
 
     count += 1
+    if len(p) == 4 :
+	prefix = ''.join(p[1])
+	url = ''.join(p[3])
+    elif len(p) == 3:
+	prefix = ''
+	url = ''.join(p[2])
 
-    prefix = p[1]
-    url = ''.join(p[2])
-
-    col = ''
+    col = ':'
     nsTag = 'prefix'
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
     p[0] = ''
@@ -463,34 +508,28 @@ def p_baseURIDecl(p):
 def p_queryBody(p):
     '''queryBody : expr'''
     global nsFlag
-    prefix = 'declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#"; \n'
-    decl_func = '\ndeclare function local:rdf_term($NType as xs:string, $V as xs:string) as xs:string \n'
-    decl_func += '{ let $rdf_term := if($NType = "sparql_result:literal" or $NType = "literal") then fn:concat("""",$V,"""") \n'
-    decl_func += '  else if ($NType = "sparql_result:bnode" or $NType = "bnode") then fn:concat("_:", $V) \n'
-    decl_func += '  else if ($NType = "sparql_result:uri" or $NType = "uri") then fn:concat("<", $V, ">") \n'
-    decl_func += '  else "" \n'
-    decl_func += '  return $rdf_term  };\n\n'
-    decl_func += 'declare function local:empty($rdf_Predicate as xs:string,  $rdf_Object as xs:string) as xs:string \n'
-    decl_func += '{ let $output :=  if( fn:substring($rdf_Predicate, 0, 3) = "_:" or substring($rdf_Predicate, 0, 2) = """ or  \n'
-    decl_func += '  substring($rdf_Predicate, fn:string-length($rdf_Predicate), fn:string-length($rdf_Predicate))   = """ ) then   " " \n'
-    decl_func += '  else  fn:concat($rdf_Predicate,  $rdf_Object) \n'
-    decl_func += '  return $output }; \n\n'
+
+    prefix =  'import module namespace local = "http://xsparql.deri.org/xsparql.xquery"\n'
+    prefix += 'at "http://xsparql.deri.org/xsparql.xquery";\n\n'
+    prefix += 'declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";\n\n'
+
 
     nsVars = lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)
     if nsVars != '' and nsFlag:
-	p[0] = '\n ' + prefix + decl_var_ns + decl_func + '\n fn:concat( ' + nsVars + ', "\n" ),\n' + p[1]
+	p[0] = prefix + decl_var_ns + '\n fn:concat( ' + nsVars + ', "\n" ),\n' + p[1]
     else:
-	p[0] = '\n ' + prefix + decl_var_ns + decl_func + p[1]
+	p[0] = prefix + decl_var_ns + p[1]
+
 
 ## ------------------------------ Expressions
 
 def p_expr(p):
-     '''expr : expr COMMA exprSingle
-	     | exprSingle'''
-     if len(p) == 2:
-	 p[0] = ''.join(p[1][0])
-     else:
-	 p[0] = ''.join(p[1]+' '+p[2]+' '+p[3][0])
+    '''expr : expr COMMA exprSingle
+	    | exprSingle'''
+    if len(p) == 2:
+	p[0] = ''.join(p[1][0])
+    else:
+	p[0] = ''.join(p[1]+' '+p[2]+' '+p[3][0])
 
 
 def p_enclosedExpr(p):
@@ -534,7 +573,7 @@ def p_datasetClause(p):
 
 
 def p_whereSPARQLClause(p):
-    '''whereSPARQLClause : WHERE constructTemplate'''
+    '''whereSPARQLClause : WHERE whereTemplate'''
     p[0] = p[2]
 
 
@@ -552,11 +591,11 @@ def p_flworExpr0(p):
     '''flworExpr : flworExprs CONSTRUCT constructTemplate'''
     global nsFlag
     nsFlag = True
-    p[0] = (''.join([ r  for r in lifrewriter.build_rewrite_query(p[1][0], p[2], p[3], p[1][2], p[1][1])]), p[1][2], p[1][2])
+    p[0] = (''.join([ r  for r in lifrewriter.build_rewrite_query(p[1][0], p[1][3], p[2], p[3], p[1][2], p[1][1])]), p[1][2], p[1][2])
 
 def p_flworExpr1(p):
     '''flworExpr : flworExprs RETURN exprSingle'''
-    p[0] = ( p[1][0] + ' '+p[2]+' '+p[3][0], p[1][1], p[1][2] )
+    p[0] = ( p[1][0] + p[1][3] + ' '+p[2]+' '+p[3][0], p[1][1], p[1][2] )
 
 
 
@@ -567,39 +606,44 @@ def p_flworExprs(p):
 		  | forletClauses orderByClause
 		  | forletClauses whereClause orderByClause'''
     if len(p) == 2:
-	p[0] = ( p[1][0], p[1][1], p[1][2] )
+	p[0] = ( p[1][0], p[1][1], p[1][2], "" )
     else:
-	p[0] = ( p[1][0] + '\n'.join(p[2:]), p[1][1], p[1][2] )
+	p[0] = ( p[1][0] ,  p[1][1], p[1][2], '\n'.join(p[2:]) )
 
 
 # todo: collect variables in let, and build up triples of (expr, variables in scope, position variables in scope)
 
+def p_forletClauses(p):
+    '''forletClauses : forletClauses forletClause
+		     | forletClause'''
+    if (len(p) == 3):
+	p[0] = ( p[1][0] + p[2][0], p[1][1] + p[2][1], p[1][2] + p[2][2] )
+    else:
+	p[0] = p[1]
 
-def p_forletClauses0(p):
-    '''forletClauses : forClause'''
-    p[0] = ( p[1][0] , p[1][1], p[1][2]  )
 
-def p_forletClauses1(p):
-    '''forletClauses : letClause'''
+
+def p_forletClause0(p):
+    '''forletClause : forClause'''
+#    p[0] = ( p[1][0] , p[1][1], p[1][2]  )
+    p[0] = ( p[1][0] , [], p[1][2]  )  # example nasty nasty
+
+def p_forletClause1(p):
+    '''forletClause : letClause'''
     p[0] = ( p[1][0] , [], p[1][2]  ) # FIXME: add bound and position variables # @todo: check if OK!
 #    p[0] = ( p[1][0] , p[1][1], p[1][2]  ) # FIXME: add bound and position variables
 
-def p_forletClauses2(p):
-    '''forletClauses : sparqlForClause'''
+def p_forletClause2(p):
+    '''forletClause : sparqlForClause'''
     p[0] = ( p[1][0] , p[1][1], p[1][2]  ) # FIXME: add bound and position variables
 
-def p_forletClauses3(p):
-    '''forletClauses : forletClauses forClause
-		     | forletClauses letClause
-		     | forletClauses sparqlForClause'''
-    p[0] = ( p[1][0] + p[2][0], p[1][1] + p[2][1], p[1][2] + p[2][2] )
 
 
 # 8 shift/reduce
 
-#                       | FOR sparqlvars datasetClauses  WHERE constructTemplate letClause solutionmodifier
+#                       | FOR sparqlvars datasetClauses  WHERE whereTemplate letClause solutionmodifier
 def p_sparqlForClause(p):
-    '''sparqlForClause : FOR sparqlvars datasetClauses WHERE constructTemplate solutionmodifier'''
+    '''sparqlForClause : FOR sparqlvars datasetClauses WHERE whereTemplate solutionmodifier'''
     if len(p) == 7:
 	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[6]) ]), p[2][1], p[2][2] )
     else:
@@ -828,7 +872,6 @@ def p_positionVar(p):
     else:
 	p[0] = ('', '')
 
-# shift/reduce (solved by precedence)
 def p_orderByClause(p):
     '''orderByClause : ORDER BY orderSpecList
 		     | STABLE ORDER BY orderSpecList'''
@@ -1328,8 +1371,8 @@ def p_nameTest(p):
 
 def p_wildCard(p):
     '''wildCard : STAR
-		| NCNAME_COLON STAR
-		| STAR COLON NCNAME'''
+		| NCNAME_COLON_STAR
+		| STAR_COLON_NCNAME'''
     p[0] = ''.join(p[1:])
 
 
@@ -1404,7 +1447,8 @@ def p_unorderedExpr(p):
 
 
 def p_functionCall(p):
-    '''functionCall : qname LPAR exprSingles RPAR'''
+    '''functionCall : qname LPAR exprSingles RPAR
+		    | PREFIXED_NAME LPAR exprSingles RPAR'''
     p[0] = ''.join(p[1:])
 
 
@@ -1429,7 +1473,7 @@ def p_constructTemplate(p):
 
 
 
-def p_statements(p):
+def p_constructTriples(p):
     '''constructTriples : lifttriples DOT constructTriples
 			| lifttriples
 			| empty'''
@@ -1442,18 +1486,19 @@ def p_statements(p):
 
 
 def p_lifttriples(p):
-    '''lifttriples : subject predicateObjectList '''
+    '''lifttriples : subject predicateObjectList'''
     p[0] = (p[1], p[2])
 
 
 def p_subject0(p):
-    '''subject : resource'''
+    '''subject : resource
+	       | iriConstruct'''
     p[0] = [ p[1] ]
 
 
-# shift/reduce with bnodeWithExpr
 def p_subject1(p):
     '''subject : blank
+	       | blankConstruct
 	       | enclosedExpr'''
     p[0] = p[1]
 
@@ -1482,18 +1527,20 @@ def p_objectList(p):
     else:
 	p[0] = [ p[1] ]
 
-
-# shift/reduce with bnodeWithExpr
 def p_object(p):
     '''object : resource
 	      | blank
 	      | rdfliteral
-	      | enclosedExpr'''
+	      | blankConstruct
+	      | iriConstruct
+	      | literalConstruct'''
     p[0] = p[1]
 
 
 def p_verb(p):
     '''verb : rdfPredicate
+	    | A
+	    | iriConstruct
 	    | enclosedExpr'''
     p[0] = p[1]
 
@@ -1504,8 +1551,31 @@ def p_rdfPredicate(p):
 
 
 
+#     '''blankConstruct : UNDERSCORE COLON NCNAME enclosedExpr
+#                       | UNDERSCORE COLON enclosedExpr'''
+def p_blankConstruct(p):
+    '''blankConstruct : BNODE_CONSTRUCT expr RCURLY'''
+    p[0] = [ ''.join(p[1:]) ]
+
+
+def p_iriConstruct(p):
+    '''iriConstruct : LESSTHAN enclosedExpr GREATERTHAN
+		    | enclosedExpr COLON enclosedExpr
+		    | NCNAME COLON enclosedExpr
+		    | enclosedExpr COLON NCNAME'''
+    p[0] = ''.join(p[1:])
+
+
+def p_literalConstruct(p):
+    '''literalConstruct :  enclosedExpr'''
+    p[0] = ''.join(p[1:])
+
+
+## ----------------------------------------------------------
+
+
 def p_resource(p):
-    '''resource : qname
+    '''resource : sparqlPrefixedName
 		| VAR
 		| IRIREF'''
     #@todo do we have to map '?' to '$'??
@@ -1517,15 +1587,13 @@ def p_resource(p):
 def p_blank(p):
     '''blank : bnode
 	     | LBRACKET predicateObjectList RBRACKET'''
-    if len(p) == 2: # bnodeWithExpr
+    if len(p) == 2: # bnode
 	p[0] = [ p[1] ]
-    else: # non-empty bracketedExpr
+    else: # non-empty bracketedExpr  @todo: is this correct??
 	p[0] = [ p[1] ] + p[2]
 
-
-
 def p_bnode(p):
-    '''bnode : UNDERSCORE COLON NCNAME'''
+    '''bnode : BNODE'''
     p[0] = ''.join(p[1:])
 
 
@@ -1538,6 +1606,106 @@ def p_rdfliteral(p):
 
 
 
+## ----------------------------------------------------------
+
+def p_whereTemplate(p):
+    '''whereTemplate : LCURLY constructTriples_where RCURLY'''
+    p[0] = p[2]
+
+def p_constructTriples_where(p):
+    '''constructTriples_where : lifttriples_where DOT constructTriples_where
+			| lifttriples_where
+			| empty'''
+    if len(p) == 4:
+	p[0] = [ p[1] ] +  p[3]
+    elif len(p) == 2 and len(p[1]):
+	p[0] = [ p[1] ]
+    else:
+	p[0] = []
+
+
+def p_lifttriples_where(p):
+    '''lifttriples_where : subject_where predicateObjectList_where '''
+    p[0] = (p[1], p[2])
+
+
+def p_subject_where0(p):
+    '''subject_where : resource'''
+    p[0] = [ p[1] ]
+
+
+def p_subject_where1(p):
+    '''subject_where : blank
+		     | enclosedExpr'''
+    p[0] = p[1]
+
+
+def p_predicateObjectList_where(p):
+    '''predicateObjectList_where : verbObjectLists_where
+				 | empty'''
+    p[0] = p[1]
+
+
+def p_verbObjectLists_where(p):
+    '''verbObjectLists_where : verb_where objectList_where SEMICOLON verbObjectLists_where
+			     | verb_where objectList_where SEMICOLON
+			     | verb_where objectList_where'''
+    if len(p) == 5:
+	p[0] = [ ( p[1], p[2] ) ] + p[4]
+    else:
+	p[0] = [ ( p[1], p[2] ) ]
+
+
+def p_objectList_where(p):
+    '''objectList_where : object_where COMMA objectList_where
+			| object_where'''
+    if len(p) == 4:
+	p[0] = [ p[1] ] + p[3]
+    else:
+	p[0] = [ p[1] ]
+
+
+def p_object_where(p):
+    '''object_where : resource
+		    | blank
+		    | rdfliteral
+		    | enclosedExpr'''
+    p[0] = p[1]
+
+
+def p_verb_where(p):
+    '''verb_where : rdfPredicate
+		  | A
+		  | enclosedExpr'''
+    p[0] = p[1]
+
+
+
+
+## ----------------------------------------------------------
+# http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName
+
+# [68]       PrefixedName     ::= PNAME_LN | PNAME_NS
+# [71]       PNAME_NS         ::= PN_PREFIX? ':'
+# [72]       PNAME_LN         ::= PNAME_NS PN_LOCAL
+
+# http://www.w3.org/TR/rdf-sparql-query/#rPN_CHARS_BASE
+# [95]       PN_CHARS_BASE    ::=        [A-Z] | [a-z]
+# [96]       PN_CHARS_U       ::=       PN_CHARS_BASE | '_'
+# [97]       VARNAME          ::=       ( PN_CHARS_U | [0-9] ) ( PN_CHARS_U | [0-9]  )*
+# [98]       PN_CHARS         ::=       PN_CHARS_U | '-' | [0-9]
+# [99]       PN_PREFIX        ::=       PN_CHARS_BASE ((PN_CHARS|'.')* PN_CHARS)?
+# [100]      PN_LOCAL         ::=       ( PN_CHARS_U | [0-9] ) ((PN_CHARS|'.')* PN_CHARS)?
+
+
+
+def p_sparqlPrefixedName(p):
+    '''sparqlPrefixedName : PREFIXED_NAME'''
+    p[0] = p[1]
+
+
+
+## ----------------------------------------------------------
 
 def p_qname(p):
     '''qname : prefixedName
@@ -1550,12 +1718,11 @@ def p_unprefixedName(p):
     p[0] = ''.join(p[1:])
 
 def p_prefixedName(p):
-    '''prefixedName : prefix localPart'''
+    '''prefixedName : prefix COLON localPart'''
     p[0] = ''.join(p[1:])
 
 def p_prefix(p):
-    '''prefix : NCNAME_COLON
-	      | COLON'''
+    '''prefix : NCNAME'''
     p[0] = ''.join(p[1:])
 
 def p_localPart(p):
@@ -1592,8 +1759,11 @@ def p_error(p):
     '''Error rule for syntax errors -> ignore them gracefully by
     throwing a SyntaxError.'''
 
-    col = find_column(p)
-    print 'Syntax error: \''+p.value+'\' at line '+`p.lineno`+', column '+`col`
+    if(p == None):
+	sys.stderr.write('Syntax error at end of file\n')
+    else:
+	col = find_column(p)
+	sys.stderr.write('Syntax error: \'' + p.value + '\' at line '+ `p.lineno` + ', column '+ `col` + '\n')
 
     raise SyntaxError
 

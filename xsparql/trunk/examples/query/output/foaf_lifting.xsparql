@@ -1,20 +1,10 @@
 declare namespace foaf = "http://xmlns.com/foaf/0.1/" ;
- declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#"; 
+import module namespace local = "http://xsparql.deri.org/xsparql.xquery"
+at "http://xsparql.deri.org/xsparql.xquery";
+
+declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";
+
 declare variable $NS_1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
-
-declare function local:rdf_term($NType as xs:string, $V as xs:string) as xs:string 
-{ let $rdf_term := if($NType = "sparql_result:literal" or $NType = "literal") then fn:concat("""",$V,"""") 
-  else if ($NType = "sparql_result:bnode" or $NType = "bnode") then fn:concat("_:", $V) 
-  else if ($NType = "sparql_result:uri" or $NType = "uri") then fn:concat("<", $V, ">") 
-  else "" 
-  return $rdf_term  };
-
-declare function local:empty($rdf_Predicate as xs:string,  $rdf_Object as xs:string) as xs:string 
-{ let $output :=  if( fn:substring($rdf_Predicate, 0, 3) = "_:" or substring($rdf_Predicate, 0, 2) = """ or  
-  substring($rdf_Predicate, fn:string-length($rdf_Predicate), fn:string-length($rdf_Predicate))   = """ ) then   " " 
-  else  fn:concat($rdf_Predicate,  $rdf_Object) 
-  return $output }; 
-
 
  fn:concat(  "  
 @", $NS_1, ".", "
@@ -24,22 +14,44 @@ let $doc  := doc("http://www.polleres.net/xsparql/data/relations.xml"   )
 let $persons  := $doc//*[@name  or ../knows ]   return 
   for $p at $p_Pos  in $persons  
 let $n  := if ( $p[@name  ]   ) then $p/@name   else $p  
-let $id  := count($p/preceding::*   )+count($p/ancestor::*   )  
+let $id  := count($p/preceding::*   )+count($p/ancestor::*   )   
+
+let $validSubject4 := fn:concat("_:b",  data($id  )) 
+let $validObject5 := fn:concat( '"',   data($n   )   ,  '"') 
+
+
 where not(exists($p/following::*[@name =$n  or data(.   ) =$n ]   )   )  
- return 
-	  fn:concat( 
-		
- 
-"_:b",  data( $id   ),   "  a  ",    "  foaf:Person  ",    ";",  "  foaf:name  ",   '"',   data($n   )   ,  '"',   
- ".&#xA;",
+
+  return ( 
+	 if (local:validSubject( "",  $validSubject4  )
+		 and local:validObject( "",  $validObject5  )) then 
+	 fn:concat( 
+		 $validSubject4,   "  a  ",    "  foaf:Person  ",    ";", 
+		 "  foaf:name  ",  $validObject5,   
+".&#xA;"
+		) 
+ else "" ,
  
   for $k at $k_Pos  in $persons  
 let $kn  := if ( $k[@name  ]   ) then $k/@name   else $k  
-let $kid  := count($k/preceding::*   )+count($k/ancestor::*   )  
+let $kid  := count($k/preceding::*   )+count($k/ancestor::*   )   
+
+let $validSubject1 := fn:concat("_:b",  data($id  )) 
+let $validObject2 := fn:concat("_:b",  data($kid  )) 
+let $validSubject3 := fn:concat("_:b",  data($kid  )) 
+
+
 where $kn =data($doc//*[@name =$n  ]/knows   ) and not(exists($kn/../following::*[@name =$kn  or data(.   ) =$kn ]   )   )  
- return 
-	  fn:concat( 
-		
- 
-"_:b",  data( $id   ),  "  foaf:knows  ",  "_:b",  data( $kid   ),  ".&#xA;",
-"_:b",  data( $kid   ),  "  a  ",    "  foaf:Person  ",   ".&#xA;") )
+
+  return ( 
+	 if (local:validSubject( "",  $validSubject1  )
+		 and local:validObject( "",  $validObject2  )) then 
+	 fn:concat( 
+		 $validSubject1,  "  foaf:knows  ",  $validObject2,  ".&#xA;"
+		) 
+ else "" ,
+	 if (local:validSubject( "",  $validSubject3  )) then 
+	 fn:concat( 
+		 $validSubject3,  "  a  ",    "  foaf:Person  ",   ".&#xA;"
+		) 
+ else ""  )  )
