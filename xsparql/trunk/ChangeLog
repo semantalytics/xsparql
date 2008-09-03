@@ -1,3 +1,8 @@
+2008-09-03  Nuno Lopes  <nuno.lopes@deri.org>
+
+	*  added new test cases for path expressions
+	*  fix of detected problems
+
 2008-08-27  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* online-interface/tempfiles/backup.sh: shell script to create a

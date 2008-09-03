@@ -14,27 +14,27 @@ let $doc  := doc("http://www.polleres.net/xsparql/data/relations.xml"   )
 let $persons  := $doc//*[@name  or ../knows ]   return 
   for $p at $p_Pos  in $persons  
 let $n  := if ( $p[@name  ]   ) then $p/@name   else $p  
-let $id  := count($p/preceding::*   )+count($p/ancestor::*   )   
+let $id  := count($p/preceding::*   )+count($p/ancestor::*   )  
+let $bl_id  := concat("_:b"   , $id   )   
 
-let $validSubject4 := fn:concat("_:b",  data($id  )) 
-let $validObject5 := fn:concat( '"',   data($n   )   ,  '"') 
+let $validObject4 := fn:concat( '"',   data($n   )   ,  '"') 
 
 
 where not(exists($p/following::*[@name =$n  or data(.   ) =$n ]   )   )  
 
   return ( 
-	 if ( local:validSubject( "",  $validSubject4  ) ) then (
+	 if ( local:validSubject( "",  $bl_id  ) ) then (
 		 
 		 
 	   
 	  fn:concat( 
-		 $validSubject4,  " a ",   'foaf:Person',  " .&#xA;"
+		 $bl_id,  " a ",   'foaf:Person',  " .&#xA;"
 		)
 ,  
 	   
-	  if ( local:validObject( "",  $validObject5  ) ) then (
+	  if ( local:validObject( "",  $validObject4  ) ) then (
 		 fn:concat( 
-		 $validSubject4,  " foaf:name ", $validObject5, " .&#xA;"
+		 $bl_id,  " foaf:name ", $validObject4, " .&#xA;"
 		)
  ) else ""  
 

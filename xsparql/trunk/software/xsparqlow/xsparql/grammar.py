@@ -1590,7 +1590,10 @@ def p_blank(p):
     if len(p) == 2: # bnode
 	p[0] = [ p[1] ]
     else: # non-empty bracketedExpr  @todo: is this correct??
-	p[0] = [ p[1] ] + p[2]
+	if (p[2] == ''):
+	    p[0] = p[1] + p[3]
+	else:
+	    p[0] = [ p[1] ] + p[2]
 
 def p_bnode(p):
     '''bnode : BNODE'''

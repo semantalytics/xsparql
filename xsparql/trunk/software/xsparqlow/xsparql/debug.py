@@ -33,8 +33,9 @@ def debug(*debug):
     global show_debug_info
     if ( not show_debug_info ):
 	return
-
+    i = 1
     for d in debug:
-	print >> sys.stderr, d
-    print >> sys.stderr
+	print >> sys.stderr, i, ":", d #.replace('\n', '\n'+`i`)
+	i = i + 1
+    print >> sys.stderr, '---'
     return

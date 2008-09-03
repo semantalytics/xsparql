@@ -41,8 +41,7 @@ import debug
 var_p = ''
 var = ''
 count = 1  # counter for temporary variables (used in the valid* functions)
-cond_separator = ''
-
+inBnode = 0
 
 def build_rewrite_query(forletExpr, modifiers, construct, graphpattern, variable_p, variable):
 
@@ -56,10 +55,9 @@ def build_rewrite_query(forletExpr, modifiers, construct, graphpattern, variable
 
     var_p = variable_p
 
-#    debug.debug('var', var, 'var_p', var_p)
-
     let, ret = build_triples(graphpattern, [], [])
 
+#    debug.debug(ret)
     return '\n  ' + forletExpr + ' \n\n' + let + '\n' + modifiers  + '\n\n  return ( ' + ret + ' )'
 
 
@@ -82,24 +80,38 @@ def build_triples(gp, variable_p, variable ):
 
     firstelement = True
     for s, polist in gp:
-	global cond_separator
-	cond_separator = ''  # diferent for each triple?
 
 	if not firstelement:
 	    ret += ','
 	    firstelement = False
-	if isinstance(s, str):
-	    s = s.lstrip('{')
-	    s = s.rstrip('}')
-	    ret += '\n' + s + ','
-	else:
-	    let_subject, cond_subject, subject = build_subject(s)
-	    let_po, cond_po, po = build_predicate(polist)
-	    let = let + let_subject + let_po
-	    if (cond_subject + cond_po == ''):
-		ret += 'fn:concat( \n\t\t '+ subject + po + '".&#xA;"\n\t\t)'
+
+	if isinstance(s, str) and not s[0] == "[":
+
+	    if polist != '':
+		let_subject, cond_subject, subject, suff_subject = build_bnode('validSubject', s)
+		let_po, cond_po, po, suff_po = build_predicate(subject, polist)
+		let += let_subject + let_po
+		ret +=  '\n\t ' + cond_subject + cond_po + ' \n\t\t '+ po.rstrip(', ') + '\n\t\t \n ' + suff_po + suff_subject + ' ,'
 	    else:
-		ret +=  '\n\t if (' + cond_subject + cond_po + ') then \n\t fn:concat( \n\t\t '+ subject + po + '".&#xA;"\n\t\t) \n else "" ,'
+		s = s.lstrip('{')
+		s = s.rstrip('}')
+		ret += '\n' + s + ','
+
+	else:
+	    let_subject, cond_subject, subject, suff_subject = build_subject(s)
+	    let_po, cond_po, po, suff_po = build_predicate(subject, polist)  # send rewritten subject
+
+	    let = let + let_subject + let_po
+
+	    if (cond_subject + cond_po == ''):
+		if isinstance(s, str) and s == "[]":
+		    ret += 'local:removeEmpty( \n\t\t fn:concat( \n\t\t "[]", ' + po.rstrip(', ') +  ', " .&#xA;" \n\t\t) \n\t\t ) '
+		elif(s[0] == "["):
+		    ret += 'local:removeEmpty( \n\t\t fn:concat( \n\t\t "[", ' + subject.rstrip(', ') + po.rstrip(', .') + ', " ] .&#xA;" \n\t\t) \n\t\t )'
+		else:
+		    ret += 'fn:concat( \n\t\t '+ subject + po.rstrip(', ') + '\n\t\t)'
+	    else:
+		ret +=  '\n\t ' + cond_subject + cond_po + ' \n\t\t '+ po.rstrip(', ') + '\n\t\t \n ' + suff_po + suff_subject + ' ,'
 
     return let, ret.rstrip(',')
 
@@ -107,29 +119,40 @@ def build_triples(gp, variable_p, variable ):
 
 def build_subject(s):
 
-#     debug.debug('------- build_subject', s)
+#    debug.debug('------- build_subject', s, len(s))
 
     if len(s) == 1 and isinstance(s[0], list) and isinstance(s[0][0], str):
 	return build_bnode('validSubject', s[0][0])
+    elif len(s) <= 2 and isinstance(s, str): # blank node or subject
+	return build_bnode('validSubject', s)
     elif len(s) == 1 and isinstance(s[0], str): # blank node or subject
 	return build_bnode('validSubject', s[0])
     elif len(s) == 1 and isinstance(s[0], list): # blank node
-	return build_predicate(s[0])
+	return build_predicate("", s[0])
     elif len(s) == 0: # single blank node
 	return '', '', '[]'
     else: # polist
-	if s[0] == '[': # first member is an opening bnode bracket
-	    let1, cond1, ret1 = build_predicate([ s[1] ])
-	    let2, cond2, ret2 =  build_predicate(s[2:])
-	    return let1 + let2, cond1 + cond2, '"[", ' + ret1 + ' ";",\n\t\t' + ret2 + ' "]",\n '
+	if s[0] == '[' or s[0] == "[]": # first member is an opening bnode bracket
+	    global inBnode
+	    inBnode = inBnode + 1
+
+	    let1, cond1, ret1, suff1 = build_predicate("", [ s[1] ])
+	    let2, cond2, ret2, suff2 = build_predicate("", s[2:])
+
+	    ret = ret1.rstrip(', ')
+
+	    if not ret2 == "":
+		ret += ',\n\t\t' + ret2
+
+	    return let1 + let2, cond1 + cond2,  ret + ' \n ', suff1 +suff2
 	else:
-	    let1, cond1, ret1 = build_predicate([ s[0] ])
-	    let2, cond2, ret2 = build_predicate(s[1:])
-	    return let1 + let2, cond1 + cond2, ' ' + ret1 + ' ";",\n\t\t' + ret2 + ' \n '
+	    let1, cond1, ret1, suff1 = build_predicate("", [ s[0] ])
+	    let2, cond2, ret2, suff2 = build_predicate("", s[1:])
+	    return let1 + let2, cond1 + cond2, ' ' + ret1 + ' "&#59;",\n\t\t' + ret2 + ' \n ', suff1+suff2
 
 
 
-def build_predicate(p):
+def build_predicate(subject, p):
 
 #    debug.debug('------- build_predicate', p, len(p))
 
@@ -139,43 +162,46 @@ def build_predicate(p):
 	    strip = str(b).lstrip('{')
 	    b = strip.rstrip('}')
 
-	    let, cond, ret = build_object(p[0][1])
-	    return let, cond,  ' '+ b + ',  ' + ret + ' '
+	    let, cond, ret, suff = build_object(subject, b, p[0][1])
+	    return let, cond,  ' '+ b + ',  ' + ret + ' ', suff
 	elif len(b) >= 2 and ( b[0] == '$'or b[0] == '?'):
 	     if b[0] == '?':
 		 b = b.lstrip('?')
 		 b = '$'+ b
+
 	     if listSearch(b):
-		 let, cond, ret = build_object(p[0][1])
-		 return let, cond, '  local:empty( '+ b + '_RDFTerm,  concat(' + ret + '"" )),'
+		 var = b + '_RDFTerm'
 	     else:
-		 let, cond, ret = build_object(p[0][1])
-		 return let, cond, '  local:empty( '+ b + ',  concat(' + ret + ' "")),'
+		 var = b
+
+	     let, cond, ret, suff = build_object(subject, var,  p[0][1])
+
+	     return let, cond, ret, suff
 	else:
 	     if len(b) >= 2:
 		 if(b[0] != '_' and b[1] != ':'):
-		     let, cond, ret = build_object(p[0][1])
-		     return let, cond, ' "  '+ b + '  ",  ' + ret + ' '
+		     let, cond, ret, suff = build_object(subject, b, p[0][1])
+		     return let, "", cond + '  \n\t  ' + ret.rstrip(', ') + '  \n ' + suff, ""
 	     else:
-		 let, cond, ret = build_object(p[0][1])
-		 return let, cond, ' " '+ b + '  ", ' + ret + ' '
+		 let, cond, ret,suff = build_object(subject, b, p[0][1])
+		 return let, "", cond + '  \n\t ' + ret.rstrip(',')  + ', ' + suff, ""
     elif len(p) == 0:
-	return '','',''
+	return '','','', ''
     else:
 	d =  p
 	if d[0] == '[' :
 	    d.remove('[')
-	    let1, cond1, ret1 = build_predicate([ d[0] ])
-	    let2, cond2, ret2 =  build_predicate([ d[1] ])
-	    return let1 + let2, cond1 + cond2, '"[", ' + ret1 + '";", \n\t\t' + ret2 + ' "]",\n'
+	    let1, cond1, ret1, suff1 = build_predicate(subject, [ d[0] ])
+	    let2, cond2, ret2, suff2 = build_predicate(subject, [ d[1] ])
+	    return let1 + let2, cond1 + cond2, '"[", ' + ret1 + '"&#59;", \n\t\t' + ret2 + ' "]",\n', suff1+suff2
 	else:
-	    let1, cond1, ret1 = build_predicate([ d[0] ])
-	    let2, cond2, ret2 =  build_predicate([ d[1] ])
-	    return let1 + let2, cond1 + cond2, ' ' + ret1 + ' ";", \n\t\t' + ret2 + ' \n'
+	    let1, cond1, ret1, suff1 = build_predicate(subject, [ d[0] ])
+	    let2, cond2, ret2, suff2 =  build_predicate(subject, d[1:])
+	    return let1 + let2, "", '\n\t ' + cond1 +  ret1.rstrip(', ')  + suff1 +',  \n\t ' +  ret2 , ""
 
 
 
-def build_object(o):
+def build_object(subject, predicate, o):
 
 #    debug.debug('------- build_object', o)
 
@@ -183,22 +209,43 @@ def build_object(o):
 	d =  o[0]
 	if d[0] == '[' :
 	    d.remove('[')
-	    let, cond, ret = build_predicate(d)
-	    return let, cond, '"[", ' + ret + ' "]",\n'
+	    global inBnode
+
+	    let, cond, ret,suff = build_predicate("", d)
+	    # distinguish from nested [] ?
+	    if inBnode > 0:
+		ret = ' fn:concat( \n\t\t "' + predicate + ' ", ' + '"[", ' + ret.rstrip(', ') + ', " ]" \n\t\t ) \n'
+	    else:
+		ret = ' fn:concat( \n\t\t ' + subject + ' " ' + predicate + ' ", ' + '"[", ' + ret.rstrip(', ') + ', " ]", " .&#xA;" \n\t\t ) \n'
+
+	    inBnode = inBnode - 1
+
+	    return let, "", cond + ret + suff, ""
+
 	else:
-	    return  build_bnode('validObject', o[0][0])
+	    let,cond,ret,suff = build_bnode('validObject', o[0][0])
+	    if (subject == "" or subject.strip('\', ') == "[]"):
+		return let, cond, ' fn:concat(" ",' + predicate + ', " ", ' + ret.rstrip(', ')  + ', " &#59; ")', suff
+	    else:
+		return let, "", cond + ' fn:concat( \n\t\t '+ subject + ' " ' + predicate + ' ", ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t)\n'+suff, ""
+
     elif len(o) == 1 and isinstance(o[0], str):
-	return  build_bnode('validObject', o[0])
+	let,cond,ret,suff = build_bnode('validObject', o[0])
+
+	if (subject == "" or subject.strip('\', ') == "[]"):
+	    return let, cond, ' fn:concat(" ' + predicate + ' ", ' + ret.rstrip(', ')  + ', "&#59;")', suff
+	else:
+	    return let, "", cond + ' fn:concat( \n\t\t '+ subject + ' " ' + predicate + ' ", ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t)\n'+suff, ""
 
     elif len(o) == 1 and isinstance(o[0], list):
-	return build_predicate(o[0])
+	return build_predicate(subject, o[0])
 
     elif len(o) == 0:
-	return "", "", '[]'
+	return "", "", '[]', ""
     else:
-	let1, cond1, ret1 = build_object( [ o[0] ])
-	let2, cond2, ret2 =  build_object( o[1:] )
-	return let1 + let2, cond1 + cond2, '"[", ' + ret1 + ' ",", \n\t\t' + ret2 + ' "]",\n'
+	let1, cond1, ret1, suff1 = build_object(subject, predicate,  [ o[0] ])
+	let2, cond2, ret2, suff2 =  build_object(subject, predicate,  o[1:] )
+	return let1 + let2, "", '\n\t ' + cond1 +  ret1  + suff1 +' , \n\t ' +  ret2  , ""
 
 
 
@@ -210,8 +257,8 @@ def build_bnode(type, b):
 	bIri =  b[1:-1].split('{')
 	iri = bIri[0]
 	iri = bIri[1].rstrip('}')
-	let,cond,ret = genLetCondReturn(type,  [ '"<" ,', iri , ', ">"'] )
-	return let,cond,'    '+ ret + '  ,  '
+	let,cond,ret,suff = genLetCondReturn(type,  [ '"<" ,', iri , ', ">"'] )
+	return let,cond,'    '+ ret + '  ,  ', suff
 
     elif b >= 2 and b[0] == '_' and b[1] == ':':  # bnode
 	global var_p
@@ -219,43 +266,42 @@ def build_bnode(type, b):
 	for i in var_p:
 	    v += ' data('+str(i[0:])+ '),'
 	if b.find('{') == -1 and b.find('}') == -1: #without enclosed {}
-	    return "", "" , '"  '+ b + '_", ' + v
+	    let,cond,ret,suff = genLetCondReturn(type, [ '"', b , '"', ', "_",', v.rstrip(',')] )
+	    return let, cond , ret + ', ', suff
 	else:
 	    bExpr =  b.split('{')
 	    bNode = bExpr[0]
 	    expr = bExpr[1].rstrip('}')
 
-	    let,cond,ret = genLetCondReturn(type, ['"' , bNode  ,  '",  data(', expr, ')'] )
-	    return let,cond, ret +', '
+	    let,cond,ret,suff = genLetCondReturn(type, ['"' , bNode  ,  '",  data(', expr, ')'] )
+	    return let,cond, ret +', ', suff
     else:
 	if b >= 2 and b[0] == '{' and b[-1] == '}' :  # literal? concatenate " and "
 	    strip = str(b).lstrip('{')
 	    b = strip.rstrip('}')
 
-	    let,cond,ret = genLetCondReturn(type,  [' \'"\',  ', b,  ',  \'"\'' ])
-	    return let,cond, ret + ', '
+	    let,cond,ret, suff = genLetCondReturn(type,  [' \'"\',  ', b,  ',  \'"\'' ])
+	    return let,cond, ret + ', ', suff
 
 	elif b >= 2 and (b[0] == '$' or b[0] == '?'):  # var: return $+..
 	    if b[0] == '?':
 		b = b.lstrip('?')
 		b = '$'+ b + ''
 
-	    let,cond,ret = genLetCondReturn(type,  [ b ])
-	    return let,cond, ret + ', '
+	    let,cond,ret,suff = genLetCondReturn(type,  [ b ])
+	    return let,cond, ret + ', ', suff
 	else:
-	    return "", "", '  "  '+ b + '  ",  '
+	    return "", "", "  '"+ b + "',  ", ""
 
 
 
 def listSearch(list_val):
     global var
-#    debug.debug('lifrewriter.listSearch: ', '\''+list_val.strip()+'\'',var,list_val.strip() in var)
     return list_val.strip() in var
 
 
 def genLetCondReturn(type, value):
     global count
-    global cond_separator
 
     if len(value) == 1:
 	# do something
@@ -281,8 +327,8 @@ def genLetCondReturn(type, value):
 	rdftype = '""'
 
 
-    cond = cond_separator + 'local:'+type + '( ' + rdftype + ',  '+var+'  )'
+    cond = 'if ( local:'+type + '( ' + rdftype + ',  '+var+'  ) ) then (\n\t\t'
+    suffix = ' ) else ""'
 
-    cond_separator = '\n\t\t and '
 
-    return let, cond, var
+    return let, cond, var, suffix

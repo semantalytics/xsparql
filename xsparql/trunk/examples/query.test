@@ -10,3 +10,11 @@ query/simple2.xsparql
 query/vCard2foaf-error.xsparql
 query/vCard2foaf.sparql
 query/vCard2foaf.xsparql
+query/pathExpression01.xsparql
+query/pathExpression02.xsparql
+query/pathExpression03.xsparql
+query/pathExpression04.xsparql
+query/pathExpression05.xsparql
+query/pathExpression06.xsparql
+query/pathExpression07.xsparql
+query/pathExpression08.xsparql

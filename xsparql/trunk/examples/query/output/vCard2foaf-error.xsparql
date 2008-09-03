@@ -29,14 +29,21 @@ for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
 	let $F := data($F_Node/*)
 	let $F_RDFTerm :=  local:rdf_term($F_NodeType, $F )
 
-let $validObject1 := fn:concat( '"',   fn:concat($N   , " "   , $F   )   ,  '"') 
+let $validSubject1 := fn:concat("_:b", "_", data($aux_result1_Pos)) 
+let $validObject2 := fn:concat( '"',   fn:concat($N   , " "   , $F   )   ,  '"') 
 
  return 
 	   
 		
  
-	 if (local:validObject( "",  $validObject1  )) then 
-	 fn:concat( 
-		 "  _:b_",  data($aux_result1_Pos), "  foaf:name  ",  $validObject1,  ".&#xA;"
-		) 
- else "" 
+	 if ( local:validSubject( "",  $validSubject1  ) ) then (
+		 
+		   
+	  if ( local:validObject( "",  $validObject2  ) ) then (
+		 fn:concat( 
+		 $validSubject1,  " foaf:name ", $validObject2, " .&#xA;"
+		)
+ ) else ""  
+
+		 
+  ) else "" 

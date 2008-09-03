@@ -28,9 +28,13 @@ for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
 
 
   return ( 
-	 if (local:validSubject( "",  $x_RDFTerm  )
-		 and local:validObject( "",  $y  )) then 
-	 fn:concat( 
-		 $x_RDFTerm,  " a  ", $y,  ".&#xA;"
-		) 
- else ""  )
+	 if ( local:validSubject( "",  $x_RDFTerm  ) ) then (
+		 
+		   
+	 if ( local:validObject( "",  $y  ) ) then (
+		 fn:concat( 
+		 $x_RDFTerm,  " a ", $y, " .&#xA;"
+		)
+ ) else ""
+
+  ) else ""  )

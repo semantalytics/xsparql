@@ -30,9 +30,14 @@ for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
 	   
 		
  
-	 if (local:validSubject( "",  $X_RDFTerm  )
-		 and local:validObject( "",  $FN_RDFTerm  )) then 
-	 fn:concat( 
-		 $X_RDFTerm,  "  foaf:name  ",  $FN_RDFTerm,  ".&#xA;"
-		) 
- else "" 
+	 if ( local:validSubject( "",  $X_RDFTerm  ) ) then (
+		 
+		   
+	  if ( local:validObject( "",  $FN_RDFTerm  ) ) then (
+		 fn:concat( 
+		 $X_RDFTerm,  " foaf:name ", $FN_RDFTerm, " .&#xA;"
+		)
+ ) else ""  
+
+		 
+  ) else "" 

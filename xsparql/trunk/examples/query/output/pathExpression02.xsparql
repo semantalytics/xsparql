@@ -15,7 +15,6 @@ declare variable $NS_1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
  $nameB at $nameB_Pos  in $person/knows   
 
 let $validObject1 := fn:concat( '"',   data($nameA   )   ,  '"') 
-let $validObject2 := fn:concat( '"',   data($nameB   )   ,  '"') 
 
 
 
@@ -24,20 +23,7 @@ let $validObject2 := fn:concat( '"',   data($nameB   )   ,  '"')
 		 "[", if ( local:validObject( "",  $validObject1  ) ) then (
 		  
 	   fn:concat(" foaf:name ", $validObject1, "&#59;")  
-  ) else "",
-		  
-	  fn:concat(" a ",   'foaf:Person', "&#59;"),  
-  
-	   fn:concat( 
-		 "foaf:knows ", "[", 
-	 if ( local:validObject( "",  $validObject2  ) ) then (
-		  
-	   fn:concat(" foaf:name ", $validObject2, "&#59;")  
-  ) else "" , 
-	   
-	  fn:concat(" a ",   'foaf:Person', "&#59;"), " ]" 
-		 ) 
-  
+  ) else "" 
 , " ] .&#xA;" 
 		) 
 		 ) )

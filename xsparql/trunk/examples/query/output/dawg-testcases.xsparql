@@ -11,7 +11,7 @@ declare variable $NS_2 := "prefix  rdf:  &#60;http://www.w3.org/1999/02/22-rdf-s
 declare variable $NS_3 := "prefix  list:  &#60;http://jena.hpl.hp.com/ARQ/list#&#62;";
 
 let $aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1,  $NS_2,  $NS_3, "
-select $incl from <http://www.polleres.net/Temp/manifest-syntax.ttl>  where { _:a  rdf:type  mf:Manifest   ;  mf:include _:b  
+select $incl from <http://www.polleres.net/xsparql/data/manifest-syntax.ttl>  where { _:a  rdf:type  mf:Manifest   ;  mf:include _:b  
  . _:b list:member    $incl   . } ")))
 for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
 	let $incl_Node := ($aux_result1/sparql_result:binding[@name = "incl"])
