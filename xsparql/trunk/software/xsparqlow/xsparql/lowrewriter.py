@@ -32,6 +32,8 @@ This is the lowering rewriter for xsparql.
 
 #@todo why
 import lifrewriter
+import debug
+import copy
 
 #
 # auxiliary variable names
@@ -182,7 +184,7 @@ def buildConstruct(constGraphpattern, from_iri, graphpattern, solutionmodifier):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
 
-    find_vars(graphpattern)
+    find_vars(copy.deepcopy(graphpattern))
 
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
 			     variables, from_iri, graphpattern, solutionmodifier)
@@ -249,6 +251,7 @@ def find_vars(p):
 
 
 def build_subject(s, f):
+
     if len(s) == 1 and isinstance(s[0], list) and isinstance(s[0][0], str):
 	return build_bnode(s[0][0], f)
     elif len(s) == 1 and isinstance(s[0], str): # blank node or object
@@ -271,6 +274,7 @@ def build_subject(s, f):
 
 
 def build_predicate(p, f):
+
     global variables
     if len(p) == 1:
 	b = p[0][0]
@@ -290,6 +294,8 @@ def build_predicate(p, f):
 			 return '   ", '+ b + '_RDFTerm ," ' + build_object(p[0][1], f)+ ' '
 		    else:
 			 return '   '+ b + '  ' + build_object(p[0][1], f)+ ' '
+
+
 	    return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
     elif len(p) == 0:
 	return ''
@@ -304,6 +310,7 @@ def build_predicate(p, f):
 
 
 def build_object(o, f):
+
     if len(o) == 1 and isinstance(o[0], list) and isinstance(o[0][0], str):
 	d =  o[0]
 	if d[0] == '[' :

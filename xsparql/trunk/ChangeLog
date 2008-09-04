@@ -1,3 +1,9 @@
+2008-09-04  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/lowrewriter.py (buildConstruct):
+	Create a copy of the graphpattern to send to 'find_vars'.
+	Otherwise the query structure might be altered.
+
 2008-09-03  Nuno Lopes  <nuno.lopes@deri.org>
 
 	*  added new test cases for path expressions
