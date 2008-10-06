@@ -2,7 +2,7 @@
 
 	* software/xsparqlow/xsparql/lowrewriter.py: Allow nested
 	variables in the "where" part
-
+	variables from a sparql are also outputed surrounded by quotes
 
 	* software/xsparqlow/xsparql/grammar.py: Allow nested variables in
 	the "where" part

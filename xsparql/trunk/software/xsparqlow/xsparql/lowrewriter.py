@@ -356,7 +356,7 @@ def build_bnode(b, f):
 		    if f:
 			variables += [ b ]
 		    if listSearch(b):
-			return '    '+ b + '_RDFTerm   '
+			return '    ", '+ b + '_RDFTerm, "   '
 		    else:
                         global letVars
                         if(b in letVars):
