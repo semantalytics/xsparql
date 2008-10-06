@@ -19,16 +19,11 @@ declare function xsparql:empty($rdf_Predicate as xs:string,  $rdf_Object as xs:s
 { 
   let $output :=  
       if( 
-          fn:substring($rdf_Predicate, 0, 3) = "_:" or 
-          substring($rdf_Predicate, 0, 2) = """ or  
-          substring(
-                    $rdf_Predicate, 
-                    fn:string-length($rdf_Predicate), 
-                    fn:string-length($rdf_Predicate)
-                   )   = """ 
+          xsparql:validPredicate("", $rdf_Predicate) and
+	  xsparql:validObject("", $rdf_Object)
         )
-        then   " " 
-        else  fn:concat($rdf_Predicate,  $rdf_Object) 
+	then  fn:concat($rdf_Predicate,  $rdf_Object) 
+	else " "
   return $output 
 }; 
 
@@ -46,22 +41,23 @@ declare function xsparql:validBNode($NType as xs:string, $V as xs:string) as xs:
 
 declare function xsparql:validUri($NType as xs:string, $V as xs:string) as xs:boolean
 {
+  let $uri := fn:substring($V, 2, fn:string-length($V) - 2 )
   let $result :=
       if ($NType = "sparql_result:uri" or $NType = "uri")
       then fn:true()
       else if (
                 fn:substring($V, 1, 1) = "<" and
                 fn:substring($V, fn:string-length($V), fn:string-length($V)) = ">" and
-                fn:not( fn:contains($V, "<" ) )  and
-                fn:not( fn:contains($V, ">" ) )  and
-                fn:not( fn:contains($V, """" ) ) and
-                fn:not( fn:contains($V, " " ) )  and
-                fn:not( fn:contains($V, "{" ) )  and
-                fn:not( fn:contains($V, "}" ) )  and
-                fn:not( fn:contains($V, "|" ) )  and
-		fn:not( fn:contains($V, "\" ) )  and
-		fn:not( fn:contains($V, "^" ) )  and
-                fn:not( fn:contains($V, "`" ) )
+                fn:not( fn:contains($uri, "<" ) )  and
+                fn:not( fn:contains($uri, ">" ) )  and
+                fn:not( fn:contains($uri, """" ) ) and
+                fn:not( fn:contains($uri, " " ) )  and
+                fn:not( fn:contains($uri, "{" ) )  and
+                fn:not( fn:contains($uri, "}" ) )  and
+                fn:not( fn:contains($uri, "|" ) )  and
+		fn:not( fn:contains($uri, "\" ) )  and
+		fn:not( fn:contains($uri, "^" ) )  and
+                fn:not( fn:contains($uri, "`" ) )
               )
            then fn:true()
            else fn:false()
@@ -114,3 +110,15 @@ declare function xsparql:validObject($NType as xs:string, $V as xs:string) as xs
       else fn:false()
  return $return 
 }; 
+
+declare function xsparql:removeEmpty($result as xs:string) as xs:string
+{
+  let $output := 
+        fn:replace($result, "^( )*\[( )*\]( )*\.", "", 'm')
+
+  let $output := 
+        fn:replace($output, ";( )*\.", " .", 'm')
+
+  return $output
+
+};

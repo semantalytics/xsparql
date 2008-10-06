@@ -1,5 +1,10 @@
 2008-10-06  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* online-interface/xsparql.xquery: merge of changes to functions
+	made in the server
+
+2008-10-06  Nuno Lopes  <nuno.lopes@deri.org>
+
 	* examples/query/output/foaf_lowering.xsparql: new rewriting for
 	the foaf_lowering example
 
