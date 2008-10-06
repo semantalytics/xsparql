@@ -1,5 +1,8 @@
 2008-10-06  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* examples/query/output/foaf_lowering.xsparql: new rewriting for
+	the foaf_lowering example
+
 	* software/xsparqlow/xsparql/lowrewriter.py: Allow nested
 	variables in the "where" part
 	variables from a sparql are also outputed surrounded by quotes

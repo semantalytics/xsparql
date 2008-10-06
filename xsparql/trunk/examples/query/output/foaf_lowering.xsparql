@@ -19,7 +19,7 @@ for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
 	let $Name_RDFTerm :=  local:rdf_term($Name_NodeType, $Name )
  return <person name = "{$Name}">{ 
 let $aux2 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1, "
-select $FName from <http://www.polleres.net/xsparql/data/relations.rdf>  where {     $Person_RDFTerm    foaf:knows    $Friend   .     $Person_RDFTerm    foaf:name     $Name_RDFTerm    .    $Friend   foaf:name    $FName   . } ")))
+select $FName from <http://www.polleres.net/xsparql/data/relations.rdf>  where {     ", $Person_RDFTerm, "    foaf:knows    $Friend   .     ", $Person_RDFTerm, "    foaf:name     ", $Name_RDFTerm, "    .    $Friend   foaf:name    $FName   . } ")))
 for $aux_result2 at $aux_result2_Pos in doc($aux2)//sparql_result:result
 	let $FName_Node := ($aux_result2/sparql_result:binding[@name = "FName"])
 	let $FName_NodeType := name($FName_Node/*)
