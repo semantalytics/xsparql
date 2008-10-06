@@ -204,8 +204,14 @@ def graphOutput(constGraphpattern):
     return '\n' + let + '\n return \n\t   \n\t\t\n ' + ret
 
 
+letVars = []
+
 # generator function, keeps track of incrementing the for-counter
-def build(vars, from_iri, graphpattern, solutionmodifier):
+def build(vars, from_iri, graphpattern, solutionmodifier, let_vars):
+
+    global letVars
+    letVars = let_vars
+
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
 
@@ -352,7 +358,11 @@ def build_bnode(b, f):
 		    if listSearch(b):
 			return '    '+ b + '_RDFTerm   '
 		    else:
-			return '   '+ b + '  '
+                        global letVars
+                        if(b in letVars):
+                            return '   ", '+ b + ', "  '
+                        else:
+                            return '   '+ b + '  '
 	    return ' '+ b + ' '
 
 
