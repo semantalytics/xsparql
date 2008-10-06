@@ -1,5 +1,7 @@
 2008-10-06  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* online-interface/index.php: added Nuno Lopes to the team
+
 	* online-interface/xsparqlrewrite: correction of path
 
 	* online-interface/xsparql.xquery: merge of changes to functions
