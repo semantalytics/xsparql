@@ -1,5 +1,7 @@
 2008-10-06  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* online-interface/xsparqlrewrite: correction of path
+
 	* online-interface/xsparql.xquery: merge of changes to functions
 	made in the server
 
