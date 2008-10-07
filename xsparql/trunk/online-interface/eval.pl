@@ -110,7 +110,7 @@ if ($error ne '') { print $error; exit 0; }
 
 if ($solver eq 'evaluate') {
     $filename =~ s/\/home\/.*\/tempfiles/tempfiles/g;
-    print '<p><a href="'.$filename.'.out">Rewritten XQuery</a></p>';
+    print '<p><a href="'.$filename.'.out" target="_BLANK">Rewritten XQuery</a></p>';
 }
 
 print '<h3 style="margin-top: 0px;">' . $headstr  . '</h3>';
