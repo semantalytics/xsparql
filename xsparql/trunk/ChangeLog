@@ -1,3 +1,21 @@
+2008-10-07  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/lowrewriter.py (build_bnode): changed
+	the way to access the declared variables
+
+	* software/xsparqlow/xsparql/lifrewriter.py (build_rewrite_query):
+	in the construct part handle a previously declared variable $var
+	in the same way as {$var}
+
+	* examples/query/output/pathExpression08.xsparql (Module): new
+	rewriting for these examples
+
+	* examples/query/output/simple.xsparql (Module): new
+	rewriting for these examples
+
+	* examples/query/output/simple2.xsparql (Module): new
+	rewriting for these examples
+
 2008-10-06  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* online-interface/index.php: added Nuno Lopes to the team

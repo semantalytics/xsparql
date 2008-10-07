@@ -24,6 +24,7 @@ for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
 	let $x_RDFTerm :=  local:rdf_term($x_NodeType, $x )
  
 
+let $validObject1 := fn:concat( '"',  $y,  '"') 
 
 
 
@@ -31,10 +32,10 @@ for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
 	 if ( local:validSubject( "",  $x_RDFTerm  ) ) then (
 		 
 		   
-	 if ( local:validObject( "",  $y  ) ) then (
+	 if ( local:validObject( "",  $validObject1  ) ) then (
 		 fn:concat( 
-		 $x_RDFTerm,  " a ", $y, " .&#xA;"
+		 $x_RDFTerm,  " a ", $validObject1, " .&#xA;"
 		)
  ) else ""
-
+		 
   ) else ""  )

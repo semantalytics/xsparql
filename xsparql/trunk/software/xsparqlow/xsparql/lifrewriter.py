@@ -33,6 +33,7 @@ import re
 #@todo why?
 import lowrewriter
 import debug
+import grammar
 
 #
 # rewriting functions
@@ -57,7 +58,6 @@ def build_rewrite_query(forletExpr, modifiers, construct, graphpattern, variable
 
     let, ret = build_triples(graphpattern, [], [])
 
-#    debug.debug(ret)
     return '\n  ' + forletExpr + ' \n\n' + let + '\n' + modifiers  + '\n\n  return ( ' + ret + ' )'
 
 
@@ -276,7 +276,7 @@ def build_bnode(type, b):
 	    let,cond,ret,suff = genLetCondReturn(type, ['"' , bNode  ,  '",  data(', expr, ')'] )
 	    return let,cond, ret +', ', suff
     else:
-	if b >= 2 and b[0] == '{' and b[-1] == '}' :  # literal? concatenate " and "
+	if (b >= 2 and b[0] == '{' and b[-1] == '}') or (b in grammar.letVars) :  # literal? concatenate " and "
 	    strip = str(b).lstrip('{')
 	    b = strip.rstrip('}')
 

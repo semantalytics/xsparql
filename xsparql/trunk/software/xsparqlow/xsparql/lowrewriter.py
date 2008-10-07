@@ -35,6 +35,7 @@ import lifrewriter
 import debug
 import copy
 
+import grammar
 #
 # auxiliary variable names
 #
@@ -204,13 +205,9 @@ def graphOutput(constGraphpattern):
     return '\n' + let + '\n return \n\t   \n\t\t\n ' + ret
 
 
-letVars = []
 
 # generator function, keeps track of incrementing the for-counter
-def build(vars, from_iri, graphpattern, solutionmodifier, let_vars):
-
-    global letVars
-    letVars = let_vars
+def build(vars, from_iri, graphpattern, solutionmodifier):
 
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
@@ -358,8 +355,7 @@ def build_bnode(b, f):
 		    if listSearch(b):
 			return '    ", '+ b + '_RDFTerm, "   '
 		    else:
-                        global letVars
-                        if(b in letVars):
+                        if(b in grammar.letVars):
                             return '   ", '+ b + ', "  '
                         else:
                             return '   '+ b + '  '

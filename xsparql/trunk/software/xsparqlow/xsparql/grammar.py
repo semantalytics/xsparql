@@ -646,11 +646,10 @@ def p_forletClause2(p):
 #                       | FOR sparqlvars datasetClauses  WHERE whereTemplate letClause solutionmodifier
 def p_sparqlForClause(p):
     '''sparqlForClause : FOR sparqlvars datasetClauses WHERE whereTemplate solutionmodifier'''
-    global letVars
     if len(p) == 7:
-	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[6],letVars) ]), p[2][1], p[2][2] )
+	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[6]) ]), p[2][1], p[2][2] )
     else:
-	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[7],letVars) ])+' '+str(p[6][0])+'  \n  ', p[2][1], p[2][2] )
+	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[7]) ])+' '+str(p[6][0])+'  \n  ', p[2][1], p[2][2] )
 
 
 
