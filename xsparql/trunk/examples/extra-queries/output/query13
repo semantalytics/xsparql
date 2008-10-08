@@ -1,0 +1,43 @@
+
+
+import module namespace local = "http://xsparql.deri.org/xsparql.xquery"
+at "http://xsparql.deri.org/xsparql.xquery";
+
+declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";
+
+declare variable $NS_1 := "prefix  :  &#60;http://www.example.org&#62;";
+declare variable $NS_2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+
+let $y  := "<http://www.example.org/knownPerson>"  
+let $aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1,  $NS_2, "
+select $s $x from <http://www.polleres.net/foaf.rdf>  where {    $s   foaf:knows    $x   . } ")))
+for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
+	let $s_Node := ($aux_result1/sparql_result:binding[@name = "s"])
+	let $s_NodeType := name($s_Node/*)
+	let $s := data($s_Node/*)
+	let $s_RDFTerm :=  local:rdf_term($s_NodeType, $s )
+	let $x_Node := ($aux_result1/sparql_result:binding[@name = "x"])
+	let $x_NodeType := name($x_Node/*)
+	let $x := data($x_Node/*)
+	let $x_RDFTerm :=  local:rdf_term($x_NodeType, $x )
+ return <aa>{ 
+let $aux2 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1,  $NS_2, "
+select $x $y from <http://www.polleres.net/foaf.rdf>  where {    $x   foaf:knows    ", $y, "   . } ")))
+for $aux_result2 at $aux_result2_Pos in doc($aux2)//sparql_result:result
+	let $s_Node := ($aux_result2/sparql_result:binding[@name = "s"])
+	let $s_NodeType := name($s_Node/*)
+	let $s := data($s_Node/*)
+	let $s_RDFTerm :=  local:rdf_term($s_NodeType, $s )
+	let $x_Node := ($aux_result2/sparql_result:binding[@name = "x"])
+	let $x_NodeType := name($x_Node/*)
+	let $x := data($x_Node/*)
+	let $x_RDFTerm :=  local:rdf_term($x_NodeType, $x )
+	let $x_Node := ($aux_result2/sparql_result:binding[@name = "x"])
+	let $x_NodeType := name($x_Node/*)
+	let $x := data($x_Node/*)
+	let $x_RDFTerm :=  local:rdf_term($x_NodeType, $x )
+	let $y_Node := ($aux_result2/sparql_result:binding[@name = "y"])
+	let $y_NodeType := name($y_Node/*)
+	let $y := data($y_Node/*)
+	let $y_RDFTerm :=  local:rdf_term($y_NodeType, $y )
+ return <b>{ $y   }</b>   }</aa>  

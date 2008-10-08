@@ -1,0 +1,54 @@
+
+
+import module namespace local = "http://xsparql.deri.org/xsparql.xquery"
+at "http://xsparql.deri.org/xsparql.xquery";
+
+declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";
+
+declare variable $NS_1 := "prefix  vc:  &#60;http://www.w3.org/2001/vcard-rdf/3.0#&#62;";
+declare variable $NS_2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+
+ fn:concat(  "  
+@", $NS_1, ".", "  
+@", $NS_2, ".", "
+" ),
+
+  
+let $Y  := "blabla@blabla.xom"  
+let $aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1,  $NS_2, "
+select $X $FName from <http://www.polleres.net/xsparql/data/vCard.rdf>  where {    $X   vc:FN    $FName   . } ")))
+for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
+	let $X_Node := ($aux_result1/sparql_result:binding[@name = "X"])
+	let $X_NodeType := name($X_Node/*)
+	let $X := data($X_Node/*)
+	let $X_RDFTerm :=  local:rdf_term($X_NodeType, $X )
+	let $FName_Node := ($aux_result1/sparql_result:binding[@name = "FName"])
+	let $FName_NodeType := name($FName_Node/*)
+	let $FName := data($FName_Node/*)
+	let $FName_RDFTerm :=  local:rdf_term($FName_NodeType, $FName )
+ 
+
+let $validObject1 := fn:concat( '"',  $Y,  '"') 
+
+
+
+  return ( 
+	 if ( local:validSubject( "",  $X_RDFTerm  ) ) then (
+		 
+		 
+	   
+	  if ( local:validObject( "",  $FName_RDFTerm  ) ) then (
+		 fn:concat( 
+		 $X_RDFTerm,  " foaf:name ", $FName_RDFTerm, " .&#xA;"
+		)
+ ) else ""  
+,  
+	   
+	  if ( local:validObject( "",  $validObject1  ) ) then (
+		 fn:concat( 
+		 $X_RDFTerm,  " foaf:mbox ", $validObject1, " .&#xA;"
+		)
+ ) else ""  
+
+		 
+  ) else ""  )

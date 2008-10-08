@@ -265,7 +265,10 @@ def build_subject(s, f):
 	return '[]'
     else: # polist
 	if s[0] == '[': # first member is an opening bnode bracket
-	    return '[ ' + build_predicate([ s[1] ], f) + ' ; ' + build_predicate(s[2:], f) + ' ]\n '
+            if s[1] == ']':
+                return '[  ]\n '
+            else:
+                return '[ ' + build_predicate([ s[1] ], f) + ' ; ' + build_predicate(s[2:], f) + ' ]\n '
 	else:
 	    return ' ' + build_predicate([ s[0] ], f) + ' ";", ' + build_predicate(s[1:], f) + ' \n '
 
@@ -298,8 +301,7 @@ def build_predicate(p, f):
 		    else:
 			 return '   '+ b + '  ' + build_object(p[0][1], f)+ ' '
 
-
-	    return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
+            return ' '+ b + ' ' + build_object(p[0][1], f)+ ' '
     elif len(p) == 0:
 	return ''
     else:

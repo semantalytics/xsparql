@@ -1,0 +1,14 @@
+-*- org -*-
+
+* XSPARQL
+** DONE check w/ Wassen the diffs between online interface and CVS
+** DONE check examples on the ml into examples
+** XSPARQL grammar
+*** Create an abstract syntax tree
+*** DONE Resolve the confilts
+    There are currently quite a few reduce/reduce and shift reduce conflicts
+** DONE Create syntax textcases
+   This is quite useful in order to change the grammar without problems
+** DONE Fix the rewriter
+   The current XSPARQL CVS version is not working in some cases,
+   including some of the web interface examples.

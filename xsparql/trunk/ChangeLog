@@ -1,3 +1,18 @@
+2008-10-08  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* examples/extra-queries/ (Module): more example queries
+
+
+	* software/xsparqlow/xsparql/lowrewriter.py (build_predicate):
+	fixes the case of [] being in the subject position in a sparql
+	construct query
+
+	* online-interface/examples/XSPARQL/06_simple2.xsparql: change the
+	query format to use <{}>
+
+	* online-interface/examples/XSPARQL/05_simple.xsparql: change the
+	query format to use <{}>
+
 2008-10-07  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* software/xsparqlow/xsparql/lowrewriter.py (build_bnode): changed

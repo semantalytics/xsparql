@@ -1,0 +1,31 @@
+declare namespace foaf = "http://xmlns.com/foaf/0.1/" ;
+import module namespace local = "http://xsparql.deri.org/xsparql.xquery"
+at "http://xsparql.deri.org/xsparql.xquery";
+
+declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";
+
+declare variable $NS_1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+
+ fn:concat(  "  
+@", $NS_1, ".", "
+" ),
+
+  for $person at $person_Pos  in doc("http://www.polleres.net/xsparql/data/relations.xml"   )//person  , 
+ $nameA at $nameA_Pos  in $person/@name  , 
+ $nameB at $nameB_Pos  in $person/knows   
+
+
+
+
+  return ( 
+	 if ( local:validSubject( "",  $person  ) ) then (
+		 
+		   
+	  if ( local:validObject( "",  $nameA  ) ) then (
+		 fn:concat( 
+		 $person,  " foaf:name ", $nameA, " .&#xA;"
+		)
+ ) else ""  
+
+		 
+  ) else ""  )
