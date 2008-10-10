@@ -1,3 +1,9 @@
+2008-10-10  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* paper/eswc2008.tex: update the report to reflect the format of
+	construct queries.  Detail the functions validSubject,
+	validPredicate and validObject
+
 2008-10-08  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* examples/extra-queries/ (Module): more example queries
