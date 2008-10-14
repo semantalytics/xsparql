@@ -1,4 +1,4 @@
-module namespace xsparql =  "http://xsparql.deri.org/xsparql.xquery" ;
+module namespace xsparql =  "http://axel.deri.ie/~nunolopes/xsparql/xsparql.xquery" ;
 
 
 declare function xsparql:rdf_term($NType as xs:string, $V as xs:string) as xs:string 
@@ -32,7 +32,7 @@ declare function xsparql:validBNode($NType as xs:string, $V as xs:string) as xs:
  let $result := 
      if ($NType = "sparql_result:bnode" or $NType = "bnode")
      then fn:true() 
-     else if (fn:substring($V, 0, 3) = "_:") 
+     else if (fn:matches($V, "^_:[a-z]([a-z|0-9|_])*$", "i"))
           then fn:true() 
           else fn:false()
   return $result
@@ -41,23 +41,12 @@ declare function xsparql:validBNode($NType as xs:string, $V as xs:string) as xs:
 
 declare function xsparql:validUri($NType as xs:string, $V as xs:string) as xs:boolean
 {
-  let $uri := fn:substring($V, 2, fn:string-length($V) - 2 )
   let $result :=
       if ($NType = "sparql_result:uri" or $NType = "uri")
       then fn:true()
       else if (
-                fn:substring($V, 1, 1) = "<" and
-                fn:substring($V, fn:string-length($V), fn:string-length($V)) = ">" and
-                fn:not( fn:contains($uri, "<" ) )  and
-                fn:not( fn:contains($uri, ">" ) )  and
-                fn:not( fn:contains($uri, """" ) ) and
-                fn:not( fn:contains($uri, " " ) )  and
-                fn:not( fn:contains($uri, "{" ) )  and
-                fn:not( fn:contains($uri, "}" ) )  and
-                fn:not( fn:contains($uri, "|" ) )  and
-		fn:not( fn:contains($uri, "\" ) )  and
-		fn:not( fn:contains($uri, "^" ) )  and
-                fn:not( fn:contains($uri, "`" ) )
+                fn:matches($V, "^<[^>]*>$", "i" )       
+(:                fn:matches($V, "^<[^<>""\ {}|\^`]*>$", "i" ) :)
               )
            then fn:true()
            else fn:false()
@@ -71,9 +60,9 @@ declare function xsparql:validLiteral($NType as xs:string, $V as xs:string) as x
       if ($NType = "sparql_result:literal" or $NType = "literal")
       then fn:true()
       else if (
-                fn:substring($V, 1, 1) = """" and 
-                fn:substring($V, fn:string-length($V), fn:string-length($V)) = """"
-              ) 
+                fn:starts-with($V, """") and 
+                fn:ends-with($V, """")
+              )
            then fn:true() 
            else fn:false()
   return $result
