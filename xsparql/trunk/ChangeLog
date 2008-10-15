@@ -1,3 +1,8 @@
+2008-10-15  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/examples/XSPARQL/03_vCard2foaf.xsparql: removed
+	duplicate triple pattern in the example
+
 2008-10-14  Nuno Lopes  <nunolopes@vmgal46.nuigalway.ie>
 
 	* online-interface/xsparql.xquery: improved the functions to check
