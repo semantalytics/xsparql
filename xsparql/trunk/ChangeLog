@@ -1,5 +1,8 @@
 2008-10-15  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* paper/eswc2008.tex: fixes to the rewriting examples to match the
+	implementation
+
 	* online-interface/examples/XSPARQL/03_vCard2foaf.xsparql: removed
 	duplicate triple pattern in the example
 
