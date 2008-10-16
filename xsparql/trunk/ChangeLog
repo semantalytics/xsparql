@@ -1,3 +1,8 @@
+2008-10-16  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py: underscore was still
+	being allowed in the grammar. Removed.
+
 2008-10-15  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* paper/eswc2008.tex: fixes to the rewriting examples to match the

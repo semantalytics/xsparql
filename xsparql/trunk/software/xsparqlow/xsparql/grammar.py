@@ -163,15 +163,18 @@ from ply.lex import TOKEN
 # [5]   NCNameChar        ::=   NameChar - ':'
 # [6]   NCNameStartChar   ::=   Letter | '_'
 
-NCNameStartChar   =   r'([A-Za-z]|_)'
-NCNameChar        =   r'([A-Za-z]|[0-9]|\.|-|_)'   # @todo: allow dots?! should be fine.
+# remove _
+# NCNameStartChar   =   r'([A-Za-z]|_)'
+# NCNameChar        =   r'([A-Za-z]|[0-9]|\.|-|_)'   # @todo: allow dots?! should be fine.
+NCNameStartChar   =   r'([A-Za-z])'
+NCNameChar        =   r'([A-Za-z]|[0-9]|\.|-)'   # @todo: allow dots?! should be fine.
 NCName            =   r'('+NCNameStartChar+')('+NCNameChar+')*'
 
 # http://www.w3.org/TR/REC-xml/#NT-NameChar
 # [4]   NameChar   ::=    Letter | Digit | '.' | '-' | '_' | ':' | CombiningChar | Extender
 
 PN_CHARS_BASE    =       r'([A-Za-z])'
-PN_CHARS_U       =       r'('+PN_CHARS_BASE+'|_)'
+PN_CHARS_U       =       r'('+PN_CHARS_BASE+')'
 VARNAME          =       r'('+PN_CHARS_U+'|[0-9])('+PN_CHARS_U+'|[0-9])*'
 PN_CHARS         =       r'('+PN_CHARS_U+'|-|[0-9])'
 PN_PREFIX        =       r''+PN_CHARS_BASE+'(('+PN_CHARS+'|\.)*'+PN_CHARS+')?'
@@ -238,7 +241,9 @@ t_LCURLY  = r'{'
 t_RCURLY = r'}'
 
 
-t_INITIAL_pattern_iri_VAR = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
+# remove underscore
+# t_INITIAL_pattern_iri_VAR = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
+t_INITIAL_pattern_iri_VAR = r'[\$\?][a-zA-Z][a-zA-Z0-9\-]*'
 t_INITIAL_pattern_iri_INTEGER   = r'[0-9]+'
 t_INITIAL_pattern_iri_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
 t_INITIAL_pattern_iri_AT        = r'@'
