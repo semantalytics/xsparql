@@ -2,6 +2,8 @@
 
 	* software/xsparqlow/xsparql/grammar.py: underscore was still
 	being allowed in the grammar. Removed.
+	(t_INITIAL_pattern_iri_error): exit the parser if it finds an
+	illegal character.
 
 2008-10-15  Nuno Lopes  <nuno.lopes@deri.org>
 

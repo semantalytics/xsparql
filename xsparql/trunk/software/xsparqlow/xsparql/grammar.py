@@ -350,8 +350,9 @@ def t_ANY_newline(t):
 
 # illegal characters will end up here
 def t_INITIAL_pattern_iri_error(t):
-    sys.stderr.write("Illegal character '" + t.value[0] + "'\n")
-    t.lexer.skip(1)
+    col = find_column(t)
+    sys.stderr.write("Illegal character: '" + t.value[0] + "' at line "+ `t.lineno` + ', column '+ `col` + '\n')
+    raise SyntaxError
 
 
 
@@ -1764,8 +1765,8 @@ def find_column(token):
     while i > 0:
 	if instring[i] == '\n': break
 	i -= 1
-    column = (token.lexpos - i)+1
-    return column
+    column = (token.lexpos - i)
+    return column-1
 
 def p_error(p):
     '''Error rule for syntax errors -> ignore them gracefully by
