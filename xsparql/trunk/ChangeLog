@@ -1,9 +1,21 @@
+2008-10-20  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py: allow '_' in the
+	elements (PN_CHARS_U)
+
+2008-10-17  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py (p_verb): remove
+	enclosedExpr option: would allow {} on the predicate position.
+
 2008-10-16  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* software/xsparqlow/xsparql/grammar.py: underscore was still
 	being allowed in the grammar. Removed.
 	(t_INITIAL_pattern_iri_error): exit the parser if it finds an
 	illegal character.
+	(p_whereSPARQLClause): rename whereTemplate to GroupGraphPattern
+	to follow the SPARQL names. 
 
 2008-10-15  Nuno Lopes  <nuno.lopes@deri.org>
 

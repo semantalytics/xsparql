@@ -174,7 +174,8 @@ NCName            =   r'('+NCNameStartChar+')('+NCNameChar+')*'
 # [4]   NameChar   ::=    Letter | Digit | '.' | '-' | '_' | ':' | CombiningChar | Extender
 
 PN_CHARS_BASE    =       r'([A-Za-z])'
-PN_CHARS_U       =       r'('+PN_CHARS_BASE+')'
+PN_CHARS_U       =       r'('+PN_CHARS_BASE+'|_)'
+# PN_CHARS_U       =       r'('+PN_CHARS_BASE+')'
 VARNAME          =       r'('+PN_CHARS_U+'|[0-9])('+PN_CHARS_U+'|[0-9])*'
 PN_CHARS         =       r'('+PN_CHARS_U+'|-|[0-9])'
 PN_PREFIX        =       r''+PN_CHARS_BASE+'(('+PN_CHARS+'|\.)*'+PN_CHARS+')?'
@@ -1550,8 +1551,7 @@ def p_object(p):
 def p_verb(p):
     '''verb : rdfPredicate
 	    | A
-	    | iriConstruct
-	    | enclosedExpr'''
+	    | iriConstruct'''
     p[0] = p[1]
 
 
