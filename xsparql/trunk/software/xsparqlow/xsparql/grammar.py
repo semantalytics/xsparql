@@ -118,7 +118,7 @@ reserved = {
 #   'lax' : 'LAX',
 #   'strict' : 'STRICT',
    'empty-sequence' : 'EMPTYSEQUENCE',
-   'item' : 'ITEM',
+#   'item' : 'ITEM',
    'node' : 'NODE',
    'document-node' : 'DOCUMENTNODE',
    'text' : 'TEXT',
@@ -1156,9 +1156,10 @@ def p_occurrenceIndicator(p):
     p[0] = ''.join(p[1:])
 
 
+# ITEM LPAR RPAR
+# 		| 
 def p_itemType(p):
-    '''itemType : ITEM LPAR RPAR
-		| atomicType
+    '''itemType : atomicType
 		| kindTest'''
     p[0] = ''.join(p[1:])
 

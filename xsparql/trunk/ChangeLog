@@ -1,3 +1,8 @@
+2008-10-20  Axel Polleres  <axepol@vmgal46.nuigalway.ie>
+
+	* software/xsparqlow/xsparql/grammar.py: remove item as a reserved
+	word
+
 2008-10-20  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* software/xsparqlow/xsparql/grammar.py: allow '_' in the
