@@ -2,7 +2,7 @@
 (: there seem to be troubles with path expressions: :)
 
 prefix : <http://www.example.org>
-construct {?x :p [?x _:a] }
+construct {$x :p [$x _:a] }
 from <http://www.polleres.net/xsparql/data/alice.ttl>
-where {?s ?p ?x}
+where {$s $p $x}
 

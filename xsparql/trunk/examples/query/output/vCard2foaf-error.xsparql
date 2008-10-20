@@ -14,7 +14,7 @@ declare variable $NS_2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 " ),
 
 let $aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1,  $NS_2, "
-select $N $P $F from <http://www.polleres.net/xsparql/data/vCard.rdf>  where {    $P   vc:Given    $N   .    $P   vc:Family    $F   .    $P   vc:Family    $F   . } order by ?P limit 3 offset 2")))
+select $N $P $F from <http://www.polleres.net/xsparql/data/vCard.rdf>  where {    $P   vc:Given    $N   .    $P   vc:Family    $F   . } order by $P limit 3 offset 2")))
 for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
 	let $N_Node := ($aux_result1/sparql_result:binding[@name = "N"])
 	let $N_NodeType := name($N_Node/*)
