@@ -362,7 +362,7 @@ def build_bnode(b, f):
 		    if f:
 			variables += [ b ]
 		    if listSearch(b):
-			return '    ", '+ lowrewriter.prefix_var(b) + '_RDFTerm, "   '
+			return '    ", '+ prefix_var(b) + '_RDFTerm, "   '
 		    else:
                         if(b in grammar.letVars):
                             return '   ", '+ b + ', "  '
