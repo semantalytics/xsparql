@@ -1,28 +1,29 @@
 declare namespace foaf = "http://xmlns.com/foaf/0.1/" ;
-import module namespace local = "http://xsparql.deri.org/xsparql.xquery"
+
+import module namespace _xsparql = "http://xsparql.deri.org/xsparql.xquery"
 at "http://xsparql.deri.org/xsparql.xquery";
 
-declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";
+declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 
-declare variable $NS_1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 <relations>{ 
-let $aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1, "
+let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1, "
 select $Person $Name from <http://www.polleres.net/xsparql/data/relations.rdf>  where {    $Person   foaf:name    $Name   . } order by $Name")))
-for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
-	let $Person_Node := ($aux_result1/sparql_result:binding[@name = "Person"])
-	let $Person_NodeType := name($Person_Node/*)
-	let $Person := data($Person_Node/*)
-	let $Person_RDFTerm :=  local:rdf_term($Person_NodeType, $Person )
-	let $Name_Node := ($aux_result1/sparql_result:binding[@name = "Name"])
-	let $Name_NodeType := name($Name_Node/*)
-	let $Name := data($Name_Node/*)
-	let $Name_RDFTerm :=  local:rdf_term($Name_NodeType, $Name )
+for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
+	let $_Person_Node := ($_aux_result1/_sparql_result:binding[@name = "Person"])
+	let $_Person_NodeType := name($_Person_Node/*)
+	let $Person := data($_Person_Node/*)
+	let $_Person_RDFTerm :=  _xsparql:_rdf_term($_Person_NodeType, $Person )
+	let $_Name_Node := ($_aux_result1/_sparql_result:binding[@name = "Name"])
+	let $_Name_NodeType := name($_Name_Node/*)
+	let $Name := data($_Name_Node/*)
+	let $_Name_RDFTerm :=  _xsparql:_rdf_term($_Name_NodeType, $Name )
  return <person name = "{$Name}">{ 
-let $aux2 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1, "
-select $FName from <http://www.polleres.net/xsparql/data/relations.rdf>  where {     ", $Person_RDFTerm, "    foaf:knows    $Friend   .     ", $Person_RDFTerm, "    foaf:name     ", $Name_RDFTerm, "    .    $Friend   foaf:name    $FName   . } ")))
-for $aux_result2 at $aux_result2_Pos in doc($aux2)//sparql_result:result
-	let $FName_Node := ($aux_result2/sparql_result:binding[@name = "FName"])
-	let $FName_NodeType := name($FName_Node/*)
-	let $FName := data($FName_Node/*)
-	let $FName_RDFTerm :=  local:rdf_term($FName_NodeType, $FName )
+let $_aux2 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1, "
+select $FName from <http://www.polleres.net/xsparql/data/relations.rdf>  where {     ", $_Person_RDFTerm, "    foaf:knows    $Friend   .     ", $_Person_RDFTerm, "    foaf:name     ", $_Name_RDFTerm, "    .    $Friend   foaf:name    $FName   . } ")))
+for $_aux_result2 at $_aux_result2_Pos in doc($_aux2)//_sparql_result:result
+	let $_FName_Node := ($_aux_result2/_sparql_result:binding[@name = "FName"])
+	let $_FName_NodeType := name($_FName_Node/*)
+	let $FName := data($_FName_Node/*)
+	let $_FName_RDFTerm :=  _xsparql:_rdf_term($_FName_NodeType, $FName )
  return <knows>{ $FName   }</knows>   }</person>   }</relations>  

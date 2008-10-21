@@ -7,6 +7,7 @@ query/simple.sparql
 query/simple.xquery
 query/simple.xsparql
 query/simple2.xsparql
+query/sioc2rss.xsparql
 query/vCard2foaf-error.xsparql
 query/vCard2foaf.sparql
 query/vCard2foaf.xsparql

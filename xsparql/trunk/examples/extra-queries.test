@@ -1,3 +1,4 @@
+extra-queries/item.xsparql
 extra-queries/query01
 extra-queries/query02
 extra-queries/query03
@@ -11,3 +12,4 @@ extra-queries/query10
 extra-queries/query11
 extra-queries/query12
 extra-queries/query13
+extra-queries/underscore.xsparql

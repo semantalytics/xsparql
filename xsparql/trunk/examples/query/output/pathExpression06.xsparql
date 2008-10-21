@@ -1,36 +1,37 @@
 declare namespace foaf = "http://xmlns.com/foaf/0.1/" ;
-import module namespace local = "http://xsparql.deri.org/xsparql.xquery"
+
+import module namespace _xsparql = "http://xsparql.deri.org/xsparql.xquery"
 at "http://xsparql.deri.org/xsparql.xquery";
 
-declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";
+declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 
-declare variable $NS_1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 
  fn:concat(  "  
-@", $NS_1, ".", "
+@", $_NS1, ".", "
 " ),
 
-  for $person at $person_Pos  in doc("http://www.polleres.net/xsparql/data/relations.xml"   )//person  , 
- $nameA at $nameA_Pos  in $person/@name  , 
- $nameB at $nameB_Pos  in $person/knows   
+  for $person at $_person_Pos  in doc("http://www.polleres.net/xsparql/data/relations.xml"   )//person  , 
+ $nameA at $_nameA_Pos  in $person/@name  , 
+ $nameB at $_nameB_Pos  in $person/knows   
 
-let $validObject1 := fn:concat( '"',   data($nameA   )   ,  '"') 
-let $validObject2 := fn:concat( '"',   data($nameA   )   ,  '"') 
+let $_validObject1 := fn:concat( '"',   data($nameA   )   ,  '"') 
+let $_validObject2 := fn:concat( '"',   data($nameA   )   ,  '"') 
 
 
 
-  return ( local:removeEmpty( 
+  return ( _xsparql:_removeEmpty( 
 		 fn:concat( 
 		 "[",   
 	  
-	 if ( local:validObject( "",  $validObject1  ) ) then (
-		 fn:concat(" foaf:name ", $validObject1, "&#59;") ) else "" , 
+	 if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
+		 fn:concat(" foaf:name ", $_validObject1, "&#59;") ) else "" , 
 	  fn:concat(" foaf:name ",   '"Nuno"', "&#59;")  
 ,
 		  
 	  
-	 if ( local:validObject( "",  $validObject2  ) ) then (
-		 fn:concat(" foaf:mbox ", $validObject2, "&#59;") ) else "" , 
+	 if ( _xsparql:_validObject( "",  $_validObject2  ) ) then (
+		 fn:concat(" foaf:mbox ", $_validObject2, "&#59;") ) else "" , 
 	  fn:concat(" foaf:mbox ",   '"Lopes"', "&#59;")  
   
 , " ] .&#xA;" 

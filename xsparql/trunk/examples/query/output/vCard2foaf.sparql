@@ -1,41 +1,42 @@
 
 
-import module namespace local = "http://xsparql.deri.org/xsparql.xquery"
+
+import module namespace _xsparql = "http://xsparql.deri.org/xsparql.xquery"
 at "http://xsparql.deri.org/xsparql.xquery";
 
-declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";
+declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 
-declare variable $NS_1 := "prefix  vc:  &#60;http://www.w3.org/2001/vcard-rdf/3.0#&#62;";
-declare variable $NS_2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+declare variable $_NS1 := "prefix  vc:  &#60;http://www.w3.org/2001/vcard-rdf/3.0#&#62;";
+declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 
  fn:concat(  "  
-@", $NS_1, ".", "  
-@", $NS_2, ".", "
+@", $_NS1, ".", "  
+@", $_NS2, ".", "
 " ),
 
-let $aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1,  $NS_2, "
+let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2, "
 select $X $FN from <http://www.polleres.net/xsparql/data/vCard.rdf>  where {    $X   vc:FN    $FN   . } ")))
-for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
-	let $X_Node := ($aux_result1/sparql_result:binding[@name = "X"])
-	let $X_NodeType := name($X_Node/*)
-	let $X := data($X_Node/*)
-	let $X_RDFTerm :=  local:rdf_term($X_NodeType, $X )
-	let $FN_Node := ($aux_result1/sparql_result:binding[@name = "FN"])
-	let $FN_NodeType := name($FN_Node/*)
-	let $FN := data($FN_Node/*)
-	let $FN_RDFTerm :=  local:rdf_term($FN_NodeType, $FN )
+for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
+	let $_X_Node := ($_aux_result1/_sparql_result:binding[@name = "X"])
+	let $_X_NodeType := name($_X_Node/*)
+	let $X := data($_X_Node/*)
+	let $_X_RDFTerm :=  _xsparql:_rdf_term($_X_NodeType, $X )
+	let $_FN_Node := ($_aux_result1/_sparql_result:binding[@name = "FN"])
+	let $_FN_NodeType := name($_FN_Node/*)
+	let $FN := data($_FN_Node/*)
+	let $_FN_RDFTerm :=  _xsparql:_rdf_term($_FN_NodeType, $FN )
 
 
  return 
 	   
 		
  
-	 if ( local:validSubject( "",  $X_RDFTerm  ) ) then (
+	 if ( _xsparql:_validSubject( "",  $_X_RDFTerm  ) ) then (
 		 
 		   
-	  if ( local:validObject( "",  $FN_RDFTerm  ) ) then (
+	  if ( _xsparql:_validObject( "",  $_FN_RDFTerm  ) ) then (
 		 fn:concat( 
-		 $X_RDFTerm,  " foaf:name ", $FN_RDFTerm, " .&#xA;"
+		 $_X_RDFTerm,  " foaf:name ", $_FN_RDFTerm, " .&#xA;"
 		)
  ) else ""  
 

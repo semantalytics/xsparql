@@ -1,43 +1,44 @@
 
-import module namespace local = "http://xsparql.deri.org/xsparql.xquery"
+
+import module namespace _xsparql = "http://xsparql.deri.org/xsparql.xquery"
 at "http://xsparql.deri.org/xsparql.xquery";
 
-declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";
+declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 
-declare variable $NS_1 := "prefix  :  &#60;http://www.example.org&#62;";
+declare variable $_NS1 := "prefix  :  &#60;http://www.example.org&#62;";
 
  fn:concat(  "  
-@", $NS_1, ".", "
+@", $_NS1, ".", "
 " ),
 
-let $aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $NS_1, "
+let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1, "
 select $s $p $x from <http://www.polleres.net/xsparql/data/alice.ttl>  where {    $s     $p     $x   . } ")))
-for $aux_result1 at $aux_result1_Pos in doc($aux1)//sparql_result:result
-	let $s_Node := ($aux_result1/sparql_result:binding[@name = "s"])
-	let $s_NodeType := name($s_Node/*)
-	let $s := data($s_Node/*)
-	let $s_RDFTerm :=  local:rdf_term($s_NodeType, $s )
-	let $p_Node := ($aux_result1/sparql_result:binding[@name = "p"])
-	let $p_NodeType := name($p_Node/*)
-	let $p := data($p_Node/*)
-	let $p_RDFTerm :=  local:rdf_term($p_NodeType, $p )
-	let $x_Node := ($aux_result1/sparql_result:binding[@name = "x"])
-	let $x_NodeType := name($x_Node/*)
-	let $x := data($x_Node/*)
-	let $x_RDFTerm :=  local:rdf_term($x_NodeType, $x )
+for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
+	let $_s_Node := ($_aux_result1/_sparql_result:binding[@name = "s"])
+	let $_s_NodeType := name($_s_Node/*)
+	let $s := data($_s_Node/*)
+	let $_s_RDFTerm :=  _xsparql:_rdf_term($_s_NodeType, $s )
+	let $_p_Node := ($_aux_result1/_sparql_result:binding[@name = "p"])
+	let $_p_NodeType := name($_p_Node/*)
+	let $p := data($_p_Node/*)
+	let $_p_RDFTerm :=  _xsparql:_rdf_term($_p_NodeType, $p )
+	let $_x_Node := ($_aux_result1/_sparql_result:binding[@name = "x"])
+	let $_x_NodeType := name($_x_Node/*)
+	let $x := data($_x_Node/*)
+	let $_x_RDFTerm :=  _xsparql:_rdf_term($_x_NodeType, $x )
 
-let $validObject1 := fn:concat("_:a", "_", data($aux_result1_Pos)) 
+let $_validObject1 := fn:concat("_:a", "_", data($_aux_result1_Pos)) 
 
  return 
 	   
 		
  
-	 if ( local:validSubject( "",  $x_RDFTerm  ) ) then (
+	 if ( _xsparql:_validSubject( "",  $_x_RDFTerm  ) ) then (
 		 
 		   
-	  if ( local:validObject( "",  $validObject1  ) ) then (
+	  if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
 		 fn:concat( 
-		 $x_RDFTerm,  " :p ", "[",  fn:concat(" ",$x_RDFTerm, " ", $validObject1, " &#59; "), "]", ".&#xA;"  
+		 $_x_RDFTerm,  " :p ", "[",  fn:concat(" ",$_x_RDFTerm, " ", $_validObject1, " &#59; "), " ]", " .&#xA;" 
 		 ) 
  ) else ""  
 

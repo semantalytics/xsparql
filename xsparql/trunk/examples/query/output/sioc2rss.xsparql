@@ -1,0 +1,45 @@
+declare namespace sioc = "http://rdfs.org/sioc/ns#" ;
+declare namespace dc = "http://purl.org/dc/elements/1.1/" ;
+declare namespace dcterms = "http://purl.org/dc/terms/" ;
+declare namespace rdfs = "http://www.w3.org/2000/01/rdf-schema#" ;
+
+import module namespace _xsparql = "http://xsparql.deri.org/xsparql.xquery"
+at "http://xsparql.deri.org/xsparql.xquery";
+
+declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
+
+declare variable $_NS1 := "prefix  sioc:  &#60;http://rdfs.org/sioc/ns#&#62;";
+declare variable $_NS2 := "prefix  dc:  &#60;http://purl.org/dc/elements/1.1/&#62;";
+declare variable $_NS3 := "prefix  dcterms:  &#60;http://purl.org/dc/terms/&#62;";
+declare variable $_NS4 := "prefix  rdfs:  &#60;http://www.w3.org/2000/01/rdf-schema#&#62;";
+
+let $johnblog  := doc("http://www.johnbreslin.com/blog/index.php?sioc_type=site"   )  
+ return <channel><title>{ 
+let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3,  $_NS4, "
+select $name from <http://www.johnbreslin.com/blog/index.php?sioc_type=site>  where { [  a  sioc:Forum   ;  ]
+  sioc:name    $name   . } ")))
+for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
+	let $_name_Node := ($_aux_result1/_sparql_result:binding[@name = "name"])
+	let $_name_NodeType := name($_name_Node/*)
+	let $name := data($_name_Node/*)
+	let $_name_RDFTerm :=  _xsparql:_rdf_term($_name_NodeType, $name )
+ return $name   }</title>{ 
+let $_aux2 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3,  $_NS4, "
+select $seeAlso from <http://www.johnbreslin.com/blog/index.php?sioc_type=site>  where { [  a  sioc:Forum   ;  ]
+  sioc:container_of [  rdfs:seeAlso    $seeAlso    ]
+  . } ")))
+for $_aux_result2 at $_aux_result2_Pos in doc($_aux2)//_sparql_result:result
+	let $_seeAlso_Node := ($_aux_result2/_sparql_result:binding[@name = "seeAlso"])
+	let $_seeAlso_NodeType := name($_seeAlso_Node/*)
+	let $seeAlso := data($_seeAlso_Node/*)
+	let $_seeAlso_RDFTerm :=  _xsparql:_rdf_term($_seeAlso_NodeType, $seeAlso )
+ return <item>{ 
+let $_aux3 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3,  $_NS4, "
+select $title from <", $seeAlso,">  where { [  a  sioc:Post   ;  ]
+  dc:title    $title   . } ")))
+for $_aux_result3 at $_aux_result3_Pos in doc($_aux3)//_sparql_result:result
+	let $_title_Node := ($_aux_result3/_sparql_result:binding[@name = "title"])
+	let $_title_NodeType := name($_title_Node/*)
+	let $title := data($_title_Node/*)
+	let $_title_RDFTerm :=  _xsparql:_rdf_term($_title_NodeType, $title )
+ return $title   }</item>   }</channel>  
