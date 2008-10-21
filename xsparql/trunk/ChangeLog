@@ -1,3 +1,12 @@
+2008-10-21  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/lowrewriter.py (build_sparql_query):
+	allow variables in the from clause
+
+	* software/xsparqlow/xsparql/grammar.py (p_datasetClause): allow
+	variables in the from clause
+	disallow variables starting with $_
+
 2008-10-20  Axel Polleres  <axepol@vmgal46.nuigalway.ie>
 
 	* software/xsparqlow/xsparql/grammar.py: remove item as a reserved

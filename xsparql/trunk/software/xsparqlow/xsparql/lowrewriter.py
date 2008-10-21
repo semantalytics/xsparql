@@ -125,7 +125,10 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
     # @todo FROM NAMED is missing
     from_iri_str = ''
     for (fn, iri) in from_iri:
-	from_iri_str += fn + ' ' + iri + '> ' # @todo '>' is ugly
+        if ( iri[0] == '$' ):
+            from_iri_str += fn + ' <", ' + iri + ',"> '
+        else:
+            from_iri_str += fn + ' ' + iri + '> ' # @todo '>' is ugly
 
     # build variables (possibly scoped)
     # @todo this is utter crap

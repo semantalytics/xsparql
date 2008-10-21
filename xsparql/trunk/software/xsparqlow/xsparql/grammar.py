@@ -163,20 +163,35 @@ from ply.lex import TOKEN
 # [5]   NCNameChar        ::=   NameChar - ':'
 # [6]   NCNameStartChar   ::=   Letter | '_'
 
-# remove _
+# remove leading _
 # NCNameStartChar   =   r'([A-Za-z]|_)'
-# NCNameChar        =   r'([A-Za-z]|[0-9]|\.|-|_)'   # @todo: allow dots?! should be fine.
 NCNameStartChar   =   r'([A-Za-z])'
-NCNameChar        =   r'([A-Za-z]|[0-9]|\.|-)'   # @todo: allow dots?! should be fine.
+NCNameChar        =   r'([A-Za-z]|[0-9]|\.|-|_)'   # @todo: allow dots?! should be fine.
 NCName            =   r'('+NCNameStartChar+')('+NCNameChar+')*'
 
 # http://www.w3.org/TR/REC-xml/#NT-NameChar
 # [4]   NameChar   ::=    Letter | Digit | '.' | '-' | '_' | ':' | CombiningChar | Extender
 
+
+# http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName
+# [68]       PrefixedName     ::= PNAME_LN | PNAME_NS
+# [71]       PNAME_NS         ::= PN_PREFIX? ':'
+# [72]       PNAME_LN         ::= PNAME_NS PN_LOCAL
+
+# http://www.w3.org/TR/rdf-sparql-query/#rPN_CHARS_BASE
+# [95]       PN_CHARS_BASE    ::=        [A-Z] | [a-z]
+# [96]       PN_CHARS_U       ::=       PN_CHARS_BASE | '_'
+# [97]       VARNAME          ::=       ( PN_CHARS_U | [0-9] ) ( PN_CHARS_U | [0-9]  )*
+# [98]       PN_CHARS         ::=       PN_CHARS_U | '-' | [0-9]
+# [99]       PN_PREFIX        ::=       PN_CHARS_BASE ((PN_CHARS|'.')* PN_CHARS)?
+# [100]      PN_LOCAL         ::=       ( PN_CHARS_U | [0-9] ) ((PN_CHARS|'.')* PN_CHARS)?
+
+
 PN_CHARS_BASE    =       r'([A-Za-z])'
+# remove leading _
 PN_CHARS_U       =       r'('+PN_CHARS_BASE+'|_)'
 # PN_CHARS_U       =       r'('+PN_CHARS_BASE+')'
-VARNAME          =       r'('+PN_CHARS_U+'|[0-9])('+PN_CHARS_U+'|[0-9])*'
+# VARNAME          =       r'('+PN_CHARS_U+'|[0-9])('+PN_CHARS_U+'|[0-9])*'
 PN_CHARS         =       r'('+PN_CHARS_U+'|-|[0-9])'
 PN_PREFIX        =       r''+PN_CHARS_BASE+'(('+PN_CHARS+'|\.)*'+PN_CHARS+')?'
 PN_LOCAL         =       r'(('+PN_CHARS_U+')|[0-9])(('+PN_CHARS+'|\.)*'+PN_CHARS+')?'
@@ -241,10 +256,20 @@ t_INITIAL_pattern_iri_QSTRING = r'\"[^\"]*\"'
 t_LCURLY  = r'{'
 t_RCURLY = r'}'
 
-
-# remove underscore
+# remove leading _
 # t_INITIAL_pattern_iri_VAR = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
-t_INITIAL_pattern_iri_VAR = r'[\$\?][a-zA-Z][a-zA-Z0-9\-]*'
+var = '[\$][a-zA-Z][a-zA-Z0-9\_\-]*'
+
+@TOKEN(var)
+def t_iri_VAR(t):
+    t.lexer.begin('INITIAL')
+    return t
+
+@TOKEN(var)
+def t_INITIAL_pattern_VAR(t):
+    return t
+
+
 t_INITIAL_pattern_iri_INTEGER   = r'[0-9]+'
 t_INITIAL_pattern_iri_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
 t_INITIAL_pattern_iri_AT        = r'@'
@@ -297,7 +322,7 @@ t_pattern_NCNAME  = r'\w[\w\-\.]*'
 # in iri state, we can match IRIs
 t_iri_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*'
 
-# GREATERTHAN token ends the iri state
+# GREATERTHAN token ends the iri state  ### in the lowrewriter you need the > at the end!!!
 def t_iri_GREATERTHAN(t):
     r'>'
     t.lexer.begin('INITIAL')
@@ -574,6 +599,7 @@ def p_datasetClauses(p): # list of (from, iri) tuples
 
 def p_datasetClause(p):
     '''datasetClause : FROM IRIREF
+		     | FROM VAR
 		     | FROM NAMED IRIREF'''
     if len(p) == 4: # from named
 	p[0] = (p[1] + ' ' + p[2], p[3])
@@ -1697,21 +1723,6 @@ def p_verb_where(p):
 
 
 ## ----------------------------------------------------------
-# http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName
-
-# [68]       PrefixedName     ::= PNAME_LN | PNAME_NS
-# [71]       PNAME_NS         ::= PN_PREFIX? ':'
-# [72]       PNAME_LN         ::= PNAME_NS PN_LOCAL
-
-# http://www.w3.org/TR/rdf-sparql-query/#rPN_CHARS_BASE
-# [95]       PN_CHARS_BASE    ::=        [A-Z] | [a-z]
-# [96]       PN_CHARS_U       ::=       PN_CHARS_BASE | '_'
-# [97]       VARNAME          ::=       ( PN_CHARS_U | [0-9] ) ( PN_CHARS_U | [0-9]  )*
-# [98]       PN_CHARS         ::=       PN_CHARS_U | '-' | [0-9]
-# [99]       PN_PREFIX        ::=       PN_CHARS_BASE ((PN_CHARS|'.')* PN_CHARS)?
-# [100]      PN_LOCAL         ::=       ( PN_CHARS_U | [0-9] ) ((PN_CHARS|'.')* PN_CHARS)?
-
-
 
 def p_sparqlPrefixedName(p):
     '''sparqlPrefixedName : PREFIXED_NAME'''
