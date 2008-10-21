@@ -88,7 +88,7 @@ def build_triples(gp, variable_p, variable ):
 	if isinstance(s, str) and not s[0] == "[":
 
 	    if polist != '':
-		let_subject, cond_subject, subject, suff_subject = build_bnode('validSubject', s)
+		let_subject, cond_subject, subject, suff_subject = build_bnode('_validSubject', s)
 		let_po, cond_po, po, suff_po = build_predicate(subject, polist)
 		let += let_subject + let_po
 		ret +=  '\n\t ' + cond_subject + cond_po + ' \n\t\t '+ po.rstrip(', ') + '\n\t\t \n ' + suff_po + suff_subject + ' ,'
@@ -105,9 +105,9 @@ def build_triples(gp, variable_p, variable ):
 
 	    if (cond_subject + cond_po == ''):
 		if isinstance(s, str) and s == "[]":
-		    ret += 'local:removeEmpty( \n\t\t fn:concat( \n\t\t "[]", ' + po.rstrip(', ') +  ', " .&#xA;" \n\t\t) \n\t\t ) '
+		    ret += '_xsparql:_removeEmpty( \n\t\t fn:concat( \n\t\t "[]", ' + po.rstrip(', ') +  ', " .&#xA;" \n\t\t) \n\t\t ) '
 		elif(s[0] == "["):
-		    ret += 'local:removeEmpty( \n\t\t fn:concat( \n\t\t "[", ' + subject.rstrip(', ') + po.rstrip(', .') + ', " ] .&#xA;" \n\t\t) \n\t\t )'
+		    ret += '_xsparql:_removeEmpty( \n\t\t fn:concat( \n\t\t "[", ' + subject.rstrip(', ') + po.rstrip(', .') + ', " ] .&#xA;" \n\t\t) \n\t\t )'
 		else:
 		    ret += 'fn:concat( \n\t\t '+ subject + po.rstrip(', ') + '\n\t\t)'
 	    else:
@@ -122,11 +122,11 @@ def build_subject(s):
 #    debug.debug('------- build_subject', s, len(s))
 
     if len(s) == 1 and isinstance(s[0], list) and isinstance(s[0][0], str):
-	return build_bnode('validSubject', s[0][0])
+	return build_bnode('_validSubject', s[0][0])
     elif len(s) <= 2 and isinstance(s, str): # blank node or subject
-	return build_bnode('validSubject', s)
+	return build_bnode('_validSubject', s)
     elif len(s) == 1 and isinstance(s[0], str): # blank node or subject
-	return build_bnode('validSubject', s[0])
+	return build_bnode('_validSubject', s[0])
     elif len(s) == 1 and isinstance(s[0], list): # blank node
 	return build_predicate("", s[0])
     elif len(s) == 0: # single blank node
@@ -170,7 +170,7 @@ def build_predicate(subject, p):
 		 b = '$'+ b
 
 	     if listSearch(b):
-		 var = b + '_RDFTerm'
+		 var = lowrewriter.prefix_var(b) + '_RDFTerm'
 	     else:
 		 var = b
 
@@ -223,14 +223,14 @@ def build_object(subject, predicate, o):
 	    return let, "", cond + ret + suff, ""
 
 	else:
-	    let,cond,ret,suff = build_bnode('validObject', o[0][0])
+	    let,cond,ret,suff = build_bnode('_validObject', o[0][0])
 	    if (subject == "" or subject.strip('\', ') == "[]"):
 		return let, cond, ' fn:concat(" ",' + predicate + ', " ", ' + ret.rstrip(', ')  + ', " &#59; ")', suff
 	    else:
 		return let, "", cond + ' fn:concat( \n\t\t '+ subject + ' " ' + predicate + ' ", ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t)\n'+suff, ""
 
     elif len(o) == 1 and isinstance(o[0], str):
-	let,cond,ret,suff = build_bnode('validObject', o[0])
+	let,cond,ret,suff = build_bnode('_validObject', o[0])
 
 	if (subject == "" or subject.strip('\', ') == "[]"):
 	    return let, cond, ' fn:concat(" ' + predicate + ' ", ' + ret.rstrip(', ')  + ', "&#59;")', suff
@@ -306,14 +306,14 @@ def genLetCondReturn(type, value):
     if len(value) == 1:
 	# do something
 	var = value[0].strip()
-	if listSearch(var): var = var + '_RDFTerm'
+	if listSearch(var): var = lowrewriter.prefix_var(var) + '_RDFTerm'
 	let = ''
     else:
 	var = '$' + type + `count`
 	count = count + 1
 	value_all = ''
 	for s in value:
-	    if listSearch(s): s = s.strip() + '_RDFTerm'
+	    if listSearch(s): s = lowrewriter.prefix_var(s.strip()) + '_RDFTerm'
 	    value_all = value_all + s
 
 	let =  'let '+ var +' := fn:concat(' +  value_all +') \n'
@@ -322,12 +322,12 @@ def genLetCondReturn(type, value):
 
     if listSearch(var):
 	rdftype = var + '_NodeType'
-	var = var + '_RDFTerm'
+	var = lowrewriter.prefix_var(var) + '_RDFTerm'
     else:
 	rdftype = '""'
 
 
-    cond = 'if ( local:'+type + '( ' + rdftype + ',  '+var+'  ) ) then (\n\t\t'
+    cond = 'if ( _xsparql:'+type + '( ' + rdftype + ',  '+var+'  ) ) then (\n\t\t'
     suffix = ' ) else ""'
 
 

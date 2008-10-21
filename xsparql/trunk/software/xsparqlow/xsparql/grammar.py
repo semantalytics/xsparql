@@ -543,9 +543,9 @@ def p_queryBody(p):
     '''queryBody : expr'''
     global nsFlag
 
-    prefix =  'import module namespace local = "http://xsparql.deri.org/xsparql.xquery"\n'
+    prefix =  '\nimport module namespace _xsparql = "http://xsparql.deri.org/xsparql.xquery"\n'
     prefix += 'at "http://xsparql.deri.org/xsparql.xquery";\n\n'
-    prefix += 'declare namespace sparql_result = "http://www.w3.org/2005/sparql-results#";\n\n'
+    prefix += 'declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";\n\n'
 
 
     nsVars = lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)
@@ -716,7 +716,8 @@ def p_forVars1(p):
 def p_forVar(p):
     '''forVar : VAR typeDeclaration positionVar IN exprSingle'''
     if len(p[3][1]) == 0:
-	 p[0] = ( p[1] + ' at ' + p[1] + '_Pos ' + p[2] + ' ' + p[4] + ' ' + p[5][0], p[1], p[1] + '_Pos' )
+        prefix_var = lowrewriter.prefix_var(p[1])
+        p[0] = ( p[1] + ' at ' + prefix_var + '_Pos ' + p[2] + ' ' + p[4] + ' ' + p[5][0], p[1], prefix_var + '_Pos' )
     else:
 	p[0] = (p[1] + ' ' + p[2] + ' ' + p[3][0] + ' ' + p[4] + ' ' + p[5][0], p[1], p[3][1] )
 
@@ -734,7 +735,7 @@ def p_letVars(p):
     '''letVars : letVars COMMA letVar
 	       | letVar'''
     if len(p) == 2:
-	p[0] = ( p[1][0], [ p[1][1] ] , [ p[1][2] ] )
+	p[0] = ( p[1][0] + '\n', [ p[1][1] ] , [ p[1][2] ] ) 
     else:
 	p[0] = ( p[1][0] + p[2] + ' \n ' + p[3][0] , p[1][1] + [ p[3][1] ], p[1][2] + [ p[3][2] ] )
 

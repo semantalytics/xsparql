@@ -41,15 +41,15 @@ import grammar
 #
 
 def query_aux(i):
-    return '$aux' + str(i)
+    return '$_aux' + str(i)
 
 
 def var_decl(i):
-    return '$NS_'+ str(i)
+    return '$_NS'+ str(i)
 
 
 def query_result_aux(i):
-    return '$aux_result' + str(i)
+    return '$_aux_result' + str(i)
 
 
 p_var = []
@@ -60,16 +60,20 @@ def position_var(i):
     return aux_result
 
 
+def prefix_var(var):
+    return var[0] + '_' + var[1:]
+
+
 def var_node(var):
-    return var + '_Node'
+    return prefix_var(var) + '_Node'
 
 
 def var_nodetype(var):
-    return var + '_NodeType'
+    return prefix_var(var) + '_NodeType'
 
 
 def var_rdfterm(var):
-    return var + '_RDFTerm'
+    return prefix_var(var) + '_RDFTerm'
 
 
 def cnv_lst_str(dec_var, flag):
@@ -161,17 +165,17 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
 
 
 def build_for_loop(i, var):
-    return 'for ' + query_result_aux(i) + ' at ' + position_var(i) + ' in doc(' + query_aux(i) + ')//sparql_result:result\n'
+    return 'for ' + query_result_aux(i) + ' at ' + position_var(i) + ' in doc(' + query_aux(i) + ')//_sparql_result:result\n'
 
 
 def build_aux_variables(i, vars):
     ret = ''
 
     for v in vars:
-	ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/sparql_result:binding[@name = "' + v[1:] + '"])\n'
+	ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/_sparql_result:binding[@name = "' + v[1:] + '"])\n'
 	ret += '\tlet ' + var_nodetype(v) + ' := name(' + var_node(v) + '/*)\n'
 	ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
-	ret += '\tlet ' + var_rdfterm(v) + ' :=  local:rdf_term(' + var_nodetype(v)+', '+v +' )\n'
+	ret += '\tlet ' + var_rdfterm(v) + ' :=  _xsparql:_rdf_term(' + var_nodetype(v)+', '+v +' )\n'
     return ret
 
 
@@ -358,7 +362,7 @@ def build_bnode(b, f):
 		    if f:
 			variables += [ b ]
 		    if listSearch(b):
-			return '    ", '+ b + '_RDFTerm, "   '
+			return '    ", '+ lowrewriter.prefix_var(b) + '_RDFTerm, "   '
 		    else:
                         if(b in grammar.letVars):
                             return '   ", '+ b + ', "  '
