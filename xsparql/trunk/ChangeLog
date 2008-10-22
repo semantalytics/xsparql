@@ -1,3 +1,10 @@
+2008-10-22  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* paper/eswc2008.tex: only display the changed grammar rules. 
+	update the paper to state that the rewriting uses variables and
+	other names beginning with '_'
+	
+
 2008-10-21  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* software/xsparqlow/xsparql/lifrewriter.py: use rewriting
