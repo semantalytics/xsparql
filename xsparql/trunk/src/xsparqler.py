@@ -30,7 +30,11 @@ import sys
 
 # our xsparql grammar
 import xsparql.grammar
+import xsparql.lowrewriter
 
+
+def usage(script):
+    return "usage: " + script + " [OPTIONS] queryfile\n"
 
 def main(argv=None):
     '''parse stdin and output the possibly rewritten XSPARQL query'''
@@ -38,7 +42,24 @@ def main(argv=None):
     if argv is None:
 	argv = sys.argv
 
-	f = open( argv[1], 'r' )
+    file = ''
+    i = 1
+    while i < len(argv) :
+        if argv[i] == "--endpoint":
+            xsparql.lowrewriter.sparql_endpoint = argv[i+1]
+            i+= 1
+        else:
+            file = argv[i]
+
+        i+= 1
+    
+
+    if file == '':
+        sys.stderr.write(usage(argv[0]))
+        sys.exit(1)
+
+
+    f = open( file, 'r' )
 
     s = f.readlines()
     s = ' '.join(s)
@@ -54,3 +75,4 @@ def main(argv=None):
 
 if __name__ == "__main__":
     sys.exit(main())
+
