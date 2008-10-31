@@ -23,7 +23,7 @@ function test_file () {
 	continue
     fi
 
-    $XSPARQL  <  $1 > $TMPFILE
+    $XSPARQL $1 > $TMPFILE
 
 #	if [ $? -eq 0 ] && cmp -s $TMPFILE $RESULT
     if [ $? -eq 0 ] && diff -q --ignore-all-space $TMPFILE $RESULT &> /dev/null
