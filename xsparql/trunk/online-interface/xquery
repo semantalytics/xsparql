@@ -1,2 +1,0 @@
-/opt/SDK/jdk/bin/java -cp /home/axepol/saxon/saxon9.jar net.sf.saxon.Query $1 |sed -e s/\<\?xml.*\?\>//
-
