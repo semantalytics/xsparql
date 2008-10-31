@@ -1,3 +1,17 @@
+2008-10-31  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/xsparqlrewrite: changed to send the file as an
+	argument instead of redirecting.
+
+	* examples/run_tests.sh: changed to send the file as an argument
+	instead of redirecting.
+
+	* src/xsparqler.py (main): Take filename as an argument instead of
+	stdin.  Changed to work on Windows machines.
+
+	* src/setup.py: xsparql depends on ply.  Will make it download on
+	install of the .egg package if it is not available.
+
 2008-10-23  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* paper/eswc2008.tex (): update rewriting rules to new rewriting $_

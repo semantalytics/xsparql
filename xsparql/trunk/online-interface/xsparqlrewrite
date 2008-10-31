@@ -27,7 +27,7 @@ fi
 # RESTMP=`mktemp -t xsparql_result_XX`
 RESTMP=$FILE.out
 
-cat $FILE | xsparqler.py > $RESTMP
+xsparqler.py $FILE > $RESTMP
 
 RETCODE=$?
 

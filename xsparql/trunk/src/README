@@ -1,0 +1,51 @@
+XSPARQL Lowering README -*- org -*-
+
+Copyright (C) 2007   Thomas Krennwallner <tkren@kr.tuwien.ac.at>
+
+xsparqlow is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+xsparqlow is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with xsparqlow.  If not, see <http://www.gnu.org/licenses/>.
+
+See the file COPYING for a complete copy of the GPL.
+
+* Prerequisite
+
+** Python
+You need Python >= 2.4 [[http://www.python.org/]]
+
+** Python Lex-Yacc
+[[http://www.dabeaz.com/ply/]]
+
+** XQuery engine
+E.g., XQilla [[http://xqilla.sourceforge.net/]], or Saxon
+[[http://saxon.sourceforge.net/]]
+
+** SPARQL Endpoint
+E.g., Joseki [[http://www.joseki.org/]]
+
+* Installing
+
+Invoke the following command to install xsparqlow:
+
+  $ python setup.py install
+
+See also [[http://docs.python.org/inst/]].
+
+* Running
+
+xsparqlow.py is a rewriter for XSPARQL Lowering to XQuery. You can
+transform an XSPARQL file to an XQuery file using the following
+command:
+
+  $ cat example.xsparql | xsparqlow.py > out.xquery
+
+Run out.xquery using your favorite XQuery engine.
