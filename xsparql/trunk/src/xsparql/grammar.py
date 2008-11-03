@@ -1821,6 +1821,11 @@ def rewrite(s):
 
     try:
 	parser = get_parser()
+        
+        # no query is given
+        if s == '':
+            sys.stderr.write('Error: empty query file\n')
+            sys.exit(1)
 
 	# parse s, and get rewritten string back
 	result = parser.parse(s)
