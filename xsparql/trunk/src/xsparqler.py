@@ -32,18 +32,10 @@ import sys
 import xsparql.grammar
 import xsparql.lowrewriter
 
-
-def usage(script):
-    return "usage: " + script + " [OPTIONS] queryfile\n"
-
-def main(argv=None):
-    '''parse stdin and output the possibly rewritten XSPARQL query'''
-
-    if argv is None:
-	argv = sys.argv
-
+def parse_params(argv):
     file = ''
     i = 1
+    
     while i < len(argv) :
         if argv[i] == "--endpoint":
             xsparql.lowrewriter.sparql_endpoint = argv[i+1]
@@ -52,14 +44,32 @@ def main(argv=None):
             file = argv[i]
 
         i+= 1
-    
 
+    # check if the file was specified 
     if file == '':
         sys.stderr.write(usage(argv[0]))
         sys.exit(1)
 
+    return file
 
-    f = open( file, 'r' )
+
+def usage(script):
+    return "Usage: " + script + " [OPTIONS] queryfile\n"
+
+def main(argv=None):
+    '''parse stdin and output the possibly rewritten XSPARQL query'''
+
+    if argv is None:
+	argv = sys.argv
+
+    file = parse_params(argv)
+
+    # read the specified file, check if it exists!
+    try:
+        f = open( file, 'r' )
+    except IOError:
+        sys.stderr.write('Error: query file not found!\n')
+        sys.exit(1)
 
     s = f.readlines()
     s = ' '.join(s)
