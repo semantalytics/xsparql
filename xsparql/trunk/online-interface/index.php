@@ -42,7 +42,7 @@
         $directories_array = array();
 
         while ($file = $directory->read())
-            if (is_dir($path.$file) && ($file != ".") && ($file != "..") && ($file != "CVS"))
+            if (is_dir($path.$file) && ($file != ".") && ($file != "..") && ($file != "CVS") && ($file != ".svn"))
                 $directories_array[] = $file;
 
         sort($directories_array);
