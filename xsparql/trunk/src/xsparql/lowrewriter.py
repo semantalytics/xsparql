@@ -397,6 +397,6 @@ def build_filter(filterpattern):
             else:
                 res += e
         else:                   # append the value
-            res += e
+            res += e.replace("\"", "\"\"")
 
     return res

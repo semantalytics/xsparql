@@ -6,6 +6,7 @@
 
 	* src/xsparql/lowrewriter.py (build_filter): added a handler for
 	the filter expressions.
+	(build_filter): escape the double quotes in the rewriting
 
 	* src/xsparql/grammar.py (p_groupGraphPattern): added filter expressions.
 
