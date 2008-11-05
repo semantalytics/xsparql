@@ -128,7 +128,20 @@ reserved = {
    'schema-element' : 'SCHEMAELEMENT',
    'document' : 'DOCUMENT',
    'named' : 'NAMED',
-#   'optional' : 'OPTIONAL'
+#   'optional' : 'OPTIONAL',
+   'filter' : 'FILTER',
+   'str': 'STR',
+   'lang' : 'LANG',
+   'langmatches' : 'LANGMATCHES',
+   'datatype' : 'DATATYPE',
+   'bound' : 'BOUND',
+   'isIRI' : 'isIRI',
+   'isURI' : 'isURI',
+   'isBLANK' : 'isBLANK',
+   'isLITERAL' : 'isLITERAL',
+   'regex' : 'REGEX',
+   'true': 'TRUE',
+   'false' : 'FALSE'
 }
 
 
@@ -138,7 +151,8 @@ tokens = [
     'CARROT', 'COLON', 'COMMA', 'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON',
     'STAR', 'DOTDOT', 'SLASHSLASH','LESSTHAN', 'GREATERTHAN',  'PLUS', 'MINUS', 'UNIONSYMBOL', 'QUESTIONMARK',
     'LESSTHANLESSTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'EQUALS', 'COLONCOLON',
-    'STAR_COLON_NCNAME', 'NCNAME_COLON_STAR', 'BNODE', 'BNODE_CONSTRUCT', 'PREFIXED_NAME'
+    'STAR_COLON_NCNAME', 'NCNAME_COLON_STAR', 'BNODE', 'BNODE_CONSTRUCT', 'PREFIXED_NAME',
+    'ORSYMBOL', 'ANDSYMBOL', 'NOT'
     ] + reserved.values()
 
 
@@ -285,11 +299,14 @@ t_INITIAL_pattern_iri_GREATERTHAN = r'>'
 t_INITIAL_pattern_iri_PLUS = r'\+'
 t_INITIAL_pattern_iri_MINUS = r'\-'
 t_INITIAL_pattern_iri_UNIONSYMBOL = r'\|'
+t_INITIAL_pattern_iri_ANDSYMBOL = r'&&'
+t_INITIAL_pattern_iri_ORSYMBOL = r'\|\|'
 t_INITIAL_pattern_iri_QUESTIONMARK = r'\?'
 t_INITIAL_pattern_iri_LESSTHANLESSTHAN = r'\<\<'
 t_INITIAL_pattern_iri_GREATERTHANEQUALS = r'\>\='
 t_INITIAL_pattern_iri_LESSTHANEQUALS = r'\<\='
 t_INITIAL_pattern_iri_HAFENEQUALS = r'\!\='
+t_INITIAL_pattern_iri_NOT = r'\!'
 
 
 
@@ -582,10 +599,10 @@ def p_exprSingle(p):
 ## ------------------------------ constructQuery / SPARQL
 
 def p_constructQuery(p):
-    '''constructQuery : CONSTRUCT constructTemplate datasetClauses whereSPARQLClause solutionmodifier'''
+    '''constructQuery : CONSTRUCT constructTemplate datasetClauses WHERE groupGraphPattern solutionmodifier'''
     global nsFlag
     nsFlag = True
-    p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[4], p[5]) ]), [], [])
+    p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[5][0], p[6], p[5][1])]), [], [])
 
 
 def p_datasetClauses(p): # list of (from, iri) tuples
@@ -606,10 +623,6 @@ def p_datasetClause(p):
     elif len(p) == 3: # from
 	p[0] = (p[1], p[2])
 
-
-def p_whereSPARQLClause(p):
-    '''whereSPARQLClause : WHERE whereTemplate'''
-    p[0] = p[2]
 
 
 ## ---------------------------------------------------- ifExpr
@@ -676,13 +689,13 @@ def p_forletClause2(p):
 
 # 8 shift/reduce
 
-#                       | FOR sparqlvars datasetClauses  WHERE whereTemplate letClause solutionmodifier
+#                       | FOR sparqlvars datasetClauses  WHERE groupGraphPattern letClause solutionmodifier
 def p_sparqlForClause(p):
-    '''sparqlForClause : FOR sparqlvars datasetClauses WHERE whereTemplate solutionmodifier'''
+    '''sparqlForClause : FOR sparqlvars datasetClauses WHERE groupGraphPattern solutionmodifier'''
     if len(p) == 7:
-	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[6]) ]), p[2][1], p[2][2] )
+	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5][0], p[6], p[5][1] )]), p[2][1], p[2][2] )
     else:
-	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5], p[7]) ])+' '+str(p[6][0])+'  \n  ', p[2][1], p[2][2] )
+	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5][0], p[7]), p[5][1] ])+' '+str(p[6][0])+'  \n  ', p[2][1], p[2][2] )
 
 
 
@@ -1649,9 +1662,163 @@ def p_rdfliteral(p):
 
 ## ----------------------------------------------------------
 
-def p_whereTemplate(p):
-    '''whereTemplate : LCURLY constructTriples_where RCURLY'''
-    p[0] = p[2]
+def p_groupGraphPattern(p):
+    '''groupGraphPattern : LCURLY constructTriples_where filter_opt RCURLY'''
+    p[0] = [ p[2], p[3] ]
+
+
+# ----------------------------------- FILTERs 
+
+def p_filter_opt(p):
+    '''filter_opt : FILTER brackettedExpression
+                  | FILTER builtInCall
+                  | FILTER functionCall 
+                  | empty'''
+    p[0] = p[1:]
+
+def p_brackettedExpression(p):
+    '''brackettedExpression : LPAR expression RPAR'''
+    p[0] = p[1:]
+
+
+def p_builtInCall(p):
+    '''builtInCall : STR LPAR expression RPAR
+                   | LANG LPAR expression RPAR
+                   | LANGMATCHES LPAR expression COMMA expression RPAR 
+                   | DATATYPE LPAR expression RPAR 
+                   | BOUND LPAR VAR RPAR 
+                   | isIRI LPAR expression RPAR 
+                   | isURI LPAR expression RPAR 
+                   | isBLANK LPAR expression RPAR 
+                   | isLITERAL LPAR expression RPAR 
+                   | RegexExpression'''
+    p[0] = p[1:]
+
+
+def p_expression(p):
+    '''expression : ConditionalOrExpression'''
+    p[0] = p[1:]
+
+def p_ConditionalOrExpression(p):
+    '''ConditionalOrExpression : ConditionalAndExpression ConditionalOrExpression_star'''
+    p[0] = p[1:]
+
+def p_ConditionalOrExpression_star(p):
+    '''ConditionalOrExpression_star : ORSYMBOL ConditionalAndExpression ConditionalOrExpression_star
+                                    | empty'''
+    p[0] = p[1:]
+
+def p_ConditionalAndExpression(p):
+    '''ConditionalAndExpression : ValueLogical ConditionalAndExpression_star'''
+    p[0] = p[1:]
+
+
+def p_ConditionalAndExpression_star(p):
+    '''ConditionalAndExpression_star : ANDSYMBOL ValueLogical ConditionalAndExpression_star
+                                     | empty'''
+    p[0] = p[1:]
+
+def p_ValueLogical(p):
+    '''ValueLogical : RelationalExpression'''
+    p[0] = p[1:]
+
+def p_RelationalExpression(p):
+    '''RelationalExpression : NumericExpression ComparisionExpression'''
+    p[0] = p[1:]
+
+
+def p_ComparisionExpression(p):
+    '''ComparisionExpression : EQUALS NumericExpression 
+                             | HAFENEQUALS NumericExpression 
+                             | LESSTHAN NumericExpression 
+                             | GREATERTHAN NumericExpression 
+                             | LESSTHANEQUALS NumericExpression 
+                             | GREATERTHANEQUALS NumericExpression 
+                             | empty'''
+    p[0] = p[1:]
+
+def p_NumericExpression(p):
+    '''NumericExpression : AdditiveExpression'''
+    p[0] = p[1:]
+
+def p_AdditiveExpression(p):
+    '''AdditiveExpression : MultiplicativeExpression AdditiveExpression_star'''
+    p[0] = p[1:]
+
+def p_AdditiveExpression_star(p):
+    '''AdditiveExpression_star : PLUS MultiplicativeExpression AdditiveExpression_star
+                               | MINUS MultiplicativeExpression AdditiveExpression_star
+                               | empty'''
+    p[0] = p[1:]
+
+def p_MultiplicativeExpression(p):
+    '''MultiplicativeExpression : UnaryExpression MultiplicativeExpression_star'''
+    p[0] = p[1:]
+
+def p_MultiplicativeExpression_star(p):
+    '''MultiplicativeExpression_star : STAR UnaryExpression MultiplicativeExpression_star
+                                     | SLASH UnaryExpression MultiplicativeExpression_star
+                                     | empty'''
+    p[0] = p[1:]
+
+def p_UnaryExpression(p):
+    '''UnaryExpression : NOT PrimaryExpression 
+                       | PLUS PrimaryExpression 
+                       | MINUS PrimaryExpression 
+                       | PrimaryExpression'''
+    p[0] = p[1:]
+
+
+def p_PrimaryExpression(p):
+    '''PrimaryExpression : brackettedExpression 
+                         | builtInCall 
+                         | IRIrefOrFunction 
+                         | rdfliteral 
+                         | BooleanLiteral 
+                         | BNODE
+                         | LBRACKET RBRACKET 
+                         | VAR'''
+    p[0] = p[1:]
+
+
+def p_RegexExpression(p):
+    '''RegexExpression	: REGEX LPAR expression COMMA expression expression_opt RPAR'''
+    p[0] = p[1:]
+
+def p_expression_opt(p):
+    '''expression_opt : COMMA  expression
+                      | empty'''
+    p[0] = p[1:]
+    
+
+def p_BooleanLiteral(p):
+    '''BooleanLiteral : TRUE
+                      | FALSE'''
+    p[0] = p[1]
+
+def p_IRIrefOrFunction(p):
+    '''IRIrefOrFunction : IRIref Arglist'''
+    p[0] = p[1:]
+
+def p_IRIref(p):
+    '''IRIref : IRIREF
+              | qname'''
+    p[0] = p[1]
+
+#  NIL |
+def p_Arglist(p):
+    '''Arglist : LPAR expression expression_star RPAR '''
+    p[0] = p[1:]
+
+def p_expression_star(p):
+    '''expression_star : COMMA expression expression_star
+                       | empty'''
+    p[0] = p[1:]
+
+
+
+# ----------------------------------- end FILTERs 
+
 
 def p_constructTriples_where(p):
     '''constructTriples_where : lifttriples_where DOT constructTriples_where
@@ -1719,7 +1886,6 @@ def p_verb_where(p):
 		  | A
 		  | enclosedExpr'''
     p[0] = p[1]
-
 
 
 

@@ -27,30 +27,57 @@
 
 
 import sys
+import getopt
 
 # our xsparql grammar
 import xsparql.grammar
 import xsparql.lowrewriter
 
 def parse_params(argv):
-    file = ''
-    i = 1
-    
-    while i < len(argv) :
-        if argv[i] == "--endpoint":
-            xsparql.lowrewriter.sparql_endpoint = argv[i+1]
-            i+= 1
+    try:
+        opts, args = getopt.getopt(argv[1:], 'he:', ['help', 'endpoint='])
+    except getopt.GetoptError, err:
+        sys.stderr.write(str(err) + "\n" + usage(argv[0]))
+        sys.exit(2)
+
+    # defaults
+    xsparql.lowrewriter.sparql_endpoint = 'http://localhost:2020/sparql?query='
+
+    for opt, arg in opts:
+        if opt in ('-h','--help'):
+            print usage(argv[0])
+            sys.exit()
+        elif opt in ('-e','--endpoint'):
+            xsparql.lowrewriter.sparql_endpoint = arg
         else:
-            file = argv[i]
+            assert False, "unhandled option"
 
-        i+= 1
-
-    # check if the file was specified 
-    if file == '':
-        sys.stderr.write(usage(argv[0]))
-        sys.exit(1)
+    try:
+        file = args[0]
+    except Exception, err:
+        sys.stderr.write("The queryfile must be specified\n" + usage(argv[0]))
+        sys.exit(2)
 
     return file
+
+
+# read the specified file, check if it exists! or from stdin
+def read_query(file):
+
+    if file == '-':
+        s = ' '.join(sys.stdin.readlines())
+    else:
+        try:
+            f = open( file, 'r' )
+        except IOError:
+            sys.stderr.write('Error: query file not found!\n')
+            sys.exit(1)
+
+        s = f.readlines()
+        s = ' '.join(s)
+        f.close()
+
+    return s
 
 
 def usage(script):
@@ -64,19 +91,9 @@ def main(argv=None):
 
     file = parse_params(argv)
 
-    # read the specified file, check if it exists!
-    try:
-        f = open( file, 'r' )
-    except IOError:
-        sys.stderr.write('Error: query file not found!\n')
-        sys.exit(1)
+    query = read_query(file)
 
-    s = f.readlines()
-    s = ' '.join(s)
-    f.close()
-#    s = ' '.join(sys.stdin.readlines())
-
-    output = xsparql.grammar.rewrite(s)
+    output = xsparql.grammar.rewrite(query)
 
     sys.stdout.write(output)
 

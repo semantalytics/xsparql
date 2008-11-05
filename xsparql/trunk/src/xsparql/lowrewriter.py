@@ -118,7 +118,7 @@ def build_where(typ, pattern):
 
 
 # @todo ground input variables? how?
-def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier):
+def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionmodifier, filterpattern):
     global scoped_variables
     global scopeVar_count
 
@@ -153,6 +153,8 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
     for s, polist in graphpattern:
 	query +=  build_subject(s, False) + build_predicate(polist, False) + '. '
 
+    query += build_filter(filterpattern)
+
     # build the SOLUTION MODIFIERs
     query += '} ' + solutionmodifier
 
@@ -180,22 +182,20 @@ def build_aux_variables(i, vars):
 
 
 
-# @todo make this configurizable
-sparql_endpoint = 'http://localhost:2020/sparql?query='
 
 namespaces = []
 scoped_variables = []
 
 _forcounter = 0
 
-def buildConstruct(constGraphpattern, from_iri, graphpattern, solutionmodifier):
+def buildConstruct(constGraphpattern, from_iri, graphpattern, solutionmodifier, filterpattern):
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
 
     find_vars(copy.deepcopy(graphpattern))
 
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
-			     variables, from_iri, graphpattern, solutionmodifier)
+			     variables, from_iri, graphpattern, solutionmodifier, filterpattern)
     yield build_for_loop(_forcounter, variables)
     yield build_aux_variables(_forcounter, variables)
     yield graphOutput(constGraphpattern)
@@ -214,7 +214,7 @@ def graphOutput(constGraphpattern):
 
 
 # generator function, keeps track of incrementing the for-counter
-def build(vars, from_iri, graphpattern, solutionmodifier):
+def build(vars, from_iri, graphpattern, solutionmodifier, filterpattern):
 
     global _forcounter, sparql_endpoint, namespaces
     _forcounter += 1
@@ -224,7 +224,7 @@ def build(vars, from_iri, graphpattern, solutionmodifier):
 	vars = variables
 
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
-			     vars, from_iri, graphpattern, solutionmodifier)
+			     vars, from_iri, graphpattern, solutionmodifier, filterpattern)
     yield build_for_loop(_forcounter, vars)
     yield build_aux_variables(_forcounter, vars)
 
@@ -383,3 +383,20 @@ def listSearch(list_val):
 def getVar():
     global variables
     return variables
+
+
+def build_filter(filterpattern):
+    res = ''
+
+    for e in filterpattern:
+        if isinstance(e, list):  # if it's a list append the flatted list
+            res += build_filter(e)
+        elif len(e) > 0 and e[0] == '$':        # if its a var check it it is already instanciated
+            if(e in grammar.letVars):
+                res += '   ", '+ e + ', "  '
+            else:
+                res += e
+        else:                   # append the value
+            res += e
+
+    return res

@@ -1,3 +1,14 @@
+2008-11-05  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparqler.py (main): applied stephane's patch to command
+	line processing.
+	Enabled reading query from stdin by using '-' as a filename
+
+	* src/xsparql/lowrewriter.py (build_filter): added a handler for
+	the filter expressions.
+
+	* src/xsparql/grammar.py (p_groupGraphPattern): added filter expressions.
+
 2008-11-03  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparqler.py (usage): Small code clean up: added a function
