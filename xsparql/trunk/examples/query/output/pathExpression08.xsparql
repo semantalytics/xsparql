@@ -11,7 +11,7 @@ declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 @", $_NS1, ".", "
 " ),
 
-  for $person at $_person_Pos  in doc("http://www.polleres.net/xsparql/data/relations.xml"   )//person  , 
+  for $person at $_person_Pos  in doc("http://xsparql.deri.org/data/relations.xml"   )//person  , 
  $nameA at $_nameA_Pos  in $person/@name  , 
  $nameB at $_nameB_Pos  in $person/knows  
 let $x  := "foaf:name"  

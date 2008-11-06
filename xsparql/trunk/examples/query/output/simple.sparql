@@ -12,7 +12,7 @@ declare variable $_NS1 := "prefix  :  &#60;http://www.example.org&#62;";
 " ),
 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1, "
-select $s $p $x from <http://www.polleres.net/xsparql/data/alice.ttl>  where {    $s     $p     $x   . } ")))
+select $s $p $x from <http://xsparql.deri.org/data/alice.ttl>  where {    $s     $p     $x   . } ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_s_Node := ($_aux_result1/_sparql_result:binding[@name = "s"])
 	let $_s_NodeType := name($_s_Node/*)

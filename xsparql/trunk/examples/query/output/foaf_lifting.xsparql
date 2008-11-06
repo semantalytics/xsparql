@@ -11,7 +11,7 @@ declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 @", $_NS1, ".", "
 " ),
 
-let $doc  := doc("http://www.polleres.net/xsparql/data/relations.xml"   )  
+let $doc  := doc("http://xsparql.deri.org/data/relations.xml"   )  
 
 let $persons  := $doc//*[@name  or ../knows ]  
  return 

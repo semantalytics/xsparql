@@ -3,6 +3,6 @@
 
 prefix : <http://www.example.org>
 construct {$x :p [$x _:a] }
-from <http://www.polleres.net/xsparql/data/alice.ttl>
+from <http://xsparql.deri.org/data/alice.ttl>
 where {$s $p $x}
 

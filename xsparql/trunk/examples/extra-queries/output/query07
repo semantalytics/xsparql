@@ -18,7 +18,7 @@ declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 let $Y  := "&quot; ;blabla@blabla.xom&quot; ; foaf:knows _:b "  
 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2, "
-select $X $FName from <http://www.polleres.net/xsparql/data/vCard.rdf>  where {    $X   vc:FN    $FName   . } ")))
+select $X $FName from <http://xsparql.deri.org/data/vCard.rdf>  where {    $X   vc:FN    $FName   . } ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_X_Node := ($_aux_result1/_sparql_result:binding[@name = "X"])
 	let $_X_NodeType := name($_X_Node/*)
