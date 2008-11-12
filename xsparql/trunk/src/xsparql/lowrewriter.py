@@ -260,16 +260,25 @@ def find_vars(p):
 	variables.remove(i)
 
 
+# check this: it puts also the vars from the filter
 def find_vars_filter(filter):
 
-    if isinstance(filter, list) and filter[0] == 'graph':
+    if len(filter) > 0 and isinstance(filter, list) and filter[0] == 'graph':
         if filter[1][0] == '$':
             global variables
-            variables += [ filter[1] ]
+            if not filter[1] in variables:
+                variables += [ filter[1] ]
 
         find_vars(filter[3])
+        find_vars_filter(filter[3:])
     elif isinstance(filter, list) or isinstance(filter, tuple):
-        find_vars_filter(filter[0])
+        for e in filter:
+            find_vars_filter(e)
+    else:
+        if len(filter) > 0 and filter[0] == '$':
+            global variables
+            if not filter in variables:
+                variables += [ filter ]
 
 
 
