@@ -193,6 +193,7 @@ def buildConstruct(constGraphpattern, from_iri, graphpattern, solutionmodifier, 
     _forcounter += 1
 
     find_vars(copy.deepcopy(graphpattern))
+    find_vars_filter(copy.deepcopy(filterpattern))
 
     yield build_sparql_query(_forcounter, sparql_endpoint, namespaces,
 			     variables, from_iri, graphpattern, solutionmodifier, filterpattern)
@@ -257,6 +258,19 @@ def find_vars(p):
 
     for i in var:
 	variables.remove(i)
+
+
+def find_vars_filter(filter):
+
+    if isinstance(filter, list) and filter[0] == 'graph':
+        if filter[1][0] == '$':
+            global variables
+            variables += [ filter[1] ]
+
+        find_vars(filter[3])
+    elif isinstance(filter, list) or isinstance(filter, tuple):
+        find_vars_filter(filter[0])
+
 
 
 
@@ -389,13 +403,13 @@ def build_filter(filterpattern):
     res = ''
 
     for e in filterpattern:
-        if isinstance(e, list):  # if it's a list append the flatted list
+        if isinstance(e, list) or isinstance(e, tuple):  # if it's a list append the flatted list
             res += build_filter(e)
         elif len(e) > 0 and e[0] == '$':        # if its a var check it it is already instanciated
             if(e in grammar.letVars):
                 res += '   ", '+ e + ', "  '
             else:
-                res += e
+                res += ' ' + e + ' '
         else:                   # append the value
             res += e.replace("\"", "\"\"")
 

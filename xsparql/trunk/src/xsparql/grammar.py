@@ -141,7 +141,8 @@ reserved = {
    'isLITERAL' : 'isLITERAL',
    'regex' : 'REGEX',
    'true': 'TRUE',
-   'false' : 'FALSE'
+   'false' : 'FALSE',
+   'graph': 'GRAPH'
 }
 
 
@@ -1662,18 +1663,49 @@ def p_rdfliteral(p):
 
 ## ----------------------------------------------------------
 
+
+# '{' TriplesBlock? ( ( GraphPatternNotTriples | Filter ) '.'? TriplesBlock? )* '}'
 def p_groupGraphPattern(p):
-    '''groupGraphPattern : LCURLY constructTriples_where filter_opt RCURLY'''
+    '''groupGraphPattern : LCURLY constructTriples_where groupGraphPattern_star RCURLY'''
     p[0] = [ p[2], p[3] ]
+
+def p_groupGraphPattern_star(p):
+    '''groupGraphPattern_star : GraphPatternNotTriplesOrFilter  groupGraphPattern_star
+                              | empty'''
+    p[0] = p[1:]
+
+
+def p_GraphPatternNotTriplesOrFilter(p):
+    '''GraphPatternNotTriplesOrFilter : Filter DOT constructTriples_where
+                                      | GraphPatternNotTriples DOT constructTriples_where
+                                      | Filter constructTriples_where
+                                      | GraphPatternNotTriples constructTriples_where'''
+    p[0] = p[1:]
+
+
+def p_GraphPatternNotTriples(p):
+    '''GraphPatternNotTriples : GraphGraphPattern'''
+    p[0] = p[1]
+
+
+def p_GraphGraphPattern(p):
+    '''GraphGraphPattern : GRAPH VarOrIRIref groupGraphPattern'''
+    p[0] = p[1:3] + ['{'] + p[3] + ['}']  # stupid hack
+
+
+def p_VarOrIRIref(p):
+    ''' VarOrIRIref : VAR
+                    | IRIref'''
+    p[0] = p[1]
+
 
 
 # ----------------------------------- FILTERs 
 
-def p_filter_opt(p):
-    '''filter_opt : FILTER brackettedExpression
-                  | FILTER builtInCall
-                  | FILTER functionCall 
-                  | empty'''
+def p_Filter(p):
+    '''Filter : FILTER brackettedExpression
+              | FILTER builtInCall
+              | FILTER functionCall'''
     p[0] = p[1:]
 
 def p_brackettedExpression(p):
@@ -1822,8 +1854,8 @@ def p_expression_star(p):
 
 def p_constructTriples_where(p):
     '''constructTriples_where : lifttriples_where DOT constructTriples_where
-			| lifttriples_where
-			| empty'''
+                              | lifttriples_where
+                              | empty'''
     if len(p) == 4:
 	p[0] = [ p[1] ] +  p[3]
     elif len(p) == 2 and len(p[1]):

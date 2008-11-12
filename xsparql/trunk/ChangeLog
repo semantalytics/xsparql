@@ -1,3 +1,15 @@
+2008-11-12  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparqler.py (parse_params): changed the parsing method of
+	the parameters to allow options to be specified after the
+	arguments.
+
+	* src/xsparql/grammar.py (p_constructTriples_where): added GRAPH
+	expressions.
+
+	* src/xsparql/lowrewriter.py (build_filter): added parsing of
+	GRAPH expressions.
+
 2008-11-05  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparqler.py (main): applied stephane's patch to command

@@ -35,7 +35,7 @@ import xsparql.lowrewriter
 
 def parse_params(argv):
     try:
-        opts, args = getopt.getopt(argv[1:], 'he:', ['help', 'endpoint='])
+        opts, args = getopt.gnu_getopt(argv[1:], 'he:', ['help', 'endpoint='])
     except getopt.GetoptError, err:
         sys.stderr.write(str(err) + "\n" + usage(argv[0]))
         sys.exit(2)
