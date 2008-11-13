@@ -1,3 +1,8 @@
+2008-11-13  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py: replaced XQuery NCName grammar
+	production with SPARQL PN_PREFIX 
+
 2008-11-12  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparqler.py (parse_params): changed the parsing method of
@@ -9,6 +14,8 @@
 
 	* src/xsparql/lowrewriter.py (build_filter): added parsing of
 	GRAPH expressions.
+	(find_vars_filter): check all the filterexpression for new
+	variables
 
 2008-11-05  Nuno Lopes  <nuno.lopes@deri.org>
 

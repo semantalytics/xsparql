@@ -152,7 +152,8 @@ tokens = [
     'CARROT', 'COLON', 'COMMA', 'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON',
     'STAR', 'DOTDOT', 'SLASHSLASH','LESSTHAN', 'GREATERTHAN',  'PLUS', 'MINUS', 'UNIONSYMBOL', 'QUESTIONMARK',
     'LESSTHANLESSTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'EQUALS', 'COLONCOLON',
-    'STAR_COLON_NCNAME', 'NCNAME_COLON_STAR', 'BNODE', 'BNODE_CONSTRUCT', 'PREFIXED_NAME',
+    'STAR_COLON_NCNAME', 'NCNAME_COLON_STAR', 'BNODE', 'BNODE_CONSTRUCT', 
+    'PREFIXED_NAME', 'UNPREFIXED_NAME',
     'ORSYMBOL', 'ANDSYMBOL', 'NOT'
     ] + reserved.values()
 
@@ -178,11 +179,12 @@ from ply.lex import TOKEN
 # [5]   NCNameChar        ::=   NameChar - ':'
 # [6]   NCNameStartChar   ::=   Letter | '_'
 
-# remove leading _
-# NCNameStartChar   =   r'([A-Za-z]|_)'
-NCNameStartChar   =   r'([A-Za-z])'
-NCNameChar        =   r'([A-Za-z]|[0-9]|\.|-|_)'   # @todo: allow dots?! should be fine.
-NCName            =   r'('+NCNameStartChar+')('+NCNameChar+')*'
+## NCName will be replaced with SPARQL's PN_PREFIX
+# # remove leading _
+# # NCNameStartChar   =   r'([A-Za-z]|_)'
+# NCNameStartChar   =   r'([A-Za-z])'
+# NCNameChar        =   r'([A-Za-z]|[0-9]|\.|-|_)'   # @todo: allow dots?! should be fine.
+# NCName            =   r'('+NCNameStartChar+')('+NCNameChar+')*'
 
 # http://www.w3.org/TR/REC-xml/#NT-NameChar
 # [4]   NameChar   ::=    Letter | Digit | '.' | '-' | '_' | ':' | CombiningChar | Extender
@@ -202,19 +204,22 @@ NCName            =   r'('+NCNameStartChar+')('+NCNameChar+')*'
 # [100]      PN_LOCAL         ::=       ( PN_CHARS_U | [0-9] ) ((PN_CHARS|'.')* PN_CHARS)?
 
 
-PN_CHARS_BASE    =       r'([A-Za-z])'
+PN_CHARS_BASE    =       r'([A-Za-z])'    #  = NCNameStartChar
 # remove leading _
 PN_CHARS_U       =       r'('+PN_CHARS_BASE+'|_)'
 # PN_CHARS_U       =       r'('+PN_CHARS_BASE+')'
 # VARNAME          =       r'('+PN_CHARS_U+'|[0-9])('+PN_CHARS_U+'|[0-9])*'
-PN_CHARS         =       r'('+PN_CHARS_U+'|-|[0-9])'
-PN_PREFIX        =       r''+PN_CHARS_BASE+'(('+PN_CHARS+'|\.)*'+PN_CHARS+')?'
+PN_CHARS         =       r'('+PN_CHARS_U+'|-|[0-9])'  # = NCNameChar - '.'
+PN_PREFIX        =       r''+PN_CHARS_BASE+'(('+PN_CHARS+'|\.)*'+PN_CHARS+')?' # = NCName
 PN_LOCAL         =       r'(('+PN_CHARS_U+')|[0-9])(('+PN_CHARS+'|\.)*'+PN_CHARS+')?'
 
-PREFIXED_NAME = r'('+PN_PREFIX+')?:'+PN_LOCAL
+PREFIXED_NAME = r''+PN_PREFIX+':'+PN_LOCAL
+UNPREFIXED_NAME = r':'+PN_LOCAL
 
-bnode           =      r'_:(' + NCName + ')'
-bnode_construct =      r'_:(' + NCName + ')?\{'
+# bnode           =      r'_:(' + NCName + ')'
+# bnode_construct =      r'_:(' + NCName + ')?\{'
+bnode           =      r'_:(' + PN_PREFIX + ')'
+bnode_construct =      r'_:(' + PN_PREFIX + ')?\{'
 
 
 
@@ -230,9 +235,13 @@ def t_INITIAL_pattern_iri_BNODE(t):
 def t_INITIAL_pattern_iri_PREFIXED_NAME(t):
     return t
 
+@TOKEN(UNPREFIXED_NAME)
+def t_INITIAL_pattern_iri_UNPREFIXED_NAME(t):
+    return t
+
 
 # takes care of keywords and IRIs
-@TOKEN(NCName)
+@TOKEN(PN_PREFIX)
 def t_INITIAL_pattern_iri_NCNAME(t):
     # an NCNAME cannot start with a digit: http://www.w3.org/TR/REC-xml-names/#NT-NCName
     t.type = reserved.get(t.value,'NCNAME')
@@ -242,10 +251,10 @@ def t_INITIAL_pattern_iri_NCNAME(t):
 
 
 
-star_ncname =          r'\*( |\t)*:( |\t)*(' + NCName + ')'
-ncname_star =          r'('+NCName+')( |\t)*:( |\t)*\*'
-# ncname_colon =         r'(' + NCName + ')( |\t)*:'
-# ncname_2colon =        r'(' + NCName + ')::'
+# star_ncname =          r'\*( |\t)*:( |\t)*(' + NCName + ')'
+# ncname_star =          r'('+NCName+')( |\t)*:( |\t)*\*'
+star_ncname =          r'\*( |\t)*:( |\t)*(' + PN_PREFIX + ')'
+ncname_star =          r'('+PN_PREFIX+')( |\t)*:( |\t)*\*'
 
 @TOKEN(star_ncname)
 def t_INITIAL_pattern_iri_STAR_COLON_NCNAME(t):
@@ -835,8 +844,8 @@ def p_directConstructor(p):
 
 # [96]    DirElemConstructor    ::=    "<" QName DirAttributeList ("/>" | (">" DirElemContent* "</" QName S? ">"))
 def p_directElemConstructor(p):
-    '''directElemConstructor : LESSTHAN NCNAME directAttributeList SLASH GREATERTHAN
-			     | LESSTHAN NCNAME directAttributeList GREATERTHAN directElemContentProcessing LESSTHAN SLASH NCNAME GREATERTHAN'''
+    '''directElemConstructor : LESSTHAN qname directAttributeList SLASH GREATERTHAN
+			     | LESSTHAN qname directAttributeList GREATERTHAN directElemContentProcessing LESSTHAN SLASH qname GREATERTHAN'''
     p[0] = ''.join(p[1:])
 
 
@@ -1500,8 +1509,7 @@ def p_unorderedExpr(p):
 
 
 def p_functionCall(p):
-    '''functionCall : qname LPAR exprSingles RPAR
-		    | PREFIXED_NAME LPAR exprSingles RPAR'''
+    '''functionCall : qname LPAR exprSingles RPAR'''
     p[0] = ''.join(p[1:])
 
 
@@ -1924,7 +1932,8 @@ def p_verb_where(p):
 ## ----------------------------------------------------------
 
 def p_sparqlPrefixedName(p):
-    '''sparqlPrefixedName : PREFIXED_NAME'''
+    '''sparqlPrefixedName : PREFIXED_NAME
+                          | UNPREFIXED_NAME'''
     p[0] = p[1]
 
 
@@ -1941,13 +1950,14 @@ def p_unprefixedName(p):
     '''unprefixedName : localPart'''
     p[0] = ''.join(p[1:])
 
+#    '''prefixedName : prefix COLON localPart'''
 def p_prefixedName(p):
-    '''prefixedName : prefix COLON localPart'''
+    '''prefixedName : PREFIXED_NAME'''
     p[0] = ''.join(p[1:])
 
-def p_prefix(p):
-    '''prefix : NCNAME'''
-    p[0] = ''.join(p[1:])
+# def p_prefix(p):
+#     '''prefix : NCNAME'''
+#     p[0] = ''.join(p[1:])
 
 def p_localPart(p):
     '''localPart : NCNAME'''
