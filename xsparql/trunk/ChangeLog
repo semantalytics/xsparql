@@ -1,5 +1,8 @@
 2008-11-13  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* online-interface/examples/XSPARQL/06_simple2.xsparql: removed
+	redundant example
+
 	* src/xsparql/grammar.py: replaced XQuery NCName grammar
 	production with SPARQL PN_PREFIX 
 
