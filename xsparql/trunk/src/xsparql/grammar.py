@@ -433,27 +433,44 @@ letVars = []
 ## first come, first serve
 def p_mainModule(p):
     '''mainModule : prolog queryBody'''
-    p[0] = ''.join(p[1:])
+
+    prefix =  '\nimport module namespace _xsparql = "http://xsparql.deri.org/xsparql.xquery"\n'
+    prefix += 'at "http://xsparql.deri.org/xsparql.xquery";\n\n'
+    prefix += 'declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";\n\n'
+
+    p[0] = prefix + ''.join(p[1:])
 
 
 ## --------------------------------------------------------- prolog
 
 def p_prolog(p):
     '''prolog : xqueryNS prolog
-	      | sparqlNS prolog
+  	      | sparqlNS prolog
+              | xqueryFunction prolog
 	      | empty'''
     p[0] = '\n'.join(p[1:])
 
 
-def p_xqueryNS(p):
-    '''xqueryNS : DECLARE xqueryNSs SEMICOLON'''
+def p_xqueryFunction(p):
+    '''xqueryFunction : DECLARE FUNCTION qname LPAR paramList RPAR enclosedExpr SEMICOLON'''
     p[0] = ' '.join(p[1:])
 
+def p_paramList(p):
+    '''paramList : param COMMA paramList
+                 | param
+                 | empty'''
+    p[0] = ' '.join(p[1:])
 
-def p_xqueryNSs(p):
-    '''xqueryNSs : defaultNamespaceDecl
-		 | namespaceDecl
-		 | baseURIDecl'''
+def p_param(p):
+    '''param : VAR'''
+    p[0] = p[1]
+
+
+
+def p_xqueryNS(p):
+    '''xqueryNS : defaultNamespaceDecl SEMICOLON
+		| namespaceDecl SEMICOLON
+		| baseURIDecl SEMICOLON'''
     p[0] = ' '.join(p[1:])
 
 
@@ -511,7 +528,7 @@ def p_sbase(p):
 
 
 def p_defaultNamespaceDecl(p):
-    '''defaultNamespaceDecl :  DEFAULT defaultNamespaceDecls'''
+    '''defaultNamespaceDecl :  DECLARE DEFAULT defaultNamespaceDecls'''
     p[0] = ' '.join(p[1:])
 
 
@@ -532,7 +549,7 @@ def p_defaultNamespaceDecls(p):
 
 
 def p_namespaceDecl(p):
-    '''namespaceDecl : NAMESPACE NCNAME EQUALS QSTRING'''
+    '''namespaceDecl : DECLARE NAMESPACE NCNAME EQUALS QSTRING'''
     global namespaces
     global count
     global decl_var_ns
@@ -549,7 +566,7 @@ def p_namespaceDecl(p):
 
 
 def p_baseURIDecl(p):
-    '''baseURIDecl  : BASEURI QSTRING'''
+    '''baseURIDecl  : DECLARE BASEURI QSTRING'''
     global namespaces
     global count
     global decl_var_ns
@@ -570,16 +587,11 @@ def p_queryBody(p):
     '''queryBody : expr'''
     global nsFlag
 
-    prefix =  '\nimport module namespace _xsparql = "http://xsparql.deri.org/xsparql.xquery"\n'
-    prefix += 'at "http://xsparql.deri.org/xsparql.xquery";\n\n'
-    prefix += 'declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";\n\n'
-
-
     nsVars = lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)
     if nsVars != '' and nsFlag:
-	p[0] = prefix + decl_var_ns + '\n fn:concat( ' + nsVars + ', "\n" ),\n' + p[1]
+	p[0] = decl_var_ns + '\n fn:concat( ' + nsVars + ', "\n" ),\n' + p[1]
     else:
-	p[0] = prefix + decl_var_ns + p[1]
+	p[0] = decl_var_ns + p[1]
 
 
 ## ------------------------------ Expressions
@@ -1026,7 +1038,7 @@ def p_rangeExpress(p):
 		    | generalComp rangeExpr
 		    | nodeComp rangeExpr
 		    | empty'''
-    p[0] = ''.join(p[1:])
+    p[0] = ' '.join(p[1:])
 
 
 def p_valueComp(p):
