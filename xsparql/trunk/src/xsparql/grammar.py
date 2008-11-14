@@ -162,7 +162,7 @@ tokens = [
 states = [
    ('pattern','exclusive'),
    ('iri','inclusive'),
-   ('comments','exclusive')
+#   ('comments','exclusive')
 ]
 
 precedence = (
@@ -355,39 +355,43 @@ def t_iri_GREATERTHAN(t):
     t.lexer.begin('INITIAL')
 
 
-
-## ------------------------------ 2.6 Comments
-# http://www.w3.org/TR/xquery/#comments
-
-# Comment        ::=  "(:" (CommentContents | Comment)* ":)"
-# CommentContents        ::=  (Char+ - (Char* ('(:' | ':)') Char*))
-
-comment_level = 0
-
-# when it finds the begining of a comment switches to the 'comment'
-# state and adds the comment level by one
 def t_INITIAL_comments_SCOM(t):
-    r'\(:\ '
-    t.lexer.begin('comments')
-    global comment_level
-    comment_level += 1
+    r'\#.*'
     pass
 
-# END_COMMENT token ends the pattern state iff comment_level counter
-# gets 0
-def t_ANY_ECOM(t):
-    r'\ :\)'
-    global comment_level
-    comment_level -= 1
-    if comment_level == 0: t.lexer.begin('INITIAL')
-    pass
 
-# Ignored characters for 'comment' state
-t_comments_ignore = r".*"
+# ## ------------------------------ 2.6 Comments
+# # http://www.w3.org/TR/xquery/#comments
 
-# illegal characters will end up here
-def t_comments_error(t):
-    t.lexer.skip(1)
+# # Comment        ::=  "(:" (CommentContents | Comment)* ":)"
+# # CommentContents        ::=  (Char+ - (Char* ('(:' | ':)') Char*))
+
+# comment_level = 0
+
+# # when it finds the begining of a comment switches to the 'comment'
+# # state and adds the comment level by one
+# def t_INITIAL_comments_SCOM(t):
+#     r'#'
+#     t.lexer.begin('comments')
+#     global comment_level
+#     comment_level += 1
+#     pass
+
+# # END_COMMENT token ends the pattern state iff comment_level counter
+# # gets 0
+# def t_ANY_ECOM(t):
+#     r'\ :\)'
+#     global comment_level
+#     comment_level -= 1
+#     if comment_level == 0: t.lexer.begin('INITIAL')
+#     pass
+
+# # Ignored characters for 'comment' state
+# t_comments_ignore = r".*"
+
+# # illegal characters will end up here
+# def t_comments_error(t):
+#     t.lexer.skip(1)
 
 
 ## -------------
