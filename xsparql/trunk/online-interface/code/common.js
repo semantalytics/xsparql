@@ -2,6 +2,7 @@ function clearquery()
 {
     document.getElementById('query').value="";
     document.getElementById('URI').value="";
+    document.getElementById('endpoint').value="";
 
 }
 
@@ -40,6 +41,7 @@ function evalquery()
 
     var poststr = "query=" + escape(document.getElementById('query').value) +
                   "&URI=" + escape(document.getElementById('URI').value) +
+                  "&endpoint=" + escape(document.getElementById('endpoint').value) +
                   "&solver=" + solverToSet;
 
     // javascript 'escape' doesn't escape plus:

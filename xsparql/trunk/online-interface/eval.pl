@@ -22,13 +22,34 @@ my $headstr = '';
 my $error = '';
 my $resultlimit = 60000;
 
-$ENV{'PATH'} = '/usr/local/bin:/usr/bin:/bin:/opt/SDK/jdk/bin/:/home/axepol/public_html/xsparql:/home/axepol/public_html/xsparql';
+$ENV{'PATH'} = '/usr/local/bin:/usr/bin:/bin:/opt/SDK/jdk/bin/:/home/xsparql/xsparql';
 
 my $cgi = new CGI;
 
-my $query = $cgi->param('query');
+my $URI = $cgi->param('URI');
+
+my $query;
+
+if ($URI eq '') {
+    $query = $cgi->param('query');
+} else {
+    use LWP::Simple;
+    $query = get $URI;
+    die "Couldn't get $URI\n" unless defined $query;
+}
+
+
+
 
 my $solver = $cgi->param('solver');
+
+my $endpoint = $cgi->param('endpoint');
+
+if ($endpoint eq '') {
+    $endpoint ="";
+} else {
+    $endpoint = "-O \"--endpoint ".$endpoint.'" ';
+}
 
 my $solverexec = '';
 
@@ -39,17 +60,16 @@ switch ($solver)
 {
 case 'evaluate'
     {
-#      $solverexec = './xsparql ';
-      $solverexec = './xsparqlrewrite --eval';
+      $solverexec = './xsparqlrewrite --eval '.$endpoint;
       $headstr = 'Result:';
     }
 case 'rewrite'
     {
-      $solverexec = './xsparqlrewrite ';
+      $solverexec = './xsparqlrewrite '.$endpoint;
       $headstr = 'Rewritten XQuery:';
     }
 else
-    { $error = 'error: no solver specified!'; }
+    { $error = "error: no solver specified!\n"; }
 }
 
 my $filename = '';
@@ -57,7 +77,7 @@ my $filename = '';
 if ($error eq '')
 {
     my $salt=join '', (0..9, 'A'..'Z', 'a'..'z')[rand 64, rand 64];
-    $filename = "/home/axepol/public_html/xsparql/tempfiles/query$$".time.$salt.".tmp";
+    $filename = "/home/xsparql/xsparql/tempfiles/query$$".time.$salt.".tmp";
 
     open(FH, "> $filename") ||  print "Cannot open file";
     print FH $query;

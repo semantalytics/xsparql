@@ -106,7 +106,9 @@
               id="evaluate"
               onClick="javascript:togglesolver(this.id);"><a href="#">Rewrite+Evaluate</a></span><br/><br/>
 	<span id="uri">Load Query from URI:&nbsp;
-              <input id="URI" type="text" style="width: 470px;" /></span>
+              <input id="URI" type="text" style="width: 461px;" /></span><br/>
+	<span id="uri">SPARQL endpoint:&nbsp;
+              <input id="endpoint" type="text" style="width: 485px;" /></span><br/>
         </p>
 
         <textarea id="query"
