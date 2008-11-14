@@ -1,5 +1,11 @@
 #! /bin/bash
 
+XQILLA="xqilla"
+
+SAXON="java -classpath /usr/local/saxon9/saxon9.jar net.sf.saxon.Query"
+
+ENGINE=$XQILLA
+
 EVAL=rewrite
 
 # default options for the script
@@ -17,6 +23,9 @@ do
     case "$1" in
        --eval)    
 	    EVAL=$1
+	    ;;
+       --saxon)    
+	    ENGINE=$SAXON
 	    ;;
 	-O)    
 	    OPTIONS=$2
@@ -43,7 +52,7 @@ if [ $RETCODE -ne 0 ]; then
 else
     # otherwise evaluate or print the rewritten query
     if [ $EVAL == "--eval" ]; then
-	xqilla $RESTMP;
+	$ENGINE $RESTMP;
 	RETCODE=$?;
     else
 	cat $RESTMP;

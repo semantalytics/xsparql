@@ -1,6 +1,7 @@
 2008-11-14  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* online-interface/index.php: add an input field for the URI.
+	added a link to the spec.
 
 	* online-interface/eval.pl: check if the query uri and endpoint is
 	specified.
@@ -10,6 +11,7 @@
 
 	* online-interface/xsparqlrewrite: added possibility of stating
 	the endpoint to query in the script.
+	added option to use SAXON instead of XQilla. 
 
 	* src/xsparql/grammar.py (p_xqueryFunction): added XQuery function
 	declarations.  
