@@ -1,5 +1,4 @@
-
-(: there seem to be troubles with path expressions: :)
+# there seem to be troubles with path expressions: 
 
 prefix : <http://www.example.org>
 construct {$x :p [$x _:a] }

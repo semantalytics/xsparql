@@ -7,9 +7,9 @@ declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 declare namespace mf = "http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#" ;
 declare namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ;
 declare namespace list = "http://jena.hpl.hp.com/ARQ/list#" ;
-declare variable $_NS1 := "prefix  namespace:  &#60;=&#62;";
-declare variable $_NS2 := "prefix  namespace:  &#60;=&#62;";
-declare variable $_NS3 := "prefix  namespace:  &#60;=&#62;";
+declare variable $_NS1 := "prefix  mf:  &#60;http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#&#62;";
+declare variable $_NS2 := "prefix  rdf:  &#60;http://www.w3.org/1999/02/22-rdf-syntax-ns#&#62;";
+declare variable $_NS3 := "prefix  list:  &#60;http://jena.hpl.hp.com/ARQ/list#&#62;";
 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3, "
 select $incl from <http://xsparql.deri.org/data/manifest-syntax.ttl>  where { _:a  rdf:type  mf:Manifest   ;  mf:include _:b  

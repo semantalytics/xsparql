@@ -16,6 +16,7 @@
 	* src/xsparql/grammar.py (p_xqueryFunction): added XQuery function
 	declarations.  
 	(t_INITIAL_comments_SCOM): changed comments char to '#'
+	(p_namespaceDecl): corrected bug on the namespaces.
 
 2008-11-13  Nuno Lopes  <nuno.lopes@deri.org>
 

@@ -8,10 +8,10 @@ declare namespace sioc = "http://rdfs.org/sioc/ns#" ;
 declare namespace dc = "http://purl.org/dc/elements/1.1/" ;
 declare namespace dcterms = "http://purl.org/dc/terms/" ;
 declare namespace rdfs = "http://www.w3.org/2000/01/rdf-schema#" ;
-declare variable $_NS1 := "prefix  namespace:  &#60;=&#62;";
-declare variable $_NS2 := "prefix  namespace:  &#60;=&#62;";
-declare variable $_NS3 := "prefix  namespace:  &#60;=&#62;";
-declare variable $_NS4 := "prefix  namespace:  &#60;=&#62;";
+declare variable $_NS1 := "prefix  sioc:  &#60;http://rdfs.org/sioc/ns#&#62;";
+declare variable $_NS2 := "prefix  dc:  &#60;http://purl.org/dc/elements/1.1/&#62;";
+declare variable $_NS3 := "prefix  dcterms:  &#60;http://purl.org/dc/terms/&#62;";
+declare variable $_NS4 := "prefix  rdfs:  &#60;http://www.w3.org/2000/01/rdf-schema#&#62;";
 
 let $johnblog  := doc("http://www.johnbreslin.com/blog/index.php?sioc_type=site"   )  
  return <channel><title>{ 

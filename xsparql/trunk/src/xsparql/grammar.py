@@ -559,9 +559,9 @@ def p_namespaceDecl(p):
     global decl_var_ns
 
     count += 1
-    namespaces.append(('prefix', p[2], ':', p[4]))
-    prefix = ''.join(p[2])
-    url = ''.join(p[4])
+    namespaces.append(('prefix', p[3], ':', p[5]))
+    prefix = ''.join(p[3])
+    url = ''.join(p[5])
     col = ':'
     nsTag = 'prefix'
     decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)

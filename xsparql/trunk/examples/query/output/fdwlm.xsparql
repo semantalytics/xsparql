@@ -7,7 +7,7 @@ declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 
 declare namespace foaf = "http://xmlns.com/foaf/0.1/" ;
 declare variable $_NS1 := "prefix  :  &#60;http://xmlns.com/foaf/0.1/&#62;";
-declare variable $_NS2 := "prefix  namespace:  &#60;=&#62;";
+declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2, "
 select $UID2 $X2 $Y2 from <http://xsparql.deri.org/data/relations.rdf>  where { [  :id    $UID2    ;  ]
