@@ -22,7 +22,7 @@ my $headstr = '';
 my $error = '';
 my $resultlimit = 60000;
 
-$ENV{'PATH'} = '/usr/local/bin:/usr/bin:/bin:/opt/SDK/jdk/bin/:/home/xsparql/xsparql';
+$ENV{'PATH'} = '/usr/local/bin:/usr/bin:/bin:/opt/SDK/jdk/bin/:/home/xsparql/xsparql/online-interface/';
 
 my $cgi = new CGI;
 
@@ -77,7 +77,7 @@ my $filename = '';
 if ($error eq '')
 {
     my $salt=join '', (0..9, 'A'..'Z', 'a'..'z')[rand 64, rand 64];
-    $filename = "/home/xsparql/xsparql/tempfiles/query$$".time.$salt.".tmp";
+    $filename = "/home/xsparql/xsparql/online-interface/tempfiles/query$$".time.$salt.".tmp";
 
     open(FH, "> $filename") ||  print "Cannot open file";
     print FH $query;

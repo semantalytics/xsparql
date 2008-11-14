@@ -4,6 +4,7 @@
 
 	* online-interface/eval.pl: check if the query uri and endpoint is
 	specified.
+	(trim): corrected paths.
 
 	* online-interface/code/common.js: add the endpoint parameter.
 
