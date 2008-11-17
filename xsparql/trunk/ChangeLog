@@ -1,3 +1,8 @@
+2008-11-17  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* added foaf.rdf file to the data directory and changed
+	simple.xsparql to query it.
+
 2008-11-14  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* online-interface/index.php: add an input field for the URI.
