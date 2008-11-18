@@ -128,7 +128,7 @@ reserved = {
    'schema-element' : 'SCHEMAELEMENT',
    'document' : 'DOCUMENT',
    'named' : 'NAMED',
-#   'optional' : 'OPTIONAL',
+   'optional' : 'OPTIONAL',
    'filter' : 'FILTER',
    'str': 'STR',
    'lang' : 'LANG',
@@ -628,7 +628,7 @@ def p_constructQuery(p):
     '''constructQuery : CONSTRUCT constructTemplate datasetClauses WHERE groupGraphPattern solutionmodifier'''
     global nsFlag
     nsFlag = True
-    p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[5][0], p[6], p[5][1])]), [], [])
+    p[0] = (''.join([ r  for r in lowrewriter.buildConstruct(p[2], p[3], p[5][1], p[6], p[5][2])]), [], [])
 
 
 def p_datasetClauses(p): # list of (from, iri) tuples
@@ -713,15 +713,11 @@ def p_forletClause2(p):
 
 
 
-# 8 shift/reduce
+# ----------------------------------------------
 
-#                       | FOR sparqlvars datasetClauses  WHERE groupGraphPattern letClause solutionmodifier
 def p_sparqlForClause(p):
     '''sparqlForClause : FOR sparqlvars datasetClauses WHERE groupGraphPattern solutionmodifier'''
-    if len(p) == 7:
-	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5][0], p[6], p[5][1] )]), p[2][1], p[2][2] )
-    else:
-	p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5][0], p[7]), p[5][1] ])+' '+str(p[6][0])+'  \n  ', p[2][1], p[2][2] )
+    p[0] = (''.join([ r  for r in lowrewriter.build(p[2][1], p[3], p[5][1], p[6], p[5][2] )]), p[2][1], p[2][2] )
 
 
 
@@ -1690,31 +1686,41 @@ def p_rdfliteral(p):
 
 # '{' TriplesBlock? ( ( GraphPatternNotTriples | Filter ) '.'? TriplesBlock? )* '}'
 def p_groupGraphPattern(p):
-    '''groupGraphPattern : LCURLY constructTriples_where groupGraphPattern_star RCURLY'''
-    p[0] = [ p[2], p[3] ]
+    '''groupGraphPattern : LCURLY triplesBlock groupGraphPattern_star RCURLY'''
+    p[0] = p[1:]
 
 def p_groupGraphPattern_star(p):
-    '''groupGraphPattern_star : GraphPatternNotTriplesOrFilter  groupGraphPattern_star
+    '''groupGraphPattern_star : graphPatternNotTriplesOrFilter DOT triplesBlock groupGraphPattern_star
+                              | graphPatternNotTriplesOrFilter triplesBlock groupGraphPattern_star
                               | empty'''
     p[0] = p[1:]
 
 
-def p_GraphPatternNotTriplesOrFilter(p):
-    '''GraphPatternNotTriplesOrFilter : Filter DOT constructTriples_where
-                                      | GraphPatternNotTriples DOT constructTriples_where
-                                      | Filter constructTriples_where
-                                      | GraphPatternNotTriples constructTriples_where'''
+def p_graphPatternNotTriplesOrFilter(p):
+    '''graphPatternNotTriplesOrFilter : graphPatternNotTriples
+                                      | Filter '''
+    p[0] = p[1]
+
+
+
+
+def p_graphPatternNotTriples(p):
+    '''graphPatternNotTriples : OPTIONAL groupGraphPattern 
+                              | groupOrUnionGraphPattern
+                              | GraphGraphPattern'''
     p[0] = p[1:]
 
 
-def p_GraphPatternNotTriples(p):
-    '''GraphPatternNotTriples : GraphGraphPattern'''
-    p[0] = p[1]
+
+def p_groupOrUnionGraphPattern(p):
+    '''groupOrUnionGraphPattern : groupGraphPattern UNION groupOrUnionGraphPattern
+                                | groupGraphPattern'''
+    p[0] = p[1:]
 
 
 def p_GraphGraphPattern(p):
     '''GraphGraphPattern : GRAPH VarOrIRIref groupGraphPattern'''
-    p[0] = p[1:3] + ['{'] + p[3] + ['}']  # stupid hack
+    p[0] = p[1:]
 
 
 def p_VarOrIRIref(p):
@@ -1876,10 +1882,10 @@ def p_expression_star(p):
 # ----------------------------------- end FILTERs 
 
 
-def p_constructTriples_where(p):
-    '''constructTriples_where : lifttriples_where DOT constructTriples_where
-                              | lifttriples_where
-                              | empty'''
+def p_triplesBlock(p):
+    '''triplesBlock : lifttriples_where DOT triplesBlock
+                    | lifttriples_where
+                    | empty'''
     if len(p) == 4:
 	p[0] = [ p[1] ] +  p[3]
     elif len(p) == 2 and len(p[1]):
@@ -1899,8 +1905,7 @@ def p_subject_where0(p):
 
 
 def p_subject_where1(p):
-    '''subject_where : blank
-		     | enclosedExpr'''
+    '''subject_where : blank'''
     p[0] = p[1]
 
 
@@ -1932,15 +1937,13 @@ def p_objectList_where(p):
 def p_object_where(p):
     '''object_where : resource
 		    | blank
-		    | rdfliteral
-		    | enclosedExpr'''
+		    | rdfliteral'''
     p[0] = p[1]
 
 
 def p_verb_where(p):
     '''verb_where : rdfPredicate
-		  | A
-		  | enclosedExpr'''
+		  | A'''
     p[0] = p[1]
 
 

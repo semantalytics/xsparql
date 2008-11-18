@@ -233,50 +233,55 @@ def build(vars, from_iri, graphpattern, solutionmodifier, filterpattern):
 variables = []
 def find_vars(p):
     global variables
-    for s, polist in p:
-	build_subject(s, True)
-	build_predicate(polist, True )
+    
 
-    var = []
-    if len(variables) == 0:
-	return
+    if isinstance(p, list) and len(p) > 0 and not isinstance(p[0], tuple):
+        for e in p:
+            find_vars(e)
+    else:
+        for s, polist in p:
+            build_subject(s, True)
+            build_predicate(polist, True )
 
-    temp = variables[0]
-    for v in variables:
-       n = 0
+        var = []
+        if len(variables) == 0:
+            return
 
-       for nv in variables:
-	  if temp.lstrip('$') == nv.lstrip('?') or temp.lstrip('?') == nv.lstrip('$') or temp == nv :
-	      n += 1
-	      if n == 2 :
-		  var += [temp]
-       for j in var:
-	   if j != v:
-	       temp = v
-	   else:
-	       temp = ''
+        temp = variables[0]
+        for v in variables:
+           n = 0
 
-    for i in var:
-	variables.remove(i)
+           for nv in variables:
+              if temp.lstrip('$') == nv.lstrip('?') or temp.lstrip('?') == nv.lstrip('$') or temp == nv :
+                  n += 1
+                  if n == 2 :
+                      var += [temp]
+           for j in var:
+               if j != v:
+                   temp = v
+               else:
+                   temp = ''
+
+        for i in var:
+            variables.remove(i)
 
 
 # check this: it puts also the vars from the filter
 def find_vars_filter(filter):
+    global variables
 
     if len(filter) > 0 and isinstance(filter, list) and filter[0] == 'graph':
         if filter[1][0] == '$':
-            global variables
             if not filter[1] in variables:
                 variables += [ filter[1] ]
 
-        find_vars(filter[3])
-        find_vars_filter(filter[3:])
+        find_vars(filter[2][1:-1])
+        find_vars_filter(filter[2:])
     elif isinstance(filter, list) or isinstance(filter, tuple):
         for e in filter:
             find_vars_filter(e)
     else:
         if len(filter) > 0 and filter[0] == '$':
-            global variables
             if not filter in variables:
                 variables += [ filter ]
 
@@ -420,6 +425,6 @@ def build_filter(filterpattern):
             else:
                 res += ' ' + e + ' '
         else:                   # append the value
-            res += e.replace("\"", "\"\"")
+            res += ' ' + e.replace("\"", "\"\"") + ' '
 
     return res
