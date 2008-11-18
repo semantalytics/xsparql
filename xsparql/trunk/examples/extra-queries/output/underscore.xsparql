@@ -1,10 +1,10 @@
 
-
-
 import module namespace _xsparql = "http://xsparql.deri.org/xsparql.xquery"
 at "http://xsparql.deri.org/xsparql.xquery";
 
 declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
+
+
 
 declare variable $_NS1 := "prefix  :  &#60;http://www.example.org&#62;";
 declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
@@ -18,7 +18,7 @@ declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 let $aux_result1  := "http://www.example.org/knownPerson"  
 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2, "
-select $x from <http://www.polleres.net/foaf.rdf>  where {    $s   foaf:knows    $x   . } ")))
+select $x from <http://www.polleres.net/foaf.rdf>  where {    $s   foaf:knows    $x   .   } ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_x_Node := ($_aux_result1/_sparql_result:binding[@name = "x"])
 	let $_x_NodeType := name($_x_Node/*)

@@ -1,3 +1,8 @@
+2008-11-18  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_graphPatternNotTriples): added nested
+	groupgraphpatterns and optionals.
+
 2008-11-17  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* added foaf.rdf file to the data directory and changed

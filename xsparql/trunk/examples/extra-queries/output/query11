@@ -1,9 +1,9 @@
 
-
 import module namespace _xsparql = "http://xsparql.deri.org/xsparql.xquery"
 at "http://xsparql.deri.org/xsparql.xquery";
 
 declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
+
 
 declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 
@@ -15,7 +15,7 @@ let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri
 select $N from <http://polleres.net/foaf.rdf>  where { [  foaf:knows [   a  foaf:Person   ;  foaf:name    $N    
   ]
    ;  ]
- . } ")))
+ .   } ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_N_Node := ($_aux_result1/_sparql_result:binding[@name = "N"])
 	let $_N_NodeType := name($_N_Node/*)

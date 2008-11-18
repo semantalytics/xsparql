@@ -7,7 +7,8 @@ TMPFILE=$($MKTEMP) # global temp. file for answer sets
 failed=0
 ntests=0
 
-XSPARQL=xsparqler.py
+# XSPARQL=xsparqler.py
+XSPARQL="python ../src/xsparqler.py"
 
 echo ============ XSPARQL tests start ============
 
@@ -25,8 +26,7 @@ function test_file () {
 
     $XSPARQL $1 > $TMPFILE
 
-#	if [ $? -eq 0 ] && cmp -s $TMPFILE $RESULT
-    if [ $? -eq 0 ] && diff -q --ignore-all-space $TMPFILE $RESULT &> /dev/null
+    if [ $? -eq 0 ] && cmp -s $TMPFILE $RESULT
     then
 	echo PASS: $1
     else
