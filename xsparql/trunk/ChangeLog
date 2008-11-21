@@ -1,3 +1,7 @@
+2008-11-21  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparqler.py: added '?query=' to the endpoint URI by default
+
 2008-11-18  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/grammar.py (p_graphPatternNotTriples): added nested

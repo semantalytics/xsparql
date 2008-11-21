@@ -48,7 +48,7 @@ def parse_params(argv):
             print usage(argv[0])
             sys.exit()
         elif opt in ('-e','--endpoint'):
-            xsparql.lowrewriter.sparql_endpoint = arg
+            xsparql.lowrewriter.sparql_endpoint = arg + '?query='
         else:
             assert False, "unhandled option"
 
