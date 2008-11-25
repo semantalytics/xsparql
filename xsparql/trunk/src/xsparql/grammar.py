@@ -1676,7 +1676,8 @@ def p_rdfliteral(p):
     '''rdfliteral : INTEGER
 		  | QSTRING
 		  | QSTRING AT NCNAME
-		  | QSTRING CARROT CARROT IRIREF'''
+		  | QSTRING CARROT CARROT IRIREF
+		  | QSTRING CARROT CARROT PREFIXED_NAME'''
     p[0] = ''.join(p[1:])
 
 

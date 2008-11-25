@@ -425,6 +425,12 @@ def build_filter(filterpattern):
             else:
                 res += ' ' + e + ' '
         else:                   # append the value
-            res += ' ' + e.replace("\"", "\"\"") + ' '
+            res += ' ' + escape_chars(e) + ' '
 
     return res
+
+
+def escape_chars(e):
+    e = e.replace("\"", "\"\"")
+    e = e.replace("&", "&amp;")
+    return e

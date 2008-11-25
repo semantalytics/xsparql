@@ -1,3 +1,11 @@
+2008-11-25  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_rdfliteral): added typed rdfliteral
+	with type as a prefixed string
+
+	* src/xsparql/lowrewriter.py (escape_chars): escape chars that can
+	give and xquery syntax error
+
 2008-11-21  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/dist: added the egg files

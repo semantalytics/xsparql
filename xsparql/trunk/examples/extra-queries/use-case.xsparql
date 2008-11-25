@@ -1,0 +1,25 @@
+prefix xs : <http://www.w3.org/2001/XMLSchema#>
+prefix foaf : <http://xmlns.com/foaf/0.1/>
+prefix rdf : <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix incontext : <http://www.in-context.eu/ontologies#>
+prefix foaf : <http://xmlns.com/foaf/0.1/>
+
+<kml xmlns="http://www.opengis.net/kml/2.2">
+{
+for $person $fn $ln $long $lat
+where {
+ $person rdf:type foaf:Person.
+ $person incontext:id $id.
+ $person incontext:hasGPSCoordinate $gps.
+ $gps incontext:long $long.
+ $gps incontext:lat $lat.
+ $person foaf:firstName $fn.
+ $person foaf:lastName $ln.
+ filter ($long != "" && $lat != "")
+}
+return <Placemark>
+         <name>{fn:concat("Location of ", $fn, " ", $ln)}</name>
+         <Point><coordinates>{fn:concat($long, ",", $lat, ",0")}</coordinates></Point>
+       </Placemark>
+}
+</kml>

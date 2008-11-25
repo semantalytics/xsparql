@@ -1,5 +1,8 @@
 extra-queries/graph.xsparql
 extra-queries/item.xsparql
+extra-queries/union.xsparql
+extra-queries/nested_ggp.xsparql
+extra-queries/use-case.xsparql
 extra-queries/query01
 extra-queries/query02
 extra-queries/query03
@@ -22,3 +25,5 @@ extra-queries/queryFilter05
 extra-queries/queryFilter06
 extra-queries/queryFilter07
 extra-queries/queryFilter08
+extra-queries/queryFilter09
+extra-queries/queryFilter10
