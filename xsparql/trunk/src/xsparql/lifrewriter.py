@@ -251,7 +251,7 @@ def build_object(subject, predicate, o):
 
 def build_bnode(type, b):
 
-#    debug.debug('----- build_bnode', b)
+#    debug.debug('----- build_bnode', b, len(b))
 
     if b >= 2 and b[0] == '<' and b[-1] == '>':  # iri literal
 	bIri =  b[1:-1].split('{')
@@ -264,7 +264,8 @@ def build_bnode(type, b):
 	global var_p
 	v = ''
 	for i in var_p:
-	    v += ' data('+str(i[0:])+ '),'
+            if i != []:
+                v += ' data('+str(i[0:])+ '),'
 	if b.find('{') == -1 and b.find('}') == -1: #without enclosed {}
 	    let,cond,ret,suff = genLetCondReturn(type, [ '"', b , '"', ', "_",', v.rstrip(',')] )
 	    return let, cond , ret + ', ', suff

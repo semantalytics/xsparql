@@ -100,7 +100,6 @@ reserved = {
    'base-uri' : 'BASEURI',
    'prefix' : 'PREFIX',
    'base' :'BASE',
-#    '_' : 'UNDERSCORE',
    'and' : 'AND',
    'or' : 'OR',
    'to' : 'TO',
