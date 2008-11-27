@@ -1,3 +1,7 @@
+2008-11-27  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/README: improved the README file with install instructions.
+
 2008-11-26  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/lifrewriter.py (build_bnode): another hack. to be

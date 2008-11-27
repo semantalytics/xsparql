@@ -264,7 +264,7 @@ def build_bnode(type, b):
 	global var_p
 	v = ''
 	for i in var_p:
-            if i != []:
+            if i != []:    #  @@fix this
                 v += ' data('+str(i[0:])+ '),'
 	if b.find('{') == -1 and b.find('}') == -1: #without enclosed {}
 	    let,cond,ret,suff = genLetCondReturn(type, [ '"', b , '"', ', "_",', v.rstrip(',')] )

@@ -48,4 +48,6 @@ An XSPARQL rewriter.
       packages=['xsparql'],
       scripts=['xsparqler.py'],
       install_requires = ["ply >= 2.3"]
+#      include_package_data = True,
+#      package_data = {'':['README'], 'examples':['examples']}
      )

@@ -1,51 +1,96 @@
-XSPARQL Lowering README -*- org -*-
 
-Copyright (C) 2007   Thomas Krennwallner <tkren@kr.tuwien.ac.at>
+--------------------------------------------------------------------------------
+OVERVIEW
+--------------------------------------------------------------------------------
 
-xsparqlow is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+XSPARQL is a simple merge of SPARQL components into XQuery. In order
+to benefit from the more intuitive facilities of SPARQL in terms of
+RDF graph matching for retrieval of RDF data and the use of
+Turtle-like syntax for result construction, we syntactically add these
+facilities to XQuery. 
 
-xsparqlow is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with xsparqlow.  If not, see <http://www.gnu.org/licenses/>.
+--------------------------------------------------------------------------------
+DOWNLOADING
+--------------------------------------------------------------------------------
 
-See the file COPYING for a complete copy of the GPL.
+You can download XSPARQL in two different ways: 
 
-* Prerequisite
+1) Package: the packaged XSPARQL is available for download on the
+   Sourceforge project page:
 
-** Python
-You need Python >= 2.4 [[http://www.python.org/]]
+            http://sourceforge.net/projects/xsparql
 
-** Python Lex-Yacc
-[[http://www.dabeaz.com/ply/]]
+  You should download the package that uses the same Python version on
+  which you are going to install.
 
-** XQuery engine
-E.g., XQilla [[http://xqilla.sourceforge.net/]], or Saxon
-[[http://saxon.sourceforge.net/]]
+2) SVN: you can get the current svn version of XSPARQL by running the
+  following command:
 
-** SPARQL Endpoint
-E.g., Joseki [[http://www.joseki.org/]]
+        svn co https://xsparql.svn.sourceforge.net/svnroot/xsparql xsparql  
 
-* Installing
+  
 
-Invoke the following command to install xsparqlow:
+--------------------------------------------------------------------------------
+INSTALL
+--------------------------------------------------------------------------------
+
+Installing XSPARQL requires the following software:
+
+Python
+------
+
+You need Python >= 2.4 and python-setuptools.  You can get Python from
+the web page: http://www.python.org/ or there are packaged versions of
+Python distributed with your UNIX based operating system.
+
+Python Lex-Yacc
+---------------
+
+You can get Python Lex-Yacc from: http://www.dabeaz.com/ply/.  If you
+are installing from the packaged file you can safely skip this step
+since it will install Python Lex-Yacc when you install the package.
+
+
+Invoke the following command to install XSPARQL:
 
   $ python setup.py install
 
-See also [[http://docs.python.org/inst/]].
+See also http://docs.python.org/inst/.
 
-* Running
+If you downloaded the packaged version of XSPARQL you can install it
+by running:
 
-xsparqlow.py is a rewriter for XSPARQL Lowering to XQuery. You can
+  $ easy_install package_file
+
+For further details you can see: http://peak.telecommunity.com/DevCenter/EasyInstall.
+
+
+
+--------------------------------------------------------------------------------
+RUNNING
+--------------------------------------------------------------------------------
+
+To run XSPARQL you need:
+
+XQuery engine
+-------------
+
+You can get XQilla (http://xqilla.sourceforge.net/) or Saxon (http://saxon.sourceforge.net/).
+XSPARQL is mostly tested using XQilla and is thus recommended you install XQilla. 
+
+
+SPARQL Endpoint
+---------------
+You can get Joseki from http://www.joseki.org/.
+
+
+xsparqler.py is a rewriter for XSPARQL to XQuery. You can
 transform an XSPARQL file to an XQuery file using the following
 command:
 
-  $ cat example.xsparql | xsparqlow.py > out.xquery
+  $ xsparqler.py example.xsparql > out.xquery
 
-Run out.xquery using your favorite XQuery engine.
+Run 'out.xquery' using the installed XQuery engine.
+
+
