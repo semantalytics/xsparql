@@ -253,11 +253,15 @@ def build_bnode(type, b):
 
 #    debug.debug('----- build_bnode', b, len(b))
 
-    if b >= 2 and b[0] == '<' and b[-1] == '>':  # iri literal
+    if b >= 4 and b[0] == '<' and b[1] == '{' and b[-2] == '}' and b[-1] == '>':  # iri literal
 	bIri =  b[1:-1].split('{')
 	iri = bIri[0]
 	iri = bIri[1].rstrip('}')
 	let,cond,ret,suff = genLetCondReturn(type,  [ '"<" ,', iri , ', ">"'] )
+	return let,cond,'    '+ ret + '  ,  ', suff
+
+    elif b >= 2 and b[0] == '<' and b[-1] == '>':  # iri literal
+	let,cond,ret,suff = genLetCondReturn(type,  [ '"<" ,', b[1:-1] , ', ">"'] )
 	return let,cond,'    '+ ret + '  ,  ', suff
 
     elif b >= 2 and b[0] == '_' and b[1] == ':':  # bnode

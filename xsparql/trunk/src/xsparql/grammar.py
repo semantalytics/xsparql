@@ -71,7 +71,6 @@ reserved = {
    'if' : 'IF',
    'then' : 'THEN',
    'else' : 'ELSE',
-#   'typeswitch' : 'TYPESWITCH',
    'return' : 'RETURN',
    'construct' : 'CONSTRUCT',
    'where' : 'WHERE',
@@ -99,7 +98,7 @@ reserved = {
    'function' : 'FUNCTION',
    'base-uri' : 'BASEURI',
    'prefix' : 'PREFIX',
-   'base' :'BASE',
+   'base' : 'BASE',
    'and' : 'AND',
    'or' : 'OR',
    'to' : 'TO',
@@ -114,8 +113,6 @@ reserved = {
    'castable' : 'CASTABLE',
    'cast' : 'CAST',
    'of' : 'OF',
-#   'lax' : 'LAX',
-#   'strict' : 'STRICT',
    'empty-sequence' : 'EMPTYSEQUENCE',
 #   'item' : 'ITEM',
    'node' : 'NODE',
@@ -173,44 +170,24 @@ precedence = (
 
 from ply.lex import TOKEN
 
+
+
+# # NCName will be replaced with SPARQL's PN_PREFIX
 # http://www.w3.org/TR/REC-xml-names/#NT-NCName
-# [4]   NCName            ::=   NCNameStartChar NCNameChar*      /* An XML Name, minus the ":" */
-# [5]   NCNameChar        ::=   NameChar - ':'
-# [6]   NCNameStartChar   ::=   Letter | '_'
-
-## NCName will be replaced with SPARQL's PN_PREFIX
 # # remove leading _
-# # NCNameStartChar   =   r'([A-Za-z]|_)'
 # NCNameStartChar   =   r'([A-Za-z])'
-# NCNameChar        =   r'([A-Za-z]|[0-9]|\.|-|_)'   # @todo: allow dots?! should be fine.
+# NCNameChar        =   r'([A-Za-z]|[0-9]|\.|-|_)'
 # NCName            =   r'('+NCNameStartChar+')('+NCNameChar+')*'
-
-# http://www.w3.org/TR/REC-xml/#NT-NameChar
-# [4]   NameChar   ::=    Letter | Digit | '.' | '-' | '_' | ':' | CombiningChar | Extender
 
 
 # http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName
-# [68]       PrefixedName     ::= PNAME_LN | PNAME_NS
-# [71]       PNAME_NS         ::= PN_PREFIX? ':'
-# [72]       PNAME_LN         ::= PNAME_NS PN_LOCAL
-
-# http://www.w3.org/TR/rdf-sparql-query/#rPN_CHARS_BASE
-# [95]       PN_CHARS_BASE    ::=        [A-Z] | [a-z]
-# [96]       PN_CHARS_U       ::=       PN_CHARS_BASE | '_'
-# [97]       VARNAME          ::=       ( PN_CHARS_U | [0-9] ) ( PN_CHARS_U | [0-9]  )*
-# [98]       PN_CHARS         ::=       PN_CHARS_U | '-' | [0-9]
-# [99]       PN_PREFIX        ::=       PN_CHARS_BASE ((PN_CHARS|'.')* PN_CHARS)?
-# [100]      PN_LOCAL         ::=       ( PN_CHARS_U | [0-9] ) ((PN_CHARS|'.')* PN_CHARS)?
-
-
 PN_CHARS_BASE    =       r'([A-Za-z])'    #  = NCNameStartChar
 # remove leading _
 PN_CHARS_U       =       r'('+PN_CHARS_BASE+'|_)'
-# PN_CHARS_U       =       r'('+PN_CHARS_BASE+')'
-# VARNAME          =       r'('+PN_CHARS_U+'|[0-9])('+PN_CHARS_U+'|[0-9])*'
 PN_CHARS         =       r'('+PN_CHARS_U+'|-|[0-9])'  # = NCNameChar - '.'
 PN_PREFIX        =       r''+PN_CHARS_BASE+'(('+PN_CHARS+'|\.)*'+PN_CHARS+')?' # = NCName
 PN_LOCAL         =       r'(('+PN_CHARS_U+')|[0-9])(('+PN_CHARS+'|\.)*'+PN_CHARS+')?'
+
 
 PREFIXED_NAME = r''+PN_PREFIX+':'+PN_LOCAL
 UNPREFIXED_NAME = r':'+PN_LOCAL
@@ -223,25 +200,25 @@ bnode_construct =      r'_:(' + PN_PREFIX + ')?\{'
 
 
 @TOKEN(bnode_construct)
-def t_INITIAL_pattern_iri_BNODE_CONSTRUCT(t):
+def t_INITIAL_pattern_BNODE_CONSTRUCT(t):
     return t
 
 @TOKEN(bnode)
-def t_INITIAL_pattern_iri_BNODE(t):
+def t_INITIAL_pattern_BNODE(t):
     return t
 
 @TOKEN(PREFIXED_NAME)
-def t_INITIAL_pattern_iri_PREFIXED_NAME(t):
+def t_INITIAL_pattern_PREFIXED_NAME(t):
     return t
 
 @TOKEN(UNPREFIXED_NAME)
-def t_INITIAL_pattern_iri_UNPREFIXED_NAME(t):
+def t_INITIAL_pattern_UNPREFIXED_NAME(t):
     return t
 
 
 # takes care of keywords and IRIs
 @TOKEN(PN_PREFIX)
-def t_INITIAL_pattern_iri_NCNAME(t):
+def t_INITIAL_pattern_NCNAME(t):
     # an NCNAME cannot start with a digit: http://www.w3.org/TR/REC-xml-names/#NT-NCName
     t.type = reserved.get(t.value,'NCNAME')
     if t.type == 'PREFIX' or t.type == 'BASE' or t.type == 'FROM':
@@ -256,24 +233,24 @@ star_ncname =          r'\*( |\t)*:( |\t)*(' + PN_PREFIX + ')'
 ncname_star =          r'('+PN_PREFIX+')( |\t)*:( |\t)*\*'
 
 @TOKEN(star_ncname)
-def t_INITIAL_pattern_iri_STAR_COLON_NCNAME(t):
+def t_INITIAL_pattern_STAR_COLON_NCNAME(t):
     return t
 
 @TOKEN(ncname_star)
-def t_INITIAL_pattern_iri_NCNAME_COLON_STAR(t):
+def t_INITIAL_pattern_NCNAME_COLON_STAR(t):
     return t
 
 
 
 
-t_INITIAL_pattern_iri_SLASH = r'/'
-t_INITIAL_pattern_iri_SLASHSLASH = r'//'
-t_INITIAL_pattern_iri_LBRACKET = r'\['
-t_INITIAL_pattern_iri_RBRACKET = r'\]'
-t_INITIAL_pattern_iri_LPAR = r'\('
-t_INITIAL_pattern_iri_RPAR = r'\)'
-t_INITIAL_pattern_iri_SEMICOLON = r';'
-t_INITIAL_pattern_iri_QSTRING = r'\"[^\"]*\"'
+t_INITIAL_pattern_SLASH = r'/'
+t_INITIAL_pattern_SLASHSLASH = r'//'
+t_INITIAL_pattern_LBRACKET = r'\['
+t_INITIAL_pattern_RBRACKET = r'\]'
+t_INITIAL_pattern_LPAR = r'\('
+t_INITIAL_pattern_RPAR = r'\)'
+t_INITIAL_pattern_SEMICOLON = r';'
+t_INITIAL_pattern_QSTRING = r'\"[^\"]*\"'
 
 
 t_LCURLY  = r'{'
@@ -293,29 +270,29 @@ def t_INITIAL_pattern_VAR(t):
     return t
 
 
-t_INITIAL_pattern_iri_INTEGER   = r'[0-9]+'
-t_INITIAL_pattern_iri_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
-t_INITIAL_pattern_iri_AT        = r'@'
-t_INITIAL_pattern_iri_CARROT    = r'\^'
-t_INITIAL_pattern_iri_COLON     = r'\:'
-t_INITIAL_pattern_iri_COLONCOLON = r'\:\:'
-t_INITIAL_pattern_iri_COMMA     = r'\,'
-t_INITIAL_pattern_iri_EQUALS    = r'='
-t_INITIAL_pattern_iri_STAR    = r'\*'
-t_INITIAL_pattern_iri_DOTDOT    = r'\.\.'
-t_INITIAL_pattern_iri_LESSTHAN = r'<'
-t_INITIAL_pattern_iri_GREATERTHAN = r'>'
-t_INITIAL_pattern_iri_PLUS = r'\+'
-t_INITIAL_pattern_iri_MINUS = r'\-'
-t_INITIAL_pattern_iri_UNIONSYMBOL = r'\|'
-t_INITIAL_pattern_iri_ANDSYMBOL = r'&&'
-t_INITIAL_pattern_iri_ORSYMBOL = r'\|\|'
-t_INITIAL_pattern_iri_QUESTIONMARK = r'\?'
-t_INITIAL_pattern_iri_LESSTHANLESSTHAN = r'\<\<'
-t_INITIAL_pattern_iri_GREATERTHANEQUALS = r'\>\='
-t_INITIAL_pattern_iri_LESSTHANEQUALS = r'\<\='
-t_INITIAL_pattern_iri_HAFENEQUALS = r'\!\='
-t_INITIAL_pattern_iri_NOT = r'\!'
+t_INITIAL_pattern_INTEGER   = r'[0-9]+'
+t_INITIAL_pattern_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
+t_INITIAL_pattern_AT        = r'@'
+t_INITIAL_pattern_CARROT    = r'\^'
+t_INITIAL_pattern_COLON     = r'\:'
+t_INITIAL_pattern_COLONCOLON = r'\:\:'
+t_INITIAL_pattern_COMMA     = r'\,'
+t_INITIAL_pattern_EQUALS    = r'='
+t_INITIAL_pattern_STAR    = r'\*'
+t_INITIAL_pattern_DOTDOT    = r'\.\.'
+t_INITIAL_pattern_LESSTHAN = r'<'
+t_INITIAL_pattern_GREATERTHAN = r'>'
+t_INITIAL_pattern_PLUS = r'\+'
+t_INITIAL_pattern_MINUS = r'\-'
+t_INITIAL_pattern_UNIONSYMBOL = r'\|'
+t_INITIAL_pattern_ANDSYMBOL = r'&&'
+t_INITIAL_pattern_ORSYMBOL = r'\|\|'
+t_INITIAL_pattern_QUESTIONMARK = r'\?'
+t_INITIAL_pattern_LESSTHANLESSTHAN = r'\<\<'
+t_INITIAL_pattern_GREATERTHANEQUALS = r'\>\='
+t_INITIAL_pattern_LESSTHANEQUALS = r'\<\='
+t_INITIAL_pattern_HAFENEQUALS = r'\!\='
+t_INITIAL_pattern_NOT = r'\!'
 
 
 
@@ -346,13 +323,21 @@ t_pattern_NCNAME  = r'\w[\w\-\.]*'
 
 
 # in iri state, we can match IRIs
-t_iri_IRIREF    = r'\<([^<>\'\{\}\|\^`\x00-\x20])*'
-
-# GREATERTHAN token ends the iri state  ### in the lowrewriter you need the > at the end!!!
-def t_iri_GREATERTHAN(t):
-    r'>'
+def t_iri_IRIREF(t):
+    r'\<([^<>\'\{\}\|\^`\x00-\x20])*>'
     t.lexer.begin('INITIAL')
+    return t
 
+# in initial state the URIs need to be enclosed with ""
+# needed to hack p_primaryExpr0
+def t_INITIAL_IRIREF(t):
+    r'\"\<([^<>\'\{\}\|\^`\x00-\x20])*>\"'
+    t.lexer.begin('INITIAL')
+    t.value = t.value[1:-1]
+    return t
+
+
+## ------------------------------ Comments
 
 def t_INITIAL_comments_SCOM(t):
     r'\#.*'
@@ -396,7 +381,7 @@ def t_INITIAL_comments_SCOM(t):
 ## -------------
 
 # Ignored characters
-t_INITIAL_pattern_iri_ignore = " \t"
+t_INITIAL_pattern_ignore = " \t"
 
 # newlines increase line numbers (and will be ignored)
 def t_ANY_newline(t):
@@ -413,7 +398,9 @@ def t_INITIAL_pattern_iri_error(t):
 
 
 # Build the lexer
-lex.lex(debug=0, reflags=re.IGNORECASE)
+#lex.lex(debug=0, reflags=re.IGNORECASE)
+# we want all keywords lowercase
+lex.lex(debug=0)
 
 
 
@@ -845,10 +832,6 @@ def p_compPIConstructor(p):
     p[0] = ' '.join(p[1:])
 
 
-# shift/reduce
-# @todo: is this recursion allowed in XQuery? example: fdwlm.xsparql
-# directConstructor directElemConstructor
-#			 |
 def p_directConstructor(p):
     '''directConstructor : directElemConstructor'''
     p[0] = ' '.join(p[1:])
@@ -1218,7 +1201,7 @@ def p_occurrenceIndicator(p):
 
 
 # ITEM LPAR RPAR
-# 		| 
+#  		| 
 def p_itemType(p):
     '''itemType : atomicType
 		| kindTest'''
@@ -1465,10 +1448,15 @@ def p_predicate(p):
     p[0] = ''.join(p[1:])
 
 
-def p_primaryExpr(p):
+# another hack!
+def p_primaryExpr0(p):
+    '''primaryExpr : IRIREF'''
+    p[0] = '"'+p[1]+'"'
+
+def p_primaryExpr1(p):
     '''primaryExpr : VAR
 		   | literal
-		   | parenthesizedExpr
+                   | parenthesizedExpr
 		   | contextItemExpr
 		   | functionCall
 		   | orderedExpr
@@ -1649,11 +1637,7 @@ def p_resource(p):
     '''resource : sparqlPrefixedName
 		| VAR
 		| IRIREF'''
-    #@todo do we have to map '?' to '$'??
-    if p[1].startswith('?'):  # translate SPARQL vars "?Var" to "$Var"
-	p[0] = '$' + p[1][1:]
-    else:
-	p[0] = p[1]
+    p[0] = p[1]
 
 def p_blank(p):
     '''blank : bnode
@@ -1959,9 +1943,33 @@ def p_sparqlPrefixedName(p):
 
 ## ----------------------------------------------------------
 
+# each reserved word is also a qname to allow it's use for instance in
+# path expressions
+
+#              | FOR
+#              | FROM
+#              | LIMIT
+#              | PREFIX
+#              | BASE
+#              | IF
+#              | isIRI
+#              | LANGMATCHES
+#              | isLITERAL
+#              | BOUND
+#              | STR
+#              | LANG
+#              | isURI
+#              | DATATYPE
+#              | REGEX
+#              | isBLANK
+#              | CONSTRUCT
+#              | ORDER
+#              | WHERE
+
 def p_qname(p):
     '''qname : prefixedName
-	     | unprefixedName'''
+	     | unprefixedName
+             | A'''
     p[0] = ''.join(p[1:])
 
 
@@ -1969,14 +1977,9 @@ def p_unprefixedName(p):
     '''unprefixedName : localPart'''
     p[0] = ''.join(p[1:])
 
-#    '''prefixedName : prefix COLON localPart'''
 def p_prefixedName(p):
     '''prefixedName : PREFIXED_NAME'''
     p[0] = ''.join(p[1:])
-
-# def p_prefix(p):
-#     '''prefix : NCNAME'''
-#     p[0] = ''.join(p[1:])
 
 def p_localPart(p):
     '''localPart : NCNAME'''

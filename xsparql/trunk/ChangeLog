@@ -1,3 +1,17 @@
+2008-12-01  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lowrewriter.py (build_sparql_query): removed the
+	need to add an > to the end of an IRI
+
+	* src/xsparql/lifrewriter.py (build_bnode): handle different case
+	of iriLiteral <> and <{}>
+
+	* src/xsparql/grammar.py: regular expressions are no longer case
+	insensitive.
+	(t_INITIAL_IRIREF): in INITIAL state the URIs need to be enclosed
+	with ""
+
+
 2008-11-27  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/README: improved the README file with install instructions.

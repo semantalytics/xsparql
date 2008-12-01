@@ -132,7 +132,7 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
         if ( iri[0] == '$' ):
             from_iri_str += fn + ' <", ' + iri + ',"> '
         else:
-            from_iri_str += fn + ' ' + iri + '> ' # @todo '>' is ugly
+            from_iri_str += fn + ' ' + iri + ' ' # > solved?? # @todo '>' is ugly
 
     # build variables (possibly scoped)
     # @todo this is utter crap
