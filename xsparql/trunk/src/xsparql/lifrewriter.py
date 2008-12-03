@@ -261,7 +261,7 @@ def build_bnode(type, b):
 	return let,cond,'    '+ ret + '  ,  ', suff
 
     elif b >= 2 and b[0] == '<' and b[-1] == '>':  # iri literal
-	let,cond,ret,suff = genLetCondReturn(type,  [ '"<" ,', b[1:-1] , ', ">"'] )
+	let,cond,ret,suff = genLetCondReturn(type,  [ '"'+b+'"' ] )
 	return let,cond,'    '+ ret + '  ,  ', suff
 
     elif b >= 2 and b[0] == '_' and b[1] == ':':  # bnode

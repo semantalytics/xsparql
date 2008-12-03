@@ -1,5 +1,8 @@
 2008-12-03  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* src/xsparql/lifrewriter.py (build_bnode): changed rewriting for
+	explicit IRI.
+
 	* src/xsparql/debug.py: added new funtion to print debug info on
 	tokens if wanted.
 
