@@ -27,15 +27,21 @@
 
 import sys
 
-show_debug_info = False
+debug_level = 0
 
 def debug(*debug):
-    global show_debug_info
-    if ( not show_debug_info ):
-	return
-    i = 1
-    for d in debug:
-	print >> sys.stderr, i, ":", d #.replace('\n', '\n'+`i`)
-	i = i + 1
-    print >> sys.stderr, '---'
+    global debug_level
+    if ( debug_level > 0 ):
+        i = 1
+        for d in debug:
+            print >> sys.stderr, i, ":", d #.replace('\n', '\n'+`i`)
+            i = i + 1
+        print >> sys.stderr, '---'
+    return
+
+
+def recognize(token):
+    global debug_level
+    if ( debug_level > 1 ):
+        print >> sys.stderr, "FOUND: ", token #.replace('\n', '\n'+`i`)
     return

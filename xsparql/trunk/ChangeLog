@@ -1,5 +1,8 @@
 2008-12-03  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* src/xsparql/debug.py: added new funtion to print debug info on
+	tokens if wanted.
+
 	* src/xsparql/grammar.py (p_directElemConstructorElm): changed the
 	IRI and XML elements definitons to allow IRIs everywhere
 	(p_qname): added the reserved words to the 'qname' production to
