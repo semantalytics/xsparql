@@ -25,19 +25,18 @@ for $f at $_f_Pos  in $friends
 let $friendsAccount  := $f/*/@href  
  
 
-let $_validSubject1 := fn:concat("<" ,http://apassant.net/alex, ">") 
-let $_validObject2 := fn:concat("<" , $friendsAccount   , ">") 
+let $_validObject1 := fn:concat("<" , $friendsAccount   , ">") 
 
 
 
   return ( 
-	 if ( _xsparql:_validSubject( "",  $_validSubject1  ) ) then (
+	 if ( _xsparql:_validSubject( "",  "<http://apassant.net/alex>"  ) ) then (
 		 
 		   
 	   fn:concat( 
-		     $_validSubject1  ,   " foaf:knows ", "[", if ( _xsparql:_validObject( "",  $_validObject2  ) ) then (
+		     "<http://apassant.net/alex>"  ,   " foaf:knows ", "[", if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
 		  
-	   fn:concat(" foaf:userAccount ",     $_validObject2, "&#59;")  
+	   fn:concat(" foaf:userAccount ",     $_validObject1, "&#59;")  
   ) else "", " ]", " .&#xA;" 
 		 ) 
   

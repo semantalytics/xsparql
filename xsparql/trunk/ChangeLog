@@ -1,5 +1,10 @@
 2008-12-03  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* examples/extra-queries/output/query-uri2.xsparql: updated
+	rewriting 
+
+	* added new egg files
+
 	* src/xsparql/lifrewriter.py (build_bnode): changed rewriting for
 	explicit IRI.
 
