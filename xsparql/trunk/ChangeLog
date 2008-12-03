@@ -1,3 +1,13 @@
+2008-12-03  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_directElemConstructorElm): changed the
+	IRI and XML elements definitons to allow IRIs everywhere
+	(p_qname): added the reserved words to the 'qname' production to
+	allow them to be used in other constructors.  Still 3 omitted:
+	PREFIX, BASE and FOR.
+
+	* Added new test cases
+
 2008-12-01  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/lowrewriter.py (build_sparql_query): removed the

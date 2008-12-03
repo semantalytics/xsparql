@@ -1,8 +1,14 @@
+extra-queries/distribution.xsparql
+extra-queries/distribution_simple.xsparql
 extra-queries/graph.xsparql
 extra-queries/item.xsparql
-extra-queries/union.xsparql
+extra-queries/nested-xsparql.xsparql
 extra-queries/nested_ggp.xsparql
-extra-queries/use-case.xsparql
+extra-queries/query-data_empty.xsparql
+extra-queries/query-one.xsparql
+extra-queries/query-reserved_word.xsparql
+extra-queries/query-uri.xsparql
+extra-queries/query-uri2.xsparql
 extra-queries/query01
 extra-queries/query02
 extra-queries/query03
@@ -16,7 +22,6 @@ extra-queries/query10
 extra-queries/query11
 extra-queries/query12
 extra-queries/query13
-extra-queries/underscore.xsparql
 extra-queries/queryFilter01
 extra-queries/queryFilter02
 extra-queries/queryFilter03
@@ -27,3 +32,7 @@ extra-queries/queryFilter07
 extra-queries/queryFilter08
 extra-queries/queryFilter09
 extra-queries/queryFilter10
+extra-queries/underscore.xsparql
+extra-queries/union.xsparql
+extra-queries/use-case.xsparql
+extra-queries/xquery-elements.xsparql
