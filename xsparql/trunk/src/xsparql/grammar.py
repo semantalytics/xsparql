@@ -45,6 +45,11 @@ import lowrewriter
 # =======================================================================
 
 
+def recognize(tok):
+    debug.recognize(tok)
+    return tok
+
+
 # reserved keywords
 reserved = {
    'a'  : 'A',
@@ -114,7 +119,7 @@ reserved = {
    'cast' : 'CAST',
    'of' : 'OF',
    'empty-sequence' : 'EMPTYSEQUENCE',
-#   'item' : 'ITEM',
+   'item' : 'ITEM',
    'node' : 'NODE',
    'document-node' : 'DOCUMENTNODE',
    'text' : 'TEXT',
@@ -144,7 +149,7 @@ reserved = {
 
 # lexer tokens
 tokens = [
-    'VAR', 'IRIREF', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING', 'DOT', 'AT',
+    'VAR', 'STARTELM', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING', 'DOT', 'AT',
     'CARROT', 'COLON', 'COMMA', 'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON',
     'STAR', 'DOTDOT', 'SLASHSLASH','LESSTHAN', 'GREATERTHAN',  'PLUS', 'MINUS', 'UNIONSYMBOL', 'QUESTIONMARK',
     'LESSTHANLESSTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'EQUALS', 'COLONCOLON',
@@ -157,13 +162,14 @@ tokens = [
 # lexer states
 states = [
    ('pattern','exclusive'),
-   ('iri','inclusive'),
+#   ('iri','inclusive'),
 #   ('comments','exclusive')
 ]
 
 precedence = (
-    ('left', 'SLASH'),
-    ('right', 'ORDER'),
+    ('left', 'SLASH','LPAR','GREATERTHAN'),
+#    ('right', 'ORDER'),
+    ['right'] + reserved.values()
 )
 
 
@@ -199,21 +205,41 @@ bnode_construct =      r'_:(' + PN_PREFIX + ')?\{'
 
 
 
+def t_INITIAL_pattern_STARTELM(t):
+    r'\<([^<>\'\{\}\|\^`\x00-\x20])+'
+    return recognize(t)
+
+# # in iri state, we can match IRIs
+# def t_iri_IRIREF(t):
+#     r'\<([^<>\'\{\}\|\^`\x00-\x20])*>'
+# #    t.lexer.begin('INITIAL')    # return to other state
+#     t.lexer.pop_state()
+#     return recognize(t)
+
+# # in initial state the URIs need to be enclosed with ""
+# # needed to hack p_primaryExpr0
+# def t_INITIAL_IRIREF(t):
+#     r'\<([^<>\'\{\}\|\^`\x00-\x20])*>'
+# #    t.lexer.begin('INITIAL')
+# #    t.value = t.value[1:-1]
+#     return recognize(t)
+
+
 @TOKEN(bnode_construct)
 def t_INITIAL_pattern_BNODE_CONSTRUCT(t):
-    return t
+    return recognize(t)
 
 @TOKEN(bnode)
 def t_INITIAL_pattern_BNODE(t):
-    return t
+    return recognize(t)
 
 @TOKEN(PREFIXED_NAME)
 def t_INITIAL_pattern_PREFIXED_NAME(t):
-    return t
+    return recognize(t)
 
 @TOKEN(UNPREFIXED_NAME)
 def t_INITIAL_pattern_UNPREFIXED_NAME(t):
-    return t
+    return recognize(t)
 
 
 # takes care of keywords and IRIs
@@ -221,9 +247,9 @@ def t_INITIAL_pattern_UNPREFIXED_NAME(t):
 def t_INITIAL_pattern_NCNAME(t):
     # an NCNAME cannot start with a digit: http://www.w3.org/TR/REC-xml-names/#NT-NCName
     t.type = reserved.get(t.value,'NCNAME')
-    if t.type == 'PREFIX' or t.type == 'BASE' or t.type == 'FROM':
-	t.lexer.begin('iri')
-    return t
+#     if t.type == 'PREFIX' or t.type == 'BASE' or t.type == 'FROM':
+# 	t.lexer.push_state('iri')
+    return recognize(t)
 
 
 
@@ -234,11 +260,11 @@ ncname_star =          r'('+PN_PREFIX+')( |\t)*:( |\t)*\*'
 
 @TOKEN(star_ncname)
 def t_INITIAL_pattern_STAR_COLON_NCNAME(t):
-    return t
+    return recognize(t)
 
 @TOKEN(ncname_star)
 def t_INITIAL_pattern_NCNAME_COLON_STAR(t):
-    return t
+    return recognize(t)
 
 
 
@@ -250,7 +276,7 @@ t_INITIAL_pattern_RBRACKET = r'\]'
 t_INITIAL_pattern_LPAR = r'\('
 t_INITIAL_pattern_RPAR = r'\)'
 t_INITIAL_pattern_SEMICOLON = r';'
-t_INITIAL_pattern_QSTRING = r'\"[^\"]*\"'
+t_INITIAL_QSTRING = r'\"[^\"]*\"'
 
 
 t_LCURLY  = r'{'
@@ -260,14 +286,14 @@ t_RCURLY = r'}'
 # t_INITIAL_pattern_iri_VAR = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
 var = '[\$][a-zA-Z][a-zA-Z0-9\_\-]*'
 
-@TOKEN(var)
-def t_iri_VAR(t):
-    t.lexer.begin('INITIAL')
-    return t
+# @TOKEN(var)
+# def t_iri_VAR(t):
+#     t.lexer.begin('INITIAL')
+#     return recognize(t)
 
 @TOKEN(var)
 def t_INITIAL_pattern_VAR(t):
-    return t
+    return recognize(t)
 
 
 t_INITIAL_pattern_INTEGER   = r'[0-9]+'
@@ -302,13 +328,13 @@ curly_brackets = 0
 def t_WHERE(t):
     r'\bwhere'
     t.lexer.begin('pattern')
-    return t
+    return recognize(t)
 
 def t_pattern_LCURLY(t):
     r'{'
     global curly_brackets
     curly_brackets += 1
-    return t
+    return recognize(t)
 
 # RCURLY token ends the pattern state iff curly_brackets counter gets 0
 def t_pattern_RCURLY(t):
@@ -316,25 +342,12 @@ def t_pattern_RCURLY(t):
     global curly_brackets
     curly_brackets -= 1
     if curly_brackets == 0: t.lexer.begin('INITIAL')
-    return t
+    return recognize(t)
 
-t_pattern_QSTRING = r'\"[^\"]*\"'
-t_pattern_NCNAME  = r'\w[\w\-\.]*'
+# t_pattern_QSTRING = r'\"[^\"]*\"'
+# t_pattern_NCNAME  = r'\w[\w\-\.]*'
 
 
-# in iri state, we can match IRIs
-def t_iri_IRIREF(t):
-    r'\<([^<>\'\{\}\|\^`\x00-\x20])*>'
-    t.lexer.begin('INITIAL')
-    return t
-
-# in initial state the URIs need to be enclosed with ""
-# needed to hack p_primaryExpr0
-def t_INITIAL_IRIREF(t):
-    r'\"\<([^<>\'\{\}\|\^`\x00-\x20])*>\"'
-    t.lexer.begin('INITIAL')
-    t.value = t.value[1:-1]
-    return t
 
 
 ## ------------------------------ Comments
@@ -343,39 +356,6 @@ def t_INITIAL_comments_SCOM(t):
     r'\#.*'
     pass
 
-
-# ## ------------------------------ 2.6 Comments
-# # http://www.w3.org/TR/xquery/#comments
-
-# # Comment        ::=  "(:" (CommentContents | Comment)* ":)"
-# # CommentContents        ::=  (Char+ - (Char* ('(:' | ':)') Char*))
-
-# comment_level = 0
-
-# # when it finds the begining of a comment switches to the 'comment'
-# # state and adds the comment level by one
-# def t_INITIAL_comments_SCOM(t):
-#     r'#'
-#     t.lexer.begin('comments')
-#     global comment_level
-#     comment_level += 1
-#     pass
-
-# # END_COMMENT token ends the pattern state iff comment_level counter
-# # gets 0
-# def t_ANY_ECOM(t):
-#     r'\ :\)'
-#     global comment_level
-#     comment_level -= 1
-#     if comment_level == 0: t.lexer.begin('INITIAL')
-#     pass
-
-# # Ignored characters for 'comment' state
-# t_comments_ignore = r".*"
-
-# # illegal characters will end up here
-# def t_comments_error(t):
-#     t.lexer.skip(1)
 
 
 ## -------------
@@ -390,7 +370,7 @@ def t_ANY_newline(t):
 
 
 # illegal characters will end up here
-def t_INITIAL_pattern_iri_error(t):
+def t_INITIAL_pattern_error(t):
     col = find_column(t)
     sys.stderr.write("Illegal character: '" + t.value[0] + "' at line "+ `t.lineno` + ', column '+ `col` + '\n')
     raise SyntaxError
@@ -479,6 +459,10 @@ def p_prefixID(p):
     '''prefixID : PREFIX prefixIDs'''
     p[0] = ''
 
+
+def p_IRIREF(p):
+    '''IRIREF : STARTELM GREATERTHAN'''
+    p[0] = ''.join(p[1:])
 
 def p_prefixIDs(p):
     '''prefixIDs :  NCNAME COLON IRIREF
@@ -717,6 +701,8 @@ def p_sparqlvars(p):
 	p[0] = ( p[1] , [ p[1] ] , [])
 
 
+# ----------------------------------------------
+
 
 def p_forClause(p):
     '''forClause : FOR forVars'''
@@ -838,21 +824,35 @@ def p_directConstructor(p):
 
 # [96]    DirElemConstructor    ::=    "<" QName DirAttributeList ("/>" | (">" DirElemContent* "</" QName S? ">"))
 def p_directElemConstructor(p):
-    '''directElemConstructor : LESSTHAN qname directAttributeList SLASH GREATERTHAN
-			     | LESSTHAN qname directAttributeList GREATERTHAN directElemContentProcessing LESSTHAN SLASH qname GREATERTHAN'''
+    '''directElemConstructor : directElemConstructorElm directElemConstructor  
+                             | directElemConstructorElm'''
+    p[0] = ''.join(p[1:])
+
+def p_directElemConstructorElm(p):
+    '''directElemConstructorElm : STARTELM directAttributeList SLASH GREATERTHAN 
+                                | STARTELM directAttributeList GREATERTHAN
+                                | STARTELM GREATERTHAN
+                                | STARTELM SLASH GREATERTHAN
+			        | enclosedExpr'''
     p[0] = ''.join(p[1:])
 
 
-def p_directElemContentProcessing(p):
-    '''directElemContentProcessing : directElemContentProcessing directElemContent
-				   | empty'''
-    p[0] = ''.join(p[1:])
+# # [96]    DirElemConstructor    ::=    "<" QName DirAttributeList ("/>" | (">" DirElemContent* "</" QName S? ">"))
+# def p_directElemConstructor(p):
+#     '''directElemConstructor : LESSTHAN qname directAttributeList SLASH GREATERTHAN
+# 			     | LESSTHAN qname directAttributeList GREATERTHAN directElemContentProcessing LESSTHAN SLASH qname GREATERTHAN'''
+#     p[0] = ''.join(p[1:])
 
 
-def p_directElemContent(p):
-    '''directElemContent : directConstructor
-			 | enclosedExpr'''
-    p[0] = ''.join(p[1:])
+# def p_directElemContentProcessing(p):
+#     '''directElemContentProcessing : directElemContentProcessing directElemContent
+# 				   | empty'''
+#     p[0] = ''.join(p[1:])
+
+# def p_directElemContent(p):
+#     '''directElemContent : directConstructor
+# 			 | enclosedExpr'''
+#     p[0] = ''.join(p[1:])
 
 
 def p_directAttributeList(p):
@@ -1200,10 +1200,9 @@ def p_occurrenceIndicator(p):
     p[0] = ''.join(p[1:])
 
 
-# ITEM LPAR RPAR
-#  		| 
 def p_itemType(p):
-    '''itemType : atomicType
+    '''itemType : ITEM LPAR RPAR
+ 		| atomicType
 		| kindTest'''
     p[0] = ''.join(p[1:])
 
@@ -1448,12 +1447,12 @@ def p_predicate(p):
     p[0] = ''.join(p[1:])
 
 
-# another hack!
-def p_primaryExpr0(p):
-    '''primaryExpr : IRIREF'''
-    p[0] = '"'+p[1]+'"'
+# # another hack!
+# def p_primaryExpr0(p):
+#     '''primaryExpr : IRIREF'''
+#     p[0] = '"'+p[1]+'"'
 
-def p_primaryExpr1(p):
+def p_primaryExpr(p):
     '''primaryExpr : VAR
 		   | literal
                    | parenthesizedExpr
@@ -1945,31 +1944,102 @@ def p_sparqlPrefixedName(p):
 
 # each reserved word is also a qname to allow it's use for instance in
 # path expressions
-
-#              | FOR
-#              | FROM
-#              | LIMIT
 #              | PREFIX
 #              | BASE
-#              | IF
-#              | isIRI
-#              | LANGMATCHES
-#              | isLITERAL
-#              | BOUND
-#              | STR
-#              | LANG
-#              | isURI
-#              | DATATYPE
-#              | REGEX
-#              | isBLANK
-#              | CONSTRUCT
-#              | ORDER
-#              | WHERE
+#              | FOR
 
 def p_qname(p):
     '''qname : prefixedName
 	     | unprefixedName
-             | A'''
+             | A
+             | IS
+             | EQ
+             | NE
+             | LT
+             | GE
+             | LE
+             | GT
+             | FROM
+             | LIMIT
+             | OFFSET
+             | LET
+             | ORDER
+             | BY
+             | ATS
+             | IN
+             | AS
+             | DESCENDING
+             | ASCENDING
+             | STABLE
+             | IF
+             | THEN
+             | ELSE
+             | RETURN
+             | CONSTRUCT
+             | WHERE
+             | GREATEST
+             | LEAST
+             | COLLATION
+             | CHILD
+             | DESCENDANT
+             | ATTRIBUTE
+             | SELF
+             | DESCENDANTORSELF
+             | FOLLOWINGSIBLING
+             | FOLLOWING
+             | PARENT
+             | ANCESTOR
+             | PRECEDINGSIBLING
+             | PRECEDING
+             | ANCESTORORSELF
+             | ORDERED
+             | UNORDERED
+             | DECLARE
+             | NAMESPACE
+             | DEFAULT
+             | ELEMENT
+             | FUNCTION
+             | BASEURI
+             | AND
+             | OR
+             | TO
+             | DIV
+             | IDIV
+             | MOD
+             | UNION
+             | INTERSECT
+             | EXCEPT
+             | INSTANCE
+             | TREAT
+             | CASTABLE
+             | CAST
+             | OF
+             | EMPTYSEQUENCE
+             | ITEM
+             | NODE
+             | DOCUMENTNODE
+             | TEXT
+             | COMMENT
+             | PROCESSINGINSTRUCTION
+             | SCHEMAATTRIBUTE
+             | SCHEMAELEMENT
+             | DOCUMENT
+             | NAMED
+             | OPTIONAL
+             | FILTER
+             | STR
+             | LANG
+             | LANGMATCHES
+             | DATATYPE
+             | BOUND
+             | isIRI
+             | isURI
+             | isBLANK
+             | isLITERAL
+             | REGEX
+             | TRUE
+             | FALSE
+             | GRAPH'''
     p[0] = ''.join(p[1:])
 
 
@@ -2015,6 +2085,7 @@ def p_error(p):
     '''Error rule for syntax errors -> ignore them gracefully by
     throwing a SyntaxError.'''
 
+    debug.debug("ERROR", p)
     if(p == None):
 	sys.stderr.write('Syntax error at end of file\n')
     else:
