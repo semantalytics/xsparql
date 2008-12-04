@@ -1,10 +1,17 @@
 2008-12-04  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* added testcases
+
+	* src/xsparql/lifrewriter.py (build_triples): avoid rewriting
+	error where subject was duplicated
+
 	* updated the rewriting of the examples
 
 	* src/xsparql/grammar.py (p_mainModule): store and print the
 	'PREFIX' declared namespaces
 	(p_mainModule): output only 'prefix' namespaces
+	(recognize): introduced new terminal to allow prefixed names w/o
+	local part
 
 	* src/xsparql/lowrewriter.py (print_namespaces): function to print
 	the namespaces declared with 'prefix' as XQuery namespaces

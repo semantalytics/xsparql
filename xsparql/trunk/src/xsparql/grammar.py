@@ -154,7 +154,7 @@ tokens = [
     'STAR', 'DOTDOT', 'SLASHSLASH','LESSTHAN', 'GREATERTHAN',  'PLUS', 'MINUS', 'UNIONSYMBOL', 'QUESTIONMARK',
     'LESSTHANLESSTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'EQUALS', 'COLONCOLON',
     'STAR_COLON_NCNAME', 'NCNAME_COLON_STAR', 'BNODE', 'BNODE_CONSTRUCT', 
-    'PREFIXED_NAME', 'UNPREFIXED_NAME',
+    'PREFIXED_NAME', 'UNPREFIXED_NAME', 'PREFIXED_COLON',
     'ORSYMBOL', 'ANDSYMBOL', 'NOT'
     ] + reserved.values()
 
@@ -196,6 +196,7 @@ PN_LOCAL         =       r'(('+PN_CHARS_U+')|[0-9])(('+PN_CHARS+'|\.)*'+PN_CHARS
 
 
 PREFIXED_NAME = r''+PN_PREFIX+':'+PN_LOCAL
+PREFIXED_COLON = r''+PN_LOCAL+':\ '    # space to avoid preceding::
 UNPREFIXED_NAME = r':'+PN_LOCAL
 
 # bnode           =      r'_:(' + NCName + ')'
@@ -239,6 +240,10 @@ def t_INITIAL_pattern_PREFIXED_NAME(t):
 
 @TOKEN(UNPREFIXED_NAME)
 def t_INITIAL_pattern_UNPREFIXED_NAME(t):
+    return recognize(t)
+
+@TOKEN(PREFIXED_COLON)
+def t_INITIAL_pattern_PREFIXED_COLON(t):
     return recognize(t)
 
 
@@ -468,7 +473,28 @@ def p_IRIREF(p):
     '''IRIREF : STARTELM GREATERTHAN'''
     p[0] = ''.join(p[1:])
 
-def p_prefixIDs(p):
+
+def p_prefixIDs0(p):
+    '''prefixIDs :  PREFIXED_COLON IRIREF'''
+    global count
+    global decl_var_ns
+
+    global prefix_namespaces
+
+    count += 1
+    prefix = p[1].rstrip(': ')
+    url = ''.join(p[2])
+
+    # save 'prefix' namespaces
+    prefix_namespaces.append(('prefix', prefix, ':', url))
+
+    col = ':'
+    nsTag = 'prefix'
+    decl_var_ns += lowrewriter.declare_namespaces(nsTag, col, prefix, url, count)
+    p[0] = ''
+
+
+def p_prefixIDs1(p):
     '''prefixIDs :  NCNAME COLON IRIREF
 		 |  COLON IRIREF'''
     global count
@@ -478,13 +504,14 @@ def p_prefixIDs(p):
 
     count += 1
     if len(p) == 4 :
-        prefix_namespaces.append(('prefix', p[1], ':', p[3]))
 	prefix = ''.join(p[1])
 	url = ''.join(p[3])
     elif len(p) == 3:
-        prefix_namespaces.append(('prefix', '', ':', p[2]))
 	prefix = ''
 	url = ''.join(p[2])
+
+    # save 'prefix' namespaces
+    prefix_namespaces.append(('prefix', prefix, ':', url))
 
     col = ':'
     nsTag = 'prefix'
@@ -1941,8 +1968,11 @@ def p_verb_where(p):
 
 ## ----------------------------------------------------------
 
+#                          | COLON
+
 def p_sparqlPrefixedName(p):
     '''sparqlPrefixedName : PREFIXED_NAME
+                          | PREFIXED_COLON
                           | UNPREFIXED_NAME'''
     p[0] = p[1]
 

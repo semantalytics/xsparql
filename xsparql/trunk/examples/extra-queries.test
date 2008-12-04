@@ -4,8 +4,15 @@ extra-queries/graph.xsparql
 extra-queries/item.xsparql
 extra-queries/nested-xsparql.xsparql
 extra-queries/nested_ggp.xsparql
+extra-queries/query-construct_uri1.xsparql
+extra-queries/query-construct_uri2.xsparql
+extra-queries/query-construct_uri3.xsparql
+extra-queries/query-construct_uri4.xsparql
 extra-queries/query-data_empty.xsparql
+extra-queries/query-ncname-empty.xsparql
 extra-queries/query-one.xsparql
+extra-queries/query-prefix.xsparql
+extra-queries/query-prefix_empty.xsparql
 extra-queries/query-reserved_word.xsparql
 extra-queries/query-uri.xsparql
 extra-queries/query-uri2.xsparql

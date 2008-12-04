@@ -109,7 +109,8 @@ def build_triples(gp, variable_p, variable ):
 		elif(s[0] == "["):
 		    ret += '_xsparql:_removeEmpty( \n\t\t fn:concat( \n\t\t "[", ' + subject.rstrip(', ') + po.rstrip(', .') + ', " ] .&#xA;" \n\t\t) \n\t\t )'
 		else:
-		    ret += 'fn:concat( \n\t\t '+ subject + po.rstrip(', ') + '\n\t\t)'
+#		    ret += 'fn:concat( \n\t\t '+ subject + po.rstrip(', ') + '\n\t\t)'
+		    ret += po.rstrip(', ')
 	    else:
 		ret +=  '\n\t ' + cond_subject + cond_po + ' \n\t\t '+ po.rstrip(', ') + '\n\t\t \n ' + suff_po + suff_subject + ' ,'
 
