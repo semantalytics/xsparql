@@ -45,7 +45,7 @@ declare function _xsparql:_validUri($NType as xs:string, $V as xs:string) as xs:
       if ($NType = "_sparql_result:uri" or $NType = "uri")
       then fn:true()
       else if (
-                fn:matches($V, "^<[^>]*>$", "i" )       
+                fn:matches($V, "^<[^>]+>$", "i" )       
 (:                fn:matches($V, "^<[^<>""\ {}|\^`]*>$", "i" ) :)
               )
            then fn:true()

@@ -1,7 +1,10 @@
 2008-12-04  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* updated the rewriting of the examples
+
 	* src/xsparql/grammar.py (p_mainModule): store and print the
 	'PREFIX' declared namespaces
+	(p_mainModule): output only 'prefix' namespaces
 
 	* src/xsparql/lowrewriter.py (print_namespaces): function to print
 	the namespaces declared with 'prefix' as XQuery namespaces
