@@ -404,9 +404,12 @@ letVars = []
 def p_mainModule(p):
     '''mainModule : prolog queryBody'''
 
+    global namespaces
+
     prefix =  '\nimport module namespace _xsparql = "http://xsparql.deri.org/xsparql.xquery"\n'
     prefix += 'at "http://xsparql.deri.org/xsparql.xquery";\n\n'
     prefix += 'declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";\n\n'
+    prefix += lowrewriter.print_namespaces(namespaces)
 
     p[0] = prefix + ''.join(p[1:])
 
@@ -470,11 +473,15 @@ def p_prefixIDs(p):
     global count
     global decl_var_ns
 
+    global namespaces
+
     count += 1
     if len(p) == 4 :
+        namespaces.append(('prefix', p[1], ':', p[3]))
 	prefix = ''.join(p[1])
 	url = ''.join(p[3])
     elif len(p) == 3:
+        namespaces.append(('prefix', '', ':', p[2]))
 	prefix = ''
 	url = ''.join(p[2])
 

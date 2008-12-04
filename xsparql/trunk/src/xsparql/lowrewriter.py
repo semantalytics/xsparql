@@ -434,3 +434,18 @@ def escape_chars(e):
     e = e.replace("\"", "\"\"")
     e = e.replace("&", "&amp;")
     return e
+
+
+def print_namespaces(ns):
+    namespaces = ''
+    for n in ns:
+        if n[1] == '':
+            default = 'default'
+            name = ''
+        else:
+            default = ''
+            name = n[1]
+
+        namespaces += 'declare '+ default + ' namespace '+ name +' = "'+n[3].strip('<>')+'";\n'
+
+    return namespaces
