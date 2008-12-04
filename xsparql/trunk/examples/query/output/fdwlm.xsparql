@@ -4,7 +4,7 @@ at "http://xsparql.deri.org/xsparql.xquery";
 
 declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 
-declare default namespace  = "http://xmlns.com/foaf/0.1/";
+declare default element namespace "http://xmlns.com/foaf/0.1/";
 
 declare namespace foaf = "http://xmlns.com/foaf/0.1/" ;
 declare variable $_NS1 := "prefix  :  &#60;http://xmlns.com/foaf/0.1/&#62;";

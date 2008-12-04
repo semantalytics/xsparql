@@ -8,6 +8,7 @@
 
 	* src/xsparql/lowrewriter.py (print_namespaces): function to print
 	the namespaces declared with 'prefix' as XQuery namespaces
+	(print_namespaces): corrected the syntax of default namespaces
 
 2008-12-03  Nuno Lopes  <nuno.lopes@deri.org>
 

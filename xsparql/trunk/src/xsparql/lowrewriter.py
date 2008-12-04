@@ -440,12 +440,9 @@ def print_namespaces(ns):
     namespaces = ''
     for n in ns:
         if n[1] == '':
-            default = 'default'
-            name = ''
+            namespaces += 'declare default element namespace "'+n[3].strip('<>')+'";\n'
         else:
-            default = ''
-            name = n[1]
+            namespaces += 'declare namespace '+ n[1] +' = "'+n[3].strip('<>')+'";\n'
 
-        namespaces += 'declare '+ default + ' namespace '+ name +' = "'+n[3].strip('<>')+'";\n'
 
     return namespaces
