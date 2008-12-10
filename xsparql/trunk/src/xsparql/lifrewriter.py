@@ -282,7 +282,7 @@ def build_bnode(type, b):
 	    let,cond,ret,suff = genLetCondReturn(type, ['"' , bNode  ,  '",  data(', expr, ')'] )
 	    return let,cond, ret +', ', suff
     else:
-	if (b >= 2 and b[0] == '{' and b[-1] == '}') or (b in grammar.letVars) :  # literal? concatenate " and "
+	if (b >= 2 and b[0] == '{' and b[-1] == '}' and b[1:-1].find('{') == -1 and b[1:-1].find('}') == -1) or (b in grammar.letVars) :  # literal? concatenate " and "
 	    strip = str(b).lstrip('{')
 	    b = strip.rstrip('}')
 
@@ -296,8 +296,17 @@ def build_bnode(type, b):
 
 	    let,cond,ret,suff = genLetCondReturn(type,  [ b ])
 	    return let,cond, ret + ', ', suff
+
 	else:
-	    return "", "", "  '"+ b + "',  ", ""
+            pattern = tokenize(b)
+            debug.debug(b, pattern[0].strip('"\''), (b >= 2 and (pattern[0].strip('"\'') != b.strip('"\''))))  
+            # if the first element (modulo " and ') is the same as the original do not execute the replacement
+            if (b >= 2 and (pattern[0].strip('"\'') != b.strip('"\''))):   # literal? concatenate " and "
+                debug.debug('replace1')
+                let,cond,ret, suff = genLetCondReturn(type,  pattern)
+                return let,cond, ret + ', ', suff
+            else:
+                return "", "", "  '"+ b + "',  ", ""
 
 
 
@@ -338,3 +347,32 @@ def genLetCondReturn(type, value):
 
 
     return let, cond, var, suffix
+
+
+
+def tokenize(string):
+
+    tokens = re.split('([^{}]*)(?:({)(.*?)(})){1,2}([^{}]*)', string)
+    pattern = []
+    enclosed = False
+    sep = ''
+
+    for tok in tokens:
+        if tok == '':
+            continue
+        elif tok == '{':
+            enclosed = True
+            continue
+        elif tok == '}':
+            enclosed = False
+            continue
+        else: 
+            if enclosed:
+                pattern.append(sep + tok)
+            else:
+                pattern.append( sep + "'"+tok+"'")
+        
+        sep = ', '
+
+    debug. debug(pattern)
+    return pattern

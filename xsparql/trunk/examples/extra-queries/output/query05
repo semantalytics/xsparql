@@ -32,6 +32,7 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_FName_RDFTerm :=  _xsparql:_rdf_term($_FName_NodeType, $FName )
  
 
+let $_validObject1 := fn:concat('foaf:',  $X   ) 
 
 
 
@@ -47,10 +48,11 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
  ) else ""  
 ,  
 	   
-	   fn:concat( 
-		 $_X_RDFTerm,  " foaf:mbox ",   'foaf:{ $X   }',  " .&#xA;"
+	  if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
+		 fn:concat( 
+		 $_X_RDFTerm,  " foaf:mbox ", $_validObject1, " .&#xA;"
 		)
-  
+ ) else ""  
 
 		 
   ) else ""  )

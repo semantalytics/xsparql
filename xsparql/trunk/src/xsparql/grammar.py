@@ -1660,6 +1660,7 @@ def p_iriConstruct(p):
     '''iriConstruct : LESSTHAN enclosedExpr GREATERTHAN
 		    | enclosedExpr COLON enclosedExpr
 		    | NCNAME COLON enclosedExpr
+		    | enclosedExpr UNPREFIXED_NAME
 		    | enclosedExpr COLON NCNAME'''
     p[0] = ''.join(p[1:])
 

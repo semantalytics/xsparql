@@ -1,7 +1,15 @@
 2008-12-10  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* src/xsparql/lifrewriter.py (build_bnode): added handling for
+	constructed iris of the following forms: {$a}:b, a:{$b} and {$a}:{$b}
+
 	* src/xsparql/grammar.py (recognize): allow ':' as a SPARQL
 	prefixed name
+	(p_iriConstruct): add 'UNPREFIXED_NAME' to allow constructing iri
+	of the type {$a}:b.  There is the following conflict thats needs
+	to be resolved:
+	   construct { {$a} :b "c" }
+	   construct { {$a}:b :b "c" }
 
 	* examples/extra-queries/query-colon.xsparql: new example
 
