@@ -1,3 +1,13 @@
+2008-12-10  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (recognize): allow ':' as a SPARQL
+	prefixed name
+
+	* examples/extra-queries/query-colon.xsparql: new example
+
+	* examples/update_rewriting.sh (XSPARQL): script to update the
+	rewriting of the examples.
+
 2008-12-04  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* added testcases

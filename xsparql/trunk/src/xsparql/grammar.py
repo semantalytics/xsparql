@@ -196,7 +196,7 @@ PN_LOCAL         =       r'(('+PN_CHARS_U+')|[0-9])(('+PN_CHARS+'|\.)*'+PN_CHARS
 
 
 PREFIXED_NAME = r''+PN_PREFIX+':'+PN_LOCAL
-PREFIXED_COLON = r''+PN_LOCAL+':\ '    # space to avoid preceding::
+PREFIXED_COLON = r'('+PN_LOCAL+')?:\ '    # space to avoid preceding::
 UNPREFIXED_NAME = r':'+PN_LOCAL
 
 # bnode           =      r'_:(' + NCName + ')'
@@ -475,15 +475,20 @@ def p_IRIREF(p):
 
 
 def p_prefixIDs0(p):
-    '''prefixIDs :  PREFIXED_COLON IRIREF'''
+    '''prefixIDs :  PREFIXED_COLON IRIREF
+		 |  NCNAME PREFIXED_COLON IRIREF'''
     global count
     global decl_var_ns
 
     global prefix_namespaces
 
     count += 1
-    prefix = p[1].rstrip(': ')
-    url = ''.join(p[2])
+    if len(p) == 4 :
+        prefix = p[1].rstrip(': ')
+        url = ''.join(p[3])
+    elif len(p) == 3:
+        prefix = p[1].rstrip(': ')
+        url = ''.join(p[2])
 
     # save 'prefix' namespaces
     prefix_namespaces.append(('prefix', prefix, ':', url))
@@ -1967,8 +1972,6 @@ def p_verb_where(p):
 
 
 ## ----------------------------------------------------------
-
-#                          | COLON
 
 def p_sparqlPrefixedName(p):
     '''sparqlPrefixedName : PREFIXED_NAME

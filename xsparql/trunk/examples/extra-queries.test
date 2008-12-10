@@ -4,6 +4,7 @@ extra-queries/graph.xsparql
 extra-queries/item.xsparql
 extra-queries/nested-xsparql.xsparql
 extra-queries/nested_ggp.xsparql
+extra-queries/query-colon.xsparql
 extra-queries/query-construct_uri1.xsparql
 extra-queries/query-construct_uri2.xsparql
 extra-queries/query-construct_uri3.xsparql
