@@ -26,7 +26,7 @@ let $friends  := $doc//*[@id = "friends"  ]
 let $foaf  := "foaf"  
 for $f at $_f_Pos  in $friends   
 
-let $_validObject1 := fn:concat( $foaf   , ':homepage') 
+let $_validObject1 := fn:concat($foaf  , ':homepage') 
 
 
 

@@ -153,7 +153,7 @@ tokens = [
     'CARROT', 'COLON', 'COMMA', 'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON',
     'STAR', 'DOTDOT', 'SLASHSLASH','LESSTHAN', 'GREATERTHAN',  'PLUS', 'MINUS', 'UNIONSYMBOL', 'QUESTIONMARK',
     'LESSTHANLESSTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'EQUALS', 'COLONCOLON',
-    'STAR_COLON_NCNAME', 'NCNAME_COLON_STAR', 'BNODE', 'BNODE_CONSTRUCT', 
+    'STAR_COLON_NCNAME', 'NCNAME_COLON_STAR', 'BNODE', 'BNODE_CONSTRUCT', 'IRI_CONSTRUCT',
     'PREFIXED_NAME', 'UNPREFIXED_NAME', 'PREFIXED_COLON',
     'ORSYMBOL', 'ANDSYMBOL', 'NOT'
     ] + reserved.values()
@@ -203,6 +203,7 @@ UNPREFIXED_NAME = r':'+PN_LOCAL
 # bnode_construct =      r'_:(' + NCName + ')?\{'
 bnode           =      r'_:(' + PN_PREFIX + ')'
 bnode_construct =      r'_:(' + PN_PREFIX + ')?\{'
+iri_construct =  r'\}:' + PN_PREFIX
 
 
 
@@ -210,24 +211,13 @@ def t_INITIAL_pattern_STARTELM(t):
     r'\<([^<>\'\{\}\|\^`\x00-\x20])+'
     return recognize(t)
 
-# # in iri state, we can match IRIs
-# def t_iri_IRIREF(t):
-#     r'\<([^<>\'\{\}\|\^`\x00-\x20])*>'
-# #    t.lexer.begin('INITIAL')    # return to other state
-#     t.lexer.pop_state()
-#     return recognize(t)
-
-# # in initial state the URIs need to be enclosed with ""
-# # needed to hack p_primaryExpr0
-# def t_INITIAL_IRIREF(t):
-#     r'\<([^<>\'\{\}\|\^`\x00-\x20])*>'
-# #    t.lexer.begin('INITIAL')
-# #    t.value = t.value[1:-1]
-#     return recognize(t)
-
 
 @TOKEN(bnode_construct)
 def t_INITIAL_pattern_BNODE_CONSTRUCT(t):
+    return recognize(t)
+
+@TOKEN(iri_construct)
+def t_INITIAL_pattern_IRI_CONSTRUCT(t):
     return recognize(t)
 
 @TOKEN(bnode)
@@ -1660,7 +1650,7 @@ def p_iriConstruct(p):
     '''iriConstruct : LESSTHAN enclosedExpr GREATERTHAN
 		    | enclosedExpr COLON enclosedExpr
 		    | NCNAME COLON enclosedExpr
-		    | enclosedExpr UNPREFIXED_NAME
+		    | LCURLY expr IRI_CONSTRUCT 
 		    | enclosedExpr COLON NCNAME'''
     p[0] = ''.join(p[1:])
 

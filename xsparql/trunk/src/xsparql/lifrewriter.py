@@ -299,10 +299,8 @@ def build_bnode(type, b):
 
 	else:
             pattern = tokenize(b)
-            debug.debug(b, pattern[0].strip('"\''), (b >= 2 and (pattern[0].strip('"\'') != b.strip('"\''))))  
             # if the first element (modulo " and ') is the same as the original do not execute the replacement
             if (b >= 2 and (pattern[0].strip('"\'') != b.strip('"\''))):   # literal? concatenate " and "
-                debug.debug('replace1')
                 let,cond,ret, suff = genLetCondReturn(type,  pattern)
                 return let,cond, ret + ', ', suff
             else:

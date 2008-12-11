@@ -1,3 +1,8 @@
+2008-12-11  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (t_INITIAL_pattern_IRI_CONSTRUCT): added
+	a new terminal to solve the shift/reduce conflict
+
 2008-12-10  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/lifrewriter.py (build_bnode): added handling for
