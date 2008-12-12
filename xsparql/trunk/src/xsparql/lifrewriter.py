@@ -159,10 +159,11 @@ def build_predicate(subject, p):
 
     if len(p) == 1:
 	b = p[0][0]
-	if len(b) >= 2 and b[0] == '{' and b[-1] == '}' :
+	if len(b) >= 2 and b[0] == '{' and b[-1] == '}' and b[1:-1].find('{') == -1 and b[1:-1].find('}') == -1:
 	    strip = str(b).lstrip('{')
 	    b = strip.rstrip('}')
 
+#            let_p, cond_p, ret_p, suff_p = build_bnode('_validPredicate', p[0][1])
 	    let, cond, ret, suff = build_object(subject, b, p[0][1])
 	    return let, cond,  ' '+ b + ',  ' + ret + ' ', suff
 	elif len(b) >= 2 and ( b[0] == '$'or b[0] == '?'):
@@ -175,14 +176,15 @@ def build_predicate(subject, p):
 	     else:
 		 var = b
 
-	     let, cond, ret, suff = build_object(subject, var,  p[0][1])
-
-	     return let, cond, ret, suff
+             let_p, cond_p, ret_p, suff_p = build_bnode('_validPredicate', var)
+	     let, cond, ret, suff = build_object(subject, ret_p.rstrip(', '),  p[0][1])
+	     return let_p + let, cond_p + cond, ret, suff_p + suff
 	else:
 	     if len(b) >= 2:
 		 if(b[0] != '_' and b[1] != ':'):
-		     let, cond, ret, suff = build_object(subject, b, p[0][1])
-		     return let, "", cond + '  \n\t  ' + ret.rstrip(', ') + '  \n ' + suff, ""
+                     let_p, cond_p, ret_p, suff_p = build_bnode('_validPredicate', b)
+ 		     let, cond, ret, suff = build_object(subject, ret_p.rstrip(', '), p[0][1])
+ 		     return let_p + let, "", cond_p + cond + '  \n\t  ' + ret.rstrip(', ') + '  \n ' + suff_p + suff, ""
 	     else:
 		 let, cond, ret,suff = build_object(subject, b, p[0][1])
 		 return let, "", cond + '  \n\t ' + ret.rstrip(',')  + ', ' + suff, ""
@@ -206,6 +208,11 @@ def build_object(subject, predicate, o):
 
 #    debug.debug('------- build_object', o)
 
+    if predicate.rstrip(' ')[0] == '$':
+        Qpredicate = '" ", ' + predicate + '," "'
+    else:
+        Qpredicate = '" ' + predicate + ' "'
+
     if len(o) == 1 and isinstance(o[0], list) and isinstance(o[0][0], str):
 	d =  o[0]
 	if d[0] == '[' :
@@ -215,9 +222,9 @@ def build_object(subject, predicate, o):
 	    let, cond, ret,suff = build_predicate("", d)
 	    # distinguish from nested [] ?
 	    if inBnode > 0:
-		ret = ' fn:concat( \n\t\t "' + predicate + ' ", ' + '"[", ' + ret.rstrip(', ') + ', " ]" \n\t\t ) \n'
+		ret = ' fn:concat( \n\t\t ' + Qpredicate + ', ' + '"[", ' + ret.rstrip(', ') + ', " ]" \n\t\t ) \n'
 	    else:
-		ret = ' fn:concat( \n\t\t ' + subject + ' " ' + predicate + ' ", ' + '"[", ' + ret.rstrip(', ') + ', " ]", " .&#xA;" \n\t\t ) \n'
+		ret = ' fn:concat( \n\t\t ' + subject + ' ' + Qpredicate + ', ' + '"[", ' + ret.rstrip(', ') + ', " ]", " .&#xA;" \n\t\t ) \n'
 
 	    inBnode = inBnode - 1
 
@@ -226,17 +233,17 @@ def build_object(subject, predicate, o):
 	else:
 	    let,cond,ret,suff = build_bnode('_validObject', o[0][0])
 	    if (subject == "" or subject.strip('\', ') == "[]"):
-		return let, cond, ' fn:concat(" ",' + predicate + ', " ", ' + ret.rstrip(', ')  + ', " &#59; ")', suff
+		return let, cond, ' fn:concat(' + Qpredicate + ',  ' + ret.rstrip(', ')  + ', " &#59; ")', suff
 	    else:
-		return let, "", cond + ' fn:concat( \n\t\t '+ subject + ' " ' + predicate + ' ", ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t)\n'+suff, ""
+		return let, "", cond + ' fn:concat( \n\t\t '+ subject + ' ' + Qpredicate + ', ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t)\n'+suff, ""
 
     elif len(o) == 1 and isinstance(o[0], str):
 	let,cond,ret,suff = build_bnode('_validObject', o[0])
 
 	if (subject == "" or subject.strip('\', ') == "[]"):
-	    return let, cond, ' fn:concat(" ' + predicate + ' ", ' + ret.rstrip(', ')  + ', "&#59;")', suff
+	    return let, cond, ' fn:concat(' + Qpredicate + ', ' + ret.rstrip(', ')  + ', "&#59;")', suff
 	else:
-	    return let, "", cond + ' fn:concat( \n\t\t '+ subject + ' " ' + predicate + ' ", ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t)\n'+suff, ""
+	    return let, "", cond + ' fn:concat( \n\t\t '+ subject + ' ' + Qpredicate + ', ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t)\n'+suff, ""
 
     elif len(o) == 1 and isinstance(o[0], list):
 	return build_predicate(subject, o[0])
@@ -303,6 +310,8 @@ def build_bnode(type, b):
             if (b >= 2 and (pattern[0].strip('"\'') != b.strip('"\''))):   # literal? concatenate " and "
                 let,cond,ret, suff = genLetCondReturn(type,  pattern)
                 return let,cond, ret + ', ', suff
+            elif type == '_validPredicate':
+                return "", "", b , ""
             else:
                 return "", "", "  '"+ b + "',  ", ""
 
@@ -372,5 +381,4 @@ def tokenize(string):
         
         sep = ', '
 
-    debug. debug(pattern)
     return pattern

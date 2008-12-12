@@ -1,3 +1,10 @@
+2008-12-12  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* added new testcases
+
+	* src/xsparql/lifrewriter.py (build_predicate): Add check for
+	validPredicate
+
 2008-12-11  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/grammar.py (t_INITIAL_pattern_IRI_CONSTRUCT): added

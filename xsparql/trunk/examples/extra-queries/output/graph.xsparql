@@ -38,11 +38,12 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 		
  
 	 if ( _xsparql:_validSubject( "",  $_g_RDFTerm  ) ) then (
+		if ( _xsparql:_validPredicate( "",  $_g_RDFTerm  ) ) then (
 		 
 		 if ( _xsparql:_validObject( "",  $_g_RDFTerm  ) ) then (
 		 fn:concat( 
-		 $_g_RDFTerm,  " $_g_RDFTerm ", $_g_RDFTerm, " .&#xA;"
+		 $_g_RDFTerm,  " ", $_g_RDFTerm," ", $_g_RDFTerm, " .&#xA;"
 		)
  ) else ""
 		 
-  ) else "" 
+  ) else "" ) else "" 

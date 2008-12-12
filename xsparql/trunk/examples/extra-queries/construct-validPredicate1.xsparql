@@ -1,0 +1,11 @@
+declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace rdfs="http://www.w3.org/2000/01/rdf-schema#";
+declare namespace xhtml="http://www.w3.org/1999/xhtml";
+declare namespace owl="http://www.w3.org/2002/07/owl#";
+
+let $doc := doc("http://apassant.net/")
+
+let $uri := "http://www.xyz.com"
+
+for $s in data($doc//@about)
+construct { $s <{$uri}> $s }

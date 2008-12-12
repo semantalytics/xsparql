@@ -1,3 +1,10 @@
+extra-queries/construct-validPredicate1.xsparql
+extra-queries/construct-validPredicate2.xsparql
+extra-queries/construct-validPredicate3.xsparql
+extra-queries/construct-validPredicate4.xsparql
+extra-queries/construct-validPredicate5.xsparql
+extra-queries/construct-validPredicate6.xsparql
+extra-queries/construct-validPredicate7.xsparql
 extra-queries/distribution.xsparql
 extra-queries/distribution_simple.xsparql
 extra-queries/graph.xsparql
@@ -8,6 +15,7 @@ extra-queries/prefix_enclosed1.xsparql
 extra-queries/prefix_enclosed2.xsparql
 extra-queries/prefix_enclosed3.xsparql
 extra-queries/prefix_enclosed4.xsparql
+extra-queries/prefix_enclosed5.xsparql
 extra-queries/query-colon.xsparql
 extra-queries/query-construct_uri1.xsparql
 extra-queries/query-construct_uri2.xsparql

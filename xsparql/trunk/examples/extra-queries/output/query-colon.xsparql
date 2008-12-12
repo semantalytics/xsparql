@@ -37,7 +37,7 @@ let $_validObject2 := fn:concat("<" , $friendsAccount   , ">")
 		 
 		   
 	   fn:concat( 
-		     $_validSubject1  ,   " :  ", "[", if ( _xsparql:_validObject( "",  $_validObject2  ) ) then (
+		     $_validSubject1  ,   " : ", "[", if ( _xsparql:_validObject( "",  $_validObject2  ) ) then (
 		  
 	   fn:concat(" foaf:userAccount ",     $_validObject2, "&#59;")  
   ) else "", " ]", " .&#xA;" 

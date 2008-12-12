@@ -30,7 +30,7 @@ let $_validObject2 := fn:concat( '"',   data($nameB   )   ,  '"')
 	  fn:concat(" a ",   'foaf:Person', "&#59;"),  
   
 	   fn:concat( 
-		 "foaf:knows ", "[", 
+		 " foaf:knows ", "[", 
 	 if ( _xsparql:_validObject( "",  $_validObject2  ) ) then (
 		  
 	   fn:concat(" foaf:name ", $_validObject2, "&#59;")  

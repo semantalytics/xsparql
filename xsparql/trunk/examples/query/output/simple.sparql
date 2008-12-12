@@ -37,11 +37,12 @@ let $_validObject1 := fn:concat("_:a", "_", data($_aux_result1_Pos))
 	 if ( _xsparql:_validSubject( "",  $_x_RDFTerm  ) ) then (
 		 
 		   
-	  if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
+	  if ( _xsparql:_validPredicate( "",  $_x_RDFTerm  ) ) then (
+		if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
 		 fn:concat( 
-		 $_x_RDFTerm,  " :p ", "[",  fn:concat(" ",$_x_RDFTerm, " ", $_validObject1, " &#59; "), " ]", " .&#xA;" 
+		 $_x_RDFTerm,  " :p ", "[",  fn:concat(" ", $_x_RDFTerm," ",  $_validObject1, " &#59; "), " ]", " .&#xA;" 
 		 ) 
- ) else ""  
+ ) else "" ) else ""  
 
 		 
   ) else "" 
