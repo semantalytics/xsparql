@@ -18,16 +18,22 @@ select $UID2 $X2 $Y2 from <http://xsparql.deri.org/data/relations.rdf>  where { 
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_UID2_Node := ($_aux_result1/_sparql_result:binding[@name = "UID2"])
 	let $_UID2_NodeType := name($_UID2_Node/*)
+	let $_UID2_NodeDatatype := $_UID2_Node/*/@datatype
+	let $_UID2_NodeLang := $_UID2_Node/*/@lang
 	let $UID2 := data($_UID2_Node/*)
-	let $_UID2_RDFTerm :=  _xsparql:_rdf_term($_UID2_NodeType, $UID2 )
+	let $_UID2_RDFTerm :=  _xsparql:_rdf_term($_UID2_NodeType, $UID2, $_UID2_NodeLang, $_UID2_NodeDatatype )
 	let $_X2_Node := ($_aux_result1/_sparql_result:binding[@name = "X2"])
 	let $_X2_NodeType := name($_X2_Node/*)
+	let $_X2_NodeDatatype := $_X2_Node/*/@datatype
+	let $_X2_NodeLang := $_X2_Node/*/@lang
 	let $X2 := data($_X2_Node/*)
-	let $_X2_RDFTerm :=  _xsparql:_rdf_term($_X2_NodeType, $X2 )
+	let $_X2_RDFTerm :=  _xsparql:_rdf_term($_X2_NodeType, $X2, $_X2_NodeLang, $_X2_NodeDatatype )
 	let $_Y2_Node := ($_aux_result1/_sparql_result:binding[@name = "Y2"])
 	let $_Y2_NodeType := name($_Y2_Node/*)
+	let $_Y2_NodeDatatype := $_Y2_Node/*/@datatype
+	let $_Y2_NodeLang := $_Y2_Node/*/@lang
 	let $Y2 := data($_Y2_Node/*)
-	let $_Y2_RDFTerm :=  _xsparql:_rdf_term($_Y2_NodeType, $Y2 )
+	let $_Y2_RDFTerm :=  _xsparql:_rdf_term($_Y2_NodeType, $Y2, $_Y2_NodeLang, $_Y2_NodeDatatype )
 
 let $dist  := $X2  
 order by $dist    return <user><user>{ $UID2   }</user><dist>{ $dist   }</dist></user>  

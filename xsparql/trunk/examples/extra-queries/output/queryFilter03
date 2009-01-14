@@ -21,16 +21,22 @@ select $N $P $F from <http://xsparql.deri.org/data/vCard.rdf>  where {    $P   v
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_N_Node := ($_aux_result1/_sparql_result:binding[@name = "N"])
 	let $_N_NodeType := name($_N_Node/*)
+	let $_N_NodeDatatype := $_N_Node/*/@datatype
+	let $_N_NodeLang := $_N_Node/*/@lang
 	let $N := data($_N_Node/*)
-	let $_N_RDFTerm :=  _xsparql:_rdf_term($_N_NodeType, $N )
+	let $_N_RDFTerm :=  _xsparql:_rdf_term($_N_NodeType, $N, $_N_NodeLang, $_N_NodeDatatype )
 	let $_P_Node := ($_aux_result1/_sparql_result:binding[@name = "P"])
 	let $_P_NodeType := name($_P_Node/*)
+	let $_P_NodeDatatype := $_P_Node/*/@datatype
+	let $_P_NodeLang := $_P_Node/*/@lang
 	let $P := data($_P_Node/*)
-	let $_P_RDFTerm :=  _xsparql:_rdf_term($_P_NodeType, $P )
+	let $_P_RDFTerm :=  _xsparql:_rdf_term($_P_NodeType, $P, $_P_NodeLang, $_P_NodeDatatype )
 	let $_F_Node := ($_aux_result1/_sparql_result:binding[@name = "F"])
 	let $_F_NodeType := name($_F_Node/*)
+	let $_F_NodeDatatype := $_F_Node/*/@datatype
+	let $_F_NodeLang := $_F_Node/*/@lang
 	let $F := data($_F_Node/*)
-	let $_F_RDFTerm :=  _xsparql:_rdf_term($_F_NodeType, $F )
+	let $_F_RDFTerm :=  _xsparql:_rdf_term($_F_NodeType, $F, $_F_NodeLang, $_F_NodeDatatype )
 
 let $_validSubject1 := fn:concat("_:b", "_", data($_aux_result1_Pos)) 
 let $_validObject2 := fn:concat( '"',   fn:concat($N   , " "   , $F   )   ,  '"') 

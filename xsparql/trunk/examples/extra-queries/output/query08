@@ -17,16 +17,22 @@ select $s $p $x from <http://xsparql.deri.org/data/alice.ttl>  where {    $s    
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_s_Node := ($_aux_result1/_sparql_result:binding[@name = "s"])
 	let $_s_NodeType := name($_s_Node/*)
+	let $_s_NodeDatatype := $_s_Node/*/@datatype
+	let $_s_NodeLang := $_s_Node/*/@lang
 	let $s := data($_s_Node/*)
-	let $_s_RDFTerm :=  _xsparql:_rdf_term($_s_NodeType, $s )
+	let $_s_RDFTerm :=  _xsparql:_rdf_term($_s_NodeType, $s, $_s_NodeLang, $_s_NodeDatatype )
 	let $_p_Node := ($_aux_result1/_sparql_result:binding[@name = "p"])
 	let $_p_NodeType := name($_p_Node/*)
+	let $_p_NodeDatatype := $_p_Node/*/@datatype
+	let $_p_NodeLang := $_p_Node/*/@lang
 	let $p := data($_p_Node/*)
-	let $_p_RDFTerm :=  _xsparql:_rdf_term($_p_NodeType, $p )
+	let $_p_RDFTerm :=  _xsparql:_rdf_term($_p_NodeType, $p, $_p_NodeLang, $_p_NodeDatatype )
 	let $_x_Node := ($_aux_result1/_sparql_result:binding[@name = "x"])
 	let $_x_NodeType := name($_x_Node/*)
+	let $_x_NodeDatatype := $_x_Node/*/@datatype
+	let $_x_NodeLang := $_x_Node/*/@lang
 	let $x := data($_x_Node/*)
-	let $_x_RDFTerm :=  _xsparql:_rdf_term($_x_NodeType, $x )
+	let $_x_RDFTerm :=  _xsparql:_rdf_term($_x_NodeType, $x, $_x_NodeLang, $_x_NodeDatatype )
 
 let $_validObject1 := fn:concat("_:a", "_", data($_aux_result1_Pos)) 
 

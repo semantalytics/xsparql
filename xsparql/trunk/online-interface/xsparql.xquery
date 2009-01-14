@@ -1,17 +1,19 @@
 module namespace _xsparql =  "http://xsparql.deri.org/xsparql.xquery" ;
 
 
-declare function _xsparql:_rdf_term($NType as xs:string, $V as xs:string) as xs:string 
-{ 
-  let $rdf_term := 
-      if($NType = "_sparql_result:literal" or $NType = "literal") 
-      then fn:concat("""",$V,"""") 
-      else if ($NType = "_sparql_result:bnode" or $NType = "bnode") 
-           then fn:concat("_:", $V) 
-           else if ($NType = "_sparql_result:uri" or $NType = "uri") 
-                then fn:concat("<", $V, ">") 
-                else "" 
-  return $rdf_term  
+declare function _xsparql:_rdf_term($NType as xs:string, $V as xs:string, $L as xs:string, $DT as xs:string) as xs:string
+{
+   let $rdf_term :=
+       if($NType = "_sparql_result:literal" or $NType = "literal")
+       then fn:concat("""",$V,"""", if($L) then fn:concat("@", $L) else "", 
+                                    if($DT) then fn:concat("^^<", $DT,">") else "" 
+                     )
+       else if ($NType = "_sparql_result:bnode" or $NType = "bnode")
+            then fn:concat("_:", $V)
+            else if ($NType = "_sparql_result:uri" or $NType = "uri")
+                 then fn:concat("<", $V, ">")
+                 else ""
+   return $rdf_term
 };
 
 
@@ -81,7 +83,7 @@ declare function _xsparql:_validSubject($NType as xs:string, $V as xs:string) as
 declare function _xsparql:_validPredicate($NType as xs:string, $V as xs:string) as xs:boolean
 { 
   let $return := 
-      if ( _xsparql:_validUri($NType, $V) ) 
+      if ( _xsparql:_validUri($NType, $V) or fn:matches($V, "a") ) 
       then fn:true() 
       else fn:false()
   return $return 

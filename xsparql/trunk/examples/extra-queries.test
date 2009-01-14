@@ -22,6 +22,9 @@ extra-queries/query-construct_uri2.xsparql
 extra-queries/query-construct_uri3.xsparql
 extra-queries/query-construct_uri4.xsparql
 extra-queries/query-data_empty.xsparql
+extra-queries/query-kml0.xsparql
+extra-queries/query-kml1.xsparql
+extra-queries/query-kml2.xsparql
 extra-queries/query-ncname-empty.xsparql
 extra-queries/query-one.xsparql
 extra-queries/query-prefix.xsparql

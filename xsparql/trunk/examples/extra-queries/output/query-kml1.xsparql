@@ -4,24 +4,21 @@ at "http://xsparql.deri.org/xsparql.xquery";
 
 declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 
-declare namespace xs = "http://www.w3.org/2001/XMLSchema#";
 declare namespace foaf = "http://xmlns.com/foaf/0.1/";
-declare namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-declare namespace incontext = "http://www.in-context.eu/ontologies#";
-declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+declare namespace geo = "http://www.w3.org/2003/01/geo/wgs84_pos#";
 
 
-
-
-
-declare variable $_NS1 := "prefix  xs:  &#60;http://www.w3.org/2001/XMLSchema#&#62;";
-declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
-declare variable $_NS3 := "prefix  rdf:  &#60;http://www.w3.org/1999/02/22-rdf-syntax-ns#&#62;";
-declare variable $_NS4 := "prefix  incontext:  &#60;http://www.in-context.eu/ontologies#&#62;";
-declare variable $_NS5 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+declare variable $_NS2 := "prefix  geo:  &#60;http://www.w3.org/2003/01/geo/wgs84_pos#&#62;";
 <kml xmlns = "http://www.opengis.net/kml/2.2">{ 
-let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3,  $_NS4,  $_NS5, "
-select $person $fn $ln $long $lat  where {    $person   rdf:type  foaf:Person  .    $person   incontext:id    $id   .    $person   incontext:hasGPSCoordinate    $gps   .    $gps   incontext:long    $long   .    $gps   incontext:lat    $lat   .    $person   foaf:firstName    $fn   .    $person   foaf:lastName    $ln   .  filter  (  $long      !=  """"      &amp;&amp;  $lat      !=  """"          )   } ")))
+let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2, "
+select $person $fn $ln $long $lat from <sample_person_geodata.rdf>  where {    $person    a  foaf:Person   ;   foaf:firstName    $fn    ;   foaf:lastName    $ln    ;  foaf:based_near [   a  geo:Point   ;   geo:long    $long    ;  geo:lat    $lat    
+  
+  ]
+   
+  
+  
+ .   } ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_person_Node := ($_aux_result1/_sparql_result:binding[@name = "person"])
 	let $_person_NodeType := name($_person_Node/*)

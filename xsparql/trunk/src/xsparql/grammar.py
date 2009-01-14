@@ -1656,7 +1656,9 @@ def p_iriConstruct(p):
 
 
 def p_literalConstruct(p):
-    '''literalConstruct :  enclosedExpr'''
+    '''literalConstruct :  enclosedExpr
+                        |  enclosedExpr AT enclosedExpr
+                        |  enclosedExpr CARROT CARROT iriConstruct'''
     p[0] = ''.join(p[1:])
 
 

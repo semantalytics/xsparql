@@ -24,12 +24,16 @@ select $X $FName from <http://xsparql.deri.org/data/vCard.rdf>  where {    $X   
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_X_Node := ($_aux_result1/_sparql_result:binding[@name = "X"])
 	let $_X_NodeType := name($_X_Node/*)
+	let $_X_NodeDatatype := $_X_Node/*/@datatype
+	let $_X_NodeLang := $_X_Node/*/@lang
 	let $X := data($_X_Node/*)
-	let $_X_RDFTerm :=  _xsparql:_rdf_term($_X_NodeType, $X )
+	let $_X_RDFTerm :=  _xsparql:_rdf_term($_X_NodeType, $X, $_X_NodeLang, $_X_NodeDatatype )
 	let $_FName_Node := ($_aux_result1/_sparql_result:binding[@name = "FName"])
 	let $_FName_NodeType := name($_FName_Node/*)
+	let $_FName_NodeDatatype := $_FName_Node/*/@datatype
+	let $_FName_NodeLang := $_FName_Node/*/@lang
 	let $FName := data($_FName_Node/*)
-	let $_FName_RDFTerm :=  _xsparql:_rdf_term($_FName_NodeType, $FName )
+	let $_FName_RDFTerm :=  _xsparql:_rdf_term($_FName_NodeType, $FName, $_FName_NodeLang, $_FName_NodeDatatype )
  
 
 let $_validObject1 := fn:concat("<" , $Y   , ">") 

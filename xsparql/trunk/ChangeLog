@@ -1,8 +1,14 @@
 2009-01-14  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* src/xsparql/grammar.py (p_literalConstruct): added grammar rules
+	to allow to construct literals with language tags and nodetype
+	tags.
+
 	* src/xsparql/lowrewriter.py (build_predicate): Fixed the bug
 	where only the 2 first elements of predicate_object lists were
 	being parsed.  Fixes Stephane's queries.
+	(build_aux_variables): changed the rewriting to check if the
+	element contains a language tag and a nodetype tag.
 
 2008-12-12  Nuno Lopes  <nuno.lopes@deri.org>
 

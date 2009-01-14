@@ -20,8 +20,10 @@ select $N from <http://polleres.net/foaf.rdf>  where { [  ]
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_N_Node := ($_aux_result1/_sparql_result:binding[@name = "N"])
 	let $_N_NodeType := name($_N_Node/*)
+	let $_N_NodeDatatype := $_N_Node/*/@datatype
+	let $_N_NodeLang := $_N_Node/*/@lang
 	let $N := data($_N_Node/*)
-	let $_N_RDFTerm :=  _xsparql:_rdf_term($_N_NodeType, $N )
+	let $_N_RDFTerm :=  _xsparql:_rdf_term($_N_NodeType, $N, $_N_NodeLang, $_N_NodeDatatype )
 
 
  return 
