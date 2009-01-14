@@ -343,9 +343,9 @@ def build_predicate(p, f):
 	d =  p
 	if d[0] == '[' :
 	    d.remove('[')
-	    return '[ ' + build_predicate([ d[0] ], f) + '; ' + build_predicate([ d[1] ], f) + ' ]\n '
+	    return '[ ' + build_predicate([ d[0] ], f) + '; ' + build_predicate( d[1:] , f) + ' ]\n '
 	else:
-	    return ' ' + build_predicate([ d[0] ], f) + ' ; ' + build_predicate([ d[1] ], f) + ' \n '
+	    return ' ' + build_predicate([ d[0] ], f) + ' ; ' + build_predicate(d[1:] , f) + ' \n '
 
 
 

@@ -1,3 +1,9 @@
+2009-01-14  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lowrewriter.py (build_predicate): Fixed the bug
+	where only the 2 first elements of predicate_object lists were
+	being parsed.  Fixes Stephane's queries.
+
 2008-12-12  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* added new testcases
