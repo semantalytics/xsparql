@@ -18,14 +18,14 @@ select $s $x from <http://www.polleres.net/foaf.rdf>  where {    $s   foaf:knows
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_s_Node := ($_aux_result1/_sparql_result:binding[@name = "s"])
 	let $_s_NodeType := name($_s_Node/*)
-	let $_s_NodeDatatype := $_s_Node/*/@datatype
-	let $_s_NodeLang := $_s_Node/*/@lang
+	let $_s_NodeDatatype := string($_s_Node/*/@datatype)
+	let $_s_NodeLang := string($_s_Node/*/@lang)
 	let $s := data($_s_Node/*)
 	let $_s_RDFTerm :=  _xsparql:_rdf_term($_s_NodeType, $s, $_s_NodeLang, $_s_NodeDatatype )
 	let $_x_Node := ($_aux_result1/_sparql_result:binding[@name = "x"])
 	let $_x_NodeType := name($_x_Node/*)
-	let $_x_NodeDatatype := $_x_Node/*/@datatype
-	let $_x_NodeLang := $_x_Node/*/@lang
+	let $_x_NodeDatatype := string($_x_Node/*/@datatype)
+	let $_x_NodeLang := string($_x_Node/*/@lang)
 	let $x := data($_x_Node/*)
 	let $_x_RDFTerm :=  _xsparql:_rdf_term($_x_NodeType, $x, $_x_NodeLang, $_x_NodeDatatype )
  return <aa>{ 
@@ -34,26 +34,26 @@ select $x $y from <http://www.polleres.net/foaf.rdf>  where {    $x   foaf:knows
 for $_aux_result2 at $_aux_result2_Pos in doc($_aux2)//_sparql_result:result
 	let $_s_Node := ($_aux_result2/_sparql_result:binding[@name = "s"])
 	let $_s_NodeType := name($_s_Node/*)
-	let $_s_NodeDatatype := $_s_Node/*/@datatype
-	let $_s_NodeLang := $_s_Node/*/@lang
+	let $_s_NodeDatatype := string($_s_Node/*/@datatype)
+	let $_s_NodeLang := string($_s_Node/*/@lang)
 	let $s := data($_s_Node/*)
 	let $_s_RDFTerm :=  _xsparql:_rdf_term($_s_NodeType, $s, $_s_NodeLang, $_s_NodeDatatype )
 	let $_x_Node := ($_aux_result2/_sparql_result:binding[@name = "x"])
 	let $_x_NodeType := name($_x_Node/*)
-	let $_x_NodeDatatype := $_x_Node/*/@datatype
-	let $_x_NodeLang := $_x_Node/*/@lang
+	let $_x_NodeDatatype := string($_x_Node/*/@datatype)
+	let $_x_NodeLang := string($_x_Node/*/@lang)
 	let $x := data($_x_Node/*)
 	let $_x_RDFTerm :=  _xsparql:_rdf_term($_x_NodeType, $x, $_x_NodeLang, $_x_NodeDatatype )
 	let $_x_Node := ($_aux_result2/_sparql_result:binding[@name = "x"])
 	let $_x_NodeType := name($_x_Node/*)
-	let $_x_NodeDatatype := $_x_Node/*/@datatype
-	let $_x_NodeLang := $_x_Node/*/@lang
+	let $_x_NodeDatatype := string($_x_Node/*/@datatype)
+	let $_x_NodeLang := string($_x_Node/*/@lang)
 	let $x := data($_x_Node/*)
 	let $_x_RDFTerm :=  _xsparql:_rdf_term($_x_NodeType, $x, $_x_NodeLang, $_x_NodeDatatype )
 	let $_y_Node := ($_aux_result2/_sparql_result:binding[@name = "y"])
 	let $_y_NodeType := name($_y_Node/*)
-	let $_y_NodeDatatype := $_y_Node/*/@datatype
-	let $_y_NodeLang := $_y_Node/*/@lang
+	let $_y_NodeDatatype := string($_y_Node/*/@datatype)
+	let $_y_NodeLang := string($_y_Node/*/@lang)
 	let $y := data($_y_Node/*)
 	let $_y_RDFTerm :=  _xsparql:_rdf_term($_y_NodeType, $y, $_y_NodeLang, $_y_NodeDatatype )
  return <b>{ $y   }</b>   }</aa>  

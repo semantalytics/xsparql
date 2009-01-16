@@ -1,3 +1,9 @@
+2009-01-16  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lowrewriter.py (build_aux_variables): the new
+	variables NodeLang and NodeDatatype need the string() to transform
+	empty sequence (in case nothing is specified) into empty string.
+
 2009-01-14  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/grammar.py (p_literalConstruct): added grammar rules

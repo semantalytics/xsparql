@@ -19,14 +19,14 @@ select $Person $Name from <http://xsparql.deri.org/data/relations.rdf>  where { 
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_Person_Node := ($_aux_result1/_sparql_result:binding[@name = "Person"])
 	let $_Person_NodeType := name($_Person_Node/*)
-	let $_Person_NodeDatatype := $_Person_Node/*/@datatype
-	let $_Person_NodeLang := $_Person_Node/*/@lang
+	let $_Person_NodeDatatype := string($_Person_Node/*/@datatype)
+	let $_Person_NodeLang := string($_Person_Node/*/@lang)
 	let $Person := data($_Person_Node/*)
 	let $_Person_RDFTerm :=  _xsparql:_rdf_term($_Person_NodeType, $Person, $_Person_NodeLang, $_Person_NodeDatatype )
 	let $_Name_Node := ($_aux_result1/_sparql_result:binding[@name = "Name"])
 	let $_Name_NodeType := name($_Name_Node/*)
-	let $_Name_NodeDatatype := $_Name_Node/*/@datatype
-	let $_Name_NodeLang := $_Name_Node/*/@lang
+	let $_Name_NodeDatatype := string($_Name_Node/*/@datatype)
+	let $_Name_NodeLang := string($_Name_Node/*/@lang)
 	let $Name := data($_Name_Node/*)
 	let $_Name_RDFTerm :=  _xsparql:_rdf_term($_Name_NodeType, $Name, $_Name_NodeLang, $_Name_NodeDatatype )
  return $Name  

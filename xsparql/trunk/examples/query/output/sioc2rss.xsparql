@@ -21,8 +21,8 @@ select $name from <http://www.johnbreslin.com/blog/index.php?sioc_type=site>  wh
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_name_Node := ($_aux_result1/_sparql_result:binding[@name = "name"])
 	let $_name_NodeType := name($_name_Node/*)
-	let $_name_NodeDatatype := $_name_Node/*/@datatype
-	let $_name_NodeLang := $_name_Node/*/@lang
+	let $_name_NodeDatatype := string($_name_Node/*/@datatype)
+	let $_name_NodeLang := string($_name_Node/*/@lang)
 	let $name := data($_name_Node/*)
 	let $_name_RDFTerm :=  _xsparql:_rdf_term($_name_NodeType, $name, $_name_NodeLang, $_name_NodeDatatype )
  return $name   }</title>{ 
@@ -33,8 +33,8 @@ select $seeAlso from <http://www.johnbreslin.com/blog/index.php?sioc_type=site> 
 for $_aux_result2 at $_aux_result2_Pos in doc($_aux2)//_sparql_result:result
 	let $_seeAlso_Node := ($_aux_result2/_sparql_result:binding[@name = "seeAlso"])
 	let $_seeAlso_NodeType := name($_seeAlso_Node/*)
-	let $_seeAlso_NodeDatatype := $_seeAlso_Node/*/@datatype
-	let $_seeAlso_NodeLang := $_seeAlso_Node/*/@lang
+	let $_seeAlso_NodeDatatype := string($_seeAlso_Node/*/@datatype)
+	let $_seeAlso_NodeLang := string($_seeAlso_Node/*/@lang)
 	let $seeAlso := data($_seeAlso_Node/*)
 	let $_seeAlso_RDFTerm :=  _xsparql:_rdf_term($_seeAlso_NodeType, $seeAlso, $_seeAlso_NodeLang, $_seeAlso_NodeDatatype )
  return <item>{ 
@@ -44,8 +44,8 @@ select $title from <", $seeAlso,">  where { [  a  sioc:Post   ;  ]
 for $_aux_result3 at $_aux_result3_Pos in doc($_aux3)//_sparql_result:result
 	let $_title_Node := ($_aux_result3/_sparql_result:binding[@name = "title"])
 	let $_title_NodeType := name($_title_Node/*)
-	let $_title_NodeDatatype := $_title_Node/*/@datatype
-	let $_title_NodeLang := $_title_Node/*/@lang
+	let $_title_NodeDatatype := string($_title_Node/*/@datatype)
+	let $_title_NodeLang := string($_title_Node/*/@lang)
 	let $title := data($_title_Node/*)
 	let $_title_RDFTerm :=  _xsparql:_rdf_term($_title_NodeType, $title, $_title_NodeLang, $_title_NodeDatatype )
  return $title   }</item>   }</channel>  

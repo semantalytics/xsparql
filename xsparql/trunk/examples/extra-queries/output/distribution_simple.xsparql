@@ -20,14 +20,14 @@ select $entry $date  where {    $entry   dct:created    $date   .   } ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_entry_Node := ($_aux_result1/_sparql_result:binding[@name = "entry"])
 	let $_entry_NodeType := name($_entry_Node/*)
-	let $_entry_NodeDatatype := $_entry_Node/*/@datatype
-	let $_entry_NodeLang := $_entry_Node/*/@lang
+	let $_entry_NodeDatatype := string($_entry_Node/*/@datatype)
+	let $_entry_NodeLang := string($_entry_Node/*/@lang)
 	let $entry := data($_entry_Node/*)
 	let $_entry_RDFTerm :=  _xsparql:_rdf_term($_entry_NodeType, $entry, $_entry_NodeLang, $_entry_NodeDatatype )
 	let $_date_Node := ($_aux_result1/_sparql_result:binding[@name = "date"])
 	let $_date_NodeType := name($_date_Node/*)
-	let $_date_NodeDatatype := $_date_Node/*/@datatype
-	let $_date_NodeLang := $_date_Node/*/@lang
+	let $_date_NodeDatatype := string($_date_Node/*/@datatype)
+	let $_date_NodeLang := string($_date_Node/*/@lang)
 	let $date := data($_date_Node/*)
 	let $_date_RDFTerm :=  _xsparql:_rdf_term($_date_NodeType, $date, $_date_NodeLang, $_date_NodeDatatype )
  return <entry date = "{$date}"/>  

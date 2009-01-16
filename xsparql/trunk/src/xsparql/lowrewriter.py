@@ -182,8 +182,8 @@ def build_aux_variables(i, vars):
     for v in vars:
 	ret += '\tlet ' + var_node(v) + ' := (' + query_result_aux(i) + '/_sparql_result:binding[@name = "' + v[1:] + '"])\n'
 	ret += '\tlet ' + var_nodetype(v) + ' := name(' + var_node(v) + '/*)\n'
-	ret += '\tlet ' + var_nodedatatype(v) + ' := ' + var_node(v) + '/*/@datatype\n'
-	ret += '\tlet ' + var_nodelang(v) + ' := ' + var_node(v) + '/*/@lang\n'
+	ret += '\tlet ' + var_nodedatatype(v) + ' := string(' + var_node(v) + '/*/@datatype)\n'
+	ret += '\tlet ' + var_nodelang(v) + ' := string(' + var_node(v) + '/*/@lang)\n'
 	ret += '\tlet ' + v + ' := data(' + var_node(v) + '/*)\n'
 	ret += '\tlet ' + var_rdfterm(v) + ' :=  _xsparql:_rdf_term(' + var_nodetype(v)+', '+v +', '+var_nodelang(v) + ', '+var_nodedatatype(v) + ' )\n'
     return ret

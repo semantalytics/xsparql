@@ -17,8 +17,8 @@ select $incl from <http://xsparql.deri.org/data/manifest-syntax.ttl>  where { _:
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_incl_Node := ($_aux_result1/_sparql_result:binding[@name = "incl"])
 	let $_incl_NodeType := name($_incl_Node/*)
-	let $_incl_NodeDatatype := $_incl_Node/*/@datatype
-	let $_incl_NodeLang := $_incl_Node/*/@lang
+	let $_incl_NodeDatatype := string($_incl_Node/*/@datatype)
+	let $_incl_NodeLang := string($_incl_Node/*/@lang)
 	let $incl := data($_incl_Node/*)
 	let $_incl_RDFTerm :=  _xsparql:_rdf_term($_incl_NodeType, $incl, $_incl_NodeLang, $_incl_NodeDatatype )
  return $incl  
