@@ -35,7 +35,7 @@ except Exception, e:
     sys.exit(1)
 
 setup(name='xsparql',
-      version='0.2',
+      version='0.1',
       description='XSPARQL Rewriter',
       long_description="""
 An XSPARQL rewriter.
