@@ -1,5 +1,7 @@
 2009-01-19  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* new package
+
 	* src/setup.py: version number starting at 0.1
 
 2009-01-16  Nuno Lopes  <nuno.lopes@deri.org>
