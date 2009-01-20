@@ -20,12 +20,7 @@
        <td align="left"> 
            <a href="http://xsparql.deri.org/"><img src="images/XSPARQLLogo-small.png" alt="XSPARQLLogo"/></a>
        </td>
-       <td style="text-align: left;"> 
-    <p>Team: <a href="http://www.polleres.net">Axel Polleres</a>, <a href="http://www.postsubmeta.net">Thomas Krennwallner</a>, <a href="http://www.deri.ie/about/team/member/waseem_akhtar/">Waseem Akhtar</a>, <a href="http://www.deri.ie/about/team/member/nuno_lopes/">Nuno Lopes</a><br/>
-    Technical report available <a href="http://www.polleres.net/TRs/DERI-TR-2007-12-14.pdf">here</a>.<br/>
-    Language specification (under development) available <a href="http://xsparql.deri.org/spec">here</a>.<br/><br/>
-    </p>
-      </td>
+       <td /> 
     </tr>
   </tbody>
  </table>
