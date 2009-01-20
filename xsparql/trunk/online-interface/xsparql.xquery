@@ -1,4 +1,4 @@
-module namespace _xsparql =  "http://xsparql.deri.org/xsparql.xquery" ;
+module namespace _xsparql =  "http://xsparql.deri.org/XSPARQLer/xsparql.xquery" ;
 
 
 declare function _xsparql:_rdf_term($NType as xs:string, $V as xs:string, $L as xs:string, $DT as xs:string) as xs:string

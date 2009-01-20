@@ -1,3 +1,13 @@
+2009-01-20  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_mainModule): changed URI for the
+	xsparql.xquery file.
+
+	* online-interface/xsparql.xquery: changed URI for the
+	xsparql.xquery file.
+
+	* online-interface/index.php: small look change
+
 2009-01-19  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* new package

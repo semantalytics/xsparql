@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>XSPARQL: Smooth Transformations between XML and RDF</title>
+    <title>XSPARQL demo</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script type="text/javascript" src="code/prototype.lite.js"></script>
     <script type="text/javascript" src="code/moo.fx.js"></script>
@@ -14,19 +14,18 @@
 <!-- body onload="initPosition(document.getElementById('query'))" -->
 <body>
    <div>
-    <table border="0" cellpadding="10" cellspacing="0" width="100%">
+    <table border="0" cellpadding="10" cellspacing="0">
     <tbody>
      <tr>
-       <td class="withoutBG" align="left"> 
-    <h2>XSPARQL: Smooth transformations between XML and RDF</h2>
+       <td align="left"> 
+           <a href="http://xsparql.deri.org/"><img src="images/XSPARQLLogo-small.png" alt="XSPARQLLogo"/></a>
+       </td>
+       <td style="text-align: left;"> 
     <p>Team: <a href="http://www.polleres.net">Axel Polleres</a>, <a href="http://www.postsubmeta.net">Thomas Krennwallner</a>, <a href="http://www.deri.ie/about/team/member/waseem_akhtar/">Waseem Akhtar</a>, <a href="http://www.deri.ie/about/team/member/nuno_lopes/">Nuno Lopes</a><br/>
     Technical report available <a href="http://www.polleres.net/TRs/DERI-TR-2007-12-14.pdf">here</a>.<br/>
     Language specification (under development) available <a href="http://xsparql.deri.org/spec">here</a>.<br/><br/>
-    <i>The greatest thing since sliced bread when it comes to slicing your data!</i></p>
+    </p>
       </td>
-       <td class="withoutBG" align="left"> 
-           <img src="images/XSPARQLLogo.png" alt="XSPARQLLogo"/>
-       </td>
     </tr>
   </tbody>
  </table>
