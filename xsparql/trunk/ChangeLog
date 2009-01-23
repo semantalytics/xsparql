@@ -1,3 +1,8 @@
+2009-01-23  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_namespaceDecl): NCNAMEs are
+	transformed into qnames to avoid reserved words
+
 2009-01-20  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/grammar.py (p_mainModule): changed URI for the

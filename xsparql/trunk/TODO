@@ -1,14 +1,32 @@
 -*- org -*-
 
-* XSPARQL
-** DONE check w/ Wassen the diffs between online interface and CVS
-** DONE check examples on the ml into examples
-** XSPARQL grammar
-*** Create an abstract syntax tree
-*** DONE Resolve the confilts
-    There are currently quite a few reduce/reduce and shift reduce conflicts
-** DONE Create syntax textcases
-   This is quite useful in order to change the grammar without problems
-** DONE Fix the rewriter
-   The current XSPARQL CVS version is not working in some cases,
-   including some of the web interface examples.
+* DONE check w/ Wassen the diffs between online interface and CVS
+* DONE check examples on the ml into examples
+* DONE Create syntax textcases
+  This is quite useful in order to change the grammar without problems
+* DONE Fix the rewriter
+  The current XSPARQL CVS version is not working in some cases,
+  including some of the web interface examples.
+* DONE allow FILTER in GroupGraphPatterns
+* DONE "let $x := ... , $y := ... , $z := ..." is not working
+  todo02.xsparql
+* DONE invent a new comment sequence (I like "-- "); (: :) and # is not working
+  using #
+* DONE fix shift-reduce conflicts in the parser
+* DONE "... return <criterion2><name>{$name}</name><weight>{$weight}</weight></criterion2> ..." does not work
+  todo01.xsparql : first syntax works
+  but we can use "... return <criterion2>{(<name>{$name}</name>,<weight>{$weight}</weight>)}</criterion2> ..."
+
+
+* TODO build abstract syntax tree instead of in-place rewriting
+* TODO EMPTY keyword in XQuery is currently non-functional, clashes with fn:empty
+* TODO all variables are global 
+  parsing of bound variables does not work properly (this goes in line with AST representation)
+* TODO parsing "... RETURN <foo>bar bar</foo> ..." does not work
+  todo03.xsparql
+* TODO modules are not working
+  declare function is working
+
+* TODO rewriter always _needs_ a namespace declaration, fix that.
+* TODO rewrite nested CONSTRUCTs properly
+

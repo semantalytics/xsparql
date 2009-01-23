@@ -466,7 +466,7 @@ def p_IRIREF(p):
 
 def p_prefixIDs0(p):
     '''prefixIDs :  PREFIXED_COLON IRIREF
-		 |  NCNAME PREFIXED_COLON IRIREF'''
+		 |  qname PREFIXED_COLON IRIREF'''
     global count
     global decl_var_ns
 
@@ -490,7 +490,7 @@ def p_prefixIDs0(p):
 
 
 def p_prefixIDs1(p):
-    '''prefixIDs :  NCNAME COLON IRIREF
+    '''prefixIDs :  qname COLON IRIREF
 		 |  COLON IRIREF'''
     global count
     global decl_var_ns
@@ -553,7 +553,7 @@ def p_defaultNamespaceDecls(p):
 
 
 def p_namespaceDecl(p):
-    '''namespaceDecl : DECLARE NAMESPACE NCNAME EQUALS QSTRING'''
+    '''namespaceDecl : DECLARE NAMESPACE qname EQUALS QSTRING'''
     global namespaces
     global count
     global decl_var_ns
@@ -841,9 +841,9 @@ def p_compCommentConstructor(p):
 
 
 def p_compPIConstructor(p):
-    '''compPIConstructor : PROCESSINGINSTRUCTION NCNAME LCURLY expr RCURLY
+    '''compPIConstructor : PROCESSINGINSTRUCTION qname LCURLY expr RCURLY
 			 | PROCESSINGINSTRUCTION LCURLY expr RCURLY LCURLY expr RCURLY
-			 | PROCESSINGINSTRUCTION NCNAME LCURLY RCURLY
+			 | PROCESSINGINSTRUCTION qname LCURLY RCURLY
 			 | PROCESSINGINSTRUCTION LCURLY expr RCURLY LCURLY RCURLY'''
     p[0] = ' '.join(p[1:])
 
@@ -1283,7 +1283,7 @@ def p_piTest(p):
 
 
 def p_piTests(p):
-    '''piTests : NCNAME
+    '''piTests : qname
 	       | QSTRING
 	       | empty'''
     p[0] = ''.join(p[1:])
@@ -1649,9 +1649,9 @@ def p_blankConstruct(p):
 def p_iriConstruct(p):
     '''iriConstruct : LESSTHAN enclosedExpr GREATERTHAN
 		    | enclosedExpr COLON enclosedExpr
-		    | NCNAME COLON enclosedExpr
+		    | qname COLON enclosedExpr
 		    | LCURLY expr IRI_CONSTRUCT 
-		    | enclosedExpr COLON NCNAME'''
+		    | enclosedExpr COLON qname'''
     p[0] = ''.join(p[1:])
 
 
@@ -1690,7 +1690,7 @@ def p_bnode(p):
 def p_rdfliteral(p):
     '''rdfliteral : INTEGER
 		  | QSTRING
-		  | QSTRING AT NCNAME
+		  | QSTRING AT qname
 		  | QSTRING CARROT CARROT IRIREF
 		  | QSTRING CARROT CARROT PREFIXED_NAME'''
     p[0] = ''.join(p[1:])

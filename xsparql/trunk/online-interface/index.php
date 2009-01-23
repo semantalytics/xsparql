@@ -100,14 +100,10 @@
         <span class="solverbutton"
               id="evaluate"
               onClick="javascript:togglesolver(this.id);"><a href="#">Rewrite+Evaluate</a></span><br/><br/>
-	<span id="uri">Load Query from URI:&nbsp;
-              <input id="URI" type="text" style="width: 461px;" /></span><br/>
-	<span id="uri">SPARQL endpoint:&nbsp;
-              <input id="endpoint" type="text" style="width: 485px;" /></span><br/>
         </p>
 
         <textarea id="query"
-                  wrap="off" style="height: 250px;width: 610px;margin-bottom: 10px;">%%% enter your XSPARQL query here %%%</textarea>
+                  wrap="off" style="height: 250px;width: 50em;margin-bottom: 10px;">%%% enter your XSPARQL query here %%%</textarea>
                   <!-- name="querytextarea"
                   onmouseup="updatePosition(this)"
                   onmousedown="updatePosition(this)"
@@ -121,7 +117,24 @@
         Column:&nbsp;<span id='txtcol'>0</span><br/>
         -->
 
-        <div style="text-align: left;">
+	<fieldset style="margin-bottom: 1em; border: 0px;">
+          <legend style="font-weight: bold;">Options:</legend>
+
+          <div>
+            <div style="width: 11em; float: left;">Load Query from URI:</div>
+            <div>
+              <input id="URI" type="text" style="width: 45em;"/>
+            </div>
+            <div style="clear:all;"/>
+          </div>
+
+	  <div>
+            <div style="width: 11em; float: left;">SPARQL endpoint:</div>
+            <div><input id="endpoint" type="text" style="width: 45Em;" /></div>
+            <div style="clear:all;"/>
+          </fieldset>
+        
+          <div style="text-align: left;">
             <span id="evalbutton"><b><a href="#" onClick="javascript:evalquery(); return false;">[ Run it! ]</a></b></span>
 	    <a href="#" onClick="javascript:clearquery(); return false;">[clear]</a>
         </div>
