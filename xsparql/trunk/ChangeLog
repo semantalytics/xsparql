@@ -1,3 +1,8 @@
+2009-01-27  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/xsparql.xquery: regular expression to match
+	typed and lang literals
+
 2009-01-23  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/grammar.py (p_namespaceDecl): NCNAMEs are
