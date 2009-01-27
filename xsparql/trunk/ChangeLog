@@ -2,6 +2,7 @@
 
 	* online-interface/xsparql.xquery: regular expression to match
 	typed and lang literals
+	add capitalized letters to the regular expression
 
 2009-01-23  Nuno Lopes  <nuno.lopes@deri.org>
 
