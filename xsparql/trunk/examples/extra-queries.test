@@ -9,6 +9,10 @@ extra-queries/distribution.xsparql
 extra-queries/distribution_simple.xsparql
 extra-queries/graph.xsparql
 extra-queries/item.xsparql
+extra-queries/literals01.xsparql
+extra-queries/literals02.xsparql
+extra-queries/literals03.xsparql
+extra-queries/literals04.xsparql
 extra-queries/nested-xsparql.xsparql
 extra-queries/nested_ggp.xsparql
 extra-queries/prefix_enclosed1.xsparql

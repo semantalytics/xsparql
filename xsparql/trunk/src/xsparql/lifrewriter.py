@@ -215,7 +215,10 @@ def build_object(subject, predicate, o):
 
     if len(o) == 1 and isinstance(o[0], list) and isinstance(o[0][0], str):
 	d =  o[0]
-	if d[0] == '[' :
+        if  ( (len(d) == 3  and d[1] == '@') or (len(d) == 4 and d[1] == '^' and d[2] == '^') ):
+	    let,cond,ret,suff = build_bnode('_validObject', d)
+            return let, "", cond + ' fn:concat( \n\t\t '+ subject + ' ' + Qpredicate + ', ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t)\n'+suff, ""
+	elif d[0] == '[' :
 	    d.remove('[')
 	    global inBnode
 
@@ -261,7 +264,59 @@ def build_bnode(type, b):
 
 #    debug.debug('----- build_bnode', b, len(b))
 
-    if b >= 4 and b[0] == '<' and b[1] == '{' and b[-2] == '}' and b[-1] == '>':  # iri literal
+    if isinstance(b, list):  # typed or lang literal
+        let,cond,ret,suff = build_bnode(type, b[0])
+        let = let.rstrip(')\n ')
+
+        if b[1] == '@':
+            let += ', "@", ' + b[2].strip('{}') + ')\n'
+            return let,cond,ret,suff
+
+        elif b[1] == '^' and b[2] == '^':
+            if let == '':
+                global count
+                var = '$' + type + `count`
+                count = count + 1
+
+                let =  'let '+ var +' := fn:concat(' +  ret.rstrip(', ')
+
+                cond = 'if ( _xsparql:'+type + '( "",  '+var+'  ) ) then (\n\t\t'
+                ret = var + ', '
+                suff = ' ) else ""'
+
+            let += ', "^^"'
+            iri = b[3]
+            if iri[0] == '<' and iri[1] == '{' and iri[-2] == '}' and iri[-1] == '>':  
+                let += ', ' + iri.strip('<{}>') + ')\n'
+            else:
+                if iri >= 4 and iri[0] == '<' and iri[1] == '{' and iri[-2] == '}' and iri[-1] == '>':  # iri literal
+                    iri =  iri[1:-1]
+
+                bIri =  iri.split('{')
+
+                for elm in bIri:
+                    if elm == '':
+                        continue
+
+                    if elm.find('}') == -1:
+                        let += ', "' + elm + '"' 
+                    else:
+                        sp = elm.split('}')
+                        for e in sp:
+                            if e == '':
+                                continue
+
+                            if e.strip(' ')[0] == '$':
+                                let += ', '+ e
+                            else:
+                                let += ', "'+ e + '"'
+
+
+                let += ")\n"
+
+            return let,cond,ret,suff
+
+    elif b >= 4 and b[0] == '<' and b[1] == '{' and b[-2] == '}' and b[-1] == '>':  # iri literal
 	bIri =  b[1:-1].split('{')
 	iri = bIri[0]
 	iri = bIri[1].rstrip('}')

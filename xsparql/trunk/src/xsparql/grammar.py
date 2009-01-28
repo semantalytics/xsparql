@@ -1655,11 +1655,18 @@ def p_iriConstruct(p):
     p[0] = ''.join(p[1:])
 
 
-def p_literalConstruct(p):
-    '''literalConstruct :  enclosedExpr
-                        |  enclosedExpr AT enclosedExpr
-                        |  enclosedExpr CARROT CARROT iriConstruct'''
+def p_literalConstruct0(p):
+    '''literalConstruct :  enclosedExpr'''
     p[0] = ''.join(p[1:])
+
+def p_literalConstruct1(p):
+    '''literalConstruct :  INTEGER AT enclosedExpr
+                        |  QSTRING AT enclosedExpr
+                        |  enclosedExpr AT enclosedExpr
+                        |  INTEGER CARROT CARROT iriConstruct
+                        |  QSTRING CARROT CARROT iriConstruct
+                        |  enclosedExpr CARROT CARROT iriConstruct'''
+    p[0] = p[1:]
 
 
 ## ----------------------------------------------------------
