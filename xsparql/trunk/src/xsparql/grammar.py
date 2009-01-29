@@ -3,8 +3,10 @@
 #
 # xsparql -- XSPARQL Rewriter
 #
-# Copyright (C) 2007,2008  Thomas Krennwallner  <tkren@kr.tuwien.ac.at>
-#               2007,2008  Waseem Akthar  <waseem.akthar@deri.org>
+# Copyright (C) 2007-2009  Nuno Lopes  <nuno.lopes@deri.org>
+#                          Thomas Krennwallner  <tkren@kr.tuwien.ac.at>
+#                          Waseem Akthar  <waseem.akthar@deri.org>
+#                          Axel Polleres  <axel.polleres@deri.org>
 #
 # This file is part of xsparql.
 #
@@ -161,14 +163,11 @@ tokens = [
 
 # lexer states
 states = [
-   ('pattern','exclusive'),
-#   ('iri','inclusive'),
-#   ('comments','exclusive')
+   ('pattern','exclusive')
 ]
 
 precedence = (
     ('left', 'SLASH','LPAR','GREATERTHAN'),
-#    ('right', 'ORDER'),
     ['right'] + reserved.values()
 )
 
@@ -199,78 +198,73 @@ PREFIXED_NAME = r''+PN_PREFIX+':'+PN_LOCAL
 PREFIXED_COLON = r'('+PN_LOCAL+')?:\ '    # space to avoid preceding::
 UNPREFIXED_NAME = r':'+PN_LOCAL
 
-# bnode           =      r'_:(' + NCName + ')'
-# bnode_construct =      r'_:(' + NCName + ')?\{'
+
 bnode           =      r'_:(' + PN_PREFIX + ')'
 bnode_construct =      r'_:(' + PN_PREFIX + ')?\{'
 iri_construct =  r'\}:' + PN_PREFIX
 
 
 
-def t_INITIAL_pattern_STARTELM(t):
+def t_STARTELM(t):
     r'\<([^<>\'\{\}\|\^`\x00-\x20])+'
     return recognize(t)
 
 
 @TOKEN(bnode_construct)
-def t_INITIAL_pattern_BNODE_CONSTRUCT(t):
+def t_BNODE_CONSTRUCT(t):
     return recognize(t)
 
 @TOKEN(iri_construct)
-def t_INITIAL_pattern_IRI_CONSTRUCT(t):
+def t_IRI_CONSTRUCT(t):
     return recognize(t)
 
 @TOKEN(bnode)
-def t_INITIAL_pattern_BNODE(t):
+def t_BNODE(t):
     return recognize(t)
 
 @TOKEN(PREFIXED_NAME)
-def t_INITIAL_pattern_PREFIXED_NAME(t):
+def t_PREFIXED_NAME(t):
     return recognize(t)
 
 @TOKEN(UNPREFIXED_NAME)
-def t_INITIAL_pattern_UNPREFIXED_NAME(t):
+def t_UNPREFIXED_NAME(t):
     return recognize(t)
 
 @TOKEN(PREFIXED_COLON)
-def t_INITIAL_pattern_PREFIXED_COLON(t):
+def t_PREFIXED_COLON(t):
     return recognize(t)
 
 
 # takes care of keywords and IRIs
 @TOKEN(PN_PREFIX)
-def t_INITIAL_pattern_NCNAME(t):
+def t_NCNAME(t):
     # an NCNAME cannot start with a digit: http://www.w3.org/TR/REC-xml-names/#NT-NCName
     t.type = reserved.get(t.value,'NCNAME')
-#     if t.type == 'PREFIX' or t.type == 'BASE' or t.type == 'FROM':
-# 	t.lexer.push_state('iri')
     return recognize(t)
 
 
 
-# star_ncname =          r'\*( |\t)*:( |\t)*(' + NCName + ')'
-# ncname_star =          r'('+NCName+')( |\t)*:( |\t)*\*'
 star_ncname =          r'\*( |\t)*:( |\t)*(' + PN_PREFIX + ')'
 ncname_star =          r'('+PN_PREFIX+')( |\t)*:( |\t)*\*'
 
 @TOKEN(star_ncname)
-def t_INITIAL_pattern_STAR_COLON_NCNAME(t):
+def t_STAR_COLON_NCNAME(t):
     return recognize(t)
 
 @TOKEN(ncname_star)
-def t_INITIAL_pattern_NCNAME_COLON_STAR(t):
+def t_NCNAME_COLON_STAR(t):
     return recognize(t)
 
 
 
 
-t_INITIAL_pattern_SLASH = r'/'
-t_INITIAL_pattern_SLASHSLASH = r'//'
-t_INITIAL_pattern_LBRACKET = r'\['
-t_INITIAL_pattern_RBRACKET = r'\]'
-t_INITIAL_pattern_LPAR = r'\('
-t_INITIAL_pattern_RPAR = r'\)'
-t_INITIAL_pattern_SEMICOLON = r';'
+t_SLASH = r'/'
+t_SLASHSLASH = r'//'
+t_LBRACKET = r'\['
+t_RBRACKET = r'\]'
+t_LPAR = r'\('
+t_RPAR = r'\)'
+t_SEMICOLON = r';'
 t_INITIAL_QSTRING = r'\"[^\"]*\"'
 
 
@@ -278,42 +272,37 @@ t_LCURLY  = r'{'
 t_RCURLY = r'}'
 
 # remove leading _
-# t_INITIAL_pattern_iri_VAR = r'[\$\?][a-zA-Z\_][a-zA-Z0-9\_\-]*'
 var = '[\$][a-zA-Z][a-zA-Z0-9\_\-]*'
 
-# @TOKEN(var)
-# def t_iri_VAR(t):
-#     t.lexer.begin('INITIAL')
-#     return recognize(t)
 
 @TOKEN(var)
-def t_INITIAL_pattern_VAR(t):
+def t_VAR(t):
     return recognize(t)
 
 
-t_INITIAL_pattern_INTEGER   = r'[0-9]+'
-t_INITIAL_pattern_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
-t_INITIAL_pattern_AT        = r'@'
-t_INITIAL_pattern_CARROT    = r'\^'
-t_INITIAL_pattern_COLON     = r'\:'
-t_INITIAL_pattern_COLONCOLON = r'\:\:'
-t_INITIAL_pattern_COMMA     = r'\,'
-t_INITIAL_pattern_EQUALS    = r'='
-t_INITIAL_pattern_STAR    = r'\*'
-t_INITIAL_pattern_DOTDOT    = r'\.\.'
-t_INITIAL_pattern_LESSTHAN = r'<'
-t_INITIAL_pattern_GREATERTHAN = r'>'
-t_INITIAL_pattern_PLUS = r'\+'
-t_INITIAL_pattern_MINUS = r'\-'
-t_INITIAL_pattern_UNIONSYMBOL = r'\|'
-t_INITIAL_pattern_ANDSYMBOL = r'&&'
-t_INITIAL_pattern_ORSYMBOL = r'\|\|'
-t_INITIAL_pattern_QUESTIONMARK = r'\?'
-t_INITIAL_pattern_LESSTHANLESSTHAN = r'\<\<'
-t_INITIAL_pattern_GREATERTHANEQUALS = r'\>\='
-t_INITIAL_pattern_LESSTHANEQUALS = r'\<\='
-t_INITIAL_pattern_HAFENEQUALS = r'\!\='
-t_INITIAL_pattern_NOT = r'\!'
+t_INTEGER   = r'[0-9]+'
+t_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
+t_AT        = r'@'
+t_CARROT    = r'\^'
+t_COLON     = r'\:'
+t_COLONCOLON = r'\:\:'
+t_COMMA     = r'\,'
+t_EQUALS    = r'='
+t_STAR    = r'\*'
+t_DOTDOT    = r'\.\.'
+t_LESSTHAN = r'<'
+t_GREATERTHAN = r'>'
+t_PLUS = r'\+'
+t_MINUS = r'\-'
+t_UNIONSYMBOL = r'\|'
+t_ANDSYMBOL = r'&&'
+t_ORSYMBOL = r'\|\|'
+t_QUESTIONMARK = r'\?'
+t_LESSTHANLESSTHAN = r'\<\<'
+t_GREATERTHANEQUALS = r'\>\='
+t_LESSTHANEQUALS = r'\<\='
+t_HAFENEQUALS = r'\!\='
+t_NOT = r'\!'
 
 
 
@@ -338,9 +327,6 @@ def t_pattern_RCURLY(t):
     curly_brackets -= 1
     if curly_brackets == 0: t.lexer.begin('INITIAL')
     return recognize(t)
-
-# t_pattern_QSTRING = r'\"[^\"]*\"'
-# t_pattern_NCNAME  = r'\w[\w\-\.]*'
 
 
 
@@ -373,8 +359,7 @@ def t_INITIAL_pattern_error(t):
 
 
 # Build the lexer
-#lex.lex(debug=0, reflags=re.IGNORECASE)
-# we want all keywords lowercase
+# all keywords lowercase
 lex.lex(debug=0)
 
 
@@ -614,6 +599,12 @@ def p_enclosedExpr(p):
     p[0] = ' '.join(p[1:])
 
 
+def p_enclosedExprEmpty(p):
+    '''enclosedExprEmpty : enclosedExpr
+                         | LCURLY RCURLY'''
+    p[0] = ' '.join(p[1:])
+
+
 def p_exprSingle(p):
     '''exprSingle : flworExpr
 		  | constructQuery
@@ -699,13 +690,11 @@ def p_forletClauses(p):
 
 def p_forletClause0(p):
     '''forletClause : forClause'''
-#    p[0] = ( p[1][0] , p[1][1], p[1][2]  )
     p[0] = ( p[1][0] , [], p[1][2]  )  # example nasty nasty
 
 def p_forletClause1(p):
     '''forletClause : letClause'''
     p[0] = ( p[1][0] , [], p[1][2]  ) # FIXME: add bound and position variables # @todo: check if OK!
-#    p[0] = ( p[1][0] , p[1][1], p[1][2]  ) # FIXME: add bound and position variables
 
 def p_forletClause2(p):
     '''forletClause : sparqlForClause'''
@@ -805,52 +794,43 @@ def p_computedConstructor(p):
 
 
 def p_compDocConstructor(p):
-    '''compDocConstructor : DOCUMENT LCURLY expr RCURLY'''
+    '''compDocConstructor : DOCUMENT enclosedExpr'''
     p[0] = ' '.join(p[1:])
 
 
 def p_compElemConstructor(p):
-    '''compElemConstructor : ELEMENT qname LCURLY contentExpr RCURLY
-			   | ELEMENT LCURLY expr RCURLY LCURLY contentExpr RCURLY
-			   | ELEMENT qname LCURLY RCURLY
-			   | ELEMENT LCURLY expr RCURLY LCURLY RCURLY'''
+    '''compElemConstructor : ELEMENT qname enclosedExprEmpty 
+			   | ELEMENT enclosedExpr enclosedExprEmpty'''
     p[0] = ' '.join(p[1:])
 
-
-def p_contentExpr(p):
-    '''contentExpr : expr'''
-    p[0] = ' '.join(p[1:])
 
 
 def p_compAttrConstructor(p):
-    '''compAttrConstructor : ATTRIBUTE qname LCURLY expr RCURLY
-			   | ATTRIBUTE LCURLY expr RCURLY LCURLY expr RCURLY
-			   | ATTRIBUTE qname LCURLY RCURLY
-			   | ATTRIBUTE LCURLY expr RCURLY LCURLY RCURLY'''
+    '''compAttrConstructor : ATTRIBUTE qname enclosedExprEmpty
+			   | ATTRIBUTE enclosedExpr enclosedExprEmpty'''
     p[0] = ' '.join(p[1:])
 
 
 def p_compTextConstructor(p):
-    '''compTextConstructor : TEXT LCURLY expr RCURLY'''
+    '''compTextConstructor : TEXT enclosedExpr'''
     p[0] = ' '.join(p[1:])
 
 
 def p_compCommentConstructor(p):
-    '''compCommentConstructor : COMMENT LCURLY expr RCURLY'''
+    '''compCommentConstructor : COMMENT enclosedExpr'''
     p[0] = ' '.join(p[1:])
 
 
 def p_compPIConstructor(p):
-    '''compPIConstructor : PROCESSINGINSTRUCTION qname LCURLY expr RCURLY
-			 | PROCESSINGINSTRUCTION LCURLY expr RCURLY LCURLY expr RCURLY
-			 | PROCESSINGINSTRUCTION qname LCURLY RCURLY
-			 | PROCESSINGINSTRUCTION LCURLY expr RCURLY LCURLY RCURLY'''
+    '''compPIConstructor : PROCESSINGINSTRUCTION qname enclosedExprEmpty
+			 | PROCESSINGINSTRUCTION enclosedExpr enclosedExprEmpty'''
     p[0] = ' '.join(p[1:])
 
 
 def p_directConstructor(p):
     '''directConstructor : directElemConstructor'''
     p[0] = ' '.join(p[1:])
+
 
 # [96]    DirElemConstructor    ::=    "<" QName DirAttributeList ("/>" | (">" DirElemContent* "</" QName S? ">"))
 def p_directElemConstructor(p):
@@ -865,24 +845,6 @@ def p_directElemConstructorElm(p):
                                 | STARTELM SLASH GREATERTHAN
 			        | enclosedExpr'''
     p[0] = ''.join(p[1:])
-
-
-# # [96]    DirElemConstructor    ::=    "<" QName DirAttributeList ("/>" | (">" DirElemContent* "</" QName S? ">"))
-# def p_directElemConstructor(p):
-#     '''directElemConstructor : LESSTHAN qname directAttributeList SLASH GREATERTHAN
-# 			     | LESSTHAN qname directAttributeList GREATERTHAN directElemContentProcessing LESSTHAN SLASH qname GREATERTHAN'''
-#     p[0] = ''.join(p[1:])
-
-
-# def p_directElemContentProcessing(p):
-#     '''directElemContentProcessing : directElemContentProcessing directElemContent
-# 				   | empty'''
-#     p[0] = ''.join(p[1:])
-
-# def p_directElemContent(p):
-#     '''directElemContent : directConstructor
-# 			 | enclosedExpr'''
-#     p[0] = ''.join(p[1:])
 
 
 def p_directAttributeList(p):
@@ -972,7 +934,6 @@ def p_orderSpecList(p):
 def p_orderSpec(p):
     '''orderSpec : exprSingle orderDirection emptyHandling
 		 | exprSingle orderDirection emptyHandling COLLATION uriliteral'''
-#    p[0] = ' '.join(p[1:])
     p[0] = p[1][0] + ' '.join(p[2:])
 
 
@@ -984,11 +945,6 @@ def p_orderDirection(p):
 
 
 # @todo EMPTY clashes with fn:empty...
-## def p_emptyHandling(p):
-##     '''emptyHandling : EMPTY GREATEST
-##                      | EMPTY LEAST
-##                      | empty'''
-##     p[0] = ' '.join(p[1:])
 def p_emptyHandling(p):
     '''emptyHandling : GREATEST
 		     | LEAST
@@ -999,11 +955,6 @@ def p_emptyHandling(p):
 def p_whereClause(p):
     '''whereClause : WHERE exprSingle '''
     p[0] = ''.join('\n'+p[1]+' '+p[2][0])
-
-
-##def p_orExpr(p):
-##    '''orExpr : pathExpr'''
-##    p[0] = p[1]
 
 
 ## ------------------------------ orExpr
@@ -1477,11 +1428,6 @@ def p_predicate(p):
     p[0] = ''.join(p[1:])
 
 
-# # another hack!
-# def p_primaryExpr0(p):
-#     '''primaryExpr : IRIREF'''
-#     p[0] = '"'+p[1]+'"'
-
 def p_primaryExpr(p):
     '''primaryExpr : VAR
 		   | literal
@@ -1527,12 +1473,12 @@ def p_contextItemExpr(p):
 
 
 def p_orderedExpr(p):
-    '''orderedExpr : ORDERED LCURLY expr RCURLY'''
+    '''orderedExpr : ORDERED enclosedExpr'''
     p[0] = ' '.join(p[1:])
 
 
 def p_unorderedExpr(p):
-    '''unorderedExpr : UNORDERED LCURLY expr RCURLY'''
+    '''unorderedExpr : UNORDERED enclosedExpr'''
     p[0] = ' '.join(p[1:])
 
 
@@ -1639,8 +1585,6 @@ def p_rdfPredicate(p):
 
 
 
-#     '''blankConstruct : UNDERSCORE COLON NCNAME enclosedExpr
-#                       | UNDERSCORE COLON enclosedExpr'''
 def p_blankConstruct(p):
     '''blankConstruct : BNODE_CONSTRUCT expr RCURLY'''
     p[0] = [ ''.join(p[1:]) ]
@@ -1985,6 +1929,8 @@ def p_sparqlPrefixedName(p):
 
 # each reserved word is also a qname to allow it's use for instance in
 # path expressions
+
+# these add conflicts:
 #              | PREFIX
 #              | BASE
 #              | FOR

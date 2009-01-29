@@ -4,8 +4,10 @@
 #
 # xsparql -- XSPARQL Rewriter
 #
-# Copyright (C) 2007,2008  Thomas Krennwallner  <tkren@kr.tuwien.ac.at>
-#               2007,2008  Waseem Akthar  <waseem.akthar@deri.org>
+# Copyright (C) 2007-2009  Nuno Lopes  <nuno.lopes@deri.org>
+#                          Thomas Krennwallner  <tkren@kr.tuwien.ac.at>
+#                          Waseem Akthar  <waseem.akthar@deri.org>
+#                          Axel Polleres  <axel.polleres@deri.org>
 #
 # This file is part of xsparql.
 #
