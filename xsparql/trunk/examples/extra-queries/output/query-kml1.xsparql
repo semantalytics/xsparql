@@ -10,9 +10,9 @@ declare namespace geo = "http://www.w3.org/2003/01/geo/wgs84_pos#";
 
 declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 declare variable $_NS2 := "prefix  geo:  &#60;http://www.w3.org/2003/01/geo/wgs84_pos#&#62;";
-<kml xmlns = "http://www.opengis.net/kml/2.2">{ 
+<kml xmlns = "http://www.opengis.net/kml/2.2"> { 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2, "
-select $person $fn $ln $long $lat from <sample_person_geodata.rdf>  where {    $person    a  foaf:Person   ;   foaf:firstName    $fn    ;   foaf:lastName    $ln    ;  foaf:based_near [   a  geo:Point   ;   geo:long    $long    ;  geo:lat    $lat    
+select $person $fn $ln $long $lat from <file://sample_person_geodata.rdf>  where {    $person    a  foaf:Person   ;   foaf:firstName    $fn    ;   foaf:lastName    $ln    ;  foaf:based_near [   a  geo:Point   ;   geo:long    $long    ;  geo:lat    $lat    
   
   ]
    
@@ -50,4 +50,4 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_lat_NodeLang := string($_lat_Node/*/@lang)
 	let $lat := data($_lat_Node/*)
 	let $_lat_RDFTerm :=  _xsparql:_rdf_term($_lat_NodeType, $lat, $_lat_NodeLang, $_lat_NodeDatatype )
- return <Placemark><name>{ fn:concat("Location of "   , $fn   , " "   , $ln   )   }</name><Point><coordinates>{ fn:concat($long   , ","   , $lat   , ",0"   )   }</coordinates></Point></Placemark>   }</kml>  
+ return <Placemark>         <name>{ fn:concat("Location of "   , $fn   , " "   , $ln   )   }</name><Point><coordinates>{ fn:concat($long   , ","   , $lat   , ",0"   )   }</coordinates></Point></Placemark>   } </kml>  

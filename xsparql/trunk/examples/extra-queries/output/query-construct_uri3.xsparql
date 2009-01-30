@@ -28,15 +28,10 @@ let $_validObject1 := fn:concat("<" , $s   , ">")
 
 
 
-  return ( 
-	 if ( _xsparql:_validSubject( "",  "<rdf:a>"  ) ) then (
-		 
-		   
+  return (   
 	  if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
 		 fn:concat( 
-		     "<rdf:a>"  ,   " rdf:b ",     $_validObject1  ,  " .&#xA;"
+		   'rdf:a',   " rdf:b ",     $_validObject1  ,  " .&#xA;"
 		)
  ) else ""  
-
-		 
-  ) else ""  )
+ )
