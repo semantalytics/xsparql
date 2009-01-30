@@ -289,8 +289,9 @@ def t_xmlElementContents_WHITESPACE(t):
     r'([ |\t])+'
     return recognize(t)
 
-@TOKEN(PN_PREFIX)
+#@TOKEN(PN_PREFIX)
 def t_xmlElementContents_NCNAMEELM(t):
+    r'[^{<\n]+'
     return recognize(t)
 
 def t_xmlEndTag_GREATERTHAN(t):

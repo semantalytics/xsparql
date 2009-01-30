@@ -4,6 +4,8 @@
 
 	* src/xsparql/grammar.py: added states and new tokens to handle
 	ncnames in XML elements
+	(t_xmlElementContents_NCNAMEELM): changed regexp for XML elements
+
 	* IRIs are now checked to have a valid prefix
 
 2009-01-29  Nuno Lopes  <nuno.lopes@deri.org>
