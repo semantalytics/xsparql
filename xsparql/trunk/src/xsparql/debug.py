@@ -46,3 +46,10 @@ def recognize(token):
     if ( debug_level > 1 ):
         print >> sys.stderr, "FOUND: ", token #.replace('\n', '\n'+`i`)
     return
+
+
+def display(p):
+    global debug_level
+    if ( debug_level > 0 ):
+        print >> sys.stderr, p
+    return

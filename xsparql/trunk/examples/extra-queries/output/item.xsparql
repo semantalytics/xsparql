@@ -4,6 +4,6 @@ at "http://xsparql.deri.org/XSPARQLer/xsparql.xquery";
 
 declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 
-<test>{ 
+<test> { 
 let $rss  := doc("http://cyber.law.harvard.edu/rss/examples/rss2sample.xml"   )  
-for $item at $_item_Pos  in $rss//item   return $item   }</test>  
+for $item at $_item_Pos  in $rss//item   return $item   } </test>  

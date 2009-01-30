@@ -4,4 +4,4 @@ at "http://xsparql.deri.org/XSPARQLer/xsparql.xquery";
 
 declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 
-<a b = "1" c = "2"></a>   , <d><e/></d>   , <f g = "3"/>   , <h/>   , <i j = "4">{ <k/>   }</i>   , <http://www.w3.org/2005/sparql-results#>  
+<a b = "1" c = "2"></a>   , <d><e/></d>   , <f g = "3"/>   , <h/>   , <i j = "4">{ <k/>   }</i>  

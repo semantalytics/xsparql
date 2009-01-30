@@ -7,4 +7,4 @@ declare namespace owl="http://www.w3.org/2002/07/owl#";
 let $doc := doc("http://apassant.net/")
 
 for $s in data($doc//@about)
-construct { <rdf:a> rdf:b <{$s}> }
+construct { rdf:a rdf:b <{$s}> }

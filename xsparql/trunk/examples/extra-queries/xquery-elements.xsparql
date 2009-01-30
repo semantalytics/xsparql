@@ -5,6 +5,4 @@
 <d><e/></d>,
 <f g="3"/>,
 <h/>,
-<i j="4">{<k/>}</i>,
-<http://www.w3.org/2005/sparql-results#>
-
+<i j="4">{<k/>}</i>

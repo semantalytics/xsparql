@@ -36,4 +36,4 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_Y2_RDFTerm :=  _xsparql:_rdf_term($_Y2_NodeType, $Y2, $_Y2_NodeLang, $_Y2_NodeDatatype )
 
 let $dist  := $X2  
-order by $dist    return <user><user>{ $UID2   }</user><dist>{ $dist   }</dist></user>  
+order by $dist    return <user> <user>{ $UID2   }</user><dist>{ $dist   }</dist></user>  

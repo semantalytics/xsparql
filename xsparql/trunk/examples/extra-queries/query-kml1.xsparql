@@ -4,7 +4,7 @@ prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
 <kml xmlns="http://www.opengis.net/kml/2.2">
 {
 for $person $fn $ln $long $lat
-from <sample_person_geodata.rdf>
+from <file://sample_person_geodata.rdf>
 where {
  $person a foaf:Person; foaf:firstName $fn;foaf:lastName $ln;
          foaf:based_near [ a geo:Point; geo:long $long; geo:lat $lat ]

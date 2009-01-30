@@ -14,7 +14,7 @@ declare variable $_NS3 := "prefix  dcterms:  &#60;http://purl.org/dc/terms/&#62;
 declare variable $_NS4 := "prefix  rdfs:  &#60;http://www.w3.org/2000/01/rdf-schema#&#62;";
 
 let $johnblog  := doc("http://www.johnbreslin.com/blog/index.php?sioc_type=site"   )  
- return <channel><title>{ 
+ return <channel> <title>       { 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3,  $_NS4, "
 select $name from <http://www.johnbreslin.com/blog/index.php?sioc_type=site>  where { [  a  sioc:Forum   ;  ]
   sioc:name    $name   .   } ")))
@@ -25,7 +25,7 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_name_NodeLang := string($_name_Node/*/@lang)
 	let $name := data($_name_Node/*)
 	let $_name_RDFTerm :=  _xsparql:_rdf_term($_name_NodeType, $name, $_name_NodeLang, $_name_NodeDatatype )
- return $name   }</title>{ 
+ return $name   } </title>{ 
 let $_aux2 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3,  $_NS4, "
 select $seeAlso from <http://www.johnbreslin.com/blog/index.php?sioc_type=site>  where { [  a  sioc:Forum   ;  ]
   sioc:container_of [  rdfs:seeAlso    $seeAlso    ]
@@ -37,7 +37,7 @@ for $_aux_result2 at $_aux_result2_Pos in doc($_aux2)//_sparql_result:result
 	let $_seeAlso_NodeLang := string($_seeAlso_Node/*/@lang)
 	let $seeAlso := data($_seeAlso_Node/*)
 	let $_seeAlso_RDFTerm :=  _xsparql:_rdf_term($_seeAlso_NodeType, $seeAlso, $_seeAlso_NodeLang, $_seeAlso_NodeDatatype )
- return <item>{ 
+ return <item>                       { 
 let $_aux3 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3,  $_NS4, "
 select $title from <", $seeAlso,">  where { [  a  sioc:Post   ;  ]
   dc:title    $title   .   } ")))
@@ -48,4 +48,4 @@ for $_aux_result3 at $_aux_result3_Pos in doc($_aux3)//_sparql_result:result
 	let $_title_NodeLang := string($_title_Node/*/@lang)
 	let $title := data($_title_Node/*)
 	let $_title_RDFTerm :=  _xsparql:_rdf_term($_title_NodeType, $title, $_title_NodeLang, $_title_NodeDatatype )
- return $title   }</item>   }</channel>  
+ return $title   }            </item>   }</channel>  

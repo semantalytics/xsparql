@@ -19,7 +19,7 @@ declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 declare variable $_NS3 := "prefix  rdf:  &#60;http://www.w3.org/1999/02/22-rdf-syntax-ns#&#62;";
 declare variable $_NS4 := "prefix  incontext:  &#60;http://www.in-context.eu/ontologies#&#62;";
 declare variable $_NS5 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
-<kml xmlns = "http://www.opengis.net/kml/2.2">{ 
+<kml xmlns = "http://www.opengis.net/kml/2.2"> { 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3,  $_NS4,  $_NS5, "
 select $person $fn $ln $long $lat  where {    $person   rdf:type  foaf:Person  .    $person   incontext:id    $id   .    $person   incontext:hasGPSCoordinate    $gps   .    $gps   incontext:long    $long   .    $gps   incontext:lat    $lat   .    $person   foaf:firstName    $fn   .    $person   foaf:lastName    $ln   .  filter  (  $long      !=  """"      &amp;&amp;  $lat      !=  """"          )   } ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
@@ -53,4 +53,4 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_lat_NodeLang := string($_lat_Node/*/@lang)
 	let $lat := data($_lat_Node/*)
 	let $_lat_RDFTerm :=  _xsparql:_rdf_term($_lat_NodeType, $lat, $_lat_NodeLang, $_lat_NodeDatatype )
- return <Placemark><name>{ fn:concat("Location of "   , $fn   , " "   , $ln   )   }</name><Point><coordinates>{ fn:concat($long   , ","   , $lat   , ",0"   )   }</coordinates></Point></Placemark>   }</kml>  
+ return <Placemark>          <name>{ fn:concat("Location of "   , $fn   , " "   , $ln   )   }</name><Point><coordinates>{ fn:concat($long   , ","   , $lat   , ",0"   )   }</coordinates></Point></Placemark>   } </kml>  

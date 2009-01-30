@@ -1,3 +1,11 @@
+2009-01-30  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/debug.py: new print function
+
+	* src/xsparql/grammar.py: added states and new tokens to handle
+	ncnames in XML elements
+	* IRIs are now checked to have a valid prefix
+
 2009-01-29  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparqler.py: header update.

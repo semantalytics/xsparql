@@ -51,6 +51,20 @@ def recognize(tok):
     debug.recognize(tok)
     return tok
 
+def begin(token, state):
+    debug.display('Entering state: ' + state)
+    token.lexer.begin(state)
+    pass
+
+def push_state(token, state):
+    debug.display('Pushing state: ' + state)
+    token.lexer.push_state(state)
+    pass
+
+def pop_state(token):
+    debug.display('Poping state: ')
+    token.lexer.pop_state()
+    pass
 
 # reserved keywords
 reserved = {
@@ -151,19 +165,22 @@ reserved = {
 
 # lexer tokens
 tokens = [
-    'VAR', 'STARTELM', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING', 'DOT', 'AT',
+    'VAR', 'STARTELM', 'ENDELM', 'INTEGER', 'LCURLY', 'RCURLY', 'NCNAME', 'QSTRING', 'DOT', 'AT',
     'CARROT', 'COLON', 'COMMA', 'SLASH', 'LBRACKET', 'RBRACKET', 'LPAR', 'RPAR', 'SEMICOLON',
     'STAR', 'DOTDOT', 'SLASHSLASH','LESSTHAN', 'GREATERTHAN',  'PLUS', 'MINUS', 'UNIONSYMBOL', 'QUESTIONMARK',
     'LESSTHANLESSTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'EQUALS', 'COLONCOLON',
     'STAR_COLON_NCNAME', 'NCNAME_COLON_STAR', 'BNODE', 'BNODE_CONSTRUCT', 'IRI_CONSTRUCT',
     'PREFIXED_NAME', 'UNPREFIXED_NAME', 'PREFIXED_COLON',
-    'ORSYMBOL', 'ANDSYMBOL', 'NOT'
+    'ORSYMBOL', 'ANDSYMBOL', 'NOT', 'WHITESPACE', 'IRIREF', 'NCNAMEELM', 'ENDTAG'
     ] + reserved.values()
 
 
 # lexer states
 states = [
-   ('pattern','exclusive')
+   ('pattern','exclusive'),
+   ('xmlElementContents','exclusive'),
+   ('xmlStartTag','inclusive'),
+   ('xmlEndTag','inclusive')
 ]
 
 precedence = (
@@ -204,15 +221,89 @@ bnode_construct =      r'_:(' + PN_PREFIX + ')?\{'
 iri_construct =  r'\}:' + PN_PREFIX
 
 
+iri_prefix = r'(aaa|aaas|acap|cap|cid|crid|data|dav|dict|dns|fax|file|ftp|go|gopher|h323\
+|http|https|icap|im|imap|info|ipp|iris|iris.beep|iris.xpc|iris.xpcs|iris.lws\
+|ldap|mailto|mid|modem|msrp|mtqp|mupdate|news|nfs|nntp|opaquelocktoken|pop\
+|pres|prospero|rtsp|service|shttp|sip|sips|snmp|soap.beep|tag|tel|telnet\
+|tftp|thismessage|tip|tv|urn|vemmi|wais|xmlrpc.beep|xmlrpc.beep|xmpp|z39.50r\
+|z39.50s|about|adiumxtra|aim|afp|aw|bolo|callto|chrome|cvs|ed2k|feed|fish|gg\
+|gizmoproject|iax2|irc|ircs|itms|jar|javascript|keyparc|lastfm|ldaps|magnet\
+|mms|msnim|mvn|notes|psyc|paparazzi:http|rmi|rsync|secondlife|sgn|skype|ssh\
+|sftp|smb|sms|soldat|steam|svn|teamspeak|unreal|ut2004|ventrilo|view-source\
+|webcal|wtai|wyciwyg|xfire|xri|ymsgr)'
 
-def t_STARTELM(t):
-    r'\<([^<>\'\{\}\|\^`\x00-\x20])+'
+iri_body = r'([^<>\"\'\{\}\|\^`\x00-\x20])*'
+iri      = r'\<'+iri_prefix+'(:|\.)'+iri_body+'\>'
+
+@TOKEN(iri)
+def t_IRIREF(t):
     return recognize(t)
 
+
+startelm   = r'\<([^\/<>\'\{\}\|\^`\x00-\x20])+'
+endelm   = r'\</([^<>\'\{\}\|\^`\x00-\x20])+'
+
+@TOKEN(startelm)
+def t_STARTELM(t):
+    r = recognize(t)
+    begin(t, 'xmlStartTag')
+    return r
+
+
+
+def t_xmlStartTag_GREATERTHAN(t):
+    r'>'
+    r = recognize(t)
+    begin(t, 'xmlElementContents')
+    return r
+
+def t_xmlStartTag_ENDTAG(t):
+    r'/>'
+    r = recognize(t)
+    begin(t, 'INITIAL')
+    return r
+
+
+# def t_xmlElementContents_ENDTAG(t):
+#     r'</'
+#     r = recognize(t)
+#     begin(t, 'xmlEndTag')
+#     return r
+
+
+
+# finding a startelm '<' will end the elementContent state
+@TOKEN(startelm)
+def t_INITIAL_xmlElementContents_STARTELM(t):
+    r = recognize(t)
+    begin(t, 'xmlStartTag')
+    return r
+
+@TOKEN(endelm)
+def t_INITIAL_xmlElementContents_ENDELM(t):
+    r = recognize(t)
+    begin(t, 'xmlEndTag')
+    return r
+
+def t_xmlElementContents_WHITESPACE(t):
+    r'([ |\t])+'
+    return recognize(t)
+
+@TOKEN(PN_PREFIX)
+def t_xmlElementContents_NCNAMEELM(t):
+    return recognize(t)
+
+def t_xmlEndTag_GREATERTHAN(t):
+    r'>'
+    r = recognize(t)
+    begin(t, 'INITIAL')
+    return r
 
 @TOKEN(bnode_construct)
 def t_BNODE_CONSTRUCT(t):
-    return recognize(t)
+    r = recognize(t)
+    push_state(t, 'INITIAL')
+    return r
 
 @TOKEN(iri_construct)
 def t_IRI_CONSTRUCT(t):
@@ -233,6 +324,19 @@ def t_UNPREFIXED_NAME(t):
 @TOKEN(PREFIXED_COLON)
 def t_PREFIXED_COLON(t):
     return recognize(t)
+
+
+def t_INITIAL_xmlElementContents_xmlStartTag_xmlEndTag_RCURLY(t):
+    r'}'
+    r = recognize(t)
+    pop_state(t)
+    return r
+
+def t_INITIAL_xmlElementContents_xmlStartTag_xmlEndTag_LCURLY(t):
+    r'{'
+    r = recognize(t)
+    push_state(t, 'INITIAL')
+    return r
 
 
 # takes care of keywords and IRIs
@@ -268,8 +372,9 @@ t_SEMICOLON = r';'
 t_INITIAL_QSTRING = r'\"[^\"]*\"'
 
 
-t_LCURLY  = r'{'
-t_RCURLY = r'}'
+
+# t_LCURLY  = r'{'
+# t_RCURLY = r'}'
 
 # remove leading _
 var = '[\$][a-zA-Z][a-zA-Z0-9\_\-]*'
@@ -279,6 +384,11 @@ var = '[\$][a-zA-Z][a-zA-Z0-9\_\-]*'
 def t_VAR(t):
     return recognize(t)
 
+
+def t_GREATERTHAN(t):
+    r'>'
+#    t.lexer.push_state('elementContent')
+    return recognize(t)
 
 t_INTEGER   = r'[0-9]+'
 t_DOT       = r'\.' # PLY 2.2 does not like . to be a literal
@@ -291,7 +401,7 @@ t_EQUALS    = r'='
 t_STAR    = r'\*'
 t_DOTDOT    = r'\.\.'
 t_LESSTHAN = r'<'
-t_GREATERTHAN = r'>'
+#t_GREATERTHAN = r'>'
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_UNIONSYMBOL = r'\|'
@@ -311,8 +421,9 @@ curly_brackets = 0
 # WHERE token starts the pattern state
 def t_WHERE(t):
     r'\bwhere'
-    t.lexer.begin('pattern')
-    return recognize(t)
+    r = recognize(t)
+    begin(t, 'pattern')
+    return r
 
 def t_pattern_LCURLY(t):
     r'{'
@@ -325,8 +436,9 @@ def t_pattern_RCURLY(t):
     r'}'
     global curly_brackets
     curly_brackets -= 1
-    if curly_brackets == 0: t.lexer.begin('INITIAL')
-    return recognize(t)
+    r = recognize(t)
+    if curly_brackets == 0: begin(t,'INITIAL')
+    return r
 
 
 
@@ -337,7 +449,13 @@ def t_INITIAL_comments_SCOM(t):
     r'\#.*'
     pass
 
+t_xmlElementContents_ignore = ""
 
+t_xmlStartTag_xmlEndTag_ignore = " \r"
+def t_xmlStartTag_xmlEndTag_xmlElementContents_error(t):
+    col = find_column(t)
+    sys.stderr.write("Illegal character: '" + t.value[0] + "' at line "+ `t.lineno` + ', column '+ `col` + '\n')
+    raise SyntaxError
 
 ## -------------
 
@@ -444,9 +562,9 @@ def p_prefixID(p):
     p[0] = ''
 
 
-def p_IRIREF(p):
-    '''IRIREF : STARTELM GREATERTHAN'''
-    p[0] = ''.join(p[1:])
+# def p_IRIREF(p):
+#     '''IRIREF : STARTELM GREATERTHAN'''
+#     p[0] = ''.join(p[1:])
 
 
 def p_prefixIDs0(p):
@@ -840,9 +958,13 @@ def p_directElemConstructor(p):
 
 def p_directElemConstructorElm(p):
     '''directElemConstructorElm : STARTELM directAttributeList SLASH GREATERTHAN 
+                                | STARTELM directAttributeList ENDTAG
                                 | STARTELM directAttributeList GREATERTHAN
                                 | STARTELM GREATERTHAN
                                 | STARTELM SLASH GREATERTHAN
+                                | ENDELM GREATERTHAN
+                                | WHITESPACE
+                                | NCNAMEELM
 			        | enclosedExpr'''
     p[0] = ''.join(p[1:])
 
