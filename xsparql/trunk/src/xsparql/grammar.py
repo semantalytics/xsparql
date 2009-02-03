@@ -170,7 +170,7 @@ tokens = [
     'STAR', 'DOTDOT', 'SLASHSLASH','LESSTHAN', 'GREATERTHAN',  'PLUS', 'MINUS', 'UNIONSYMBOL', 'QUESTIONMARK',
     'LESSTHANLESSTHAN', 'GREATERTHANEQUALS', 'LESSTHANEQUALS', 'HAFENEQUALS', 'EQUALS', 'COLONCOLON',
     'STAR_COLON_NCNAME', 'NCNAME_COLON_STAR', 'BNODE', 'BNODE_CONSTRUCT', 'IRI_CONSTRUCT',
-    'PREFIXED_NAME', 'UNPREFIXED_NAME', 'PREFIXED_COLON',
+    'PREFIXED_NAME', 'UNPREFIXED_NAME', 'PREFIXED_COLON', 'CDATASTART', 'CDATAELMEND', 
     'ORSYMBOL', 'ANDSYMBOL', 'NOT', 'WHITESPACE', 'IRIREF', 'NCNAMEELM', 'ENDTAG'
     ] + reserved.values()
 
@@ -180,7 +180,8 @@ states = [
    ('pattern','exclusive'),
    ('xmlElementContents','exclusive'),
    ('xmlStartTag','inclusive'),
-   ('xmlEndTag','inclusive')
+   ('xmlEndTag','inclusive'),
+   ('cdata', 'exclusive')
 ]
 
 precedence = (
@@ -240,8 +241,18 @@ def t_IRIREF(t):
     return recognize(t)
 
 
+
+
+def t_ANY_CDATASTART(t):
+    r'<!\[CDATA\['
+    push_state(t,'cdata')
+    return recognize(t)
+
+
+
 startelm   = r'\<([^\/<>\'\{\}\|\^`\x00-\x20])+'
 endelm   = r'\</([^<>\'\{\}\|\^`\x00-\x20])+'
+
 
 @TOKEN(startelm)
 def t_STARTELM(t):
@@ -339,6 +350,10 @@ def t_INITIAL_xmlElementContents_xmlStartTag_xmlEndTag_LCURLY(t):
     push_state(t, 'INITIAL')
     return r
 
+def t_cdata_CDATAELMEND(t):
+    r'(.|\n|\t|\r)*\]\]>'
+    pop_state(t)
+    return recognize(t)
 
 # takes care of keywords and IRIs
 @TOKEN(PN_PREFIX)
@@ -450,13 +465,9 @@ def t_INITIAL_comments_SCOM(t):
     r'\#.*'
     pass
 
-t_xmlElementContents_ignore = ""
+t_xmlElementContents_cdata_ignore = ""
 
 t_xmlStartTag_xmlEndTag_ignore = " \r"
-def t_xmlStartTag_xmlEndTag_xmlElementContents_error(t):
-    col = find_column(t)
-    sys.stderr.write("Illegal character: '" + t.value[0] + "' at line "+ `t.lineno` + ', column '+ `col` + '\n')
-    raise SyntaxError
 
 ## -------------
 
@@ -468,9 +479,8 @@ def t_ANY_newline(t):
     r'(\r?\n)+'
     t.lexer.lineno += t.value.count("\n")
 
-
 # illegal characters will end up here
-def t_INITIAL_pattern_error(t):
+def t_ANY_error(t):
     col = find_column(t)
     sys.stderr.write("Illegal character: '" + t.value[0] + "' at line "+ `t.lineno` + ', column '+ `col` + '\n')
     raise SyntaxError
@@ -966,6 +976,7 @@ def p_directElemConstructorElm(p):
                                 | ENDELM GREATERTHAN
                                 | WHITESPACE
                                 | NCNAMEELM
+                                | CDATASTART CDATAELMEND
 			        | enclosedExpr'''
     p[0] = ''.join(p[1:])
 
