@@ -14,6 +14,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # (r'^admin/(.*)', admin.site.root),
-    (r'^xsparql/', 'xsparqlrest.restapi.views.query'),
-    (r'^', 'xsparqlrest.restapi.views.index'),
+    (r'^', 'xsparqlrest.restapi.views.query'),
+#    (r'^xsparql/', 'xsparqlrest.restapi.views.query'),
+#    (r'^', 'xsparqlrest.restapi.views.index'),
 )

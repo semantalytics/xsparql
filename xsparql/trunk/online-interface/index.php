@@ -103,7 +103,7 @@
         </p>
 
         <textarea id="query"
-                  wrap="off" style="height: 250px;width: 50em;margin-bottom: 10px;">%%% enter your XSPARQL query here %%%</textarea>
+                  wrap="off" style="height: 250px;width: 50em;margin-bottom: 10px;">### enter your XSPARQL query here ###</textarea>
                   <!-- name="querytextarea"
                   onmouseup="updatePosition(this)"
                   onmousedown="updatePosition(this)"

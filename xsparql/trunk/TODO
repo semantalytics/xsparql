@@ -1,5 +1,26 @@
 -*- org -*-
 
+* KNOW ISSUES:
+** TODO EMPTY keyword in XQuery is currently non-functional, clashes with fn:empty
+   Considered a 'known issue'
+** TODO modules are not working
+   declare function is working
+   Considered a 'known issue'
+
+** TODO nested expressions inside strings
+
+** TODO variable scope
+   all variables are global to the query
+
+
+* FUTURE WORK:
+** TODO build abstract syntax tree instead of in-place rewriting
+** TODO all variables are global 
+   parsing of bound variables does not work properly (this goes inline with AST representation)
+** TODO rewrite nested CONSTRUCTs properly
+
+** TODO check ply 3.1
+
 * DONE check w/ Wassen the diffs between online interface and CVS
 * DONE check examples on the ml into examples
 * DONE Create syntax textcases
@@ -18,24 +39,7 @@
   but we can use "... return <criterion2>{(<name>{$name}</name>,<weight>{$weight}</weight>)}</criterion2> ..."
 
 * DONE rewriter always _needs_ a namespace declaration, fix that.
-
-* TODO build abstract syntax tree instead of in-place rewriting
-* TODO all variables are global 
-  parsing of bound variables does not work properly (this goes in line with AST representation)
-
-
-
 * DONE parsing "... RETURN <foo>bar bar</foo> ..." does not work
   todo03.xsparql
-* TODO rewrite nested CONSTRUCTs properly
 
-
-
-KNOW ISSUES:
-------------
-* TODO EMPTY keyword in XQuery is currently non-functional, clashes with fn:empty
-  Considered a 'known issue'
-* TODO modules are not working
-  declare function is working
-  Considered a 'known issue'
-
+* DONE CDATA
