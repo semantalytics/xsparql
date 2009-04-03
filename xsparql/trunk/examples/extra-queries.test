@@ -61,6 +61,7 @@ extra-queries/queryFilter09
 extra-queries/queryFilter10
 extra-queries/todo01.xsparql
 extra-queries/todo02.xsparql
+extra-queries/typed_literal01.xsparql
 extra-queries/underscore.xsparql
 extra-queries/union.xsparql
 extra-queries/use-case.xsparql
