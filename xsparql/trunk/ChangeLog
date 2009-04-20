@@ -1,3 +1,7 @@
+2009-04-20  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/xsparql.xquery: allow spaces in literals
+
 2009-02-03  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/grammar.py (p_directElemConstructorElm): added CDATA
