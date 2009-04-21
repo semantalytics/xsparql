@@ -36,15 +36,12 @@ function test_file () {
 }
 
 
-function test_dirs() {
-    FILES=$(find . -name '*.test' -type f);
+function test_files() {
+    FILES=$(find . -mindepth 2 -iname \*.xsparql -o -iname \*.sparql -o -iname \*.xquery | egrep -v "(/output/|/tmp/)" );
 
-    for t in $FILES
+    for FILE in $FILES
     do
-	while read QUERY
-	do
-	    test_file $QUERY
-	done < `basename $t` # redirect test file to the while loop
+	test_file $FILE
     done
 }
 
@@ -55,7 +52,7 @@ if [ $# -gt 0 ]; then
 	test_file $i;
     done
 else
-    test_dirs;
+    test_files;
 fi
 
 
