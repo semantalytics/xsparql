@@ -1,0 +1,26 @@
+
+import module namespace _xsparql = "http://xsparql.deri.org/XSPARQLer/xsparql.xquery"
+at "http://xsparql.deri.org/XSPARQLer/xsparql.xquery";
+
+declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
+
+declare default element namespace "http://xmlns.com/foaf/0.1/";
+
+declare variable $_NS1 := "prefix  :  &#60;http://xmlns.com/foaf/0.1/&#62;";
+<people>{ 
+let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1, "
+select $aName $bName from <http://xsparql.deri.org/data/relations.rdf>  where {    $a   :knows    $b   .    $b   :name    $bName   .    $a   :name    $aName   .   } ")))
+for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
+	let $_aName_Node := ($_aux_result1/_sparql_result:binding[@name = "aName"])
+	let $_aName_NodeType := name($_aName_Node/*)
+	let $_aName_NodeDatatype := string($_aName_Node/*/@datatype)
+	let $_aName_NodeLang := string($_aName_Node/*/@lang)
+	let $aName := data($_aName_Node/*)
+	let $_aName_RDFTerm :=  _xsparql:_rdf_term($_aName_NodeType, $aName, $_aName_NodeLang, $_aName_NodeDatatype )
+	let $_bName_Node := ($_aux_result1/_sparql_result:binding[@name = "bName"])
+	let $_bName_NodeType := name($_bName_Node/*)
+	let $_bName_NodeDatatype := string($_bName_Node/*/@datatype)
+	let $_bName_NodeLang := string($_bName_Node/*/@lang)
+	let $bName := data($_bName_Node/*)
+	let $_bName_RDFTerm :=  _xsparql:_rdf_term($_bName_NodeType, $bName, $_bName_NodeLang, $_bName_NodeDatatype )
+ return <knows a = "{$aName}">{ $bName   }</knows>   }</people>  

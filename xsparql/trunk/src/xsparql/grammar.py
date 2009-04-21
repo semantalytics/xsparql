@@ -2068,6 +2068,7 @@ def p_sparqlPrefixedName(p):
 #              | PREFIX
 #              | BASE
 #              | FOR
+#              | DECLARE
 
 def p_qname(p):
     '''qname : prefixedName
@@ -2115,7 +2116,6 @@ def p_qname(p):
              | ANCESTORORSELF
              | ORDERED
              | UNORDERED
-             | DECLARE
              | NAMESPACE
              | DEFAULT
              | ELEMENT
