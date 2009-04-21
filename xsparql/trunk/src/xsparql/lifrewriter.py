@@ -416,10 +416,14 @@ def genLetCondReturn(type, value):
 
 def tokenize(string):
 
-    tokens = re.split('([^{}]*)(?:({)(.*?)(})){1,2}([^{}]*)', string)
+    tokens = re.split('([^{}]*)(?:({)([^{}]*)(})){1,2}([^{}]*)', string)
     pattern = []
     enclosed = False
     sep = ''
+
+    if tokens[0].strip(" ") == '{':
+        pattern.append('\'"\'')
+        sep = ', '
 
     for tok in tokens:
         if tok == '':
@@ -431,11 +435,14 @@ def tokenize(string):
             enclosed = False
             continue
         else: 
-            if enclosed:
+            if enclosed and tok.strip(' ')[0] == '$':
                 pattern.append(sep + tok)
             else:
                 pattern.append( sep + "'"+tok+"'")
         
         sep = ', '
+
+    if tokens[-1].strip(" ") == '}':
+        pattern.append(sep + '\'"\'')
 
     return pattern

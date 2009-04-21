@@ -1,5 +1,8 @@
 2009-04-21  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* src/xsparql/lifrewriter.py (tokenize): fixes bug in simple
+	nested query
+
 	* src/xsparql/grammar.py (p_qname): solve shift/reduce conflicts
 	only presented in ply-3.x
 
