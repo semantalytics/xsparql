@@ -416,12 +416,20 @@ def genLetCondReturn(type, value):
 
 def tokenize(string):
 
+    string = string.replace("\n", "")
+
+    typed = re.split('(.*}")(\^\^|@)(.*)', string) # remove the lang and type part from construct literals
+    debug.debug(typed)
+
+    if len(typed) > 1:
+        string = typed[1].strip("\"")
+
     tokens = re.split('([^{}]*)(?:({)([^{}]*)(})){1,2}([^{}]*)', string)
     pattern = []
     enclosed = False
     sep = ''
 
-    if tokens[0].strip(" ") == '{':
+    if tokens[0].strip(" \"") == '{':
         pattern.append('\'"\'')
         sep = ', '
 
@@ -444,5 +452,8 @@ def tokenize(string):
 
     if tokens[-1].strip(" ") == '}':
         pattern.append(sep + '\'"\'')
+
+    if len(typed) > 1:
+        pattern.append(sep + "\"" + ''.join(typed[2:]) + "\"")
 
     return pattern

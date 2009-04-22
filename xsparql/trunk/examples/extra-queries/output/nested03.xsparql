@@ -1,0 +1,59 @@
+
+import module namespace _xsparql = "http://xsparql.deri.org/XSPARQLer/xsparql.xquery"
+at "http://xsparql.deri.org/XSPARQLer/xsparql.xquery";
+
+declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
+
+declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+declare namespace rdfs = "http://www.w3.org/2000/01/rdf-schema#";
+
+
+declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+declare variable $_NS2 := "prefix  rdfs:  &#60;http://www.w3.org/2000/01/rdf-schema#&#62;";
+
+ fn:concat(  "  
+@", $_NS1, ".", "  
+@", $_NS2, ".", "
+" ),
+
+  
+let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2, "
+select $p $n $g from <http://www.polleres.net/foaf.rdf>  where {    $p    foaf:name    $n    ;  rdfs:seeAlso    $g    
+ .   } ")))
+for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
+	let $_p_Node := ($_aux_result1/_sparql_result:binding[@name = "p"])
+	let $_p_NodeType := name($_p_Node/*)
+	let $_p_NodeDatatype := string($_p_Node/*/@datatype)
+	let $_p_NodeLang := string($_p_Node/*/@lang)
+	let $p := data($_p_Node/*)
+	let $_p_RDFTerm :=  _xsparql:_rdf_term($_p_NodeType, $p, $_p_NodeLang, $_p_NodeDatatype )
+	let $_n_Node := ($_aux_result1/_sparql_result:binding[@name = "n"])
+	let $_n_NodeType := name($_n_Node/*)
+	let $_n_NodeDatatype := string($_n_Node/*/@datatype)
+	let $_n_NodeLang := string($_n_Node/*/@lang)
+	let $n := data($_n_Node/*)
+	let $_n_RDFTerm :=  _xsparql:_rdf_term($_n_NodeType, $n, $_n_NodeLang, $_n_NodeDatatype )
+	let $_g_Node := ($_aux_result1/_sparql_result:binding[@name = "g"])
+	let $_g_NodeType := name($_g_Node/*)
+	let $_g_NodeDatatype := string($_g_Node/*/@datatype)
+	let $_g_NodeLang := string($_g_Node/*/@lang)
+	let $g := data($_g_Node/*)
+	let $_g_RDFTerm :=  _xsparql:_rdf_term($_g_NodeType, $g, $_g_NodeLang, $_g_NodeDatatype )
+ 
+
+let $_validObject1 := fn:concat('"', '<name>             <full>', $n, '</full>            </name>', '"', "^^rdf:XMLliteral") 
+
+
+
+  return ( 
+	 if ( _xsparql:_validSubject( "",  $_p_RDFTerm  ) ) then (
+		 
+		   
+	  if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
+		 fn:concat( 
+		 $_p_RDFTerm,  " ex:myname ", $_validObject1, " .&#xA;"
+		)
+ ) else ""  
+
+		 
+  ) else ""  )

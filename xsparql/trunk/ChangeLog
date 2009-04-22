@@ -1,3 +1,8 @@
+2009-04-22  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lifrewriter.py (tokenize): separate the (optional)
+	datatype and language part of the construct
+
 2009-04-21  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/lifrewriter.py (tokenize): fixes bug in simple
