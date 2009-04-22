@@ -37,7 +37,7 @@ import xsparql.lowrewriter
 
 def parse_params(argv):
     try:
-        opts, args = getopt.gnu_getopt(argv[1:], 'he:', ['help', 'endpoint='])
+        opts, args = getopt.gnu_getopt(argv[1:], 'hde:', ['help', 'debug', 'endpoint='])
     except getopt.GetoptError, err:
         sys.stderr.write(str(err) + "\n" + usage(argv[0]))
         sys.exit(2)
@@ -51,6 +51,8 @@ def parse_params(argv):
             sys.exit()
         elif opt in ('-e','--endpoint'):
             xsparql.lowrewriter.sparql_endpoint = arg + '?query='
+        elif opt in ('-d','--debug'):
+            xsparql.grammar.debugInfo = True
         else:
             assert False, "unhandled option"
 

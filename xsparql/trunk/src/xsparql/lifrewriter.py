@@ -419,7 +419,6 @@ def tokenize(string):
     string = string.replace("\n", "")
 
     typed = re.split('(.*}")(\^\^|@)(.*)', string) # remove the lang and type part from construct literals
-    debug.debug(typed)
 
     if len(typed) > 1:
         string = typed[1].strip("\"")

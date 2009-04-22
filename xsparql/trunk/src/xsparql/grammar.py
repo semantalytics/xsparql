@@ -38,6 +38,9 @@ import lifrewriter
 import lowrewriter
 
 
+# print parser debug info
+debugInfo = False
+
 #
 # XSPARQL Grammar begin
 #
@@ -1011,28 +1014,38 @@ def p_attributeValueContent(p):
 
 
 def p_solutionmodifier(p):
-    '''solutionmodifier : orderclause limitoffsetclause
-			| orderclause
-			| limitoffsetclause
-			| empty'''
-    p[0] = ' '.join(p[1:])
+    '''solutionmodifier : orderclause limitoffsetclause'''
+    p[0] = ''.join(p[1:])
 
 
 def p_limitoffsetclause(p):
-    '''limitoffsetclause : limitclause
-			 | offsetclause
-			 | limitclause offsetclause
-			 | offsetclause limitclause'''
+    '''limitoffsetclause : limitclause offsetclause_opt
+			 | offsetclause limitclause_opt
+                         | empty'''
     p[0] = ' '.join(p[1:])
 
 
 def p_orderclause(p):
-    '''orderclause : ORDER BY VAR'''
+    '''orderclause : ORDER BY VAR
+                   | empty'''
     p[0] = ' '.join(p[1:])
+
+
+def p_limitclause_opt(p):
+    '''limitclause_opt : limitclause
+                       | empty'''
+    p[0] = p[1]
+
 
 def p_limitclause(p):
     '''limitclause : LIMIT INTEGER'''
     p[0] = ' '.join(p[1:])
+
+
+def p_offsetclause_opt(p):
+    '''offsetclause_opt : offsetclause
+                        | empty'''
+    p[0] = p[1]
 
 
 def p_offsetclause(p):
@@ -2069,6 +2082,8 @@ def p_sparqlPrefixedName(p):
 #              | BASE
 #              | FOR
 #              | DECLARE
+#              | ORDER
+#              | BY
 
 def p_qname(p):
     '''qname : prefixedName
@@ -2085,8 +2100,6 @@ def p_qname(p):
              | LIMIT
              | OFFSET
              | LET
-             | ORDER
-             | BY
              | ATS
              | IN
              | AS
@@ -2250,7 +2263,10 @@ def rewrite(s):
             sys.exit(1)
 
 	# parse s, and get rewritten string back
-	result = parser.parse(s)
+        if debugInfo: 
+            result = parser.parse(s, debug=1)
+        else:
+            result = parser.parse(s)
 
 	if result:
 	   return result + '\n'

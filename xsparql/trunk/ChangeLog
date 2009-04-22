@@ -1,5 +1,11 @@
 2009-04-22  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* src/xsparqler.py (parse_params): added new option to show debug
+	information from the parser.
+
+	* src/xsparql/grammar.py (p_solutionmodifier): updated grammar
+	rules for solution modifieres.  Fixes parse of order by clauses.
+
 	* src/xsparql/lifrewriter.py (tokenize): separate the (optional)
 	datatype and language part of the construct
 
