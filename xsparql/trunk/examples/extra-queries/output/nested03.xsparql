@@ -19,7 +19,7 @@ declare variable $_NS2 := "prefix  rdfs:  &#60;http://www.w3.org/2000/01/rdf-sch
   
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2, "
 select $p $n $g from <http://www.polleres.net/foaf.rdf>  where {    $p    foaf:name    $n    ;  rdfs:seeAlso    $g    
- .   } ")))
+ .   }  ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_p_Node := ($_aux_result1/_sparql_result:binding[@name = "p"])
 	let $_p_NodeType := name($_p_Node/*)

@@ -16,7 +16,7 @@ declare variable $_NS3 := "prefix  dct:  &#60;http://purl.org/dc/terms/&#62;";
 
 let $results  := 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3, "
-select $entry $date  where {    $entry   dct:created    $date   .   } ")))
+select $entry $date  where {    $entry   dct:created    $date   .   }  ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_entry_Node := ($_aux_result1/_sparql_result:binding[@name = "entry"])
 	let $_entry_NodeType := name($_entry_Node/*)

@@ -9,7 +9,7 @@ declare namespace bkxml = "http://example.com/bookTicket.xsd" ;
 declare namespace tool = "http://example.com/tools" ;
 declare function tool:locationLowering ( $node , $name ) { 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3, "
-select $city $country $station from <http://input.rdf>  where {  optional  {  $node  a  bkrdf:TrainStation  bkrdf:name  $station  bkrdf:isInCity  $cityNode  $cityNode  bkrdf:name  $city  bkrdf:isInCountry  $countryNode  $countryNode  bkrdf:name  $country    }  optional  {  $node  a  bkrdf:City  bkrdf:name  $city  bkrdf:isInCountry  $countryNode  $countryNode  bkrdf:name  $country    }   } ")))
+select $city $country $station from <http://input.rdf>  where {  optional  {  $node  a  bkrdf:TrainStation  bkrdf:name  $station  bkrdf:isInCity  $cityNode  $cityNode  bkrdf:name  $city  bkrdf:isInCountry  $countryNode  $countryNode  bkrdf:name  $country    }  optional  {  $node  a  bkrdf:City  bkrdf:name  $city  bkrdf:isInCountry  $countryNode  $countryNode  bkrdf:name  $country    }   }  ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_city_Node := ($_aux_result1/_sparql_result:binding[@name = "city"])
 	let $_city_NodeType := name($_city_Node/*)
@@ -39,7 +39,7 @@ select $date $count $from $to from <http://input.rdf>  where {    $req    a  bkr
   
   
   
- .   } ")))
+ .   }  ")))
 for $_aux_result2 at $_aux_result2_Pos in doc($_aux2)//_sparql_result:result
 	let $_date_Node := ($_aux_result2/_sparql_result:binding[@name = "date"])
 	let $_date_NodeType := name($_date_Node/*)

@@ -1015,7 +1015,7 @@ def p_attributeValueContent(p):
 
 def p_solutionmodifier(p):
     '''solutionmodifier : orderclause limitoffsetclause'''
-    p[0] = ''.join(p[1:])
+    p[0] = ' '.join(p[1:])
 
 
 def p_limitoffsetclause(p):

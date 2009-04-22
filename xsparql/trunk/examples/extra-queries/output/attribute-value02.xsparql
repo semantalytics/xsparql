@@ -9,7 +9,7 @@ declare default element namespace "http://xmlns.com/foaf/0.1/";
 declare variable $_NS1 := "prefix  :  &#60;http://xmlns.com/foaf/0.1/&#62;";
 <people>{ 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1, "
-select $aName $bName from <http://xsparql.deri.org/data/relations.rdf>  where {    $a   :knows    $b   .    $b   :name    $bName   .    $a   :name    $aName   .   } ")))
+select $aName $bName from <http://xsparql.deri.org/data/relations.rdf>  where {    $a   :knows    $b   .    $b   :name    $bName   .    $a   :name    $aName   .   }  ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_aName_Node := ($_aux_result1/_sparql_result:binding[@name = "aName"])
 	let $_aName_NodeType := name($_aName_Node/*)

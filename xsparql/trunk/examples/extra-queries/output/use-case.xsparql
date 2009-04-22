@@ -21,7 +21,7 @@ declare variable $_NS4 := "prefix  incontext:  &#60;http://www.in-context.eu/ont
 declare variable $_NS5 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 <kml xmlns = "http://www.opengis.net/kml/2.2"> { 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3,  $_NS4,  $_NS5, "
-select $person $fn $ln $long $lat  where {    $person   rdf:type  foaf:Person  .    $person   incontext:id    $id   .    $person   incontext:hasGPSCoordinate    $gps   .    $gps   incontext:long    $long   .    $gps   incontext:lat    $lat   .    $person   foaf:firstName    $fn   .    $person   foaf:lastName    $ln   .  filter  (  $long      !=  """"      &amp;&amp;  $lat      !=  """"          )   } ")))
+select $person $fn $ln $long $lat  where {    $person   rdf:type  foaf:Person  .    $person   incontext:id    $id   .    $person   incontext:hasGPSCoordinate    $gps   .    $gps   incontext:long    $long   .    $gps   incontext:lat    $lat   .    $person   foaf:firstName    $fn   .    $person   foaf:lastName    $ln   .  filter  (  $long      !=  """"      &amp;&amp;  $lat      !=  """"          )   }  ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_person_Node := ($_aux_result1/_sparql_result:binding[@name = "person"])
 	let $_person_NodeType := name($_person_Node/*)

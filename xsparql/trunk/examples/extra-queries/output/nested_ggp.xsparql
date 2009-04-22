@@ -9,7 +9,7 @@ declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 " ),
 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat("", "
-select $S $P $O from <http://xsparql.deri.org/data/vCard.rdf>  where {  {  $S  $P  $O    }   } ")))
+select $S $P $O from <http://xsparql.deri.org/data/vCard.rdf>  where {  {  $S  $P  $O    }   }  ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_S_Node := ($_aux_result1/_sparql_result:binding[@name = "S"])
 	let $_S_NodeType := name($_S_Node/*)

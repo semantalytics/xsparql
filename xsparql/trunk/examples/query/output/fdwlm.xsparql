@@ -14,7 +14,7 @@ let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri
 select $UID2 $X2 $Y2 from <http://xsparql.deri.org/data/relations.rdf>  where { [  :id    $UID2    ;  ]
   :hasGPSCoordinate [   :lat    $X2    ;  :long    $Y2    
   ]
-  .   } ")))
+  .   }  ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_UID2_Node := ($_aux_result1/_sparql_result:binding[@name = "UID2"])
 	let $_UID2_NodeType := name($_UID2_Node/*)

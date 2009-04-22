@@ -17,7 +17,7 @@ select $person $fn $ln $long $lat from <http://srvgal65.deri.ie/xsparqler/spec/d
   
  .    $gps    a  geo:Point   ;   geo:long    $long    ;  geo:lat    $lat    
   
- .   } ")))
+ .   }  ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_person_Node := ($_aux_result1/_sparql_result:binding[@name = "person"])
 	let $_person_NodeType := name($_person_Node/*)

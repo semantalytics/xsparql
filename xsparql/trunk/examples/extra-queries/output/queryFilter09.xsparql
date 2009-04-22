@@ -15,7 +15,7 @@ declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 declare variable $_NS3 := "prefix  app:  &#60;http://example.org/ns#&#62;";
 
 let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3, "
-select $Person $Name from <http://xsparql.deri.org/data/relations.rdf>  where {    $Person   foaf:name    $Name   .  filter  (  app:customDate  (  $date              )      >  ""2005-02-28T00:00:00Z""^^xsd:dateTime          )  .   } ")))
+select $Person $Name from <http://xsparql.deri.org/data/relations.rdf>  where {    $Person   foaf:name    $Name   .  filter  (  app:customDate  (  $date              )      >  ""2005-02-28T00:00:00Z""^^xsd:dateTime          )  .   }  ")))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_Person_Node := ($_aux_result1/_sparql_result:binding[@name = "Person"])
 	let $_Person_NodeType := name($_Person_Node/*)
