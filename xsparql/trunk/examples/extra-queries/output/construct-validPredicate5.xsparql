@@ -26,7 +26,7 @@ let $doc  := doc("http://apassant.net/"   )
 let $uri  := "http://www.xyz.com"  
 for $s at $_s_Pos  in data($doc//@about   )   
 
-let $_validPredicate1 := fn:concat( $uri   , ':',  $uri   ) 
+let $_validPredicate1 := fn:concat($uri, ':', $uri) 
 
 
 

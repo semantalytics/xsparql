@@ -185,8 +185,8 @@ def build_predicate(subject, p):
 	     if len(b) >= 2:
 		 if(b[0] != '_' and b[1] != ':'):
                      let_p, cond_p, ret_p, suff_p = build_bnode('_validPredicate', b)
- 		     let, cond, ret, suff = build_object(subject, ret_p.rstrip(', '), p[0][1])
- 		     return let_p + let, "", cond_p + cond + '  \n\t  ' + ret.rstrip(', ') + '  \n ' + suff_p + suff, ""
+                     let, cond, ret, suff = build_object(subject, ret_p.rstrip(', '), p[0][1])
+                     return let_p + let, "", cond_p + cond + '  \n\t  ' + ret.rstrip(', ') + '  \n ' + suff_p + suff, ""
 	     else:
 		 let, cond, ret,suff = build_object(subject, b, p[0][1])
 		 return let, "", cond + '  \n\t ' + ret.rstrip(',')  + ', ' + suff, ""
@@ -288,7 +288,7 @@ def build_bnode(type, b):
 
             let += ', "^^"'
             iri = b[3]
-            if iri[0] == '<' and iri[1] == '{' and iri[-2] == '}' and iri[-1] == '>':  
+            if iri[0] == '<' and iri[1] == '{' and iri[-2] == '}' and iri[-1] == '>':
                 let += ', ' + iri.strip('<{}>') + ')\n'
             else:
                 if iri >= 4 and iri[0] == '<' and iri[1] == '{' and iri[-2] == '}' and iri[-1] == '>':  # iri literal
@@ -301,7 +301,7 @@ def build_bnode(type, b):
                         continue
 
                     if elm.find('}') == -1:
-                        let += ', "' + elm + '"' 
+                        let += ', "' + elm + '"'
                     else:
                         sp = elm.split('}')
                         for e in sp:
@@ -415,42 +415,58 @@ def genLetCondReturn(type, value):
 
 
 def tokenize(string):
-
-    string = string.replace("\n", "")
-
-    typed = re.split('(.*}")(\^\^|@)(.*)', string) # remove the lang and type part from construct literals
-
+    
+    typedRegexp = re.compile('(.*}")(\^\^|@)(.*)', re.DOTALL) # remove the lang and type part from construct literals
+    typed = typedRegexp.split(string)
+     
     if len(typed) > 1:
         string = typed[1].strip("\"")
 
-    tokens = re.split('([^{}]*)(?:({)([^{}]*)(})){1,2}([^{}]*)', string)
+#    tokens = re.split('([^{}]*)(?:({)([^{}]*)(})){1,2}([^{}]*)', string)
+
+    regexp = re.compile('([^{}]*[^{}]*)', re.DOTALL)
+    tokens = regexp.split(string)
+    
     pattern = []
-    enclosed = False
+    enclosed = [False]
     sep = ''
 
-    if tokens[0].strip(" \"") == '{':
-        pattern.append('\'"\'')
-        sep = ', '
+    end = ''
+    if tokens[0].strip(" \"") == '{' and tokens[-1].strip(" \"") == '}' and ':' not in tokens:
+        pattern.append('\'"\' ')
+        end = ", " + '\'"\''
+        tokens = tokens[1:-1]
+        sep=', '
+
+
 
     for tok in tokens:
-        if tok == '':
+        if tok.strip(" ") == '':
             continue
         elif tok == '{':
-            enclosed = True
+            if len(enclosed) > 1 and  enclosed[-1]:
+                pattern.append(tok)
+            enclosed.append(True)
             continue
         elif tok == '}':
-            enclosed = False
+            enclosed.pop()
+            if len(enclosed) > 1 and enclosed[-1]:
+                pattern.append(tok)
             continue
-        else: 
-            if enclosed and tok.strip(' ')[0] == '$':
-                pattern.append(sep + tok)
+        else:
+            if len(pattern) > 1 and pattern[-1] in ('{', '}'):
+                sep = ''
+
+            if len(enclosed) > 1 and  enclosed[-1]:
+                pattern.append(sep + tok.strip("' "))
             else:
                 pattern.append( sep + "'"+tok+"'")
-        
+
         sep = ', '
 
-    if tokens[-1].strip(" ") == '}':
-        pattern.append(sep + '\'"\'')
+
+    if end != '':
+        pattern.append(end)
 
     if len(typed) > 1:
         pattern.append(sep + "\"" + ''.join(typed[2:]) + "\"")

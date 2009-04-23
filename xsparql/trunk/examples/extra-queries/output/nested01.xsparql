@@ -41,7 +41,7 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_g_RDFTerm :=  _xsparql:_rdf_term($_g_NodeType, $g, $_g_NodeLang, $_g_NodeDatatype )
  
 
-let $_validObject1 := fn:concat('"', ' <name>             <full>',  $n   , '</full></name>   ', '"') 
+let $_validObject1 := fn:concat('"' , ' <name>             <full>', $n, '</full></name>   ', '"') 
 
 
 

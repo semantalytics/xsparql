@@ -1,3 +1,8 @@
+2009-04-23  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lifrewriter.py (tokenize): rewrite tokenizer
+	function to support new example of nested xsparql.
+
 2009-04-22  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparqler.py (parse_params): added new option to show debug

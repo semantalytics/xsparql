@@ -385,7 +385,10 @@ def build_bnode(b, f):
 	v = ''
 	for i in p_var:
 	    v += ' data('+str(i[0:])+ ') '
-	return ''+ b + '' + v
+        if v == '' :
+            return ''+ b + '' 
+        else:
+            return ''+ b + '",' + v +',"'
     else:
 	if b >= 2 and b[0] == '{' and b[-1] == '}' :
 	    strip = str(b).lstrip('{')

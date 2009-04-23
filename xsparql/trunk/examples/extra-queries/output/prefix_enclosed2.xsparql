@@ -24,7 +24,7 @@ let $authorhp  := data($author/li/*/@href   )
 let $friends  := $doc//*[@id = "friends"  ]  
 for $f at $_f_Pos  in $friends   
 
-let $_validObject1 := fn:concat('foaf:',  $authorhp   ) 
+let $_validObject1 := fn:concat('foaf:', $authorhp) 
 
 
 
