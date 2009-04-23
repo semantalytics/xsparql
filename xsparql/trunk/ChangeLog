@@ -1,5 +1,8 @@
 2009-04-23  Nuno Lopes  <nuno.lopes@deri.org>
 
+	* src/xsparql/grammar.py (p_literalConstruct1): allow for IRIs of
+	typed literals in construct queries to be stated explicitly
+
 	* src/xsparql/lifrewriter.py (tokenize): rewrite tokenizer
 	function to support new example of nested xsparql.
 

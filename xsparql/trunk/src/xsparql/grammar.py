@@ -1756,9 +1756,16 @@ def p_literalConstruct1(p):
                         |  enclosedExpr AT enclosedExpr
                         |  INTEGER CARROT CARROT iriConstruct
                         |  QSTRING CARROT CARROT iriConstruct
-                        |  enclosedExpr CARROT CARROT iriConstruct'''
+                        |  enclosedExpr CARROT CARROT iri'''
     p[0] = p[1:]
 
+
+
+def p_iri(p):
+    '''iri :  PREFIXED_NAME
+           |  IRIREF
+           |  iriConstruct'''
+    p[0] = p[1]
 
 ## ----------------------------------------------------------
 

@@ -28,7 +28,7 @@
 
 import sys
 
-debug_level = 0
+debug_level = 1
 
 def debug(*debug):
     global debug_level
@@ -50,6 +50,6 @@ def recognize(token):
 
 def display(p):
     global debug_level
-    if ( debug_level > 0 ):
+    if ( debug_level > 1 ):
         print >> sys.stderr, p
     return
