@@ -1,3 +1,10 @@
+2009-04-28  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lifrewriter.py (genLetCondReturn): use serialize
+	instead of fn:concat in some cases.
+
+	* online-interface/xsparql.xquery: added xml serialize functions
+
 2009-04-23  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/grammar.py (p_literalConstruct1): allow for IRIs of

@@ -314,7 +314,7 @@ def build_bnode(type, b):
                                 let += ', "'+ e + '"'
 
 
-                let += ")\n"
+                let += "))\n"
 
             return let,cond,ret,suff
 
@@ -395,7 +395,7 @@ def genLetCondReturn(type, value):
 	    if listSearch(s): s = lowrewriter.prefix_var(s.strip()) + '_RDFTerm'
 	    value_all = value_all + s
 
-	let =  'let '+ var +' := fn:concat(' +  value_all +') \n'
+	let =  'let '+ var +' := _xsparql:_serialize((' +  value_all +')) \n'
 
 
 
