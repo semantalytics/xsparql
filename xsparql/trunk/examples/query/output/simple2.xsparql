@@ -11,16 +11,16 @@ declare namespace foaf = "http://xmlns.com/foaf/0.1/";
 declare variable $_NS1 := "prefix  :  &#60;http://www.example.org&#62;";
 declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 
- fn:concat(  "  
+ _xsparql:_serialize((  "  
 @", $_NS1, ".", "  
 @", $_NS2, ".", "
-" ),
+" )),
 
   
 let $y  := "<http://www.example.org/knownPerson>"  
 
-let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2, "
-select $s $x from <http://www.polleres.net/foaf.rdf>  where {    $s   foaf:knows    $x   .   }  ")))
+let $_aux1 := _xsparql:_serialize(("http://localhost:2020/sparql?query=", fn:encode-for-uri( _xsparql:_serialize((  $_NS1,  $_NS2, "
+select $s $x from <http://www.polleres.net/foaf.rdf>  where {    $s   foaf:knows    $x   .   }  ")))))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_s_Node := ($_aux_result1/_sparql_result:binding[@name = "s"])
 	let $_s_NodeType := name($_s_Node/*)
@@ -36,7 +36,7 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_x_RDFTerm :=  _xsparql:_rdf_term($_x_NodeType, $x, $_x_NodeLang, $_x_NodeDatatype )
  
 
-let $_validObject1 := fn:concat( '"',  $y,  '"') 
+let $_validObject1 := _xsparql:_serialize(( '"',  $y,  '"')) 
 
 
 
@@ -45,9 +45,9 @@ let $_validObject1 := fn:concat( '"',  $y,  '"')
 		 
 		   
 	 if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		 $_x_RDFTerm,  " a ", $_validObject1, " .&#xA;"
-		)
+		))
  ) else ""
 		 
   ) else ""  )

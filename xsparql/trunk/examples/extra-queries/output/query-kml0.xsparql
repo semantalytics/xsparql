@@ -14,8 +14,8 @@ declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 declare variable $_NS2 := "prefix  rdf:  &#60;http://www.w3.org/1999/02/22-rdf-syntax-ns#&#62;";
 declare variable $_NS3 := "prefix  geo:  &#60;http://www.w3.org/2003/01/geo/wgs84_pos#&#62;";
 <kml xmlns = "http://www.opengis.net/kml/2.2"> { 
-let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2,  $_NS3, "
-select $person $fn $ln $long $lat from <http://srvgal65.deri.ie/xsparqler/spec/draft/examples/sample_person_geodata.rdf>  where {    $person   rdf:type  foaf:Person  .    $person   foaf:based_near    $gps   .    $gps   rdf:type  geo:Point  .    $gps   geo:long    $long   .    $gps   geo:lat    $lat   .    $person   foaf:firstName    $fn   .    $person   foaf:lastName    $ln   .   }  ")))
+let $_aux1 := _xsparql:_serialize(("http://localhost:2020/sparql?query=", fn:encode-for-uri( _xsparql:_serialize((  $_NS1,  $_NS2,  $_NS3, "
+select $person $fn $ln $long $lat from <http://srvgal65.deri.ie/xsparqler/spec/draft/examples/sample_person_geodata.rdf>  where {    $person   rdf:type  foaf:Person  .    $person   foaf:based_near    $gps   .    $gps   rdf:type  geo:Point  .    $gps   geo:long    $long   .    $gps   geo:lat    $lat   .    $person   foaf:firstName    $fn   .    $person   foaf:lastName    $ln   .   }  ")))))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_person_Node := ($_aux_result1/_sparql_result:binding[@name = "person"])
 	let $_person_NodeType := name($_person_Node/*)

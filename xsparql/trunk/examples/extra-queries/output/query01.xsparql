@@ -11,14 +11,14 @@ declare namespace foaf = "http://xmlns.com/foaf/0.1/";
 declare variable $_NS1 := "prefix  vc:  &#60;http://www.w3.org/2001/vcard-rdf/3.0#&#62;";
 declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 
- fn:concat(  "  
+ _xsparql:_serialize((  "  
 @", $_NS1, ".", "  
 @", $_NS2, ".", "
-" ),
+" )),
 
   
-let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2, "
-select $X $FName from <http://xsparql.deri.org/data/vCard.rdf>  where {    $X   vc:FN    $FName   .   }  ")))
+let $_aux1 := _xsparql:_serialize(("http://localhost:2020/sparql?query=", fn:encode-for-uri( _xsparql:_serialize((  $_NS1,  $_NS2, "
+select $X $FName from <http://xsparql.deri.org/data/vCard.rdf>  where {    $X   vc:FN    $FName   .   }  ")))))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_X_Node := ($_aux_result1/_sparql_result:binding[@name = "X"])
 	let $_X_NodeType := name($_X_Node/*)
@@ -43,14 +43,14 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 		   
 	  
 	 if ( _xsparql:_validObject( "",  $_FName_RDFTerm  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		 $_X_RDFTerm,  " foaf:name ", $_FName_RDFTerm, " .&#xA;"
-		)
+		))
  ) else "" , 
 	 if ( _xsparql:_validObject( "",  $Y  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		 $_X_RDFTerm,  " foaf:name ", $Y, " .&#xA;"
-		)
+		))
  ) else ""  
 
 		 

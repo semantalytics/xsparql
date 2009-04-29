@@ -710,7 +710,7 @@ def p_queryBody(p):
 
     nsVars = lowrewriter.cnv_lst_str(lowrewriter.dec_var, True)
     if nsVars != '' and nsFlag:
-	p[0] = decl_var_ns + '\n fn:concat( ' + nsVars + ', "\n" ),\n' + p[1]
+	p[0] = decl_var_ns + '\n _xsparql:_serialize(( ' + nsVars + ', "\n" )),\n' + p[1]
     else:
 	p[0] = decl_var_ns + p[1]
 

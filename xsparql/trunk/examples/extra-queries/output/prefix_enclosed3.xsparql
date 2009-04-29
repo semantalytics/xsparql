@@ -9,10 +9,10 @@ declare default element namespace "http://www.w3.org/1999/xhtml" ;
 declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 declare variable $_NS2 := "prefix  :  &#60;http://www.w3.org/1999/xhtml&#62;";
 
- fn:concat(  "  
+ _xsparql:_serialize((  "  
 @", $_NS1, ".", "  
 @", $_NS2, ".", "
-" ),
+" )),
 
   
 let $doc  := doc("http://cgi.w3.org/cgi-bin/tidy?docAddr=http%3A%2F%2Ftwitter.com%2Fterraces"   )  
@@ -26,16 +26,16 @@ let $friends  := $doc//*[@id = "friends"  ]
 let $foaf  := "foaf"  
 for $f at $_f_Pos  in $friends   
 
-let $_validObject1 := fn:concat($foaf, ':', $authorhp) 
+let $_validObject1 := _xsparql:_serialize(($foaf, ':', $authorhp)) 
 
 
 
   return ( _xsparql:_removeEmpty( 
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		 "[", if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
 		  
-	   fn:concat(" foaf:homepage ", $_validObject1, "&#59;")  
+	   _xsparql:_serialize((" foaf:homepage ", $_validObject1, "&#59;"))  
   ) else "" 
 , " ] .&#xA;" 
-		) 
+		)) 
 		 ) )

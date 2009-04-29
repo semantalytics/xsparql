@@ -7,9 +7,9 @@ declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 declare namespace foaf = "http://xmlns.com/foaf/0.1/" ;
 declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 
- fn:concat(  "  
+ _xsparql:_serialize((  "  
 @", $_NS1, ".", "
-" ),
+" )),
 
   for $person at $_person_Pos  in doc("http://xsparql.deri.org/data/relations.xml"   )//person  , 
  $nameA at $_nameA_Pos  in $person/@name  , 
@@ -23,9 +23,9 @@ declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 		 
 		   
 	  if ( _xsparql:_validObject( "",  $nameA  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		 $person,  " foaf:name ", $nameA, " .&#xA;"
-		)
+		))
  ) else ""  
 
 		 

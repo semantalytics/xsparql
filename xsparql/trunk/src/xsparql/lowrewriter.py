@@ -168,9 +168,9 @@ def build_sparql_query(i, sparqlep, pfx, vars, from_iri, graphpattern, solutionm
 
     # return XQuery SPARQL query
     # @todo: fdwlm.xsparql,dawg-testcases
-    return '\nlet ' + query_aux(i) + ' := fn:concat("' + sparqlep + \
-	     '", fn:encode-for-uri( fn:concat(' + cnv_lst_str(dec_var, False) + ', "' + \
-	     query + '")))\n'
+    return '\nlet ' + query_aux(i) + ' := _xsparql:_serialize(("' + sparqlep + \
+	     '", fn:encode-for-uri( _xsparql:_serialize((' + cnv_lst_str(dec_var, False) + ', "' + \
+	     query + '")))))\n'
 
 
 

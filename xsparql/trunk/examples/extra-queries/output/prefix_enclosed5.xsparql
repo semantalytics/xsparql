@@ -13,12 +13,12 @@ declare variable $_NS2 := "prefix  rdfs:  &#60;http://www.w3.org/2000/01/rdf-sch
 declare variable $_NS3 := "prefix  xhtml:  &#60;http://www.w3.org/1999/xhtml&#62;";
 declare variable $_NS4 := "prefix  owl:  &#60;http://www.w3.org/2002/07/owl#&#62;";
 
- fn:concat(  "  
+ _xsparql:_serialize((  "  
 @", $_NS1, ".", "  
 @", $_NS2, ".", "  
 @", $_NS3, ".", "  
 @", $_NS4, ".", "
-" ),
+" )),
 
   
 let $doc  := doc("http://apassant.net/"   )  
@@ -26,7 +26,7 @@ let $doc  := doc("http://apassant.net/"   )
 let $uri  := "http://www.xyz.com"  
 for $s at $_s_Pos  in data($doc//@about   )   
 
-let $_validSubject1 := fn:concat($uri, ':', $uri) 
+let $_validSubject1 := _xsparql:_serialize(($uri, ':', $uri)) 
 
 
 
@@ -35,9 +35,9 @@ let $_validSubject1 := fn:concat($uri, ':', $uri)
 		 
 		   
 	  if ( _xsparql:_validObject( "",  $s  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		 $_validSubject1,  " rdf:b ", $s, " .&#xA;"
-		)
+		))
  ) else ""  
 
 		 

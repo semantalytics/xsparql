@@ -7,9 +7,9 @@ declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 declare namespace foaf = "http://xmlns.com/foaf/0.1/" ;
 declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 
- fn:concat(  "  
+ _xsparql:_serialize((  "  
 @", $_NS1, ".", "
-" ),
+" )),
 
 let $doc  := doc("http://xsparql.deri.org/data/relations.xml"   )  
 
@@ -21,8 +21,8 @@ let $n  := if ( $p[@name  ]   ) then $p/@name   else $p
 let $id  := count($p/preceding::*   )+count($p/ancestor::*   )  
  
 
-let $_validSubject4 := fn:concat("_:b",  data($id  )) 
-let $_validObject5 := fn:concat( '"',   data($n   )   ,  '"') 
+let $_validSubject4 := _xsparql:_serialize(("_:b",  data($id  ))) 
+let $_validObject5 := _xsparql:_serialize(( '"',   data($n   )   ,  '"')) 
 
 
 where not(exists($p/following::*[@name = $n  or data(.   ) = $n ]   )   )  
@@ -32,15 +32,15 @@ where not(exists($p/following::*[@name = $n  or data(.   ) = $n ]   )   )
 		 
 		 
 	   
-	  fn:concat( 
+	  _xsparql:_serialize(( 
 		 $_validSubject4,  " a ",   'foaf:Person',  " .&#xA;"
-		)
+		))
 ,  
 	   
 	  if ( _xsparql:_validObject( "",  $_validObject5  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		 $_validSubject4,  " foaf:name ", $_validObject5, " .&#xA;"
-		)
+		))
  ) else ""  
 
 		 
@@ -52,9 +52,9 @@ let $kn  := if ( $k[@name  ]   ) then $k/@name   else $k
 let $kid  := count($k/preceding::*   )+count($k/ancestor::*   )  
  
 
-let $_validSubject1 := fn:concat("_:b",  data($id  )) 
-let $_validObject2 := fn:concat("_:b",  data($kid  )) 
-let $_validSubject3 := fn:concat("_:b",  data($kid  )) 
+let $_validSubject1 := _xsparql:_serialize(("_:b",  data($id  ))) 
+let $_validObject2 := _xsparql:_serialize(("_:b",  data($kid  ))) 
+let $_validSubject3 := _xsparql:_serialize(("_:b",  data($kid  ))) 
 
 
 where $kn = data($doc//*[@name = $n  ]/knows   ) and not(exists($kn/../following::*[@name = $kn  or data(.   ) = $kn ]   )   )  
@@ -64,9 +64,9 @@ where $kn = data($doc//*[@name = $n  ]/knows   ) and not(exists($kn/../following
 		 
 		   
 	  if ( _xsparql:_validObject( "",  $_validObject2  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		 $_validSubject1,  " foaf:knows ", $_validObject2, " .&#xA;"
-		)
+		))
  ) else ""  
 
 		 
@@ -74,9 +74,9 @@ where $kn = data($doc//*[@name = $n  ]/knows   ) and not(exists($kn/../following
 	 if ( _xsparql:_validSubject( "",  $_validSubject3  ) ) then (
 		 
 		   
-	  fn:concat( 
+	  _xsparql:_serialize(( 
 		 $_validSubject3,  " a ",   'foaf:Person',  " .&#xA;"
-		)
+		))
 
 		 
   ) else ""  )  )

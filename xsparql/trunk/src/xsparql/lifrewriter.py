@@ -107,11 +107,10 @@ def build_triples(gp, variable_p, variable ):
 
 	    if (cond_subject + cond_po == ''):
 		if isinstance(s, str) and s == "[]":
-		    ret += '_xsparql:_removeEmpty( \n\t\t fn:concat( \n\t\t "[]", ' + po.rstrip(', ') +  ', " .&#xA;" \n\t\t) \n\t\t ) '
+		    ret += '_xsparql:_removeEmpty( \n\t\t _xsparql:_serialize(( \n\t\t "[]", ' + po.rstrip(', ') +  ', " .&#xA;" \n\t\t)) \n\t\t ) '
 		elif(s[0] == "["):
-		    ret += '_xsparql:_removeEmpty( \n\t\t fn:concat( \n\t\t "[", ' + subject.rstrip(', ') + po.rstrip(', .') + ', " ] .&#xA;" \n\t\t) \n\t\t )'
+		    ret += '_xsparql:_removeEmpty( \n\t\t _xsparql:_serialize(( \n\t\t "[", ' + subject.rstrip(', ') + po.rstrip(', .') + ', " ] .&#xA;" \n\t\t)) \n\t\t )'
 		else:
-#		    ret += 'fn:concat( \n\t\t '+ subject + po.rstrip(', ') + '\n\t\t)'
 		    ret += po.rstrip(', ')
 	    else:
 		ret +=  '\n\t ' + cond_subject + cond_po + ' \n\t\t '+ po.rstrip(', ') + '\n\t\t \n ' + suff_po + suff_subject + ' ,'
@@ -219,7 +218,7 @@ def build_object(subject, predicate, o):
 	d =  o[0]
         if  ( (len(d) == 3  and d[1] == '@') or (len(d) == 4 and d[1] == '^' and d[2] == '^') ):
 	    let,cond,ret,suff = build_bnode('_validObject', d)
-            return let, "", cond + ' fn:concat( \n\t\t '+ subject + ' ' + Qpredicate + ', ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t)\n'+suff, ""
+            return let, "", cond + ' _xsparql:_serialize(( \n\t\t '+ subject + ' ' + Qpredicate + ', ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t))\n'+suff, ""
 	elif d[0] == '[' :
 	    d.remove('[')
 	    global inBnode
@@ -227,9 +226,9 @@ def build_object(subject, predicate, o):
 	    let, cond, ret,suff = build_predicate("", d)
 	    # distinguish from nested [] ?
 	    if inBnode > 0:
-		ret = ' fn:concat( \n\t\t ' + Qpredicate + ', ' + '"[", ' + ret.rstrip(', ') + ', " ]" \n\t\t ) \n'
+		ret = ' _xsparql:_serialize(( \n\t\t ' + Qpredicate + ', ' + '"[", ' + ret.rstrip(', ') + ', " ]" \n\t\t )) \n'
 	    else:
-		ret = ' fn:concat( \n\t\t ' + subject + ' ' + Qpredicate + ', ' + '"[", ' + ret.rstrip(', ') + ', " ]", " .&#xA;" \n\t\t ) \n'
+		ret = ' _xsparql:_serialize(( \n\t\t ' + subject + ' ' + Qpredicate + ', ' + '"[", ' + ret.rstrip(', ') + ', " ]", " .&#xA;" \n\t\t )) \n'
 
 	    inBnode = inBnode - 1
 
@@ -238,17 +237,17 @@ def build_object(subject, predicate, o):
 	else:
 	    let,cond,ret,suff = build_bnode('_validObject', o[0][0])
 	    if (subject == "" or subject.strip('\', ') == "[]"):
-		return let, cond, ' fn:concat(' + Qpredicate + ',  ' + ret.rstrip(', ')  + ', " &#59; ")', suff
+		return let, cond, ' _xsparql:_serialize((' + Qpredicate + ',  ' + ret.rstrip(', ')  + ', " &#59; "))', suff
 	    else:
-		return let, "", cond + ' fn:concat( \n\t\t '+ subject + ' ' + Qpredicate + ', ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t)\n'+suff, ""
+		return let, "", cond + ' _xsparql:_serialize(( \n\t\t '+ subject + ' ' + Qpredicate + ', ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t))\n'+suff, ""
 
     elif len(o) == 1 and isinstance(o[0], str):
 	let,cond,ret,suff = build_bnode('_validObject', o[0])
 
 	if (subject == "" or subject.strip('\', ') == "[]"):
-	    return let, cond, ' fn:concat(' + Qpredicate + ', ' + ret.rstrip(', ')  + ', "&#59;")', suff
+	    return let, cond, ' _xsparql:_serialize((' + Qpredicate + ', ' + ret.rstrip(', ')  + ', "&#59;"))', suff
 	else:
-	    return let, "", cond + ' fn:concat( \n\t\t '+ subject + ' ' + Qpredicate + ', ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t)\n'+suff, ""
+	    return let, "", cond + ' _xsparql:_serialize(( \n\t\t '+ subject + ' ' + Qpredicate + ', ' + ret.rstrip(',')  + '" .&#xA;"\n\t\t))\n'+suff, ""
 
     elif len(o) == 1 and isinstance(o[0], list):
 	return build_predicate(subject, o[0])
@@ -271,7 +270,7 @@ def build_bnode(type, b):
         let = let.rstrip(')\n ')
 
         if b[1] == '@':
-            let += ', "@", ' + b[2].strip('{}') + ')\n'
+            let += ', "@", ' + b[2].strip('{}') + '))\n'
             return let,cond,ret,suff
 
         elif b[1] == '^' and b[2] == '^':
@@ -280,7 +279,7 @@ def build_bnode(type, b):
                 var = '$' + type + `count`
                 count = count + 1
 
-                let =  'let '+ var +' := fn:concat(' +  ret.rstrip(', ')
+                let =  'let '+ var +' := _xsparql:_serialize((' +  ret.rstrip(', ')
 
                 cond = 'if ( _xsparql:'+type + '( "",  '+var+'  ) ) then (\n\t\t'
                 ret = var + ', '
@@ -289,7 +288,7 @@ def build_bnode(type, b):
             let += ', "^^"'
             iri = b[3]
             if iri[0] == '<' and iri[1] == '{' and iri[-2] == '}' and iri[-1] == '>':
-                let += ', ' + iri.strip('<{}>') + ')\n'
+                let += ', ' + iri.strip('<{}>') + '))\n'
             else:
                 if iri >= 4 and iri[0] == '<' and iri[1] == '{' and iri[-2] == '}' and iri[-1] == '>':  # iri literal
                     iri =  iri[1:-1]
@@ -312,7 +311,6 @@ def build_bnode(type, b):
                                 let += ', '+ e
                             else:
                                 let += ', "'+ e + '"'
-
 
                 let += "))\n"
 
@@ -342,7 +340,7 @@ def build_bnode(type, b):
 	    bExpr =  b.split('{')
 	    bNode = bExpr[0]
 	    expr = bExpr[1].rstrip('}')
-
+            
 	    let,cond,ret,suff = genLetCondReturn(type, ['"' , bNode  ,  '",  data(', expr, ')'] )
 	    return let,cond, ret +', ', suff
     else:

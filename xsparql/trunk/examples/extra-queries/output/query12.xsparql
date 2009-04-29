@@ -8,15 +8,15 @@ declare namespace foaf = "http://xmlns.com/foaf/0.1/";
 
 declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 
- fn:concat(  "  
+ _xsparql:_serialize((  "  
 @", $_NS1, ".", "
-" ),
+" )),
 
-let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1, "
+let $_aux1 := _xsparql:_serialize(("http://localhost:2020/sparql?query=", fn:encode-for-uri( _xsparql:_serialize((  $_NS1, "
 select $N from <http://polleres.net/foaf.rdf>  where { [  ]
   foaf:knows [   a  foaf:Person   ;  foaf:name    $N    
   ]
-  .   }  ")))
+  .   }  ")))))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_N_Node := ($_aux_result1/_sparql_result:binding[@name = "N"])
 	let $_N_NodeType := name($_N_Node/*)
@@ -34,9 +34,9 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 		if ( _xsparql:_validPredicate( "",  $_N_RDFTerm  ) ) then (
 		 
 		 if ( _xsparql:_validObject( "",  $_N_RDFTerm  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		 $_N_RDFTerm,  " ", $_N_RDFTerm," ", $_N_RDFTerm, " .&#xA;"
-		)
+		))
  ) else ""
 		 
   ) else "" ) else "" 

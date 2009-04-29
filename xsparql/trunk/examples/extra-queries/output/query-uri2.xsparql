@@ -11,11 +11,11 @@ declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 declare variable $_NS2 := "prefix  ex:  &#60;http://example.org&#62;";
 declare variable $_NS3 := "prefix  :  &#60;http://www.w3.org/1999/xhtml&#62;";
 
- fn:concat(  "  
+ _xsparql:_serialize((  "  
 @", $_NS1, ".", "  
 @", $_NS2, ".", "  
 @", $_NS3, ".", "
-" ),
+" )),
 
   
 let $doc  := doc("http://cgi.w3.org/cgi-bin/tidy?docAddr=http%3A%2F%2Ftwitter.com%2Fterraces"   )  
@@ -25,7 +25,7 @@ for $f at $_f_Pos  in $friends
 let $friendsAccount  := $f/*/@href  
  
 
-let $_validObject1 := fn:concat("<" , $friendsAccount   , ">") 
+let $_validObject1 := _xsparql:_serialize(("<" , $friendsAccount   , ">")) 
 
 
 
@@ -33,12 +33,12 @@ let $_validObject1 := fn:concat("<" , $friendsAccount   , ">")
 	 if ( _xsparql:_validSubject( "",  "<http://apassant.net/alex>"  ) ) then (
 		 
 		   
-	   fn:concat( 
+	   _xsparql:_serialize(( 
 		     "<http://apassant.net/alex>"  ,   " foaf:knows ", "[", if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
 		  
-	   fn:concat(" foaf:userAccount ",     $_validObject1, "&#59;")  
+	   _xsparql:_serialize((" foaf:userAccount ",     $_validObject1, "&#59;"))  
   ) else "", " ]", " .&#xA;" 
-		 ) 
+		 )) 
   
 
 		 

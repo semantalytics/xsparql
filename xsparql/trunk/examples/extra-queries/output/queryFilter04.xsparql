@@ -11,13 +11,13 @@ declare namespace foaf = "http://xmlns.com/foaf/0.1/";
 declare variable $_NS1 := "prefix  vc:  &#60;http://www.w3.org/2001/vcard-rdf/3.0#&#62;";
 declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
 
- fn:concat(  "  
+ _xsparql:_serialize((  "  
 @", $_NS1, ".", "  
 @", $_NS2, ".", "
-" ),
+" )),
 
-let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat(  $_NS1,  $_NS2, "
-select $N $P $F from <http://xsparql.deri.org/data/vCard.rdf>  where {    $P   vc:Given    $N   .    $P   vc:Family    $F   .  filter  (  isIRI  (  $F              )            )   }  ")))
+let $_aux1 := _xsparql:_serialize(("http://localhost:2020/sparql?query=", fn:encode-for-uri( _xsparql:_serialize((  $_NS1,  $_NS2, "
+select $N $P $F from <http://xsparql.deri.org/data/vCard.rdf>  where {    $P   vc:Given    $N   .    $P   vc:Family    $F   .  filter  (  isIRI  (  $F              )            )   }  ")))))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_N_Node := ($_aux_result1/_sparql_result:binding[@name = "N"])
 	let $_N_NodeType := name($_N_Node/*)
@@ -38,8 +38,8 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $F := data($_F_Node/*)
 	let $_F_RDFTerm :=  _xsparql:_rdf_term($_F_NodeType, $F, $_F_NodeLang, $_F_NodeDatatype )
 
-let $_validSubject1 := fn:concat("_:b", "_", data($_aux_result1_Pos)) 
-let $_validObject2 := fn:concat( '"',   fn:concat($N   , " "   , $F   )   ,  '"') 
+let $_validSubject1 := _xsparql:_serialize(("_:b", "_", data($_aux_result1_Pos))) 
+let $_validObject2 := _xsparql:_serialize(( '"',   fn:concat($N   , " "   , $F   )   ,  '"')) 
 
  return 
 	   
@@ -49,9 +49,9 @@ let $_validObject2 := fn:concat( '"',   fn:concat($N   , " "   , $F   )   ,  '"'
 		 
 		   
 	  if ( _xsparql:_validObject( "",  $_validObject2  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		 $_validSubject1,  " foaf:name ", $_validObject2, " .&#xA;"
-		)
+		))
  ) else ""  
 
 		 

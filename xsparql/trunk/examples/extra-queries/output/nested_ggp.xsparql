@@ -5,11 +5,11 @@ at "http://xsparql.deri.org/XSPARQLer/xsparql.xquery";
 declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 
 
- fn:concat( "", "
-" ),
+ _xsparql:_serialize(( "", "
+" )),
 
-let $_aux1 := fn:concat("http://localhost:2020/sparql?query=", fn:encode-for-uri( fn:concat("", "
-select $S $P $O from <http://xsparql.deri.org/data/vCard.rdf>  where {  {  $S  $P  $O    }   }  ")))
+let $_aux1 := _xsparql:_serialize(("http://localhost:2020/sparql?query=", fn:encode-for-uri( _xsparql:_serialize(("", "
+select $S $P $O from <http://xsparql.deri.org/data/vCard.rdf>  where {  {  $S  $P  $O    }   }  ")))))
 for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 	let $_S_Node := ($_aux_result1/_sparql_result:binding[@name = "S"])
 	let $_S_NodeType := name($_S_Node/*)
@@ -39,9 +39,9 @@ for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
 		if ( _xsparql:_validPredicate( "",  $_P_RDFTerm  ) ) then (
 		 
 		 if ( _xsparql:_validObject( "",  $_O_RDFTerm  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		 $_S_RDFTerm,  " ", $_P_RDFTerm," ", $_O_RDFTerm, " .&#xA;"
-		)
+		))
  ) else ""
 		 
   ) else "" ) else "" 

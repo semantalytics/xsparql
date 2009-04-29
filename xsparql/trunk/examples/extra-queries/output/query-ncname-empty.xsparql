@@ -20,26 +20,26 @@ declare variable $_NS3 := "prefix  xhtml:  &#60;http://www.w3.org/1999/xhtml&#62
 declare variable $_NS4 := "prefix  owl:  &#60;http://www.w3.org/2002/07/owl#&#62;";
 declare variable $_NS5 := "prefix  :  &#60;http://www.w3.org/2002/07/owl#&#62;";
 
- fn:concat(  "  
+ _xsparql:_serialize((  "  
 @", $_NS1, ".", "  
 @", $_NS2, ".", "  
 @", $_NS3, ".", "  
 @", $_NS4, ".", "  
 @", $_NS5, ".", "
-" ),
+" )),
 
   
 let $doc  := doc("http://apassant.net/"   )  
 for $s at $_s_Pos  in $doc//xhtml:about   
 
-let $_validObject1 := fn:concat( '"',   $s   ,  '"') 
+let $_validObject1 := _xsparql:_serialize(( '"',   $s   ,  '"')) 
 
 
 
   return (   
 	  if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		   'rdf: ',   " rdf: ", $_validObject1, " .&#xA;"
-		)
+		))
  ) else ""  
  )
