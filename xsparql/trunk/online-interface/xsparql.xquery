@@ -115,32 +115,32 @@ declare function _xsparql:_removeEmpty($result as xs:string) as xs:string
 
 
 
-declare function local:serialize-attributes (  $n as item()*  ) as xs:string {
+declare function _xsparql:_serialize-attributes (  $n as item()*  ) as xs:string {
          if(fn:empty($n)) then
               ""
          else 
               fn:concat(" ", 
                         fn:node-name($n[1]), "=""", fn:data($n[1]), """", 
-                        local:serialize-attributes( fn:subsequence( $n, 2 ) ) 
+                        _xsparql:_serialize-attributes( fn:subsequence( $n, 2 ) ) 
                        ) 
 
 };
 
 
-declare function local:serialize (  $n as item()* ) as xs:string {
+declare function _xsparql:_serialize (  $n as item()* ) as xs:string {
     if(fn:empty($n)) then
           ""
      else 
           fn:concat(
               typeswitch ($n[1])
                   case $e as element() 
-                      return fn:concat("<", fn:name($e), local:serialize-attributes($e/@*), ">", 
-                                       local:serialize($e/child::node()), 
+                      return fn:concat("<", fn:name($e), _xsparql:_serialize-attributes($e/@*), ">", 
+                                       _xsparql:_serialize($e/child::node()), 
                                        "</", fn:name($e), ">"
                                       )
                   default
                       return $n[1],
-              local:serialize( fn:subsequence( $n, 2 ) )
+              _xsparql:_serialize( fn:subsequence( $n, 2 ) )
               )
            
 };
