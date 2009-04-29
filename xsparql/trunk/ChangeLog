@@ -1,3 +1,7 @@
+2009-04-29  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/xsparql.xquery: change serialization functions
+
 2009-04-28  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* src/xsparql/lifrewriter.py (genLetCondReturn): use serialize

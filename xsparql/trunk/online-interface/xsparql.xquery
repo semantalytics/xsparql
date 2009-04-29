@@ -113,31 +113,34 @@ declare function _xsparql:_removeEmpty($result as xs:string) as xs:string
 
 };
 
-declare function _xsparql:_node-data($n as item()) as xs:string {
-        let $c := fn:string-join(fn:data($n/child::*), "")
-        return fn:substring-after(fn:concat(fn:data($n), ""), $c) 
-};
 
-declare function _xsparql:_serialize-attributes (  $n as item()* , $sep ) as xs:string {
+
+declare function local:serialize-attributes (  $n as item()*  ) as xs:string {
          if(fn:empty($n)) then
               ""
          else 
-              fn:concat($sep, fn:node-name($n[1]), "=""", fn:data($n[1]), """", _xsparql:_serialize-attributes( fn:subsequence( $n, 2 ), " " ) ) 
+              fn:concat(" ", 
+                        fn:node-name($n[1]), "=""", fn:data($n[1]), """", 
+                        local:serialize-attributes( fn:subsequence( $n, 2 ) ) 
+                       ) 
 
 };
 
 
-declare function _xsparql:_serialize (  $n as item()* ) as xs:string {
-         if(fn:empty($n)) then
-              ""
-         else 
-              fn:concat(
+declare function local:serialize (  $n as item()* ) as xs:string {
+    if(fn:empty($n)) then
+          ""
+     else 
+          fn:concat(
               typeswitch ($n[1])
-              case $e as element() 
-                    return fn:concat("<", fn:name($e), _xsparql:_serialize-attributes($e/@*, " "),">", _xsparql:_serialize($e/child::*), _xsparql:_node-data($n[1]), "</", fn:name($e), ">")
-              default
-                    return string($n[1]),
-              _xsparql:_serialize( fn:subsequence( $n, 2 ) )
+                  case $e as element() 
+                      return fn:concat("<", fn:name($e), local:serialize-attributes($e/@*), ">", 
+                                       local:serialize($e/child::node()), 
+                                       "</", fn:name($e), ">"
+                                      )
+                  default
+                      return $n[1],
+              local:serialize( fn:subsequence( $n, 2 ) )
               )
            
 };
