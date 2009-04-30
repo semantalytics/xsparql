@@ -62,7 +62,7 @@ declare function _xsparql:_validLiteral($NType as xs:string, $V as xs:string) as
       if ($NType = "_sparql_result:literal" or $NType = "literal")
       then fn:true()
       else if (
-                fn:matches($V, "^([0-9]+|""[a-zA-Z0-9. ]+""([ ]*(@|\^\^)[ ]*[a-zA-Z0-9:.#/<>]+)?)$", "i")
+                fn:matches($V, "^([0-9]+|""[a-zA-Z0-9. <>/]+""([ ]*(@|\^\^)[ ]*[a-zA-Z0-9:.#/<>]+)?)$", "i")
               )
            then fn:true() 
            else fn:false()

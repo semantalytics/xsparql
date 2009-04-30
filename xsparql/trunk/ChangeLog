@@ -1,3 +1,8 @@
+2009-04-30  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/xsparql.xquery: allow <>/ chars in literals
+	(XML literals)
+
 2009-04-29  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* online-interface/xsparql.xquery: change serialization functions
