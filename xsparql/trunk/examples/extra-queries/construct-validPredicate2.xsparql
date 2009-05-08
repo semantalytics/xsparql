@@ -8,4 +8,4 @@ let $doc := doc("http://apassant.net/")
 let $uri := "http://www.xyz.com"
 
 for $s in data($doc//@about)
-construct { rdf:b {$uri} $s }
+construct { rdf:b <{$uri}> $s }
