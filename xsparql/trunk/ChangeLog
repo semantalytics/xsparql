@@ -1,3 +1,7 @@
+2009-05-11  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py: removed unnecessary state.
+
 2009-04-30  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* online-interface/xsparql.xquery: allow <>/ chars in literals

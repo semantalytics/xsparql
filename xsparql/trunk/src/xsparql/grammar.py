@@ -180,7 +180,6 @@ tokens = [
 
 # lexer states
 states = [
-   ('pattern','exclusive'),
    ('xmlElementContents','exclusive'),
    ('xmlStartTag','inclusive'),
    ('xmlEndTag','inclusive'),
@@ -437,28 +436,6 @@ t_NOT = r'\!'
 
 curly_brackets = 0
 
-# WHERE token starts the pattern state
-def t_WHERE(t):
-    r'\bwhere'
-    r = recognize(t)
-    begin(t, 'pattern')
-    return r
-
-def t_pattern_LCURLY(t):
-    r'{'
-    global curly_brackets
-    curly_brackets += 1
-    return recognize(t)
-
-# RCURLY token ends the pattern state iff curly_brackets counter gets 0
-def t_pattern_RCURLY(t):
-    r'}'
-    global curly_brackets
-    curly_brackets -= 1
-    r = recognize(t)
-    if curly_brackets == 0: begin(t,'INITIAL')
-    return r
-
 
 
 
@@ -475,7 +452,7 @@ t_xmlStartTag_xmlEndTag_ignore = " \r"
 ## -------------
 
 # Ignored characters
-t_INITIAL_pattern_ignore = " \t"
+t_INITIAL_ignore = " \t"
 
 # newlines increase line numbers (and will be ignored)
 def t_ANY_newline(t):
@@ -1185,7 +1162,7 @@ def p_rangeExpr(p):
 
 def p_rangeAddiExpr(p):
     '''rangeAddiExpr : TO additiveExpr
-		   | empty'''
+		     | empty'''
     p[0] = ' '.join(p[1:])
 
 

@@ -5,8 +5,8 @@ at "http://xsparql.deri.org/XSPARQLer/xsparql.xquery";
 declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
 
 
- fn:concat( "", "
-" ),
+ _xsparql:_serialize(( "", "
+" )),
 
   
 let $y  := "http://www.example.org/knownPerson"  
@@ -16,8 +16,8 @@ let $x  := "12"
 let $int  := "http://www.w3.org/2001/XMLSchema#integer"  
  
 
-let $_validSubject1 := fn:concat("<" , $y   , ">") 
-let $_validObject2 := fn:concat( '"',   $x   ,  '"', "^^",  $int   )
+let $_validSubject1 := _xsparql:_serialize(("<" , $y   , ">")) 
+let $_validObject2 := _xsparql:_serialize(( '"',   $x   ,  '"', "^^",  $int   ))
 
 
 
@@ -26,9 +26,9 @@ let $_validObject2 := fn:concat( '"',   $x   ,  '"', "^^",  $int   )
 		 
 		   
 	 if ( _xsparql:_validObject( "",  $_validObject2  ) ) then (
-		 fn:concat( 
+		 _xsparql:_serialize(( 
 		     $_validSubject1  ,   " a ", $_validObject2, " .&#xA;"
-		)
+		))
  ) else ""
 		 
   ) else ""  )
