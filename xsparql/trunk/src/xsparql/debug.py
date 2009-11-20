@@ -28,7 +28,7 @@
 
 import sys
 
-debug_level = 1
+debug_level = 0
 
 def debug(*debug):
     global debug_level

@@ -1775,7 +1775,7 @@ def p_rdfliteral(p):
 		  | QSTRING AT qname
 		  | QSTRING CARROT CARROT IRIREF
 		  | QSTRING CARROT CARROT PREFIXED_NAME'''
-    p[0] = ''.join(p[1:])
+    p[0] = ''.join(p[1:]).replace("\"", "\"\"")
 
 
 
