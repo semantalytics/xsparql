@@ -1,0 +1,546 @@
+2009-05-11  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py: removed unnecessary state.
+
+2009-04-30  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/xsparql.xquery: allow <>/ chars in literals
+	(XML literals)
+
+2009-04-29  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/xsparql.xquery: change serialization functions
+
+2009-04-28  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lifrewriter.py (genLetCondReturn): use serialize
+	instead of fn:concat in some cases.
+
+	* online-interface/xsparql.xquery: added xml serialize functions
+
+2009-04-23  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_literalConstruct1): allow for IRIs of
+	typed literals in construct queries to be stated explicitly
+
+	* src/xsparql/lifrewriter.py (tokenize): rewrite tokenizer
+	function to support new example of nested xsparql.
+
+2009-04-22  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparqler.py (parse_params): added new option to show debug
+	information from the parser.
+
+	* src/xsparql/grammar.py (p_solutionmodifier): updated grammar
+	rules for solution modifieres.  Fixes parse of order by clauses.
+
+	* src/xsparql/lifrewriter.py (tokenize): separate the (optional)
+	datatype and language part of the construct
+
+2009-04-21  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lifrewriter.py (tokenize): fixes bug in simple
+	nested query
+
+	* src/xsparql/grammar.py (p_qname): solve shift/reduce conflicts
+	only presented in ply-3.x
+
+2009-04-20  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/xsparql.xquery: allow spaces in literals
+
+2009-02-03  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_directElemConstructorElm): added CDATA
+	elements to the grammar
+
+2009-01-30  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/debug.py: new print function
+
+	* src/xsparql/grammar.py: added states and new tokens to handle
+	ncnames in XML elements
+	(t_xmlElementContents_NCNAMEELM): changed regexp for XML elements
+
+	* IRIs are now checked to have a valid prefix
+
+2009-01-29  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparqler.py: header update.
+
+	* src/xsparql/lowrewriter.py: header update.
+
+	* src/xsparql/lifrewriter.py: header update.
+
+	* src/xsparql/debug.py: header update.
+
+	* src/xsparql/grammar.py (t_INITIAL_comments_SCOM): header update.
+	Comment cleanup.  
+	Small grammar refactoring: '{' expr '}' => enclosedExpr
+
+2009-01-28  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lifrewriter.py (build_bnode): handling of the new
+	typed and lang literals 
+
+	* src/xsparql/grammar.py (p_literalConstruct0): added new forms of
+	constructing literals (with ^^ and @)
+
+	* online-interface/xsparql.xquery: add . and # to regular expression
+
+2009-01-27  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/xsparql.xquery: regular expression to match
+	typed and lang literals
+	add capitalized letters to the regular expression
+
+2009-01-23  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_namespaceDecl): NCNAMEs are
+	transformed into qnames to avoid reserved words
+
+2009-01-20  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_mainModule): changed URI for the
+	xsparql.xquery file.
+
+	* online-interface/xsparql.xquery: changed URI for the
+	xsparql.xquery file.
+
+	* online-interface/index.php: small look change
+
+2009-01-19  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* new package
+
+	* src/setup.py: version number starting at 0.1
+
+2009-01-16  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lowrewriter.py (build_aux_variables): the new
+	variables NodeLang and NodeDatatype need the string() to transform
+	empty sequence (in case nothing is specified) into empty string.
+
+2009-01-14  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_literalConstruct): added grammar rules
+	to allow to construct literals with language tags and nodetype
+	tags.
+
+	* src/xsparql/lowrewriter.py (build_predicate): Fixed the bug
+	where only the 2 first elements of predicate_object lists were
+	being parsed.  Fixes Stephane's queries.
+	(build_aux_variables): changed the rewriting to check if the
+	element contains a language tag and a nodetype tag.
+
+2008-12-12  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* added new testcases
+
+	* src/xsparql/lifrewriter.py (build_predicate): Add check for
+	validPredicate
+
+2008-12-11  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (t_INITIAL_pattern_IRI_CONSTRUCT): added
+	a new terminal to solve the shift/reduce conflict
+
+2008-12-10  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lifrewriter.py (build_bnode): added handling for
+	constructed iris of the following forms: {$a}:b, a:{$b} and {$a}:{$b}
+
+	* src/xsparql/grammar.py (recognize): allow ':' as a SPARQL
+	prefixed name
+	(p_iriConstruct): add 'UNPREFIXED_NAME' to allow constructing iri
+	of the type {$a}:b.  There is the following conflict thats needs
+	to be resolved:
+	   construct { {$a} :b "c" }
+	   construct { {$a}:b :b "c" }
+
+	* examples/extra-queries/query-colon.xsparql: new example
+
+	* examples/update_rewriting.sh (XSPARQL): script to update the
+	rewriting of the examples.
+
+2008-12-04  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* added testcases
+
+	* src/xsparql/lifrewriter.py (build_triples): avoid rewriting
+	error where subject was duplicated
+
+	* updated the rewriting of the examples
+
+	* src/xsparql/grammar.py (p_mainModule): store and print the
+	'PREFIX' declared namespaces
+	(p_mainModule): output only 'prefix' namespaces
+	(recognize): introduced new terminal to allow prefixed names w/o
+	local part
+
+	* src/xsparql/lowrewriter.py (print_namespaces): function to print
+	the namespaces declared with 'prefix' as XQuery namespaces
+	(print_namespaces): corrected the syntax of default namespaces
+
+2008-12-03  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/xsparql.xquery: forced a validUri to have at
+	least one element.
+
+	* examples/extra-queries/output/query-uri2.xsparql: updated
+	rewriting 
+
+	* added new egg files
+
+	* src/xsparql/lifrewriter.py (build_bnode): changed rewriting for
+	explicit IRI.
+
+	* src/xsparql/debug.py: added new funtion to print debug info on
+	tokens if wanted.
+
+	* src/xsparql/grammar.py (p_directElemConstructorElm): changed the
+	IRI and XML elements definitons to allow IRIs everywhere
+	(p_qname): added the reserved words to the 'qname' production to
+	allow them to be used in other constructors.  Still 3 omitted:
+	PREFIX, BASE and FOR.
+
+	* Added new test cases
+
+2008-12-01  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lowrewriter.py (build_sparql_query): removed the
+	need to add an > to the end of an IRI
+
+	* src/xsparql/lifrewriter.py (build_bnode): handle different case
+	of iriLiteral <> and <{}>
+
+	* src/xsparql/grammar.py: regular expressions are no longer case
+	insensitive.
+	(t_INITIAL_IRIREF): in INITIAL state the URIs need to be enclosed
+	with ""
+
+
+2008-11-27  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/README: improved the README file with install instructions.
+
+2008-11-26  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/lifrewriter.py (build_bnode): another hack. to be
+	removed ASAP.
+
+2008-11-25  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_rdfliteral): added typed rdfliteral
+	with type as a prefixed string
+
+	* src/xsparql/lowrewriter.py (escape_chars): escape chars that can
+	give and xquery syntax error
+
+2008-11-21  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/dist: added the egg files
+
+	* src/xsparqler.py: added '?query=' to the endpoint URI by default
+
+2008-11-18  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparql/grammar.py (p_graphPatternNotTriples): added nested
+	groupgraphpatterns and optionals.
+
+2008-11-17  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* added foaf.rdf file to the data directory and changed
+	simple.xsparql to query it.
+
+2008-11-14  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/index.php: add an input field for the URI.
+	added a link to the spec.
+
+	* online-interface/eval.pl: check if the query uri and endpoint is
+	specified.
+	(trim): corrected paths.
+
+	* online-interface/code/common.js: add the endpoint parameter.
+
+	* online-interface/xsparqlrewrite: added possibility of stating
+	the endpoint to query in the script.
+	added option to use SAXON instead of XQilla. 
+
+	* src/xsparql/grammar.py (p_xqueryFunction): added XQuery function
+	declarations.  
+	(t_INITIAL_comments_SCOM): changed comments char to '#'
+	(p_namespaceDecl): corrected bug on the namespaces.
+
+2008-11-13  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/examples/XSPARQL/06_simple2.xsparql: removed
+	redundant example
+
+	* src/xsparql/grammar.py: replaced XQuery NCName grammar
+	production with SPARQL PN_PREFIX 
+
+2008-11-12  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparqler.py (parse_params): changed the parsing method of
+	the parameters to allow options to be specified after the
+	arguments.
+
+	* src/xsparql/grammar.py (p_constructTriples_where): added GRAPH
+	expressions.
+
+	* src/xsparql/lowrewriter.py (build_filter): added parsing of
+	GRAPH expressions.
+	(find_vars_filter): check all the filterexpression for new
+	variables
+
+2008-11-05  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparqler.py (main): applied stephane's patch to command
+	line processing.
+	Enabled reading query from stdin by using '-' as a filename
+
+	* src/xsparql/lowrewriter.py (build_filter): added a handler for
+	the filter expressions.
+	(build_filter): escape the double quotes in the rewriting
+
+	* src/xsparql/grammar.py (p_groupGraphPattern): added filter expressions.
+
+2008-11-03  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xsparqler.py (usage): Small code clean up: added a function
+	to handle the parsing of the parameters 
+
+2008-10-31  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/xsparqlrewrite: changed to send the file as an
+	argument instead of redirecting.
+
+	* examples/run_tests.sh: changed to send the file as an argument
+	instead of redirecting.
+
+	* src/xsparqler.py (main): Take filename as an argument instead of
+	stdin.  Changed to work on Windows machines.
+	(main): validate if there is a file specified in the command line
+	and allow to specify a different sparql endpoint with the
+	--endpoint parameter
+
+	* src/setup.py: xsparql depends on ply.  Will make it download on
+	install of the .egg package if it is not available.
+
+2008-10-23  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* paper/eswc2008.tex (): update rewriting rules to new rewriting $_
+
+	* w3c-submission/xsparql-Overview.html: update rewriting rules to
+	new rewriting $_
+	commented related work and removed conclusions
+
+2008-10-22  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* w3c-submission/xsparql-Overview.html (name): new grammar rules
+
+	* paper/eswc2008.tex: only display the changed grammar rules. 
+	update the paper to state that the rewriting uses variables and
+	other names beginning with '_'
+	
+
+2008-10-21  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/lifrewriter.py: use rewriting
+	variables starting with '_'
+
+	* online-interface/xsparql.xquery: rename of functions to start
+	with '_'
+
+	* software/xsparqlow/xsparql/lowrewriter.py (build_sparql_query):
+	allow variables in the from clause
+	(build_bnode): use rewriting variables starting with '_'
+
+
+	* software/xsparqlow/xsparql/grammar.py (p_datasetClause): allow
+	variables in the from clause
+	disallow variables starting with $_
+	use rewriting variables starting with '_'
+
+2008-10-20  Axel Polleres  <axepol@vmgal46.nuigalway.ie>
+
+	* software/xsparqlow/xsparql/grammar.py: remove item as a reserved
+	word
+
+2008-10-20  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py: allow '_' in the
+	elements (PN_CHARS_U)
+
+2008-10-17  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py (p_verb): remove
+	enclosedExpr option: would allow {} on the predicate position.
+
+2008-10-16  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py: underscore was still
+	being allowed in the grammar. Removed.
+	(t_INITIAL_pattern_iri_error): exit the parser if it finds an
+	illegal character.
+	(p_whereSPARQLClause): rename whereTemplate to GroupGraphPattern
+	to follow the SPARQL names. 
+
+2008-10-15  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* paper/eswc2008.tex: fixes to the rewriting examples to match the
+	implementation
+
+	* online-interface/examples/XSPARQL/03_vCard2foaf.xsparql: removed
+	duplicate triple pattern in the example
+
+2008-10-14  Nuno Lopes  <nunolopes@vmgal46.nuigalway.ie>
+
+	* online-interface/xsparql.xquery: improved the functions to check
+	the validity of elements
+
+2008-10-10  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* paper/eswc2008.tex: update the report to reflect the format of
+	construct queries.  Detail the functions validSubject,
+	validPredicate and validObject
+
+2008-10-08  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* examples/extra-queries/ (Module): more example queries
+
+
+	* software/xsparqlow/xsparql/lowrewriter.py (build_predicate):
+	fixes the case of [] being in the subject position in a sparql
+	construct query
+
+	* online-interface/examples/XSPARQL/06_simple2.xsparql: change the
+	query format to use <{}>
+
+	* online-interface/examples/XSPARQL/05_simple.xsparql: change the
+	query format to use <{}>
+
+2008-10-07  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/lowrewriter.py (build_bnode): changed
+	the way to access the declared variables
+
+	* software/xsparqlow/xsparql/lifrewriter.py (build_rewrite_query):
+	in the construct part handle a previously declared variable $var
+	in the same way as {$var}
+
+	* examples/query/output/pathExpression08.xsparql (Module): new
+	rewriting for these examples
+
+	* examples/query/output/simple.xsparql (Module): new
+	rewriting for these examples
+
+	* examples/query/output/simple2.xsparql (Module): new
+	rewriting for these examples
+
+2008-10-06  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/index.php: added Nuno Lopes to the team
+
+	* online-interface/xsparqlrewrite: correction of path
+
+	* online-interface/xsparql.xquery: merge of changes to functions
+	made in the server
+
+2008-10-06  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* examples/query/output/foaf_lowering.xsparql: new rewriting for
+	the foaf_lowering example
+
+	* software/xsparqlow/xsparql/lowrewriter.py: Allow nested
+	variables in the "where" part
+	variables from a sparql are also outputed surrounded by quotes
+
+	* software/xsparqlow/xsparql/grammar.py: Allow nested variables in
+	the "where" part
+
+2008-09-04  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/lowrewriter.py (buildConstruct):
+	Create a copy of the graphpattern to send to 'find_vars'.
+	Otherwise the query structure might be altered.
+
+2008-09-03  Nuno Lopes  <nuno.lopes@deri.org>
+
+	*  added new test cases for path expressions
+	*  fix of detected problems
+
+2008-08-27  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* online-interface/tempfiles/backup.sh: shell script to create a
+	backup file of the existing query output files. To add as a cronjob
+
+	* online-interface/xsparqlrewrite: show stderr msgs in interface
+
+	* software/xsparqlow/xsparql/debug.py: aux function to print debug
+	info
+
+2008-08-22  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py: Error printing is now
+	done to stderr.
+	(p_queryBody): auxiliary functions moved to a xquery module
+	available at http://xsparql.deri.org/xsparql.xquery.
+
+2008-08-20  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/lifrewriter.py: rewriting for the
+	lifting checks if it the variable is a valid subject, predicate or
+	object.
+
+	* software/xsparqlow/xsparql/grammar.py: rewriting for the
+	lifting checks if it the variable is a valid subject, predicate or
+	object.
+
+
+2008-08-14  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py: new syntax for
+	nested expressions in constructs: _:{} for a bnode, <{}> or {}:{}
+	for iri. The {} is defined as being a literal "{}".
+
+2008-08-12  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py (p_qname): Resolved 1
+	shift/reduce by using the definition from:
+	http://www.w3.org/TR/REC-xml-names/#NT-QName and defining one new
+	terminal.  Removed the rule sparqlqname.
+	(p_blank): removed bnodeWithExpr (to check foaf_lifting)
+	(find_column): new function to calculate the column in case of
+	syntax error.  New error reporting format.
+
+2008-07-29  Nuno Lopes  <nl@unikhorn.ie.deri.local>
+
+	* software/xsparqlow/xsparql/grammar.py: grammar refactoring.
+	There are still 2 shift/reduce and the grammar was restricted in
+	the following ways:
+	1) example query/fdwlm.xsparql: return <user></user><dist></dist>
+	is not allowed.  It needs to be return <node><user></user><dist></dist></node>
+	2) FOR (...) constructTemplate letClause solutionmodifier was
+	removed. To check how to add later.
+
+
+2008-07-22  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql/grammar.py: added comments in the
+	form '(: ' and ' :)'
+	* software/xsparqlow/xsparql/grammar.py: changed the NCNAME
+	definition: according to
+	http://www.w3.org/TR/REC-xml-names/#NT-NCName it cannot start with
+	a digit
+
+
+2008-07-18  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* software/xsparqlow/xsparql: bring code in CVS to the same state
+	as the web interface.  Some revisions were discarded.  The parser
+	now returns exit code 1 on syntax error.
+	* online-interface: rewrite xsparqlrewrite to handle more
+	cases. If there is a parse error return the original query.

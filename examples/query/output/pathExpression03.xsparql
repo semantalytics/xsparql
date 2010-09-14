@@ -1,0 +1,29 @@
+
+import module namespace _xsparql = "http://xsparql.deri.org/XSPARQLer/xsparql.xquery"
+at "http://xsparql.deri.org/XSPARQLer/xsparql.xquery";
+
+declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
+
+declare namespace foaf = "http://xmlns.com/foaf/0.1/" ;
+declare variable $_NS1 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+
+ _xsparql:_serialize((  "  
+@", $_NS1, ".", "
+" )),
+
+  for $person at $_person_Pos  in doc("http://xsparql.deri.org/data/relations.xml"   )//person  , 
+ $nameA at $_nameA_Pos  in $person/@name  , 
+ $nameB at $_nameB_Pos  in $person/knows   
+
+let $_validObject1 := _xsparql:_serialize(( '"',   data($nameA   )   ,  '"')) 
+
+
+
+  return ( _xsparql:_removeEmpty( 
+		 _xsparql:_serialize(( 
+		 "[]", if ( _xsparql:_validObject( "",  $_validObject1  ) ) then (
+		  
+	   _xsparql:_serialize((" foaf:name ", $_validObject1, "&#59;"))  
+  ) else "", " .&#xA;" 
+		)) 
+		 )  )

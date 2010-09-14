@@ -1,0 +1,31 @@
+
+import module namespace _xsparql = "http://xsparql.deri.org/XSPARQLer/xsparql.xquery"
+at "http://xsparql.deri.org/XSPARQLer/xsparql.xquery";
+
+declare namespace _sparql_result = "http://www.w3.org/2005/sparql-results#";
+
+declare namespace vc = "http://www.w3.org/2001/vcard-rdf/3.0#";
+declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+
+
+declare variable $_NS1 := "prefix  vc:  &#60;http://www.w3.org/2001/vcard-rdf/3.0#&#62;";
+declare variable $_NS2 := "prefix  foaf:  &#60;http://xmlns.com/foaf/0.1/&#62;";
+
+let $N  := 4  
+
+let $_aux1 := _xsparql:_serialize(("http://localhost:2020/sparql?query=", fn:encode-for-uri( _xsparql:_serialize((  $_NS1,  $_NS2, "
+select $Person $Name from <http://xsparql.deri.org/data/relations.rdf>  where {    $Person   foaf:name    $Name   .  filter  (    ", $N, "       =  4          )   }  ")))))
+for $_aux_result1 at $_aux_result1_Pos in doc($_aux1)//_sparql_result:result
+	let $_Person_Node := ($_aux_result1/_sparql_result:binding[@name = "Person"])
+	let $_Person_NodeType := name($_Person_Node/*)
+	let $_Person_NodeDatatype := string($_Person_Node/*/@datatype)
+	let $_Person_NodeLang := string($_Person_Node/*/@lang)
+	let $Person := data($_Person_Node/*)
+	let $_Person_RDFTerm :=  _xsparql:_rdf_term($_Person_NodeType, $Person, $_Person_NodeLang, $_Person_NodeDatatype )
+	let $_Name_Node := ($_aux_result1/_sparql_result:binding[@name = "Name"])
+	let $_Name_NodeType := name($_Name_Node/*)
+	let $_Name_NodeDatatype := string($_Name_Node/*/@datatype)
+	let $_Name_NodeLang := string($_Name_Node/*/@lang)
+	let $Name := data($_Name_Node/*)
+	let $_Name_RDFTerm :=  _xsparql:_rdf_term($_Name_NodeType, $Name, $_Name_NodeLang, $_Name_NodeDatatype )
+ return $Name  

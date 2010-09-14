@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE owl [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#">
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/">
+    <!ENTITY dct "http://purl.org/dc/terms/">
+    <!ENTITY akt "http://www.aktors.org/ontology/portal#">
+    <!ENTITY akts "http://www.aktors.org/ontology/support#">
+    <!ENTITY dblp "http://dblp.rkbexplorer.com/id/">
+]>
+
+<rdf:RDF
+    xmlns:owl="&owl;"
+    xmlns:rdf="&rdf;"
+    xmlns:rdfs="&rdfs;"
+    xmlns:dc="&dc;"
+    xmlns:dct="&dct;"
+    xmlns:akt="&akt;"
+    xmlns:akts="&akts;"
+    
+>
+
+  <owl:Ontology rdf:about="">
+    <rdfs:label>DBLP : dblp-publications.rdf</rdfs:label>
+    <dc:title xml:lang="en">DBLP : dblp-publications-2009.rdf</dc:title>
+    <dc:description xml:lang="en">This ontology contains information detailing publications from dblp</dc:description>
+    <dc:creator>ReSIST Project</dc:creator>
+    <dc:creator>Christopher Franklin</dc:creator>
+    <owl:imports rdf:resource="http://www.aktors.org/ontology/portal"/>
+    <owl:imports rdf:resource="http://www.aktors.org/ontology/extension"/>
+  </owl:Ontology>
+
+
+    <akt:Book-Section-Reference rdf:about="http://dblp.rkbexplorer.com/id/conf/esws/IanniKMP09">
+        <owl:sameAs rdf:resource="http://dblp.l3s.de/d2r/resource/publications/conf/esws/IanniKMP09"/>
+        <akt:has-title>A Rule System for Querying Persistent RDFS Data.</akt:has-title>
+        <akt:has-author>
+            <akt:Person rdf:about="http://dblp.rkbexplorer.com/id/people-b79d8c362bc450d56de0d510504270bf-ae17fb52e2ec7e207f75b89661f86dfd">
+                <akt:full-name>Giovambattista Ianni</akt:full-name>
+            </akt:Person>
+        </akt:has-author>
+        <akt:has-author>
+            <akt:Person rdf:about="http://dblp.rkbexplorer.com/id/people-f21429d05306af0aab5737a7624c6c21-ae17fb52e2ec7e207f75b89661f86dfd">
+                <akt:full-name>Thomas Krennwallner</akt:full-name>
+            </akt:Person>
+        </akt:has-author>
+        <akt:has-author>
+            <akt:Person rdf:about="http://dblp.rkbexplorer.com/id/people-3c04856807ccfbb9601d41618f893ba1-ae17fb52e2ec7e207f75b89661f86dfd">
+                <akt:full-name>Alessandra Martello</akt:full-name>
+            </akt:Person>
+        </akt:has-author>
+        <akt:has-author>
+            <akt:Person rdf:about="http://dblp.rkbexplorer.com/id/people-3afc43a75b2000c6e2e360b234d99361-ae17fb52e2ec7e207f75b89661f86dfd">
+                <akt:full-name>Axel Polleres</akt:full-name>
+            </akt:Person>
+        </akt:has-author>
+        <akt:article-of-journal>
+            <akt:Journal rdf:about="http://dblp.rkbexplorer.com/id/journal-42c12ed185d25be53d6c83ba01fdb98f">
+                <akt:has-title>ESWC</akt:has-title>
+            </akt:Journal>
+        </akt:article-of-journal>
+        <akt:cites-publication-reference rdf:resource="http://dblp.rkbexplorer.com/id/conf/esws/2009"/>
+        <akt:has-web-address>http://dx.doi.org/10.1007/978-3-642-02121-3_70</akt:has-web-address>
+        <akt:has-date>
+            <akts:Calendar-Date rdf:about="http://www.aktors.org/ontology/date#2009">
+                <akts:year-of>2009</akts:year-of>
+            </akts:Calendar-Date>
+        </akt:has-date>
+    </akt:Book-Section-Reference>
+
+
+    <akt:Book-Section-Reference rdf:about="http://dblp.rkbexplorer.com/id/conf/www/PhuocPHTM09">
+        <owl:sameAs rdf:resource="http://dblp.l3s.de/d2r/resource/publications/conf/www/PhuocPHTM09"/>
+        <akt:has-title>Rapid prototyping of semantic mash-ups through semantic web pipes.</akt:has-title>
+        <akt:has-author>
+            <akt:Person rdf:about="http://dblp.rkbexplorer.com/id/people-73b09c11a09f33c68a731dc289c0e1bf-8f83d08bc7fd1189b3473ad5451850a5">
+                <akt:full-name>Danh Le Phuoc</akt:full-name>
+            </akt:Person>
+        </akt:has-author>
+        <akt:has-author>
+            <akt:Person rdf:about="http://dblp.rkbexplorer.com/id/people-3afc43a75b2000c6e2e360b234d99361-8f83d08bc7fd1189b3473ad5451850a5">
+                <akt:full-name>Axel Polleres</akt:full-name>
+            </akt:Person>
+        </akt:has-author>
+        <akt:has-author>
+            <akt:Person rdf:about="http://dblp.rkbexplorer.com/id/people-8ff5793604b334ca0ad91759a50fd8d4-8f83d08bc7fd1189b3473ad5451850a5">
+                <akt:full-name>Manfred Hauswirth</akt:full-name>
+            </akt:Person>
+        </akt:has-author>
+        <akt:has-author>
+            <akt:Person rdf:about="http://dblp.rkbexplorer.com/id/people-73e43f4577f2d63268d1cfc2c4753f98-8f83d08bc7fd1189b3473ad5451850a5">
+                <akt:full-name>Giovanni Tummarello</akt:full-name>
+            </akt:Person>
+        </akt:has-author>
+        <akt:has-author>
+            <akt:Person rdf:about="http://dblp.rkbexplorer.com/id/people-bde48b477420ba9b8fec09881462475b-8f83d08bc7fd1189b3473ad5451850a5">
+                <akt:full-name>Christian Morbidoni</akt:full-name>
+            </akt:Person>
+        </akt:has-author>
+        <akt:article-of-journal>
+            <akt:Journal rdf:about="http://dblp.rkbexplorer.com/id/journal-793b899a4f8fdf8109b9b0e71aa0f28e">
+                <akt:has-title>WWW</akt:has-title>
+            </akt:Journal>
+        </akt:article-of-journal>
+        <akt:cites-publication-reference rdf:resource="http://dblp.rkbexplorer.com/id/conf/www/2009"/>
+        <akt:has-web-address>http://doi.acm.org/10.1145/1526709.1526788</akt:has-web-address>
+        <akt:has-date>
+            <akts:Calendar-Date rdf:about="http://www.aktors.org/ontology/date#2009">
+                <akts:year-of>2009</akts:year-of>
+            </akts:Calendar-Date>
+        </akt:has-date>
+    </akt:Book-Section-Reference>
+
+
+    <akt:Book-Section-Reference rdf:about="http://dblp.rkbexplorer.com/id/series/xmedia/PolleresM09">
+        <owl:sameAs rdf:resource="http://dblp.l3s.de/d2r/resource/publications/series/xmedia/PolleresM09"/>
+        <akt:has-title>Expertise bewerben und finden im Social Semantic Web.</akt:has-title>
+        <akt:has-author>
+            <akt:Person rdf:about="http://dblp.rkbexplorer.com/id/people-3afc43a75b2000c6e2e360b234d99361-9cf8b99d236f3d4731438e560a08c945">
+                <akt:full-name>Axel Polleres</akt:full-name>
+            </akt:Person>
+        </akt:has-author>
+        <akt:has-author>
+            <akt:Person rdf:about="http://dblp.rkbexplorer.com/id/people-f2fba7358436ce13a6c11e5822fb80b1-9cf8b99d236f3d4731438e560a08c945">
+                <akt:full-name>Malgorzata Mochol</akt:full-name>
+            </akt:Person>
+        </akt:has-author>
+        <akt:article-of-journal>
+            <akt:Journal rdf:about="http://dblp.rkbexplorer.com/id/journal-7832f0de60d11ce7a6a05602a43d195e">
+                <akt:has-title>Social Semantic Web</akt:has-title>
+            </akt:Journal>
+        </akt:article-of-journal>
+        <akt:cites-publication-reference rdf:resource="http://dblp.rkbexplorer.com/id/series/xmedia/2009social"/>
+        <akt:has-web-address>http://dx.doi.org/10.1007/978-3-540-72216-8_10</akt:has-web-address>
+        <akt:has-date>
+            <akts:Calendar-Date rdf:about="http://www.aktors.org/ontology/date#2009">
+                <akts:year-of>2009</akts:year-of>
+            </akts:Calendar-Date>
+        </akt:has-date>
+    </akt:Book-Section-Reference>
+
+</rdf:RDF>
+<!--  Canonisation Information: Mon,  1 Jun 2009 17:34:56 +0100
+786 URI(s) were substituted from file rdf/dblp-publications-2009.rdf to file rdf/dblp-publications-2009.rdf-canon
+-->

@@ -1,0 +1,9 @@
+@prefix : <http://www.example.org> .
+@prefix xs: <http://www.w3.org/2001/XMLSchema#> .
+
+:s :p "example"@en .
+:s :q "1.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+:s :q "2"^^xs:integer .
+:s :q 3 .
+:s :q 4.5 .
+:s :r "plain" .

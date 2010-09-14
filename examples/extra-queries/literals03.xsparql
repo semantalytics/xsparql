@@ -1,0 +1,9 @@
+prefix : <http://www.example.org>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+let $x := "http://www.example.org/i"
+let $y := "http://www.example.org/myType"
+let $l := "en"
+let $t := "myType"
+let $foo:= "bar"
+
+construct { <{$x}> a {$l} @ {$l}  }

@@ -1,0 +1,64 @@
+#! /bin/bash
+
+XQILLA="xqilla"
+
+SAXON="java -classpath /usr/local/saxon9/saxon9.jar net.sf.saxon.Query"
+
+ENGINE=$XQILLA
+
+EVAL=rewrite
+
+# default options for the script
+OPTIONS=''
+
+if [ $# -lt 1 ]; then
+    echo "USAGE: $0 --eval filename";
+    exit 1;
+fi
+
+
+# parse the arguments
+while [ $# -gt 0 ]
+do
+    case "$1" in
+       --eval)    
+	    EVAL=$1
+	    ;;
+       --saxon)    
+	    ENGINE=$SAXON
+	    ;;
+	-O)    
+	    OPTIONS=$2
+	    shift
+	    ;;
+	*)   
+	    FILE=$1
+    esac
+    shift
+done
+
+
+# store the rewritten query in tempfiles/
+# RESTMP=`mktemp -t xsparql_result_XX`
+RESTMP=$FILE.out
+
+python ../src/xsparqler.py $OPTIONS $FILE > $RESTMP
+
+RETCODE=$?
+
+# if the parse failed return the original query along with the error
+if [ $RETCODE -ne 0 ]; then
+    cat $RESTMP;
+else
+    # otherwise evaluate or print the rewritten query
+    if [ $EVAL == "--eval" ]; then
+	$ENGINE $RESTMP;
+	RETCODE=$?;
+    else
+	cat $RESTMP;
+    fi
+fi
+
+# rm -f $RESTMP
+
+exit $RETCODE

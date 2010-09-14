@@ -1,0 +1,8 @@
+prefix : <http://www.example.org>
+
+construct { $g $g $g  .}
+where {
+ graph $g {
+   $s $p $o .
+ }
+}
