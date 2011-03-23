@@ -1,0 +1,24 @@
+====
+
+    Copyright (C) 2011, NUI Galway.
+    All rights reserved.
+
+    The software in this package is published under the terms of the BSD style license a copy of which has been included
+    with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
+    http://www.deri.ie/publications/tools/bsd_license.txt
+
+    Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
+    NUI Galway.
+====
+(This notice is included in the Saxon distribution because Saxon includes a QuickSort
+module that was originally developed by Wolfgang Hoschek at CERN, and which was licensed
+for use under the conditions specified here.)
+
+
+Copyright © 1999 CERN - European Organization for Nuclear Research.
+
+Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose
+is hereby granted without fee, provided that the above copyright notice appear in all copies and
+that both that copyright notice and this permission notice appear in supporting documentation.
+CERN makes no representations about the suitability of this software for any purpose.
+It is provided "as is" without expressed or implied warranty.

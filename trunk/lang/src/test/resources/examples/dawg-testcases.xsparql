@@ -1,0 +1,14 @@
+(: get list of included files from a first file. not finished:)
+
+declare namespace mf="http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#";
+declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace list="http://jena.hpl.hp.com/ARQ/list#";
+
+for $incl
+from <http://xsparql.deri.org/data/manifest-syntax.ttl>
+where {
+     _:a rdf:type mf:Manifest;
+         mf:include _:b .
+         _:b list:member $incl
+}
+return $incl

@@ -1,0 +1,25 @@
+====
+
+    Copyright (C) 2011, NUI Galway.
+    All rights reserved.
+
+    The software in this package is published under the terms of the BSD style license a copy of which has been included
+    with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
+    http://www.deri.ie/publications/tools/bsd_license.txt
+
+    Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
+    NUI Galway.
+====
+Apache Ant
+Copyright 1999-2006 The Apache Software Foundation
+
+This product includes software developed by
+The Apache Software Foundation (http://www.apache.org/).
+
+This product includes also software developed by :
+  - the W3C consortium (http://www.w3c.org) ,
+  - the SAX project (http://www.saxproject.org)
+
+The <sync> task is based on code Copyright (c) 2002, Landmark
+Graphics Corp that has been kindly donated to the Apache Software
+Foundation.

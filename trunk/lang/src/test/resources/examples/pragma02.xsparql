@@ -1,0 +1,4 @@
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+for * from <http://xsparql.deri.org/data/foaf.rdf>
+where {$p foaf:name $x}
+construct {$p foaf:name {fn:lower-case($x)}}

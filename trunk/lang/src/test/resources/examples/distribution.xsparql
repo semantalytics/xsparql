@@ -1,0 +1,25 @@
+prefix :     <http://www.example.org>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix dct:  <http://purl.org/dc/terms/>
+
+declare function local:_distribution_count($s, $i, $c) {
+  let $x :=
+    if ($i > count($s)) then
+      ()
+    else if ($s[$i] eq $s[$i + 1]) then
+      local:_distribution_count($s, $i + 1, $c + 1)
+    else
+      fn:concat( fn:concat($s[$i], ", ", $c) , "
+", local:_distribution_count($s, $i + 1, 1) )
+  return $x
+};
+
+let $days  := 
+  for $entry $date
+  from <http://xsparql.deri.org/data/sample_distribution_data.n3>
+  where {$entry dct:created $date}
+  let $day := day-from-dateTime(xs:dateTime($date))
+  order by $day
+  return $day
+
+return local:_distribution_count($days, 1, 1)

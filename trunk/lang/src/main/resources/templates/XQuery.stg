@@ -1,0 +1,165 @@
+group XQuery;
+
+generic(content) ::= <<
+$content$
+>>
+
+main(date, queryBodies) ::= <<
+(: -*- mode: xquery -*- :)
+(: Created: $date$ :)
+(: Generator: XSPARQL translator :)
+
+$queryBodies;separator="\n"$
+>>
+
+queryBody(main) ::= <<
+$main; separator=", \n"$
+>>
+
+namespace(name, value) ::= "declare namespace $name$ = $value$;"
+
+defaultnamespace(value) ::= "declare default element namespace $value$;"
+
+xmlElement(name, attributes, contents) ::= <<
+<$name$$if(attributes)$ $attributes; separator=" "$$endif$>$contents$</$name$>
+>>
+
+xmlAttribute(name, value) ::= <<
+$name$="$value$"
+>>
+
+flworExpr(forlets) ::= <<
+$forlets$
+>>
+
+whereExpr(main) ::= <<
+where $main$
+>>
+
+filterExpr(main) ::= <<
+filter $main$
+>>
+
+orderExpr(main) ::= <<
+order by $main$
+
+>>
+
+returnExpr(main) ::= <<
+return 
+  $main$
+>>
+
+letClause(var, expr) ::= <<
+let $var$ := $expr$
+
+>>
+
+forClause(var, type, at, in) ::= <<
+for $var$$if(type)$ as $type$$endif$$if(at)$ at $at$$endif$ in $in$
+
+>>
+
+par(content) ::= <<
+($content; separator=", "$)
+>>
+
+rangeExpr(from, to) ::= <<
+$from$ to $to$
+>>
+
+infixOpExpr(p1, p2, op) ::= <<
+$p1$ $op$ $p2$
+>>
+
+returnClause(return) ::= <<
+return $return$
+>>
+
+funcDecl(name, params, as, definition) ::= <<
+declare function $name$ ($params; separator=", "$) $if(as)$ as $as$$endif$ $if(definition)${$definition$}$else$ external $endif$;
+>>
+
+param(name, type) ::= <<
+$name$$if(type)$ as $type$$endif$
+>>
+
+funcCall(name, expr) ::= <<
+$name$( $expr; separator=", "$ )
+>>
+
+xmlContents(content) ::= <<
+{$content; separator=", \n"$}
+>>
+
+xmlContent(content) ::= <<
+$content$
+>>
+
+objectClause(object) ::= <<
+$object$
+>>
+
+orderByClause(expr) ::= <<
+order by $expr$
+>>
+
+having(expr) ::= <<
+" having ( $expr$ ) " 
+>>
+
+group_by(var) ::= <<
+" group by $var$ " 
+>>
+
+moduleImport(mi1, mi2, mi3) ::= <<
+import module namespace $mi1$ = $mi2$ 
+                                at $mi3$;
+>>
+
+schemaImport(mi1, mi2, mi3) ::= <<
+import schema namespace $mi1$ = $mi2$ 
+                                at $mi3$;
+>>
+
+varDecl(v1, v2, v3) ::= <<
+declare variable $v1$$if(v2)$ as $v2$$endif$ := $v3$;
+>>
+
+externalVarDecl(v1, v2) ::= <<
+declare variable $v1$$if(v2)$ as $v2$$endif$ external;
+>>
+
+qstring(qs) ::= <<
+"$qs$"
+>>
+
+defaultDecl(dd1, dd2, dd3) ::= <<
+declare default $dd1$ $dd2$ $dd3$;
+>>
+
+comment(comment) ::= <<
+
+(: $comment$ :)
+
+>>
+
+triplessamesubject(subject, verbobject) ::= <<
+$subject$, " " $verbobject; separator=", \" ; \" "$
+>>
+
+verbobject(verb, objects) ::= <<
+, $verb$, " ", $objects; separator=", "$
+>>
+
+triples(triples) ::= <<
+$triples; separator=", \".\", "$
+>>
+
+ifExpr(cond, then, elseExpr) ::= <<
+if ($cond$) then
+  $then$
+  $if(elseExpr)$else $elseExpr$
+$endif$
+>>
+

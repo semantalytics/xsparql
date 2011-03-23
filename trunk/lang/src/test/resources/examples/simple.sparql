@@ -1,0 +1,4 @@
+prefix : <http://www.example.org>
+construct {$x :p [$x _:a] }
+from <http://xsparql.deri.org/data/alice.ttl>
+where {$s $p $x}
