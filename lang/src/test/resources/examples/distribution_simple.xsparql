@@ -1,0 +1,17 @@
+prefix :     <http://www.example.org>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix dct:  <http://purl.org/dc/terms/>
+
+let $results :=
+  for $entry $date
+  from <http://xsparql.deri.org/data/sample_distribution_data.n3>
+  where {$entry dct:created $date}
+  return <entry date="{$date}"/>
+return
+    let $days := for $day in data($results/@date)
+             return day-from-dateTime(xs:dateTime($day))
+    for $day in distinct-values($days)
+    order by $day
+    return <day
+n="{$day}">{count($results[day-from-dateTime(xs:dateTime(@date)) =
+$day])}</day>

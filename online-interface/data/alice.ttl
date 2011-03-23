@@ -1,4 +1,0 @@
-@prefix : <http://www.example.org> .
-
-:s :p _:b.
-:s :q _:b.

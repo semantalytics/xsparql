@@ -1,1 +1,0 @@
-rdfproc -n test_temp_turtle2rdfxml parse $1 turtle; rdfproc test_temp_turtle2rdfxml serialize rdfxml

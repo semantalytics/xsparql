@@ -1,9 +1,0 @@
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
-prefix xhtml: <http://www.w3.org/1999/xhtml>
-prefix owl: <http://www.w3.org/2002/07/owl#>
-
-let $doc := doc("http://apassant.net/")
-
-for $s in $doc//xhtml:about
-construct { rdf:s rdf:p $s }

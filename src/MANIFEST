@@ -1,9 +1,0 @@
-xsparql/__init__.py
-xsparql/grammar.py
-xsparql/lifrewriter.py
-xsparql/lowrewriter.py
-xsparql/parsetab.py
-setup.py
-xsparqler.py
-README
-COPYING

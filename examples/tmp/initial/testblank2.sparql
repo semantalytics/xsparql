@@ -1,4 +1,0 @@
-prefix : <http://www.example.org>
-select ?x
-from <file:alice.ttl>
-WHERE {{?s :p ?x} UNION {?s :q ?x} }

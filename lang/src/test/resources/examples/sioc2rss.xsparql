@@ -1,0 +1,26 @@
+declare namespace sioc="http://rdfs.org/sioc/ns#";
+declare namespace dc="http://purl.org/dc/elements/1.1/";
+declare namespace dcterms="http://purl.org/dc/terms/";
+declare namespace rdfs="http://www.w3.org/2000/01/rdf-schema#";
+
+<channel>
+<title>
+      {for $name 
+       from <http://nunolopes.org/blog/index.php?sioc_type=site>
+       where { [a sioc:Forum] sioc:name $name }
+       return $name
+      }
+</title>
+      {for $seeAlso
+       from <http://nunolopes.org/blog/index.php?sioc_type=site>
+       where { [a sioc:Forum] sioc:container_of [rdfs:seeAlso $seeAlso] }
+       return 
+           <item>        
+              {for $title
+               from $seeAlso 
+               where { [a sioc:Post] dc:title $title }
+               return $title}
+           </item>
+      }
+</channel>
+

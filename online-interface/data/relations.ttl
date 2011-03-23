@@ -1,8 +1,0 @@
-@prefix foaf: <http://xmlns.com/foaf/0.1/> . 
-_:b1 a foaf:Person; 
-     foaf:name "Alice"; 
-     foaf:knows _:b2; 
-     foaf:knows _:b3. 
-_:b2 a foaf:Person; foaf:name "Bob"; 
-     foaf:knows _:b3. 
-_:b3 a foaf:Person; foaf:name "Charles".

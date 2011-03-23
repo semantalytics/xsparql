@@ -1,0 +1,8 @@
+[XSPARQL-14] SPARQL Filter Operators not implemented 
+[XSPARQL-19] reserved words 
+[XSPARQL-20] XML namespaces not being parsed
+[XSPARQL-21] Turtle preamble is added in the output if nested construct is used 
+[XSPARQL-24] literals from sparql are elements in results 
+[XSPARQL-29] xsparql-types validations functions fail with optional 
+[XSPARQL-30] nested blank nodes bug 
+[XSPARQL-31] constructed IRI (QName) is broken 

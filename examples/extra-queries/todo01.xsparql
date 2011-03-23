@@ -1,4 +1,0 @@
-# comments
-
-let $name := "xpto"
-return <criterion2><name>{$name}</name><weight>{$weight}</weight></criterion2>
