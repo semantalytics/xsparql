@@ -17,7 +17,7 @@ The central Apache Maven repository contains almost all dependencies of XSPARQL.
 
     Install the jar file in your local maven repository:
     
-    mvn install:install-file -DgroupId=net.sf.saxon -DartifactId=saxon-ee -Dversion=9.3 -Dpackaging=jar -Dfile=<path-to-jar-file>
+    mvn install:install-file -DgroupId=net.sf.saxon -DartifactId=saxon -Dversion=9.3 -Dpackaging=jar -Dfile=<path-to-jar-file>
 
 
 2) Building XSPARQL
