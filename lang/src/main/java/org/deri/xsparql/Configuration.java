@@ -391,9 +391,9 @@ public class Configuration {
 	    eval = new xqueryEvaluatorSaxon();
 	}
 
-	if (xqueryEngine.equals("qexo")) {
-	    eval = new xqueryEvaluatorQexo();
-	}
+	//if (xqueryEngine.equals("qexo")) {
+	//    eval = new xqueryEvaluatorQexo();
+	//}
 
 	return eval;
     }
