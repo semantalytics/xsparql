@@ -26,12 +26,6 @@
     <!-- </dependency> -->
 
     <dependency>
-      <groupId>kawa</groupId>
-      <artifactId>kawa</artifactId>
-      <version>1.10</version>
-    </dependency>
-
-    <dependency>
       <groupId>net.sf.jopt-simple</groupId>
       <artifactId>jopt-simple</artifactId>
       <version>3.2</version>
