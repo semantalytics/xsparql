@@ -120,11 +120,6 @@ public class xqueryEvaluatorSaxon extends xqueryEvaluator {
 	final XQueryCompiler compiler = proc.newXQueryCompiler();
 	final XQueryEvaluator evaluator = compiler.compile(query).load();
 
-	final BufferedReader in = new BufferedReader(new InputStreamReader(
-		XSPARQLProcessor.class
-			.getResourceAsStream("/xquery/xsparql-types.xquery")));
-	compiler.compileLibrary(in);
-
 	for (String name : xqueryExternalVars.keySet()) {
 	    evaluator.setExternalVariable(new QName(name), new XdmAtomicValue(
 		    xqueryExternalVars.get(name)));
