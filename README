@@ -45,12 +45,12 @@ You will also need a directory called ./tfd for the dot files and the generated 
 
 You can run xsparql from the the created jar file:
 
-   java -jar lang/target/lang-1.0-SNAPSHOT-jar-with-dependencies.jar query.xs
+   java -jar lang/target/lang-0.2-jar-with-dependencies.jar query.xs
 
 To get an overview of the possible parameters of xsparql execute
 
-   java -jar lang/target/lang-1.0-SNAPSHOT-jar-with-dependencies.jar -h
+   java -jar lang/target/lang-0.2-jar-with-dependencies.jar -h
 
 You can also assign values to variables declared as external using an equals sign ($graph in this example):
 
-   java -jar lang/target/lang-1.0-SNAPSHOT-jar-with-dependencies.jar query.xs graph="<file:///home/user/graph.rdf>"
+   java -jar lang/target/lang-0.2-jar-with-dependencies.jar query.xs graph="<file:///home/user/graph.rdf>"

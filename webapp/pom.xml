@@ -34,7 +34,7 @@
 
   
   <build>
-    <finalName>xsparql-webapp</finalName> 
+    <!--finalName>xsparql-webapp</finalName--> 
     <plugins>
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
