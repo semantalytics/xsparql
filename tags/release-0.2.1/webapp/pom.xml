@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.deri</groupId>
+    <artifactId>xsparql</artifactId>
+    <version>0.2</version>
+  </parent>
+
+  <artifactId>webapp</artifactId>
+  <name>XSPARQL webapp</name>
+
+  <packaging>war</packaging>
+  <version>0.2</version>
+  <url>http://xsparql.deri.org/</url>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.deri</groupId>
+      <artifactId>lang</artifactId>
+      <version>0.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+        <artifactId>maven-jetty-plugin</artifactId>
+        <version>6.1.25</version>
+    </dependency>
+
+  </dependencies>
+
+  
+  <build>
+    <!--finalName>xsparql-webapp</finalName--> 
+    <plugins>
+      <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>maven-jetty-plugin</artifactId>
+        <version>6.1.25</version>
+        <configuration>
+          <webAppConfig>
+            <contextPath>/</contextPath>
+          </webAppConfig>
+          <!-- <daemon>true</daemon> -->
+          <stopPort>9966</stopPort>
+          <stopKey>foo</stopKey>
+        </configuration>
+      </plugin>
+      <plugin>
+        <inherited>false</inherited>
+        <groupId>com.google.code.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <version>1.4.0</version>
+        <configuration>
+          <header>../header.txt</header>
+          <properties>
+            <year>${project.inceptionYear}</year>
+          </properties>
+          <excludes>
+            <exclude>LICENSE</exclude>
+            <exclude>README</exclude>
+            <exclude>**/src/main/resources/notices/**</exclude>
+            <exclude>**/src/test/resources/examples/**</exclude>
+            <exclude>**/**.stg</exclude>
+          </excludes>
+          <mapping>
+            <!-- <jwc>XML_STYLE</jwc> -->
+            <!-- <application>XML_STYLE</application> -->
+            <flex>JAVADOC_STYLE</flex>
+            <g>JAVADOC_STYLE</g>
+          </mapping>
+          <useDefaultMapping>true</useDefaultMapping>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  
+</project>

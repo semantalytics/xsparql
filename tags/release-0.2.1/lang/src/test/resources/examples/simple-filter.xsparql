@@ -1,0 +1,6 @@
+prefix : <http://www.example.org>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+let $y := "http://www.example.org/knownPerson"
+for * from <http://xsparql.deri.org/data/foaf.rdf>
+where {$s foaf:knows $x filter (!isblank($x))}
+construct {$x a <{$y}> }

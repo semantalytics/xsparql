@@ -1,0 +1,7 @@
+prefix foaf: <http://xmlns.com/foaf/0.1/> 
+construct{ $N $N $N }
+from <http://xsparql.deri.org/data/foaf.rdf> 
+where { 
+[] foaf:knows 
+[ a foaf:Person; foaf:name $N ]
+}

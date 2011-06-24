@@ -1,0 +1,6 @@
+prefix vc: <http://www.w3.org/2001/vcard-rdf/3.0#>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+let $N := 4
+for $Person $Name from <http://xsparql.deri.org/data/relations.rdf>
+where { $Person foaf:name $Name . filter ($N = 4)}
+return $Name

@@ -1,0 +1,183 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.deri</groupId>
+  <artifactId>xsparql</artifactId>
+  <name>XSPARQL framework</name>
+
+  <packaging>pom</packaging>
+  <version>0.2</version>
+  <url>http://xsparql.deri.org</url>
+  <licenses>
+    <license>
+      <name>BSD</name>
+      <url>http://www.deri.ie/publications/tools/bsd_license.txt</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <inceptionYear>2011</inceptionYear>
+
+  <modules>
+    <module>lang</module>
+    <module>webapp</module>
+  </modules>
+
+  <organisation>
+    <name>Digital Enterprise Research Institute, Galway</name>
+    <url>http://www.deri.ie/</url>
+  </organisation>
+  
+  <developers>
+    <developer>
+      <name>Axel Polleres</name>
+    </developer>
+    <developer>
+      <name>Nuno Lopes</name>
+    </developer>
+    <developer>
+      <name>Stefan Bischof</name>
+    </developer>
+  </developers>
+  
+  <issueManagement>
+    <system>Sourceforge</system>
+    <url>https://sourceforge.net/tracker/?group_id=243296</url>
+  </issueManagement>
+
+  <scm>
+    <connection>scm:svn:https://xsparql.svn.sourceforge.net/svnroot/xsparql/trunk/</connection>
+    <developerConnection>scm:svn:https://xsparql.svn.sourceforge.net/svnroot/xsparql/trunk/</developerConnection>
+    <tag>HEAD</tag>
+    <url>http://xsparql.svn.sourceforge.net/viewvc/xsparql/trunk/</url>
+  </scm> 
+
+  <mailingLists>
+    <mailingList>
+      <name>XSPARQL Discussion</name>
+      <subscribe>https://lists.sourceforge.net/lists/listinfo/xsparql-discussion</subscribe>
+      <unsubscribe>https://lists.sourceforge.net/lists/listinfo/xsparql-discussion</unsubscribe>
+      <post>xsparql-discussion@lists.sourceforge.net</post>
+      <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=xsparql-discussion</archive>
+    </mailingList>
+  </mailingLists>
+  
+  
+  <!-- remove warning of being system dependent -->
+  <properties> 
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
+  </properties>
+  
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>2.7.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+            <source>1.6</source>
+            <target>1.6</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration/>
+      </plugin>
+
+      <plugin>
+        <inherited>false</inherited>
+        <groupId>com.google.code.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <version>1.4.0</version>
+        <configuration>
+          <header>header.txt</header>
+          <properties>
+            <year>${project.inceptionYear}</year>
+          </properties>
+          <excludes>
+            <exclude>LICENSE</exclude>
+            <exclude>README</exclude>
+            <exclude>**/src/main/resources/notices/**</exclude>
+            <exclude>**/src/test/resources/examples/**</exclude>
+            <exclude>**/**.stg</exclude>
+          </excludes>
+          <mapping>
+            <!-- <jwc>XML_STYLE</jwc> -->
+            <!-- <application>XML_STYLE</application> -->
+            <flex>JAVADOC_STYLE</flex>
+            <g>JAVADOC_STYLE</g>
+          </mapping>
+          <useDefaultMapping>true</useDefaultMapping>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <version>2.8</version>
+        <configuration>
+          <downloadSources>true</downloadSources>
+          <downloadJavadocs>true</downloadJavadocs>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+        </configuration>
+      </plugin>
+      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-pmd-plugin</artifactId>
+         <version>2.5</version>
+         <configuration>
+            <linkXref>true</linkXref>
+            <targetJdk>1.5</targetJdk>
+            <rulesets>
+               <ruleset>/rulesets/basic.xml</ruleset>
+               <ruleset>/rulesets/braces.xml</ruleset>
+               <ruleset>/rulesets/coupling.xml</ruleset>
+               <ruleset>/rulesets/design.xml</ruleset>
+               <ruleset>/rulesets/unusedcode.xml</ruleset>
+               <ruleset>/rulesets/imports.xml</ruleset>
+               <!--ruleset>/rulesets/controversial.xml</ruleset-->
+            </rulesets>
+            <format>xml</format>
+            <linkXref>true</linkXref>
+            <sourceEncoding>utf-8</sourceEncoding>
+            <minimumTokens>100</minimumTokens>
+         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.2</version>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>
