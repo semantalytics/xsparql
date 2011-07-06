@@ -272,5 +272,7 @@ main
 xmlAttribute
   : ^(T_XML_ATTRIBUTE name=NCNAME value=QSTRING)
   -> xmlAttribute(name={$name}, value={$value})
+  | ^(T_XML_ATTRIBUTE name=PNAME_LN value=QSTRING)
+  -> xmlAttribute(name={$name}, value={$value})
   ;
 
