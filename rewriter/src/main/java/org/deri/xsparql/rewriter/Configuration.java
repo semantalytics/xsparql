@@ -79,11 +79,6 @@ public class Configuration {
    */
   public static String endpointURI;
 
-  /**
-   * XSPARQL XQuery library location
-   */
-  public static String xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql.xquery";
-
   public static boolean warnIfNestedConstruct = false;
 
   /**
@@ -162,13 +157,6 @@ public class Configuration {
    */
   public static String endpointURI() {
     return endpointURI;
-  }
-
-  /**
-   * XSPARQL XQuery library uri
-   */
-  public static String xsparqlLibURL() {
-    return xsparqlLibURL;
   }
 
   public static boolean warnIfNestedConstruct() {

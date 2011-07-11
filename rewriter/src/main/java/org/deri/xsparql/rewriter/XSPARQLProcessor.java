@@ -333,15 +333,12 @@ public class XSPARQLProcessor {
     this.setWarnIfNestedConstruct(true);
   }
 
-  public void setXSPARQLLibURL(String string) {
-    Configuration.xsparqlLibURL = string;
-  }
-
+  // TODO: devise a proper debug methodology
   public void setDebugVersion(boolean has) {
     Configuration.debugVersion = has;
-    if(has) {
-      Configuration.xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql-types.debug.xquery";
-    }
+    // if(has) {
+    //   Configuration.xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql-types.debug.xquery";
+    // }
   }
 
   public void setSPARQLEngine(SPARQLEngine se) {
@@ -358,8 +355,8 @@ public class XSPARQLProcessor {
 
   public void setValidating(boolean b) {
     Configuration.validatingXQuery = b;
-    if(b) {
-      Configuration.xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql-types.xquery";
-    }
+    // if(b) {
+    //   Configuration.xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql-types.xquery";
+    // }
   }
 }

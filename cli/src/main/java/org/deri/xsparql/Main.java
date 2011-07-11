@@ -183,8 +183,6 @@ public class Main {
     oparser.accepts("arq", "use ARQ API to perform SPARQL queries (default)");
     oparser.accepts("joseki", "use Joseki endpoint to perform SPARQL queries");
     oparser.accepts("rewrite-only", "Only perform rewriting to XQuery");
-    oparser.accepts("lib", "XQuery library location as URI").withRequiredArg()
-        .ofType(String.class);
     final OptionSpec<File> tdbDirOption = oparser
         .accepts("tdbdir", "TDB directory").withRequiredArg()
         .ofType(File.class);
@@ -270,14 +268,6 @@ public class Main {
     // SPARQL endpoint URI
     if (options.has("u")) {
       proc.setEndpointURI(options.valueOf("u").toString());
-    }
-
-    // XSPARQL XQuery library location
-
-    if (options.has("lib")) {
-      proc.setXSPARQLLibURL(options.valueOf("lib").toString());
-    } else {
-      // use default
     }
 
     {

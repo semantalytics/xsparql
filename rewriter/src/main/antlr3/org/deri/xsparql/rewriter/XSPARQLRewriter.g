@@ -174,6 +174,7 @@ scope VariableScope {
   import java.util.logging.Logger;
   import java.util.LinkedList;
   import java.util.UUID;
+  import java.net.URL;
 }
 
 @members {
@@ -364,7 +365,7 @@ scope VariableScope {
 
   private static final String schemaAbbrev = "_sparql_result";
   private static final String schemaNamespace = "http://www.w3.org/2005/sparql-results#";
-  private static final String schemaURL = "http://xsparql.deri.org/demo/xquery/sparql.xsd";
+  private static String schemaURL = "http://xsparql.deri.org/demo/xquery/sparql.xsd";
 
   private static final String validSubjectFunction = xsparqlAbbrev+":_validSubject";
   private static final String validPredicateFunction = xsparqlAbbrev+":_validPredicate";
@@ -381,19 +382,28 @@ scope VariableScope {
 
   public void setLibraryVersion() {
 
+    URL local = XSPARQLRewriter.class.getResource("/xquery/xsparql-types.xquery");
+    if (local != null) {
+      xsparqlLibURL = local.toString();
+    }
+
     if (!Configuration.validatingXQuery()) {
-      xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql.xquery";
+      local = XSPARQLRewriter.class.getResource("/xquery/xsparql.xquery");
+      if (local != null) {
+        xsparqlLibURL = local.toString();
+      } else {
+        xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql.xquery";
+      }
     }
 
     if(Configuration.debugVersion()) {
-      xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql-types.debug.xquery";
+      local = XSPARQLRewriter.class.getResource("/xquery/xsparql-types.debug.xquery");
+      if (local != null) {
+        xsparqlLibURL = local.toString();
+      } else {
+        xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql-types.debug.xquery";
+      }
     } 
-
-    if(Configuration.xsparqlLibURL() != null) {
-      xsparqlLibURL = Configuration.xsparqlLibURL();
-    } 
-
-    
 
   }
   
@@ -403,6 +413,10 @@ scope VariableScope {
     
     //    ^(T_SCHEMA_IMPORT ^(NAMESPACE NCNAME[schemaAbbrev]) QSTRING[schemaNamespace] ^(AT QSTRING[schemaURL]))
     if (Configuration.validatingXQuery()) {
+      URL local = XSPARQLRewriter.class.getResource("/xquery/sparql.xsd");
+      if (local != null) {
+        schemaURL = local.toString();
+      }
 
       CommonTree at = (CommonTree) adaptor.create(AT, "AT");
       adaptor.addChild(at, adaptor.create(QSTRING, schemaURL));
