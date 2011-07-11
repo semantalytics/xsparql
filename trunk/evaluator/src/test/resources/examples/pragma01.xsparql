@@ -1,0 +1,6 @@
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+<namelist>
+{for $x from <http://xsparql.deri.org/data/foaf.rdf>
+where {[] foaf:name $x}
+return <name>{$x}</name>}
+</namelist>

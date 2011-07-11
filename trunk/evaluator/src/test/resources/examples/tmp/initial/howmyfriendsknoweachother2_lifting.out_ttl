@@ -1,0 +1,17 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+_:a_111 foaf:name "alice". 
+_:a_111 a foaf:Person.
+_:a_111 foaf:knows _:b_111.
+_:b_111 foaf:name "bob".
+_:b_111 a foaf:Person.
+_:a_211 foaf:name "bob". 
+_:a_211 a foaf:Person.
+_:a_211 foaf:knows _:b_211.
+_:b_211 foaf:name "charles".
+_:b_211 a foaf:Person.
+_:a_311 foaf:name "bob". 
+_:a_311 a foaf:Person.
+_:a_311 foaf:knows _:b_311.
+_:b_311 foaf:name "alice".
+_:b_311 a foaf:Person.
