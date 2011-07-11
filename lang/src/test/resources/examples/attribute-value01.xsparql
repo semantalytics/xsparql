@@ -1,2 +1,0 @@
-let $name := "xpto"
-return <foo a="{$name}">bar</foo>
