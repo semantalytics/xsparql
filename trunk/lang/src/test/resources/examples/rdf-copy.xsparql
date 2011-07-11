@@ -1,3 +1,0 @@
-construct {$s $p $o}
-from <http://nunolopes.org/foaf.rdf>
-where {$s $p $o}
