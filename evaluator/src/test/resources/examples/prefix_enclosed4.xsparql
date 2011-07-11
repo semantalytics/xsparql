@@ -1,0 +1,9 @@
+declare namespace foaf="http://xmlns.com/foaf/0.1/"; 
+declare default element namespace "http://www.w3.org/1999/xhtml";
+let $doc := doc("http://cgi.w3.org/cgi-bin/tidy?docAddr=http%3A%2F%2Ftwitter.com%2Fterraces")
+let $author:= $doc//*[@class="about vcard entry-author"]
+let $authorhp:= data($author/li/*/@href)
+let $friends:= $doc//*[@id="friends"] 
+let $foaf := "foaf"
+for $f in $friends 
+construct { [foaf:homepage {$foaf} ] }
