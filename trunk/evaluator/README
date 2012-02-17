@@ -1,0 +1,3 @@
+saxon + maven
+
+mvn install:install-file -DgroupId=net.sf.saxon -DartifactId=saxon -Dversion=9.2 -Dpackaging=jar -Dfile=/Users/nl/work/deri/sw/saxon/saxon/saxon9ee.jar

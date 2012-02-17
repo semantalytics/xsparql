@@ -1,0 +1,12 @@
+prefix dbpedia2: <http://dbpedia.org/property/>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix : <http://example.org/>
+
+let $MyB := for * from <http://nunolopes.org/foaf.rdf>
+            where { [ foaf:birthday $B ]. }
+            return $B
+
+for * from <http://dbpedia.org/> 
+endpoint <http://dbpedia.org/sparql?format=application/sparql-results+xml&amp;default-graph-uri=http://dbpedia.org&amp;query=>
+where { $uri dbpedia2:born $B; foaf:name $N . filter ( regex(str($B),str($MyB)) )  } 
+construct { :nuno :sameBirthDayAs $uri. $uri foaf:name $N }

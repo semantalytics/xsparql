@@ -1,0 +1,11 @@
+# should behave the same as queryAxel04: 
+
+prefix vc: <http://www.w3.org/2001/vcard-rdf/3.0#>
+prefix foaf: <http://xmlns.com/foaf/0.1/> 
+let $Y := "blabla@blabla.xom"
+for $X $FName
+from <http://xsparql.deri.org/data/vCard.rdf> 
+where { $X vc:FN $FName .} 
+construct { $X foaf:name $FName; foaf:mbox {$Y}.}
+
+

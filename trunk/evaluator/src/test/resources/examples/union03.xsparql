@@ -1,0 +1,5 @@
+let $O := "Polleres"
+for *
+from <http://xsparql.deri.org/data/vCard.rdf>
+where { { $S $P $O . } union { $S $P $O . } }
+construct { $S $P $O .}

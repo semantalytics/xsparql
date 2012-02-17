@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+
+  <groupId>org.deri.xsparql</groupId>
+  <artifactId>parent</artifactId>
+  <name>XSPARQL parent</name>
+
+  <packaging>pom</packaging>
+  <version>0.4-SNAPSHOT</version>
+  <url>http://xsparql.deri.org/</url>
+  <licenses>
+    <license>
+      <name>BSD</name>
+      <url>http://www.deri.ie/publications/tools/bsd_license.txt</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <inceptionYear>2011</inceptionYear>
+
+  <modules>
+    <module>rewriter</module>
+    <module>evaluator</module>
+    <module>webapp</module>
+    <module>cli</module>
+  </modules>
+
+  <organisation>
+    <name>Digital Enterprise Research Institute, Galway</name>
+    <url>http://www.deri.ie/</url>
+  </organisation>
+  
+  <developers>
+    <developer>
+      <name>Axel Polleres</name>
+    </developer>
+    <developer>
+      <name>Nuno Lopes</name>
+    </developer>
+    <developer>
+      <name>Stefan Bischof</name>
+    </developer>
+  </developers>
+  
+  <issueManagement>
+    <system>Sourceforge</system>
+    <url>https://dev.deri.ie:8443/jira/browse/XSPARQL</url>
+  </issueManagement>
+
+  <scm>
+    <connection>scm:svn:https://subversion.deri.ie/xsparql/trunk/</connection>
+    <developerConnection>scm:svn:https://subversion.deri.ie/xsparql/trunk/</developerConnection>
+    <url>http://websvn.deri.ie/xsparql/trunk/</url>
+  </scm> 
+
+  <mailingLists>
+    <mailingList>
+      <name>XSPARQL Discussion</name>
+      <subscribe>https://lists.sourceforge.net/lists/listinfo/xsparql-discussion</subscribe>
+      <unsubscribe>https://lists.sourceforge.net/lists/listinfo/xsparql-discussion</unsubscribe>
+      <post>xsparql-discussion@lists.sourceforge.net</post>
+      <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=xsparql-discussion</archive>
+    </mailingList>
+  </mailingLists>
+  
+  <ciManagement>
+    <system>continuum</system>
+    <url>http://xsparql.deri.org:8081/continuum</url>
+    <notifiers>
+      <notifier>
+        <type>mail</type>
+        <sendOnError>true</sendOnError>
+        <sendOnFailure>true</sendOnFailure>
+        <sendOnSuccess>false</sendOnSuccess>
+        <sendOnWarning>true</sendOnWarning>
+        <configuration><address>continuum@127.0.0.1</address></configuration>
+      </notifier>
+    </notifiers>
+  </ciManagement>
+  
+  <!-- remove warning of being system dependent -->
+  <properties> 
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <antlr.version>3.2</antlr.version>
+  </properties>
+  
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>        
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>2.1.0</version>
+          <extensions>true</extensions>
+        </plugin>
+        <plugin>
+          <groupId>com.google.code.maven-license-plugin</groupId>
+          <artifactId>maven-license-plugin</artifactId>
+          <version>1.4.0</version>
+          <configuration>
+            <header>http://xsparql.deri.org/license/header.txt</header>
+            <failIfMissing>false</failIfMissing>
+            <properties>
+              <year>${project.inceptionYear}</year>
+            </properties>
+            <failIfMissing>false</failIfMissing>
+            <excludes>
+              <exclude>LICENSE</exclude>
+              <exclude>README</exclude>
+              <exclude>**/src/main/resources/notices/**</exclude>
+              <exclude>**/src/test/resources/examples/**</exclude>
+              <exclude>**/**.stg</exclude>
+              <exclude>**/site/**</exclude>
+              <exclude>**/**.xsd</exclude>
+              <exclude>**/**.xquery</exclude>
+              <exclude>**/**.xsparql</exclude>
+            </excludes>
+            <mapping>
+              <!-- <jwc>XML_STYLE</jwc> -->
+              <!-- <application>XML_STYLE</application> -->
+              <flex>JAVADOC_STYLE</flex>
+              <g>JAVADOC_STYLE</g>
+            </mapping>
+            <useDefaultMapping>true</useDefaultMapping>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.3.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.2.2</version>
+          <configuration>
+            <tagBase>https://subversion.deri.ie/xsparql/tags</tagBase>
+          </configuration>
+        </plugin>
+        
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>2.7.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.antlr</groupId>
+          <artifactId>antlr3-maven-plugin</artifactId>
+          <version>${antlr.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    
+    <plugins>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+          <testFailureIgnore>true</testFailureIgnore>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <version>2.8</version>
+        <configuration>
+          <downloadSources>true</downloadSources>
+          <downloadJavadocs>true</downloadJavadocs>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      
+      <!-- Could be used to create a zipfile with sources -->
+      <!--plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>project</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attached</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin-->
+    </plugins>
+  </build>
+  
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.deri.xsparql</groupId>
+        <artifactId>rewriter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.deri.xsparql</groupId>
+        <artifactId>evaluator</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.deri.xsparql</groupId>
+        <artifactId>cli</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.deri.xsparql</groupId>
+        <artifactId>webapp</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.deri.xsparql</groupId>
+        <artifactId>osgi-consumer</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr-runtime</artifactId>
+        <version>${antlr.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>xerces</groupId>
+        <artifactId>xercesImpl</artifactId>
+        <version>2.9.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.deri.xsparql</groupId>
+        <artifactId>xerces.xercesImpl</artifactId>
+        <version>2.9.1</version>
+      </dependency>
+      <dependency>
+        <groupId>xml-apis</groupId>
+        <artifactId>xml-apis</artifactId>
+        <version>1.3.04</version>
+      </dependency>
+      <dependency>
+        <groupId>xml-resolver</groupId>
+        <artifactId>xml-resolver</artifactId>
+        <version>1.2</version>
+      </dependency>
+      <dependency> 
+        <groupId>junit</groupId> 
+        <artifactId>junit</artifactId> 
+        <version>4.8.1</version> 
+        <scope>test</scope> 
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+        </configuration>
+      </plugin>
+      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-pmd-plugin</artifactId>
+         <version>2.5</version>
+         <configuration>
+            <linkXref>true</linkXref>
+            <targetJdk>1.5</targetJdk>
+            <rulesets>
+               <ruleset>/rulesets/basic.xml</ruleset>
+               <ruleset>/rulesets/braces.xml</ruleset>
+               <ruleset>/rulesets/coupling.xml</ruleset>
+               <ruleset>/rulesets/design.xml</ruleset>
+               <ruleset>/rulesets/unusedcode.xml</ruleset>
+               <ruleset>/rulesets/imports.xml</ruleset>
+               <!--ruleset>/rulesets/controversial.xml</ruleset-->
+            </rulesets>
+            <format>xml</format>
+            <linkXref>true</linkXref>
+            <sourceEncoding>utf-8</sourceEncoding>
+            <minimumTokens>100</minimumTokens>
+         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.7.2</version>
+      </plugin>
+      
+    </plugins>
+  </reporting>
+  
+  <profiles>
+    <profile>
+      <id>osgi</id>
+      <modules>
+        <module>external</module>
+        <module>osgi-consumer</module>
+      </modules>
+    </profile>
+  </profiles>
+  
+</project>

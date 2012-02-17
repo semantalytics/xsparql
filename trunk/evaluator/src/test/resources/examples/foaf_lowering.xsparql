@@ -1,0 +1,15 @@
+declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+<relations>
+{ for $Person $Name from <http://xsparql.deri.org/data/relations.rdf>
+  where { $Person foaf:name $Name }
+  order by $Name
+  return <person name="{$Name}">
+         { for $FName from <http://xsparql.deri.org/data/relations.rdf>
+           where { $Person foaf:knows $Friend .
+                   $Person foaf:name $Name.
+                   $Friend foaf:name $FName. }
+           return <knows> { $FName }</knows>
+         }
+         </person>
+}
+</relations>

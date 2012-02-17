@@ -1,0 +1,10 @@
+declare namespace foaf="http://xmlns.com/foaf/0.1/";
+declare namespace ex="http://example.org";
+declare default element namespace "http://www.w3.org/1999/xhtml";
+
+let $doc := doc("http://cgi.w3.org/cgi-bin/tidy?docAddr=http%3A%2F%2Ftwitter.com%2Fterraces")
+let $friends:= $doc//*[@id="friends"]/span[@class="vcard"]
+for $f in $friends
+let $friendsAccount := $f/*/@href
+
+construct { <http://apassant.net/alex> foaf:knows [ foaf:userAccount <{$friendsAccount}> ] }

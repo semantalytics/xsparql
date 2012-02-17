@@ -1,0 +1,8 @@
+declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+for $person in doc("http://xsparql.deri.org/data/relations.xml")//person,
+    $nameA in $person/@name,
+    $nameB in $person/knows
+construct
+{
+[ foaf:name {data($nameA)} ].
+}

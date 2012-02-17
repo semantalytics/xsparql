@@ -1,0 +1,8 @@
+<res>{
+for * from student,address
+return <row><studentid>{$student.id}</studentid>
+       <name>{$student.name}</name>
+       <addressid>{$address.id}</addressid>
+       <address>{$address.address}</address>
+       <student>{$address.student}</student></row>
+}</res>

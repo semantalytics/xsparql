@@ -1,0 +1,13 @@
+let $res := "
+       Select (Name || ID ) AS ""bandId""
+            , ID
+            , Name
+         from band
+       "
+(: return $res :)
+for row $row from sqlQuery($res)
+return $row/bandId
+
+(: let $y := <b><b><c/><c></c></b></b> :)
+(: for $x in $y/b :)
+(: return $x :)

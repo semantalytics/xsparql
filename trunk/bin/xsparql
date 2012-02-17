@@ -1,0 +1,66 @@
+#!/bin/sh
+# Run xsparql
+
+# find a system-wide configuration
+test -f /etc/default/xsparql && . /etc/default/xsparql
+# find a local configuration
+test -f `dirname $0`/config && . `dirname $0`/config
+
+# optionally hard code the path to xsparql
+# XSPARQLROOT=/path/to/xsparql
+
+[ "$XSPARQLROOT" = "" ] && { echo "XSPARQLROOT is unset." 1>&2 ; exit 1 ;  }
+
+CLASSPATH=$XSPARQLROOT/dist/xsparql.jar:$XSPARQLROOT/lib/*
+
+USAGE="usage: `basename $0` [OPTIONS]
+available OPTIONS are:
+    -c          use XSPARQL from the command line
+    -v          use XSPARQL from the command line with debug mode"
+
+
+# to get the debug version do: $ DEBUG=1 ./xsparql ...
+if [ $DEBUG ]; then
+    NODEBUG="";
+else
+    NODEBUG="-Djava.util.logging.config.file=logging.properties";
+fi
+
+# check min number of params
+if [ $# -lt 1 ]; then
+    echo "$USAGE"
+    exit 1
+fi
+
+
+case $1 in
+    -server)
+        shift 1
+        case $1 in
+            --method) # execute a query using the XSPARQL server
+                shift 1;
+                wget -q -O - "http://localhost:8080/xsparql?queryFile=$2&exec=true&method=$1"
+                exit $?
+                ;;
+            -e) # execute a query using the XSPARQL server
+                shift 1;
+                wget -q -O - "http://localhost:8080/xsparql?queryFile=$1&exec=true"
+                exit $?
+                ;;
+            *) # rewrite a query using the XSPARQL server
+                echo $1;
+                wget -q -O - "http://localhost:8080/xsparql?queryFile=$1"
+                exit $?
+                ;;
+        esac
+        ;;
+    # -v) # use XSPARQL from the command line with debug mode
+    #     shift 1;
+    #     java $NODEBUG -classpath $CLASSPATH org.deri.xsparql.Main "$@"
+    #     exit $?;
+    #     ;;
+    *)
+        java $NODEBUG -classpath $CLASSPATH org.deri.xsparql.Main "$@"
+        exit $?
+        ;;
+esac

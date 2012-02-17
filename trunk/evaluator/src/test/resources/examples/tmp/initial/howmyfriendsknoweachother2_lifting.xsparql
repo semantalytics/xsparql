@@ -1,0 +1,13 @@
+declare namespace foaf="http://xmlns.com/foaf/0.1/";
+
+for $knows in doc("howmyFriendsknoweachother.xml")//knows,
+    $nameA in $knows/Person[1]/@name,
+    $nameB in $knows/Person[2]/@name
+construct
+{ 
+_:a foaf:name {data($nameA)}. 
+_:a a foaf:Person.
+_:a foaf:knows _:b.
+_:b foaf:name {data($nameB)}.
+_:b a foaf:Person.
+}

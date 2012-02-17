@@ -1,0 +1,4 @@
+let $name := "Nuno"
+for id as $one, name as $two  from student
+where name = $name
+return <name>{$two}</name>
