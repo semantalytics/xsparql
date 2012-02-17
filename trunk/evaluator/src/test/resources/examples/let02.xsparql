@@ -1,3 +1,0 @@
-
-let $name := "xpto", $weight := 100
-return <criterion2><name>{$name}</name><weight>{$weight}</weight></criterion2>

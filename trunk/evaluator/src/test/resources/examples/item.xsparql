@@ -1,5 +1,0 @@
-<test>
-{let $rss := doc("http://cyber.law.harvard.edu/rss/examples/rss2sample.xml")
-for $item in $rss//item 
-return $item}
-</test>

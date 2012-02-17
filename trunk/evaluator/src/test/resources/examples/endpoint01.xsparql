@@ -1,7 +1,0 @@
-prefix dbpedia: <http://dbpedia.org/resource/>
-
-for * from <http://dbpedia.org/resource/Opel_Astra> 
-endpoint <http://dbpedia.org/sparql?format=application/sparql-results+xml&amp;default-graph-uri=http://dbpedia.org&amp;query=>
-where { dbpedia:Opel_Astra  $b $c }
-construct { dbpedia:Opel_Astra <{$b}> $c }
-(: return <a/> :)

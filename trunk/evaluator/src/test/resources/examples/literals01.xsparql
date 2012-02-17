@@ -1,3 +1,0 @@
-construct { $S $P $O.}
-from <http://xsparql.deri.org/data/literals.ttl>
-where { $S $P $O .}

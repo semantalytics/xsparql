@@ -1,5 +1,0 @@
-prefix foaf: <http://xmlns.com/foaf/0.1/>
-
-let $s := "foaf:s"
-let $o := "o"
-construct { [ <{$s}> $o ; foaf:name "Nuno" ]}
