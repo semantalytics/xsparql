@@ -1,0 +1,10 @@
+prefix :  <http://xmlns.com/foaf/0.1/>
+
+<people>{
+for $aName $bName
+from <http://xsparql.deri.org/data/relations.rdf>
+where { $a :knows $b. $b :name $bName. $a :name $aName }
+
+return <knows a="{$aName}">{$bName}</knows>
+}</people>
+

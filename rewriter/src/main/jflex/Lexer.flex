@@ -5,15 +5,16 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
  */
-
 package org.deri.xsparql.rewriter;
 
-import org.antlr.runtime.*;
+import org.antlr.runtime.CommonToken;
+import org.antlr.runtime.Token;
+import org.antlr.runtime.TokenSource;
 
 import java.util.Stack;
 
@@ -32,8 +33,8 @@ import java.util.Stack;
 */
 %class XSPARQLLexer
 
-/* Make Lexer public class */
-%public
+/* Make methods private */
+%apiprivate
 
 // ANTLR
 %implements TokenSource
@@ -49,18 +50,6 @@ import java.util.Stack;
 /* Use unicode */
 %unicode
 
-/* name of the generated symbols interface */
-//%cupsym org.deri.xsparql.rewriter.Symbols
-
-/*
-   Will switch to a CUP compatibility mode to interface with a CUP
-   generated parser.
-*/
-//%cup
-
-/* Create main method for Lexer class for testing */
-//%cupdebug
-
 /*
   Declarations
 
@@ -71,35 +60,37 @@ import java.util.Stack;
 */
 %{
 
+  private boolean debug = false;
+  
+  public void setDebug(boolean debug) {
+    this.debug = debug;
+  }
+
+  // implements antlr.TokenSource
+
+  /* (non-Javadoc)
+	 * @see org.antlr.runtime.TokenSource#nextToken()
+	 */
+  public Token nextToken() {
+    try {
+      return yylex();
+    } catch (java.io.IOException e) {
+      System.err.println("Lexer: Unable to get next token: " + e.getMessage());
+      return Token.EOF_TOKEN;
+    }
+  }
+  
+  /* (non-Javadoc)
+	 * @see org.antlr.runtime.TokenSource#getSourceName()
+	 */
+	public String getSourceName() {
+	  return "JFlex lexer - unknown source";
+ 	}
+
    /**
     * Stack for Lexer states
     */
    private Stack<Integer> stateStack = new Stack<Integer>();
-
-   /* To create a new java_cup.runtime.Symbol with information about
-      the current token, the token will have no value in this
-      case. */
-/*   private Symbol symbol(int type) {
-      Symbol s = new Symbol(type, yyline, yycolumn);
-
-      if(debug) {
-         System.out.println("Line " + (yyline+1) + ", Col " + (yycolumn+1) + " in state " + getStateName(yystate()) + ": " + getTokenName(s.sym));
-      }
-
-      return s;
-   }*/
-
-   /* Also creates a new java_cup.runtime.Symbol with information
-      about the current token, but this object has a value. */
-/*   private Symbol symbol(int type, Object value) {
-      Symbol s = new Symbol(type, yyline, yycolumn, value);
-
-      if(debug) {
-         System.out.println("Line " + (yyline+1) + ", Col " + (yycolumn+1) + " in state " + getStateName(yystate()) + ": " + getTokenName(s.sym) + " \"" + yytext() + "\"");
-      }
-
-      return s;
-   }*/
 
    /*
     * Push current state to stack and change to state
@@ -108,7 +99,7 @@ import java.util.Stack;
     */
    private void pushStateAndSwitch(int state) {
       stateStack.push(yystate());
-      if(Configuration.debuglexer()) {
+      if(this.debug) {
          System.out.println("Push state");
       }
       switchState(state);
@@ -119,7 +110,7 @@ import java.util.Stack;
     */
    private void popState() {
       int state = stateStack.pop().intValue();
-      if(Configuration.debuglexer()) {
+      if(this.debug) {
          System.out.println("Pop state");
       }
       switchState(state);
@@ -128,8 +119,8 @@ import java.util.Stack;
    /*
     * Switch to another state without any stack interaction
     */
-   public void switchState(int state) {
-      if(Configuration.debuglexer()) {
+   private void switchState(int state) {
+      if(this.debug) {
          System.out.println("Switch state " + getStateName(state));
       }
       yybegin(state);
@@ -138,7 +129,7 @@ import java.util.Stack;
    /*
     * Get the name of a state, like getTokenName
     */
-   public static String getStateName(int state) {
+   private static String getStateName(int state) {
       try {
          java.lang.reflect.Field [] classFields = org.deri.xsparql.rewriter.XSPARQLLexer.class.getFields();
          for (int i = 0; i < classFields.length; i++) {
@@ -153,35 +144,11 @@ import java.util.Stack;
        return "UNKNOWN STATE";
    }
 
-   // implements antlr.TokenSource
-
-   /* (non-Javadoc)
-	 * @see org.antlr.runtime.TokenSource#nextToken()
-	 */
-   public Token nextToken() {
-        try {
-            return yylex();
-        }
-        catch (java.io.IOException e) {
-            System.err.println("shouldn't happen: " + e.getMessage());
-            return Token.EOF_TOKEN;
-        }
-    }
-
-    /** Turn 1-based to 0-based. */
-    public void setLine(int line) {
-        this.yyline = line-1;
-    }
-
-    public void setColumn(int column) {
-        this.yycolumn = column;
-    }
-
-    public int getLine() {
+    private int getLine() {
         return this.yyline+1;
     }
 
-    public int getColumn() {
+    private int getColumn() {
         return this.yycolumn;
     }
 
@@ -190,7 +157,7 @@ import java.util.Stack;
         token.setLine(getLine());
         token.setCharPositionInLine(getColumn());
 
-        if(Configuration.debuglexer()) {
+        if(this.debug) {
            System.out.println("Line " + (yyline+1) + ", Col " + (yycolumn+1) + " in state " + getStateName(yystate()) + ": " + XSPARQL.tokenNames[type] + " \"" + text + "\"");
         }
         return token;
@@ -201,18 +168,11 @@ import java.util.Stack;
         token.setLine(getLine());
         token.setCharPositionInLine(getColumn());
 
-        if(Configuration.debuglexer()) {
+        if(this.debug) {
            System.out.println("Line " + (yyline+1) + ", Col " + (yycolumn+1) + " in state " + getStateName(yystate()) + ": " + XSPARQL.tokenNames[type]);
         }
         return token;
     }
-
-    /* (non-Javadoc)
-	 * @see org.antlr.runtime.TokenSource#getSourceName()
-	 */
-	public String getSourceName() {
-	   return null;
- 	}
 
 %}
 
@@ -269,12 +229,14 @@ PN_LOCAL          = ( {PN_CHARS_U} | [0-9] ) (({PN_CHARS}|\.)* {PN_CHARS})?
 
 iri               = < ([^<>\"\{\}\|\^`\\])* >
 
-var               = [\$][a-zA-Z][a-zA-Z0-9\_\-]*
+var               = [\$][a-zA-Z]([a-zA-Z0-9\_\-\.]*[a-zA-Z0-9\_\-]+)?
 
 %%
 
 <YYINITIAL, xmlElementContents, SPARQL_CONSTRUCT, xmlStartTag> 
 {
+
+  \</{WhiteSpace}    { return symbol(XSPARQL.LESSTHAN, yytext()); }
 
   \<         { pushStateAndSwitch(xmlStartTag);
                return symbol(XSPARQL.LESSTHAN, yytext()); }
@@ -298,8 +260,8 @@ var               = [\$][a-zA-Z][a-zA-Z0-9\_\-]*
 \(         { return symbol(XSPARQL.LPAR, yytext()); }
 \)         { return symbol(XSPARQL.RPAR, yytext()); }
 \;         { return symbol(XSPARQL.SEMICOLON, yytext()); }
-\"[^\"]*\" { return symbol(XSPARQL.QSTRING, yytext().substring(1, yytext().length()-1)); }
-\'[^\']*\' { String ret = yytext().replaceAll("\"", "\"\""); 
+\"(\"\"|[^\"])*\" { return symbol(XSPARQL.QSTRING, yytext().substring(1, yytext().length()-1)); }
+\'(\'\'|[^\'])*\' { String ret = yytext().replaceAll("\"", "\"\""); 
              ret = ret.substring(1, ret.length()-1).replaceAll("''", "'"); 
              return symbol(XSPARQL.QSTRING, ret); }
 [0-9]+     { return symbol(XSPARQL.INTEGER, yytext()); }
@@ -362,6 +324,7 @@ var               = [\$][a-zA-Z][a-zA-Z0-9\_\-]*
 "descending"             { return symbol(XSPARQL.DESCENDING, yytext()); }
 "ascending"              { return symbol(XSPARQL.ASCENDING, yytext()); }
 "stable"                 { return symbol(XSPARQL.STABLE, yytext()); }
+"row"                    { return symbol(XSPARQL.ROW, yytext()); }
 "if"                     { return symbol(XSPARQL.IF, yytext()); }
 "then"                   { return symbol(XSPARQL.THEN, yytext()); }
 "else"                   { return symbol(XSPARQL.ELSE, yytext()); }
@@ -593,6 +556,7 @@ var               = [\$][a-zA-Z][a-zA-Z0-9\_\-]*
 /* ------------------------- SPARQL ----------------------------------------- */
 
 <SPARQL> {
+
    {iri}          {  popState();
                      return symbol(XSPARQL.IRIREF, yytext().substring(1, yytext().length()-1)); }
 
@@ -600,6 +564,9 @@ var               = [\$][a-zA-Z][a-zA-Z0-9\_\-]*
                   { return symbol(XSPARQL.PNAME_NS, yytext()); }
 
    "named"        { return symbol(XSPARQL.NAMED, yytext()); }
+
+   {PN_PREFIX}    {  popState();
+                     return symbol(XSPARQL.NCNAME, yytext()); }
 
 }
 

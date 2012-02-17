@@ -1,10 +1,24 @@
+<!--
+
+
+    Copyright (C) 2011, NUI Galway.
+    All rights reserved.
+
+    The software in this package is published under the terms of the BSD style license a copy of which has been included
+    with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
+    http://xsparql.deri.ie/license/bsd_license.txt
+
+    Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
+    NUI Galway.
+
+-->
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
   <id>bin</id>
   <formats>
     <format>dir</format>
-    <!--format>zip</format-->
+    <format>zip</format>
   </formats>
   <includeBaseDirectory>false</includeBaseDirectory>
   <dependencySets>

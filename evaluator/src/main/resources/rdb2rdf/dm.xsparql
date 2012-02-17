@@ -1,0 +1,125 @@
+prefix rr: <http://www.w3.org/ns/r2rml#>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix ex: <http://example.com/>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix test: <http://www.w3.org/2006/03/test-description#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+declare variable $baseURI external;
+
+
+(:::::::::::::::::::::::::::::::::::::::::::::::)
+(: creates an RDF term with the specified type :)
+(:::::::::::::::::::::::::::::::::::::::::::::::)
+declare function local:createTermWithType($value, $type) {
+  (: let $type := fn:trace($type, "type") return :)
+  if($type eq "BIGINT UNSIGNED" or $type eq "TEXT" or $type eq "CHAR")
+    then xsparql:createLiteral($value)
+  else if($type eq "FLOAT")
+    then xsparql:createLiteral($value, "", "xsd:float")
+  else if($type eq "INT")
+    then xsparql:createLiteral($value, "", "xsd:integer")
+  else xsparql:createTerm($value)
+};
+
+(::::::::::::::::::::::::::::)
+(: url escaping as per spec :)
+(::::::::::::::::::::::::::::)
+declare function local:escape($string) {
+  fn:replace(fn:normalize-space($string), " ", "+")
+};
+
+
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: return the primary keys of a relation, used to generate the subject URI :)
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+declare function local:getPKs($row, $tableMetadata) {
+  let $pks := $tableMetadata//*[@primaryKey]
+  for $pk in $pks
+  let $pkName := $pk/@name
+  return fn:concat($pkName, ".",local:escape($row//*[@name eq $pkName])) (: xsparql:value :)
+};
+
+
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: Missing / TODO:                                             :)
+(: does not perform validation                                 :)
+(: eliminate duplicate rows                                    :)
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
+
+
+(::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: creates the subject for a row from the database                            :)
+(: if there exist PK create URI based on those, otherwise create a blank node :)
+(::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+declare function local:createS($tableName, $row, $rowPos, $tableMetadata) {
+  let $pks := local:getPKs($row, $tableMetadata)
+    (: how up-to-date is the "#_" terminator? can't find a mention of it: http://www.w3.org/TR/2011/WD-rdb-direct-mapping-20110920/ :) 
+  return if(not(fn:empty($pks))) then xsparql:createURI(fn:concat($baseURI, local:escape($tableName), "/", fn:string-join($pks, "_"), "#_"))
+    else xsparql:createBNode(fn:concat($tableName,$rowPos))
+};
+
+
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: creates the predicate of a tuple from the database        :)
+(: simple concatenation according to the rules from the spec :)
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+declare function local:createP($tableName, $attribute) {
+  xsparql:createURI(fn:concat($baseURI, local:escape($tableName), "#", local:escape(data($attribute/@name))))
+};
+
+(::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: creates the object of a tuple from the database                    :)
+(: if is a foreign key create the respective URI, otherwise a literal :)
+(::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+declare function local:createO($attribute, $rowMetadata) {
+  if ($rowMetadata[@foreignKeyTable]) then
+    let $value := $attribute/text() return
+    if ($value) then xsparql:createURI(fn:concat($baseURI, $rowMetadata/@foreignKeyTable, "/", $rowMetadata/@foreignKeyAttribute, ".", local:escape($value), "#_"))
+    else ()
+  else
+  let $type := data($rowMetadata/@type)
+  return if (data($attribute)) then local:createTermWithType($attribute, $type) else ()
+};
+
+
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: creates the triples for a specific result from a relation in the input database :)
+(: given the subject, generates the predicate and object and outputs the triples   :)
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+declare function local:createPO($tableName, $row, $tableMetadata, $subject) {
+  for $attribute in $row/*
+    let $row1 := fn:trace($attribute/@name, "row") 
+    let $predicate :=  local:createP($tableName, $attribute)
+    let $rowMetadata := $tableMetadata//column[@name eq data($attribute/@name)]
+    let $object := local:createO($attribute, $rowMetadata)
+    construct { $subject <{$predicate}> $object }
+};
+
+
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: determines the URI of the relation, the subject URI and outputs the rdf:type triple :)
+(: uses auxiliary function to create the triples for the data                          :)
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+declare function local:createSPO($tableName, $rows, $tableMetadata) {
+  let $tableURI := xsparql:createURI(fn:concat($baseURI, $tableName))
+  for $row at $rowPos in $rows                                               (: for each result from the database :)
+  let $subject := local:createS($tableName, $row, $rowPos, $tableMetadata)   (: create the subject :)
+   (: return <row><tableName>{$tableName}</tableName><row>{$row}</row><tableMetadata>{$tableMetadata}</tableMetadata><s>{$subject}</s><p>{$predicate}</p><o>{$object}</o></row> :)
+   (: output rdf:type triples and call createPO to create triples for data :)
+  construct { $subject rdf:type $tableURI . 
+              { local:createPO($tableName, $row, $tableMetadata, $subject) } }
+};
+
+
+
+(::::::::::::::::::::::::::::::::::::::::)
+(: Let's start, get all tables from RDB :)
+(::::::::::::::::::::::::::::::::::::::::)
+let $tables := xsparql:getRDBTables()           (: retreive all the relations from the database :)
+for $table in $tables//relation                 (: iterating over the relations :)
+  let $tableName := data($table)
+  let $tableMetadata := xsparql:getRDBTableAttributes($tableName)   (: collect the attributes of the relation :)
+  let $rows := for row $row from $tableName return $row             (: collect the data from the database :)
+  return local:createSPO($tableName, $rows, $tableMetadata)         (: generate the triples:)

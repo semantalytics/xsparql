@@ -12,6 +12,6 @@ declare variable $user := 'jacktrades';
 <kml ><Document>{
 let $lastfm := fn:concat("http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&amp;api_key=16307daa8ce0d0cc1dab015e0fdab8ec&amp;user=", $user)
 for $artistInfo in doc($lastfm)//artist
-where data($artistInfo/@rank) lt 2
+where xs:int($artistInfo/@rank) lt 2
 return data($artistInfo/@rank)
 }</Document></kml>

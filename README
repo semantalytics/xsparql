@@ -53,4 +53,4 @@ To get an overview of the possible parameters of xsparql execute
 
 You can also assign values to variables declared as external using an equals sign ($graph in this example):
 
-   java -jar lang/target/lang-0.2-jar-with-dependencies.jar query.xs graph="<file:///home/user/graph.rdf>"
+   java -jar lang/target/lang-0.2-jar-with-dependencies.jar query.xs graph="file:///home/user/graph.rdf"

@@ -5,7 +5,7 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
@@ -33,11 +33,10 @@ tokens {
   import java.util.logging.Logger;
   import java.util.Collection;
   import java.util.ArrayList;
-  import org.deri.xsparql.AbstractMyTreeRewriter;
 }
 
 @members {
-  private static final Logger logger = Logger.getLogger(XSPARQLRewriter.class.getClass().getName());
+  private static final Logger logger = Logger.getLogger(XSPARQLSimplifier.class.getClass().getName());
 
   private String nodeFunction;
 
@@ -45,8 +44,8 @@ tokens {
   /**
    * set the XQuery evaluation engine
    */
-  public void setEngine() {
-    if (Configuration.xqueryEngine().equals("qexo") && Configuration.SPARQLmethod().equals("arq")) {
+  public void setEngine(String xqueryEngine, String sparqlmethod) {
+   if (xqueryEngine.equals("qexo") && sparqlmethod.equals("arq")) {
       this.nodeFunction = "_java:resultNode";
     } else {
       this.nodeFunction = "_xsparql:_resultNode";
@@ -54,6 +53,8 @@ tokens {
   }
 
 }
+
+// TOP DOWN RULES
 
 topdown
   : varrewrite
@@ -65,7 +66,7 @@ varrewrite
 @init {
   String varName = "";
 }
-  :  ^(r=REWRITEVNODE v=VAR) {varName=Helper.removeLeading($v.text, "$");}
+  :  ^(r=REWRITEVNODE v=VAR) { varName=Helper.removeLeading($v.text, "$"); }
   -> ^(T_FLWOR[$v.token,"i'm a stupid flworExpr"] // avoid "Can't set single child to a list"
        COMMENT["SPARQL variable " + $v.text + " from " + $v.line + ":" + $v.pos]
        ^(T_LET[$v.token,"LET"] 
@@ -75,6 +76,26 @@ varrewrite
            ^(T_PARAMS
               VAR[$r.text]
               QSTRING[varName]
+            )
+          )
+        )
+     )
+  // sql variable list, no comma separator
+  | ^(T_VAR q=QSTRING VAR) 
+  -> QSTRING[" "+$q.text+" AS \"\"" + $q.text +"\"\" "]
+  // sql variable list, comma separator
+  | ^(T_VAR c=COMMA q=QSTRING VAR) 
+  -> QSTRING[$c.text+" "+$q.text+" AS \"\"" + $q.text +"\"\" "] 
+  |  ^(r=REWRITEVNODE ^(T_VAR COMMA? q=QSTRING v=VAR)) { varName = Helper.removeLeading($v.text, "$"); }
+  -> ^(T_FLWOR[$q.token,"i'm a stupid flworExpr"] // avoid "Can't set single child to a list"
+       COMMENT["SPARQL variable " + $q.text + " from " + $q.line + ":" + $q.pos]
+       ^(T_LET[$q.token,"LET"] 
+          VAR[$q.token, "\$" + varName]
+         ^(T_FUNCTION_CALL
+            NCNAME["_xsparql:_sqlResultNode"]
+           ^(T_PARAMS
+              VAR[$r.text]
+              QSTRING
             )
           )
         )
@@ -105,33 +126,40 @@ varrewrite
   -> QSTRING[$vv.token, " "]
   | ^(REWRITEVNODE1 LPAR ^(T_FUNCTION_CALL n=NCNAME ^(T_PARAMS ^(XPATH v=VAR))) AS v2=VAR RPAR)
   -> QSTRING[$n.token, "(" + $n.text + "(" + $v.text + ") AS " + $v2.text + ")"]
+  // SQL variable assigments, take only column name
   ;
 
 singleconcat
-  : ^(T_FUNCTION_CALL f=NCNAME q=QSTRING)
-  -> {$f.text.equals("fn:concat")}? $q
-  -> ^(T_FUNCTION_CALL $f $q)
+  : ^(T_FUNCTION_CALL f=NCNAME ^(T_PARAMS QSTRING))
+  -> {$f.text.equals("fn:concat")}? QSTRING
+  -> ^(T_FUNCTION_CALL $f ^(T_PARAMS QSTRING))
   ;
   
-markunoptimized
-  : ^(T_FUNCTION_CALL f=NCNAME params=.)
+// appearantly this is not working realiably: for some concats this rule never fires
+// it is not clear what the reason is for this
+// try for example: foaf_lowering.xsparql or sioc2rss.xsparql
+markunoptimized 
+  : ^(t=T_FUNCTION_CALL f=NCNAME params=.)
   -> {$f.text.equals("fn:concat")}? ^(T_UNOPTIMIZED_FUNCTION_CALL $f $params)
-  -> ^(T_FUNCTION_CALL $f $params)
+  -> ^($t $f $params)
   ;
 
+
+// BOTTOM UP RULES
 
 bottomup
-  : staticconcat // switch of if it loops infinitely
+  : staticconcat // switch off if it loops infinitely
   ;
 
-
 staticconcat
-  : ^(T_UNOPTIMIZED_FUNCTION_CALL NCNAME ^(T_PARAMS q+=qstringandfunctioncall* q2=QSTRING q3=QSTRING rest+=.*)) // merge two QSTRINGs into one
-  -> ^(T_UNOPTIMIZED_FUNCTION_CALL NCNAME ^(T_PARAMS $q* QSTRING[$q2.token, $q2.text + $q3.text] $rest*))
-  | ^(T_UNOPTIMIZED_FUNCTION_CALL NCNAME ^(T_PARAMS q+=qstringandfunctioncall+ q1=QSTRING?)) // is not unoptimized now
-  -> ^(T_FUNCTION_CALL NCNAME ^(T_PARAMS $q+ $q1?))
-  | ^(T_UNOPTIMIZED_FUNCTION_CALL NCNAME ^(T_PARAMS q1=QSTRING)) // omit needless function call: string concat on single argument
-  -> $q1
+  : ^(T_UNOPTIMIZED_FUNCTION_CALL NCNAME ^(T_PARAMS VAR? q+=qstringandfunctioncall* q2=QSTRING q3=QSTRING rest+=.*)) // merge two QSTRINGs into one
+  -> ^(T_UNOPTIMIZED_FUNCTION_CALL NCNAME ^(T_PARAMS VAR? $q* QSTRING[$q2.token, $q2.text + $q3.text] $rest*))
+  | ^(T_UNOPTIMIZED_FUNCTION_CALL NCNAME ^(T_PARAMS VAR? q+=qstringandfunctioncall+ q1=QSTRING?)) // is fully optimised now
+  -> ^(T_FUNCTION_CALL NCNAME ^(T_PARAMS VAR? $q+ $q1?))
+  | ^(T_UNOPTIMIZED_FUNCTION_CALL NCNAME ^(T_PARAMS VAR q1=QSTRING)) // is fully optimised now
+  -> ^(T_FUNCTION_CALL NCNAME ^(T_PARAMS VAR $q1))
+  | ^(T_UNOPTIMIZED_FUNCTION_CALL NCNAME ^(T_PARAMS QSTRING)) // omit needless function call, same as singleconcat
+  -> QSTRING
   ;
   
 qstringandfunctioncall

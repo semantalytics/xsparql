@@ -1,8 +1,7 @@
 
 module namespace sparql =  "http://xsparql.deri.org/demo/xquery/sparql-functions.xquery" ;
 
-import module namespace _xsparql = "http://xsparql.deri.org/demo/xquery/xsparql.xquery" 
-                                at "http://xsparql.deri.org/demo/xquery/xsparql.xquery";
+import module namespace _xsparql = "http://xsparql.deri.org/demo/xquery/xsparql.xquery";
 
 
 declare namespace _sparql_result =  "http://www.w3.org/2005/sparql-results#";
@@ -10,14 +9,14 @@ declare namespace _sparql_result =  "http://www.w3.org/2005/sparql-results#";
 (: Determine if valid Blank node, uri or literal respectively, by checking if
    the parameter is an instance of the required type :)
 
-declare function sparql:isBNode($NType as item()) as xs:boolean
+declare function sparql:isBlank($NType as item()) as xs:boolean
 {
   if ($NType instance of element()) then
       fn:name($NType) eq "bnode" or fn:name($NType) eq "_sparql_result:bnode" or fn:name($NType) eq "{http://www.w3.org/2005/sparql-results#}:bnode"
   else fn:false()
 };
 
-declare function sparql:isURI($NType as item()) as xs:boolean
+declare function sparql:isIRI($NType as item()) as xs:boolean
 {
   if ($NType instance of element()) then
     (:fn:resolve-QName("_sparql_result:uri", $NType) eq fn:node-name($NType):)
@@ -33,13 +32,29 @@ declare function sparql:isLiteral($NType as item()) as xs:boolean
   else fn:false()
 };
 
+declare function sparql:bound($NType as item()) as xs:boolean
+{
+  fn:not(fn:empty($NType))
+};
+
+declare function sparql:lang($NType as item()) as xs:string
+{
+  $NType/@xml:lang
+};
+
+declare function sparql:datatype($NType as item()) as xs:string
+{
+  $NType/@datatype
+};
+
+
 
 declare function sparql:skolem ($term as item() ) {
    sparql:skolem ($term, "http://xsparql.deri.org/skolem#")
 };
 
 declare function sparql:skolem ($term as item(), $prefix as xs:string) {
-  if(sparql:isBNode($term)) then _xsparql:_rdf_term(fn:concat($prefix, $term)) else $term
+  if(sparql:isBlank($term)) then _xsparql:_rdf_term(fn:concat($prefix, $term)) else $term
 };
 
 declare function sparql:skolemise ($terms as item()*, $prefix as xs:string) {
@@ -92,7 +107,7 @@ declare function sparql:createBNode ($label as item()?) {
   else ()
 };
 
-declare function sparql:createLiteral ($label as xs:string, $lang as xs:string, $type as xs:string) {
+declare function sparql:createLiteral ($label as xs:string, $lang as xs:string?, $type as xs:string?) {
   _xsparql:_binding("_sparql_result:literal",  $label, $lang, $type)
 };
 
@@ -113,7 +128,7 @@ declare function sparql:createTerm($term as item()?) {
 (: get the value of a column from an SQLResult :)
 declare function sparql:value($result as item()?, $var as xs:string) {
   (: data($result//SQLbinding[@label=$var]) :)
-  data($result//*[name() = $var])
+  data($result/SQLbinding[@name = $var])
 };
 
 

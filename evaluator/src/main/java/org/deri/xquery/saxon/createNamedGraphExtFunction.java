@@ -5,7 +5,7 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
@@ -21,8 +21,6 @@ import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.EmptyIterator;
 import net.sf.saxon.value.SequenceType;
 
-import org.deri.xsparql.rewriter.Configuration;
-
 import com.hp.hpl.jena.query.DataSource;
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.DatasetFactory;
@@ -35,7 +33,7 @@ import com.hp.hpl.jena.update.UpdateAction;
  * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
  * @version 1.0
  */
-class createNamedGraphExtFunction extends ExtensionFunctionDefinition {
+public class createNamedGraphExtFunction extends ExtensionFunctionDefinition {
 
   private static final long serialVersionUID = 5099093796002792831L;
   /**
@@ -48,7 +46,8 @@ class createNamedGraphExtFunction extends ExtensionFunctionDefinition {
   private String location;
 
   // hide default constructor
-  private createNamedGraphExtFunction() {
+  public createNamedGraphExtFunction() {
+    this.location = EvaluatorExternalFunctions.getDefaultTDBDatasetLocation();
   }
 
   public createNamedGraphExtFunction(String location) {
@@ -67,13 +66,13 @@ class createNamedGraphExtFunction extends ExtensionFunctionDefinition {
 
   @Override
   public int getMaximumNumberOfArguments() {
-    return 3;
+    return 4;
   }
 
   @Override
   public SequenceType[] getArgumentTypes() {
     return new SequenceType[] { SequenceType.SINGLE_STRING,
-        SequenceType.SINGLE_STRING, SequenceType.SINGLE_STRING };
+        SequenceType.SINGLE_STRING, SequenceType.SINGLE_STRING , SequenceType.SINGLE_STRING };
   }
 
   @Override
@@ -98,9 +97,12 @@ class createNamedGraphExtFunction extends ExtensionFunctionDefinition {
         String graphName = arguments[0].next().getStringValue();
         String prefix = arguments[1].next().getStringValue();
         String data = arguments[2].next().getStringValue();
+        String loc = arguments[3].next().getStringValue();
+        if (!loc.equals("")) {
+          location = loc;
+        }
 
         try {
-
           Dataset dataset = EvaluatorExternalFunctions.getTDBDataset(location);
 
           DataSource datasource = DatasetFactory.create(dataset);
@@ -111,13 +113,15 @@ class createNamedGraphExtFunction extends ExtensionFunctionDefinition {
           String insertString = "PREFIX ex: <" + graphName + ">" + prefix
               + " INSERT DATA INTO <" + graphName + "> { " + data + " }";
 
+          
           UpdateAction.parseExecute(insertString, (Dataset) datasource);
 
           // Close the dataset.
           dataset.close();
 
         } catch (Exception e) {
-          System.out.println("error: " + e.getMessage());
+          System.err.println("error creating named graph: " + e.getMessage());
+          System.exit(1);
         }
 
         return EmptyIterator.getInstance();

@@ -1,0 +1,9 @@
+<tables>{
+let $tables := xsparql:getRDBTables()
+for $tableName in $tables//relation
+return <table name="{$tableName}">{
+  let $attrs := xsparql:getRDBTableAttributes(data($tableName))
+  return $attrs
+}</table>
+
+}</tables>

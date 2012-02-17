@@ -1,0 +1,15 @@
+declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+for $Person $Name from <file:../online-interface/data/relations.rdf>
+where {$Person foaf:name $Name}
+order by $Name
+return 
+ <Person name="{$Name}">
+   {
+    for ?FName from <file:../online-interface/data/relations.rdf>
+    where { $Person foaf:knows $Friend . 
+            $Person foaf:name $Name. 
+            $Friend foaf:name $Fname. } 
+    return <knows>{ $FName }</knows> 
+    }
+</Person>
+

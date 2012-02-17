@@ -5,14 +5,21 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
  */
 package org.deri.xsparql;
 
-import java.io.*;
+import java.io.Console;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +53,9 @@ public class Main {
   private final XSPARQLProcessor proc = new XSPARQLProcessor();
   private final XSPARQLEvaluator xe = new XSPARQLEvaluator();
   private boolean evaluate;
-
+  protected boolean r2rml = false;
+  protected boolean dm = false;
+  
   /**
    * Main application entry point
    * 
@@ -56,9 +65,9 @@ public class Main {
    */
   public static void main(final String[] args) throws IOException {
     Main main = new Main();
-
+    
     main.parseOptions(args);
-
+    
     Reader is = null;
     if (main.queryFiles.length > 0) {
       for (File queryFile : main.queryFiles) {
@@ -70,24 +79,70 @@ public class Main {
           String filename = queryFile.getPath();
           System.err.println("File not found: " + filename);
         } catch (Exception e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
+          if(main.isDebug()) {
+            e.printStackTrace();
+            System.exit(1);
+          } else {
+            System.err.println("Error executing query ("+queryFile.getName()+"): "+e.getMessage());
+            System.exit(1);
+          }
         }
       }
-    } else {
+    }
+    
+    
+    if (main.queryFiles.length == 0 && !main.r2rml && !main.dm) {
       is = new InputStreamReader(System.in);
       String xquery = main.rewriteQuery(is, "stdin");
       try {
         main.postProcessing(xquery);
       } catch (Exception e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+	  if(main.isDebug()) {
+	      e.printStackTrace();
+          } else {
+              System.err.println("Error executing query (stdin): "+e.getMessage());
+          }
       }
+    }
+    
+    // process R2RML 
+    // TODO: determine behaviour if both r2rml and query files are specified
+    if(main.r2rml) {
+	is = new InputStreamReader(XSPARQLEvaluator.class.getResourceAsStream("/rdb2rdf/r2rml.xsparql"));
+	String xquery = main.rewriteQuery(is, "r2rml");
+	try {
+	    main.postProcessing(xquery);
+	} catch (Exception e) {
+	    if(main.isDebug()) {
+		e.printStackTrace();
+	    } else {
+		System.err.println("Error executing R2RML mapping: "+e.getMessage());
+	    }
+	}
+    }
+
+    // process R2RML 
+    // TODO: determine behaviour if both r2rml and query files are specified
+    if(main.dm) {
+	is = new InputStreamReader(XSPARQLEvaluator.class.getResourceAsStream("/rdb2rdf/dm.xsparql"));
+	String xquery = main.rewriteQuery(is, "dm");
+	try {
+	    main.postProcessing(xquery);
+	} catch (Exception e) {
+	    if(main.isDebug()) {
+		e.printStackTrace();
+	    } else {
+		System.err.println("Error executing RDB2RDF direct mapping: "+e.getMessage());
+	    }
+	}
     }
 
     if (main.parseErrors) {
       System.exit(1);
     }
+
+    //close any db connection
+    main.closeDBconnection();
   }
 
   /**
@@ -100,6 +155,7 @@ public class Main {
    */
   private String rewriteQuery(Reader is, String filename) {
     String xquery = null;
+
     try {
       proc.setQueryFilename(filename);
 
@@ -108,6 +164,7 @@ public class Main {
 
     } catch (Exception e) {
       System.err.println("Parse error: " + e);
+      e.printStackTrace();
       parseErrors = true;
     }
     return xquery;
@@ -130,10 +187,11 @@ public class Main {
     }
 
     String result;
-    
+
     // evaluate the expression
     if (this.evaluate) {
 
+      xe.setDBconnection(proc.getDBconnection());
       result = xe.evaluateRewrittenQuery(xquery);
 
       // XQueryEvaluator eval = XSPARQLEvaluator.getEvaluator();
@@ -147,7 +205,7 @@ public class Main {
     } else {
       result = xquery;
     }
-      
+
     if (outputFile == null) {
       Helper.outputString(result, System.out);
     } else {
@@ -163,6 +221,8 @@ public class Main {
    *          the same as for main(String[] args)
    */
   private void parseOptions(final String[] args) {
+    boolean createDBconnection = false;
+
     final OptionParser oparser = new OptionParser();
     oparser.accepts("p", "Parse in debug mode");
     oparser.accepts("l", "Put Lexer in debug mode");
@@ -181,8 +241,21 @@ public class Main {
     oparser.accepts("noval", "Use non-validating XQuery engine (default)");
     oparser.accepts("val", "Use validating XQuery engine");
     oparser.accepts("arq", "use ARQ API to perform SPARQL queries (default)");
-    oparser.accepts("joseki", "use Joseki endpoint to perform SPARQL queries");
+//    oparser.accepts("joseki", "use Joseki endpoint to perform SPARQL queries");
     oparser.accepts("rewrite-only", "Only perform rewriting to XQuery");
+
+    oparser.accepts("psql", "Connect to a PostgreSQL database");
+    oparser.accepts("mysql", "Connect to a MySQL database");
+    oparser.accepts("sqlserver", "Connect to a SQL Server database");
+    oparser.accepts("dbName", "Name of database to connect to").withRequiredArg().ofType(String.class);
+    oparser.accepts("dbInstance", "Named instance of SQL server to connect to").withRequiredArg().ofType(String.class);
+    oparser.accepts("dbUser", "Username for database connection").withRequiredArg().ofType(String.class);
+    oparser.accepts("dbPass", "Prompt for user password");
+    final OptionSpec<File> dbConfig = oparser.accepts("dbConfig", "database configuration file").withRequiredArg().ofType(File.class);
+
+    oparser.accepts("r2rml", "R2RML mapping file").withRequiredArg().ofType(String.class);
+    oparser.accepts("dm", "RDB2RDF direct mapping. Base URI as argument").withRequiredArg().ofType(String.class);
+
     final OptionSpec<File> tdbDirOption = oparser
         .accepts("tdbdir", "TDB directory").withRequiredArg()
         .ofType(File.class);
@@ -235,13 +308,14 @@ public class Main {
     this.evaluate = !options.has("rewrite-only");
     proc.setDebugVersion(options.has("d"));
 
-    if (options.has("arq") && options.has("joseki")) {
-      System.err.println("Use either \"arq\" or \"joseki\". Using default.");
-    } else if (options.has("joseki")) {
-      proc.setSPARQLEngine(SPARQLEngine.JOSEKI);
-    } else {
-      // use default
-    }
+    // Disabled this option, if somebody wants to use this we can re-enable it
+//    if (options.has("arq") && options.has("joseki")) {
+//      System.err.println("Use either \"arq\" or \"joseki\". Using default.");
+//    } else if (options.has("joseki")) {
+//      proc.setSPARQLEngine(SPARQLEngine.JOSEKI);
+//    } else {
+//      // use default
+//    }
 
     // XQuery engine specification
 
@@ -289,6 +363,69 @@ public class Main {
       queryFiles = queryFilesList.toArray(new File[queryFilesList.size()]);
     }
 
+    
+//    if (options.has("mysql") && options.has("psql")) {
+//	System.err.println("Use either \"mysql\" or \"psql\".");
+//	System.exit(1);
+//    } else 
+    if (options.has("psql")) {
+	proc.setDBDriver("psql");
+        createDBconnection = true;
+    } else if (options.has("mysql")) {
+	proc.setDBDriver("mysql");
+        createDBconnection = true;
+    } else if (options.has("sqlserver")) {
+	proc.setDBDriver("sqlserver");
+        createDBconnection = true;
+    }
+    
+
+    // DB configuration
+    if (options.has("dbName")) {
+      proc.setDBName(options.valueOf("dbName").toString());
+      createDBconnection = true;
+    }
+
+    if (options.has("dbInstance")) {
+	proc.setDBInstance(options.valueOf("dbInstance").toString());
+	createDBconnection = true;
+    }
+
+    if (options.has("dbUser")) {
+      proc.setDBUser(options.valueOf("dbUser").toString());
+      createDBconnection = true;
+    }
+
+    if (options.has("dbPass")) {
+	Console cons;
+	char[] passwd;
+	if ((cons = System.console()) != null &&
+		(passwd = cons.readPassword("%s ", "Password:")) != null) {
+	    proc.setDBPasswd(new String(passwd));
+	    java.util.Arrays.fill(passwd, ' ');
+	}
+        createDBconnection = true;
+    }
+
+    // DB configuration file
+    if (options.has(dbConfig)) {
+      proc.setDBConfig(options.valueOf(dbConfig));
+      createDBconnection = true;
+    }
+   
+    // R2RML mapping file
+    if (options.has("r2rml")) {
+	// TODO: this should be a restricted variable name
+	xe.addXQueryExternalVar("r2rml_mapping", "file:"+options.valueOf("r2rml").toString());
+	r2rml = true;
+    }
+    
+    // R2RML mapping file
+    if (options.has("dm")) {
+	xe.addXQueryExternalVar("baseURI", options.valueOf("dm").toString());
+	dm = true;
+    }
+    
     // if you don't use a local sparql endpoint (otherwise you wouldn't use
     // the -u) and you want to evaluate the
     // query right after the translation then under the additional condition
@@ -296,8 +433,29 @@ public class Main {
     // construct the evaluation wont work -> check for a nested construct
     // during translation
     // TODO move this to the XSPARQLProcessor
-    
+
+
+    // create a DB connection if required!
+    if (createDBconnection) {
+      proc.createDBconnection();
+    }
+
 
   }
+
+  /**
+   * closes the XSPARQLProcessor DB connection
+   */
+  private void closeDBconnection() {
+    proc.closeDBconnection();
+  }
+
+  /**
+   * is debug version?
+   */
+  private boolean isDebug() {
+    return proc.isDebug();
+  }
+
 
 }

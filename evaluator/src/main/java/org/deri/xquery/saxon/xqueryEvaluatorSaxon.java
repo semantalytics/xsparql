@@ -5,26 +5,37 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
  */
 package org.deri.xquery.saxon;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.transform.Source;
 
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.Serializer;
-import net.sf.saxon.s9api.XdmAtomicValue;
 import net.sf.saxon.s9api.XQueryCompiler;
+import net.sf.saxon.s9api.XdmAtomicValue;
 
+import org.deri.sql.SQLQuery;
 import org.deri.xquery.XQueryEvaluator;
-import org.deri.xsparql.rewriter.XSPARQLProcessor;
 
 /**
  * Evaluate an XQuery using the Saxon API
@@ -43,9 +54,22 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 
   private Serializer serializer;
 
-  private boolean licensedVersion;
+  private Source source = null;
 
   private boolean omitXMLDecl = true;
+
+  private SQLQuery sqlQuery = null;
+  
+  public void setDBconnection(SQLQuery q) {
+    this.sqlQuery = q;
+
+    // RDB functions
+    proc.registerExtensionFunction(new sqlQueryExtFunction(sqlQuery));
+    proc.registerExtensionFunction(new getRDBTablesExtFunction(sqlQuery));
+    proc.registerExtensionFunction(new getRDBTableAttributesExtFunction(sqlQuery));
+
+  }
+
 
   /**
    * use validating XQuery engine
@@ -63,7 +87,10 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 
   public void setExternalVariables(Map<String, String> xqueryExternalVars) {
     this.xqueryExternalVars = xqueryExternalVars;
+  }
 
+  public void setSource(Source source) {
+    this.source = source;
   }
 
   /**
@@ -72,21 +99,19 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
    */
   public xqueryEvaluatorSaxon(boolean licensedVersion) {
 
-    this.licensedVersion = licensedVersion;
-
     proc = new Processor(licensedVersion);
 
     proc.registerExtensionFunction(new sparqlQueryExtFunction());
     proc.registerExtensionFunction(new turtleGraphToURIExtFunction());
-    proc.registerExtensionFunction(new doPostQueryExtFunction());
     proc.registerExtensionFunction(new createScopedDatasetExtFunction());
     proc.registerExtensionFunction(new sparqlScopedDatasetExtFunction());
     proc.registerExtensionFunction(new deleteScopedDatasetExtFunction());
     proc.registerExtensionFunction(new scopedDatasetPopResultsExtFunction());
+    proc.registerExtensionFunction(new jsonDocExtFunction());
+
 
     // debug external functions
-    // proc.setConfigurationProperty(FeatureKeys.TRACE_EXTERNAL_FUNCTIONS,
-    // true);
+//    proc.setConfigurationProperty(FeatureKeys.TRACE_EXTERNAL_FUNCTIONS, true);
 
     initializeSerializer();
 
@@ -151,6 +176,15 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.deri.xquery.XQueryEvaluator#applyOutputProperty()
+   */
+  public void setOutputMethod(String outputMethod) {
+    serializer.setOutputProperty(Serializer.Property.METHOD, outputMethod);
+  }
+
   /**
    * 
    */
@@ -158,8 +192,6 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
     serializer = new Serializer();
     // can be xml, html, xhtml, or text.
     // TODO: possibly add parameter to the command line.
-    serializer.setOutputProperty(Serializer.Property.METHOD,
-        org.deri.xsparql.rewriter.Configuration.getOutputMethod());
     serializer.setOutputProperty(Serializer.Property.OMIT_XML_DECLARATION,
         omitXMLDecl ? "yes" : "no");
     serializer.setOutputProperty(Serializer.Property.INDENT, "yes");
@@ -178,27 +210,11 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
     // http://sourceforge.net/tracker/?func=detail&aid=3008672&group_id=29872&atid=397617
     xqueryComp = proc.newXQueryCompiler();
 
-    if (false && licensedVersion) {
-      // BufferedReader xsdIn = new BufferedReader(new
-      // InputStreamReader(XSPARQLProcessor.class.getResourceAsStream("/xquery/sparql.xsd")));
-      // proc.getSchemaManager().load(new StreamSource(xsdIn));
-
-      try {
-
-        // final BufferedReader in = new BufferedReader(new
-        // InputStreamReader(XSPARQLProcessor.class.getResourceAsStream("/xquery/xsparql.xquery")));
-        final BufferedReader in = new BufferedReader(new InputStreamReader(
-            XSPARQLProcessor.class.getResourceAsStream("/xsparql.xquery")));
-        xqueryComp.compileLibrary(in);
-
-      } catch (SaxonApiException e) {
-        System.err.println(e.getMessage());
-      }
-
-    }
-
     net.sf.saxon.s9api.XQueryEvaluator evaluator = xqueryComp.compile(query)
         .load();
+
+    if (source != null)
+      evaluator.setSource(source);
 
     for (String name : xqueryExternalVars.keySet()) {
       evaluator.setExternalVariable(new QName(name), new XdmAtomicValue(

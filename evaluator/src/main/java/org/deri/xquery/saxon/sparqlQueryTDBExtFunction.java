@@ -5,7 +5,7 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
@@ -46,15 +46,11 @@ import com.hp.hpl.jena.util.FileManager;
 import com.hp.hpl.jena.util.FileUtils;
 
 /**
- * Saxon External call for implementing SPARQL queries. Based on
- * https://github.com
- * /LeifW/MusicPath/blob/master/src/main/scala/org/musicpath/ExtFunCall.scala,
- * thanks to Leif Warner. Need to port other functions to this mechanism.
  * 
  * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
  * @version 1.0
  */
-class sparqlQueryTDBExtFunction extends ExtensionFunctionDefinition {
+public class sparqlQueryTDBExtFunction extends ExtensionFunctionDefinition {
 
   /**
 	 * 
@@ -68,9 +64,8 @@ class sparqlQueryTDBExtFunction extends ExtensionFunctionDefinition {
       "http://xsparql.deri.org/demo/xquery/xsparql.xquery", "_sparqlQueryTDB");
   private String location;
 
-  // hide default constructor
-  @SuppressWarnings("unused")
-  private sparqlQueryTDBExtFunction() {
+  public sparqlQueryTDBExtFunction() {
+    this.location = EvaluatorExternalFunctions.getDefaultTDBDatasetLocation();
   }
 
   public sparqlQueryTDBExtFunction(String location) {
@@ -89,12 +84,12 @@ class sparqlQueryTDBExtFunction extends ExtensionFunctionDefinition {
 
   @Override
   public int getMaximumNumberOfArguments() {
-    return 1;
+    return 2;
   }
 
   @Override
   public SequenceType[] getArgumentTypes() {
-    return new SequenceType[] { SequenceType.SINGLE_STRING };
+    return new SequenceType[] { SequenceType.SINGLE_STRING, SequenceType.SINGLE_STRING };
   }
 
   @Override
@@ -115,6 +110,10 @@ class sparqlQueryTDBExtFunction extends ExtensionFunctionDefinition {
         // TDB.setOptimizerWarningFlag(false);
 
         String queryString = arguments[0].next().getStringValue();
+        String loc = arguments[1].next().getStringValue();
+        if (!loc.equals("")) {
+          location = loc;
+        }
 
         // String location = Configuration.getTDBLocation() ;
         // Dataset dataset = TDBFactory.createDataset(location);
@@ -197,7 +196,8 @@ class sparqlQueryTDBExtFunction extends ExtensionFunctionDefinition {
       addDefaultModel(dftGraphURI, dataset);
       addNamedModel(namedGraphURIs, dataset);
     } catch (Exception e) {
-      System.out.println("error: " + e.getMessage());
+      System.err.println("error building the graphs: " + e.getMessage());
+      System.exit(1);
     }
     return q.toString();
 

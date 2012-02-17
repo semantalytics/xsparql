@@ -5,18 +5,27 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
  */
 package org.deri.xsparql.evaluator;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.deri.xquery.*;
+import javax.xml.transform.Source;
+
+import org.deri.sql.SQLQuery;
+import org.deri.xquery.XQueryEvaluator;
 import org.deri.xsparql.rewriter.XSPARQLProcessor;
 
 /**
@@ -31,6 +40,8 @@ import org.deri.xsparql.rewriter.XSPARQLProcessor;
  * @version 1.0
  */
 public final class XSPARQLEvaluator {
+
+  private SQLQuery sqlQuery = null;
 
   /**
    * 
@@ -60,6 +71,8 @@ public final class XSPARQLEvaluator {
   private File tdbDir = null;
   private XQueryEngine xqueryEngine = XQueryEngine.SAXONHE;
   private Map<String, String> externalVars = new HashMap<String, String>();
+  private Source source;
+  private String queryFilename;
 
   /**
    * @return
@@ -80,6 +93,13 @@ public final class XSPARQLEvaluator {
    */
   public void setXqueryExternalVars(Map<String, String> xqueryExternalVars) {
     this.externalVars = xqueryExternalVars;
+  }
+
+  /**
+   * @param xqueryExternalVars
+   */
+  public void addXQueryExternalVar(String key, String value) {
+    this.externalVars.put(key, value);
   }
 
   /**
@@ -106,7 +126,8 @@ public final class XSPARQLEvaluator {
    * @exception Exception
    *              if an error occurs
    */
-  public void evaluate(Reader is, Writer out) throws IOException, Exception {
+  public void evaluate(Reader is, Writer out) throws Exception {
+    xsparqlProc.setQueryFilename(this.queryFilename);
     final String xquery = xsparqlProc.process(is);
     this.evaluateRewrittenQuery(new BufferedReader(new StringReader(xquery)),
         out);
@@ -135,9 +156,10 @@ public final class XSPARQLEvaluator {
    * @throws Exception
    */
   public String evaluateRewrittenQuery(final String xquery) throws Exception {
-    xqueryEval = xqueryEngine.getXQueryEvaluator();
-    xqueryEval.setExternalVariables(externalVars);
-    return xqueryEval.evaluate(xquery);
+    StringWriter sw = new StringWriter();
+    this.evaluateRewrittenQuery(new StringReader(xquery), sw);
+
+    return sw.toString();
   }
 
   /**
@@ -148,13 +170,29 @@ public final class XSPARQLEvaluator {
    * @throws Exception
    */
   public void evaluateRewrittenQuery(Reader query, Writer out) throws Exception {
+
     xqueryEval = xqueryEngine.getXQueryEvaluator();
     xqueryEval.setExternalVariables(externalVars);
+    xqueryEval.setSource(source);
+    xqueryEval.setOutputMethod(xsparqlProc.getOutputMethod());
+    xqueryEval.setDBconnection(sqlQuery);
     xqueryEval.evaluate(query, out);
   }
 
   public void setXQueryEngine(XQueryEngine xee) {
     this.xqueryEngine = xee;
+  }
+
+  public void setSource(Source source) {
+    this.source = source;
+  }
+
+  public void setQueryFilename(String filename) {
+    this.queryFilename = filename;
+  }
+
+  public void setDBconnection(SQLQuery q) {
+    this.sqlQuery = q;
   }
 
 }

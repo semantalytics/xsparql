@@ -1,0 +1,20 @@
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+for * from <http://xsparql.deri.org/data/foaf.rdf>
+where {$p foaf:name $n; rdfs:seeAlso $g}
+construct { $p ex:myname {<name>
+            <full>{$n}</full>
+
+            {
+            for $f $l from $g
+            where { _:p foaf:name $n;
+                      foaf:givenname $f;
+                      foaf:surname $l}
+            return <firstlast>
+                      <first>{$f}</first>
+                      <last>{$l}</last>
+                   </firstlast>
+            }
+
+           </name>} }

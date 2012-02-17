@@ -5,7 +5,7 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
@@ -45,6 +45,8 @@ main
     -> flworExpr(forlets={$flcs})
   |  ^(T_WHERE where=main)
     -> whereExpr(main={$where.st})
+  |  WHERE where=main
+    -> sqlWhereExpr(main={$where.st})
   |  ^(FILTER filter+=main*)
     -> filterExpr(main={$filter})
   |  ^(T_ORDER order=main)
@@ -71,27 +73,31 @@ main
     -> externalVarDecl(v1={$v1.st}, v2={$v2.st})
   |  ^(T_PAR e2+=main*)
     -> par(content={$e2})
-  |  ^(T_MODULE_IMPORT ^(NAMESPACE mi1=main?) mi2=main ^(AT mi3=main*))
+  |  ^(T_MODULE_IMPORT (^(NAMESPACE mi1=main?))? mi2=main ^(AT mi3=main*))
     -> moduleImport(mi1={$mi1.st}, mi2={$mi2.st}, mi3={$mi3.st})
   |  ^(T_SCHEMA_IMPORT ^(NAMESPACE mi1=main?) mi2=main ^(AT mi3=main*))
     -> schemaImport(mi1={$mi1.st}, mi2={$mi2.st}, mi3={$mi3.st})
-  |  ^(T_FUNCTION_DECL fname1=main ^(T_PARAMS params+=main*) (^(AS as=main))? definition=main?)
-    -> funcDecl(name={$fname1.st}, params={$params}, as={$as.st}, definition={$definition.st})
-  |  ^(T_PARAM param=main ^(T_TYPE type=main?))
-    -> param(name={$param.st}, type={$type.st})
+  |  ^(T_FUNCTION_DECL fname1=main ^(T_PARAMS params+=main*) (^(AS as=main (op=QUESTIONMARK|op=STAR|op=PLUS)?))? definition=main?)
+    -> funcDecl(name={$fname1.st}, params={$params}, as={$as.st}, op={$op.text}, definition={$definition.st})
+  |  ^(T_PARAM param=main ^(T_TYPE type=main? (op=QUESTIONMARK|op=STAR|op=PLUS)?))
+    -> param(name={$param.st}, type={$type.st}, op={$op.text})
   |  ^(T_FUNCTION_CALL fname=main ^(T_PARAMS fexpr+=main*))
     -> funcCall(name={$fname.st}, expr={$fexpr})
   |  ^(T_UNOPTIMIZED_FUNCTION_CALL fname=main ^(T_PARAMS fexpr+=main*))
     -> funcCall(name={$fname.st}, expr={$fexpr})
   |  ^(T_FOR a=VAR (^(T_TYPE t=main))? ^(AT c=VAR) ^(IN e3+=main+))
     -> forClause(var={$a.text}, type={$t.st}, at={$c.text}, in={$e3})
+  | ^((op=EVERY|op=SOME) vars+=main+ ^(SATISFIES er=main))   // TODO: only outputting 
+    -> quantifiedExpr(op={$op},vars={$vars}, satisfies={$er.st})
+  | ^(T_VAR v=VAR (^(T_TYPE tm=main))? ^(IN m=main)) 
+    -> var(var={$v.text}, type={$tm.st}, in={$m.st})
   |  ^(T_LET b=main (d1+=main)+)
     -> letClause(var={$b.st}, expr={$d1})
   |  ^(XPATH xp+=main+)
     -> generic(content={$xp})
   |  ^(TO from=main to=main)
     -> rangeExpr(from={$from.st}, to={$to.st})
-  |  ^((op=PLUS|op=MINUS|op=STAR|op=DIV|op=IDIV|op=MOD) (p1=main p2=main)?)
+  |  ^((op=LESSTHAN|op=PLUS|op=MINUS|op=STAR|op=DIV|op=IDIV|op=MOD) (p1=main p2=main)?)
     -> infixOpExpr(p1={$p1.st}, p2={$p2.st}, op={$op})
   |  x=XPATH
     -> generic(content={$x.text})
@@ -105,7 +111,7 @@ main
     -> objectClause(object={$a5.st})
   |  ^(T_TYPE type=main?)
     -> generic(content={$type.st})
-  |  ^((op=LT|op=GT|op=LE|op=GE|op=EQUALS|op=GREATERTHAN|op=EQ|op=HAFENEQUALS) eq1=main eq2=main)
+  |  ^((op=LT|op=GT|op=LE|op=GE|op=EQUALS|op=GREATERTHAN|op=EQ|op=NE|op=HAFENEQUALS) eq1=main eq2=main)
     -> infixOpExpr(p1={$eq1.st}, p2={$eq2.st}, op={$op})
   |  q=QSTRING
     -> qstring(qs={$q.text})
@@ -157,6 +163,8 @@ main
     -> {%{$PNAME_NS.text}}
   |  NCNAMEELM
     -> {%{$NCNAMEELM.text}}
+  |  WHITESPACE
+    -> {%{$WHITESPACE.text}}
   |  A
     -> {%{$A.text}}
   |  SLASH
@@ -261,12 +269,12 @@ main
     -> {%{$LAX.text}}
   | CASE 
     -> {%{$CASE.text}}
-  | EVERY 
-    -> {%{$EVERY.text}}
   | TYPESWITCH 
     -> {%{$TYPESWITCH.text}}
   | SATISFIES 
     -> {%{$SATISFIES.text}}
+  | IN
+    -> {%{$IN.text}}
   | VALIDATE 
     -> {%{$VALIDATE.text}}
   | SOME 

@@ -1,0 +1,4 @@
+let $tables := xsparql:getRDBTables()
+for $tableName in $tables//relation
+return $tableName
+

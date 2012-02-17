@@ -5,7 +5,7 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
@@ -21,13 +21,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import net.sf.json.JSON;
+import net.sf.json.JSONSerializer;
+import net.sf.json.xml.XMLSerializer;
 
 import org.deri.xquery.DatasetResults;
 
@@ -54,6 +56,8 @@ class EvaluatorExternalFunctions {
 
   private static Map<String, DatasetResults> scopedDataset = new HashMap<String, DatasetResults>();
 
+  private static String TDBLocation = System.getProperty("user.home") + "/.xsparql/TDB";
+
   // ----------------------------------------------------------------------------------------------------
   // constructed Dataset
 
@@ -79,7 +83,7 @@ class EvaluatorExternalFunctions {
       // Write to temp file
       BufferedWriter out = new BufferedWriter(new FileWriter(temp));
       out.write(prefix);
-      out.write(n3);
+      out.write(n3.replace("\\", "\\\\"));  // re-escape any blackslashes
       out.close();
 
       ret = "file://" + temp.getAbsolutePath();
@@ -91,49 +95,6 @@ class EvaluatorExternalFunctions {
 
   }
 
-  /**
-   * Performs a POST query to a url. Called from the rewritten query for the
-   * Named graphs optimisation.
-   * 
-   * @param endpoint
-   *          endpoint to POST the query
-   * @param data
-   *          data to be POSTed
-   */
-  public static void doPostQuery(String endpoint, String data) {
-    String ret = "";
-
-    try {
-      // Construct data
-      // String data = URLEncoder.encode("key1", "UTF-8") + "=" +
-      // URLEncoder.encode("value1", "UTF-8");
-      // data += "&" + URLEncoder.encode("key2", "UTF-8") + "=" +
-      // URLEncoder.encode("value2", "UTF-8");
-
-      // Send data
-      URL url = new URL(endpoint);
-      URLConnection conn = url.openConnection();
-      conn.setDoOutput(true);
-      conn.setRequestProperty("Content-Type",
-          "application/x-www-form-urlencoded");
-      OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-      wr.write("request=" + data);
-      wr.flush();
-
-      // Get the response
-      BufferedReader rd = new BufferedReader(new InputStreamReader(
-          conn.getInputStream()));
-      String line;
-      while ((line = rd.readLine()) != null) {
-        ret += line;// Process line...
-      }
-      wr.close();
-      rd.close();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-  }
 
   public static Dataset getTDBDataset(String location) {
 
@@ -143,7 +104,8 @@ class EvaluatorExternalFunctions {
         new File(location).mkdirs();
 
       } catch (Exception e) {
-        System.err.println("Error: " + e.getMessage());
+        System.err.println("Error retrieving the datasets: " + e.getMessage());
+        System.exit(1);
       }
 
     }
@@ -151,6 +113,24 @@ class EvaluatorExternalFunctions {
     Dataset dataset = TDBFactory.createDataset(location);
 
     return dataset;
+
+  }
+
+
+  public static Dataset getTDBDataset() {
+
+    String location = TDBLocation;
+
+    return getTDBDataset(location);
+
+  }
+
+
+
+
+  public static String getDefaultTDBDatasetLocation() {
+
+    return TDBLocation;
 
   }
 
@@ -305,5 +285,47 @@ class EvaluatorExternalFunctions {
       scopedDataset.get(id).popResults();
     }
   }
+
+  /**
+   * Retrieves data from a url, Converts JSON data to XML
+   * 
+   * @param URL   location of the data
+   * 
+   */
+  public static String jsonToXML(String loc) {
+    String xml = "";
+    String jsonData = "";
+    
+    try {
+
+      // Send data
+      URL url = new URL(loc);
+      BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+      String inputLine;
+
+      while ((inputLine = in.readLine()) != null) {
+          jsonData+=inputLine;
+      }
+
+//      String jsonData = IOUtils.toString(is);
+      
+      XMLSerializer serializer = new XMLSerializer(); 
+      JSON json = JSONSerializer.toJSON( jsonData ); 
+      serializer.setTypeHintsEnabled(false);
+      xml = serializer.write( json );  
+
+      
+      in.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
+    
+    return xml;
+
+  }
+
+
 
 }

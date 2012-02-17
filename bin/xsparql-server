@@ -1,0 +1,65 @@
+#!/bin/sh
+# Run xsparql
+
+### BEGIN INIT INFO
+# Provides:             joseki
+# Required-Start:       
+# Required-Stop:        
+# Default-Start:        2 3 4 5
+# Default-Stop:         0 1 6
+# Short-Description:    XSPARQL server
+### END INIT INFO
+
+# find a system-wide configuration
+test -f /etc/default/xsparql && . /etc/default/xsparql
+# find a local configuration
+test -f `dirname $0`/config && . `dirname $0`/config
+
+# optionally hard code the path to xsparql
+# XSPARQLROOT=/path/to/xsparql
+
+[ "$XSPARQLROOT" = "" ] && { echo "XSPARQLROOT is unset." 1>&2 ; exit 1 ;  }
+
+# to find the webapps directory
+cd $XSPARQLROOT
+
+PID=$XSPARQLROOT/.xsparql.pid
+
+
+CLASSPATH=$XSPARQLROOT/dist/xsparql.jar:$XSPARQLROOT/lib/*
+
+
+if [ $# -gt 0 ]; then
+    case $1 in
+        start)  # start the XSPARQL server
+            if [ -e $PID ]; then
+                /bin/echo "XSPARQL server is already running.."
+                exit 1;
+            fi
+            /bin/echo -n "Starting XSPARQL server.. "
+            nohup java -Xms256m -Xmx256m -Djava.util.logging.config.file=logging.properties -classpath $CLASSPATH org.deri.xsparql.Main -s &> $XSPARQLROOT/xsparql.log & 
+            /bin/echo $! > $PID
+            /bin/echo  " done. "
+            exit 0
+            ;;
+       stop) # stop the XSPARQL server
+            if [ ! -e $PID ]; then
+                /bin/echo "XSPARQL server is not running.."
+                exit 1;
+            fi
+            /bin/echo -n "Stopping XSPARQL server.. "
+            
+            JPID=`cat $PID`
+            kill -15 $JPID
+            rm -f $PID
+            /bin/echo  " done. "
+            exit 0
+            ;;
+        restart) # restart the XSPARQL server
+            $0 stop
+            $0 start
+            ;;
+    esac
+fi
+
+

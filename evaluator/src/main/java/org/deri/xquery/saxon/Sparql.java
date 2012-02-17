@@ -5,7 +5,7 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
@@ -18,18 +18,12 @@ package org.deri.xquery.saxon;
 //import java.io.*;
 //import java.net.*;
 //import java.util.*;
-import org.w3c.dom.*;
-//import javax.xml.parsers.*;
-//import org.xml.sax.XMLReader;
-//import org.xml.sax.InputSource;
-//import org.apache.xerces.dom.DocumentImpl;
+import org.deri.sparql.SPARQLQuery;
+import org.deri.xsparql.rewriter.Helper;
+import org.w3c.dom.Document;
 
-import com.hp.hpl.jena.query.*;
-//import com.hp.hpl.jena.sparql.util.*;
-
-import org.deri.xsparql.rewriter.*;
-import org.deri.sparql.*;
-import org.deri.xquery.*;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFormatter;
 
 /**
  * Library of Java methods for usage from within XQuery queries when using Saxon
@@ -76,19 +70,6 @@ public class Sparql {
 
   }
 
-  /**
-   * Performs a POST query to a url. Called from the rewritten query for the
-   * Named graphs optimisation.
-   * 
-   * @param endpoint
-   *          endpoint to POST the query
-   * @param data
-   *          data to be POSTed
-   */
-  @Deprecated
-  public static void doPostQuery(String endpoint, String data) {
-    EvaluatorExternalFunctions.doPostQuery(endpoint, data);
-  }
 
   // ----------------------------------------------------------------------------------------------------
   // Scoped Dataset

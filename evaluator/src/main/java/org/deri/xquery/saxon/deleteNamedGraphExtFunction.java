@@ -5,7 +5,7 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
@@ -29,7 +29,7 @@ import com.hp.hpl.jena.update.UpdateAction;
  * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
  * @version 1.0
  */
-class deleteNamedGraphExtFunction extends ExtensionFunctionDefinition {
+public class deleteNamedGraphExtFunction extends ExtensionFunctionDefinition {
 
   private static final long serialVersionUID = 7913750047065854611L;
 
@@ -42,7 +42,8 @@ class deleteNamedGraphExtFunction extends ExtensionFunctionDefinition {
 
   private String location;
 
-  private deleteNamedGraphExtFunction() {
+  public deleteNamedGraphExtFunction() {
+    this.location = EvaluatorExternalFunctions.getDefaultTDBDatasetLocation();
   }
 
   public deleteNamedGraphExtFunction(String location) {
@@ -61,12 +62,12 @@ class deleteNamedGraphExtFunction extends ExtensionFunctionDefinition {
 
   @Override
   public int getMaximumNumberOfArguments() {
-    return 1;
+    return 2;
   }
 
   @Override
   public SequenceType[] getArgumentTypes() {
-    return new SequenceType[] { SequenceType.SINGLE_STRING };
+    return new SequenceType[] { SequenceType.SINGLE_STRING, SequenceType.SINGLE_STRING };
   }
 
   @Override
@@ -86,6 +87,10 @@ class deleteNamedGraphExtFunction extends ExtensionFunctionDefinition {
           XPathContext context) throws XPathException {
 
         String graphName = arguments[0].next().getStringValue();
+        String loc = arguments[1].next().getStringValue();
+        if (!loc.equals("")) {
+          location = loc;
+        }
 
         try {
 
@@ -105,6 +110,8 @@ class deleteNamedGraphExtFunction extends ExtensionFunctionDefinition {
           dataset.close();
 
         } catch (Exception e) {
+          System.err.println("error deleting named graph: " + e.getMessage());
+          System.exit(1);
         }
 
         return EmptyIterator.getInstance();

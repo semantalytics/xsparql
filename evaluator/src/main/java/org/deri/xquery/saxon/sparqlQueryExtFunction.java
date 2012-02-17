@@ -5,7 +5,7 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
@@ -32,15 +32,11 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
 
 /**
- * Saxon External call for implementing SPARQL queries. Based on
- * https://github.com
- * /LeifW/MusicPath/blob/master/src/main/scala/org/musicpath/ExtFunCall.scala,
- * thanks to Leif Warner. Need to port other functions to this mechanism.
  * 
  * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
  * @version 1.0
  */
-class sparqlQueryExtFunction extends ExtensionFunctionDefinition {
+public class sparqlQueryExtFunction extends ExtensionFunctionDefinition {
 
   private static final long serialVersionUID = -3012293238578637469L;
   /**

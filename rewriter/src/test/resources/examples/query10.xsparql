@@ -1,0 +1,8 @@
+# what do we do with that one: 
+ 
+prefix : <http://www.example.org>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+let $y := "<http://www.example.org/knownPerson>, <http://www.example.org/knownPerson2>"
+for $x from <http://xsparql.deri.org/data/foaf.rdf>
+where {$s foaf:knows $x}
+construct {$x a $y }

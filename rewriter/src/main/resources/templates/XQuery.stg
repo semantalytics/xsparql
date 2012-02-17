@@ -32,8 +32,14 @@ flworExpr(forlets) ::= <<
 $forlets$
 >>
 
+sqlWhereExpr(main) ::= <<
+where $main$ 
+
+>>
+
 whereExpr(main) ::= <<
-where $main$
+where $main$ 
+
 >>
 
 filterExpr(main) ::= <<
@@ -65,6 +71,16 @@ for $var$$if(type)$ as $type$$endif$$if(at)$ at $at$$endif$ in $in$
 
 >>
 
+quantifiedExpr(op, vars, satisfies) ::= <<
+$op$ $vars; separator=", "$ satisfies $satisfies$
+
+>>
+
+var(var, type, in) ::= <<
+$var$$if(type)$ as $type$$endif$ in $in$
+>>
+
+
 par(content) ::= <<
 ($content; separator=", "$)
 >>
@@ -81,12 +97,12 @@ returnClause(return) ::= <<
 return $return$
 >>
 
-funcDecl(name, params, as, definition) ::= <<
-declare function $name$ ($params; separator=", "$) $if(as)$ as $as$$endif$ $if(definition)${$definition$}$else$ external $endif$;
+funcDecl(name, params, as, op, definition) ::= <<
+declare function $name$ ($params; separator=", "$) $if(as)$ as $as$$if(op)$$op$$endif$$endif$ $if(definition)${$definition$}$else$ external $endif$;
 >>
 
-param(name, type) ::= <<
-$name$$if(type)$ as $type$$endif$
+param(name, type, op) ::= <<
+$name$$if(type)$ as $type$$if(op)$$op$$endif$$endif$
 >>
 
 funcCall(name, expr) ::= <<
@@ -118,7 +134,7 @@ group_by(var) ::= <<
 >>
 
 moduleImport(mi1, mi2, mi3) ::= <<
-import module namespace $mi1$ = $mi2$ 
+import module $if(mi1)$namespace $mi1$ = $endif$$mi2$ 
                                 at $mi3$;
 >>
 

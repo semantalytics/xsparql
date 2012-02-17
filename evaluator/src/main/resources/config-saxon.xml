@@ -6,7 +6,7 @@
 
     The software in this package is published under the terms of the BSD style license a copy of which has been included
     with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
-    http://www.deri.ie/publications/tools/bsd_license.txt
+    http://xsparql.deri.ie/license/bsd_license.txt
 
     Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
     NUI Galway.
@@ -21,7 +21,6 @@
     <extensionFunction>org.deri.xquery.saxon.doPostQueryExtFunction</extensionFunction>
     <extensionFunction>org.deri.xquery.saxon.createScopedDatasetExtFunction</extensionFunction>
     <extensionFunction>org.deri.xquery.saxon.deleteScopedDatasetExtFunction</extensionFunction>
-    <extensionFunction>org.deri.xquery.saxon.doPostQueryExtFunction</extensionFunction>
     <extensionFunction>org.deri.xquery.saxon.scopedDatasetPopResultsExtFunction</extensionFunction>
     <extensionFunction>org.deri.xquery.saxon.sparqlQueryExtFunction</extensionFunction>
     <extensionFunction>org.deri.xquery.saxon.sparqlScopedDatasetExtFunction</extensionFunction>
@@ -29,6 +28,7 @@
     <extensionFunction>org.deri.xquery.saxon.createNamedGraphExtFunction</extensionFunction>
     <extensionFunction>org.deri.xquery.saxon.deleteNamedGraphExtFunction</extensionFunction>
     <extensionFunction>org.deri.xquery.saxon.sparqlQueryTDBExtFunction</extensionFunction>
+    <extensionFunction>org.deri.xquery.saxon.jsonDocExtFunction</extensionFunction>
   </resources>
 </configuration>
 

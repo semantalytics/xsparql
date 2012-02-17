@@ -5,7 +5,7 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
@@ -17,6 +17,10 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Map;
+
+import javax.xml.transform.Source;
+
+import org.deri.sql.SQLQuery;
 
 /**
  * Evaluate an XQuery query.
@@ -43,6 +47,14 @@ public interface XQueryEvaluator {
   public void setValidatingXQuery(boolean validatingXQuery);
 
   /**
+   * Set source for the query.
+   * 
+   * @param source
+   *          Source of the query.
+   */
+  public void setSource(Source source);
+
+  /**
    * Evaluate XQuery query <code>query</code> and output the result to
    * <code>out</code>.
    * 
@@ -66,5 +78,14 @@ public interface XQueryEvaluator {
    * @param xmloutput
    */
   public void setOmitXMLDecl(final boolean xmloutput);
+
+  /**
+   * Instanciate the output method of the specific xquery evaluator
+   * 
+   */
+  public void setOutputMethod(String outputMethod);
+
+
+  public void setDBconnection(SQLQuery q);
 
 }

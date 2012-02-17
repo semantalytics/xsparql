@@ -24,7 +24,7 @@ declare namespace _sparql_result =  "http://www.w3.org/2005/sparql-results#";
 (: Determine if valid Blank node, uri or literal respectively, by checking if
    the parameter is an instance of the required type :)
 
-declare function _xsparql:_validBNode($NType as item()) as xs:boolean
+declare function _xsparql:_validBNode($NType as item()?) as xs:boolean
 {
   if ($NType instance of element()) then
 (:    fn:resolve-QName("_sparql_result:bnode", $NType) eq fn:node-name($NType):)
@@ -32,15 +32,14 @@ declare function _xsparql:_validBNode($NType as item()) as xs:boolean
   else fn:false()
 };
 
-declare function _xsparql:_validUri($NType as item()) as xs:boolean
+declare function _xsparql:_validUri($NType as item()?) as xs:boolean
 {
   if ($NType instance of element()) then
-    (:fn:resolve-QName("_sparql_result:uri", $NType) eq fn:node-name($NType):)
     fn:name($NType) eq "uri" or fn:name($NType) eq "_sparql_result:uri" or fn:name($NType) eq "{http://www.w3.org/2005/sparql-results#}:uri"
   else fn:false()
 };
 
-declare function _xsparql:_validLiteral($NType as item()) as xs:boolean
+declare function _xsparql:_validLiteral($NType as item()?) as xs:boolean
 {
   if ($NType instance of element()) then
     (:fn:resolve-QName("_sparql_result:literal", $NType) eq fn:node-name($NType):)
@@ -48,17 +47,17 @@ declare function _xsparql:_validLiteral($NType as item()) as xs:boolean
   else fn:false()
 };
 
-declare function _xsparql:_validSubject($NType as item()) as xs:boolean
+declare function _xsparql:_validSubject($NType as item()?) as xs:boolean
 { 
     _xsparql:_validBNode($NType) or _xsparql:_validUri($NType)
 };
 
-declare function _xsparql:_validPredicate($NType as item()) as xs:boolean
+declare function _xsparql:_validPredicate($NType as item()?) as xs:boolean
 { 
 _xsparql:_validUri($NType) or fn:matches(data($NType), "^a$") 
 };
 
-declare function _xsparql:_validObject($NType as item()*) as xs:boolean
+declare function _xsparql:_validObject($NType as item()?) as xs:boolean
 { 
   fn:not(empty($NType)) and 
   (_xsparql:_validBNode($NType) or 
@@ -66,6 +65,11 @@ declare function _xsparql:_validObject($NType as item()*) as xs:boolean
   _xsparql:_validLiteral($NType))
 }; 
 
+
+declare function _xsparql:_validSparqlBinding($NType as item()?) as xs:boolean
+{ 
+_xsparql:_validUri($NType) or _xsparql:_validBNode($NType) or _xsparql:_validLiteral($NType) 
+};
 
  
 declare function _xsparql:_typeData (  $items as item()* ) as item()* {
@@ -114,14 +118,25 @@ declare function _xsparql:_rdf_term($Node as item()) as xs:string
     if (_xsparql:_validBNode($Node)) then
             fn:concat("_:", data($Node), "")
     else if (_xsparql:_validUri($Node)) 
-         then fn:concat("<", data($Node), ">")
+         then if (fn:starts-with($Node, "http://") or fn:starts-with($Node, "mailto:") or fn:starts-with($Node, "file:") or fn:not(fn:contains($Node, ":"))) then
+               fn:concat("<", data($Node), ">")
+               else data($Node)
          else if (_xsparql:_validLiteral($Node)) 
             then
                 let $DT := data($Node/@datatype)
                 let $L := data($Node/@xml:lang) 
-                let $value := if(data($Node) instance of xs:integer and fn:empty($DT)) then data($Node) else fn:concat("""", data($Node), """")
+		return
+                  if ($DT eq "rdf:XMLLiteral") then _xsparql:_serialize(("""""""", $Node/child::node(), """""""","^^", $DT,""))
+                  else
+                let $value := if(fn:matches(data($Node), "^[0-9]+(\.[0-9]+)?$") and fn:empty($DT)) then data($Node) else 
+                  let $d := fn:data($Node)
+                  return if (fn:contains($d, "&#xD;") or fn:contains($d, """") or fn:matches($d, "\n")) then fn:concat("""""""", $d, """""""")
+                    else fn:concat("""", $d, """")
+
                 return fn:concat($value, if($L) then fn:concat("@", $L) else "", 
-                                     if($DT) then fn:concat("^^<", $DT,">") else () 
+                                     if($DT) then 
+                                       if (fn:starts-with($DT, "http://")) then fn:concat("^^<", $DT,">") else fn:concat("^^", $DT,"")
+                                     else () 
                      )
             else $Node
 };
@@ -130,10 +145,12 @@ declare function _xsparql:_rdf_term($Node as item()) as xs:string
 (: returns an element of a SPARQL type.  Used for conversion of XML elements when outputing RDF. 
    Determines the RDF type according to the XML type :)
 declare function _xsparql:_binding_term($prefix as xs:string,
-                                        $Node as xs:anyAtomicType?, 
+                                        $Node as item()*, 
                                         $lang as xs:string, 
                                         $type as xs:string) as item()
 {
+  if (_xsparql:_validSparqlBinding($Node)) then $Node
+  else 
   if(fn:empty($Node)) then "" else
     let $label := if(fn:compare($prefix, "")=0)   (: change to if($prefix) :)
       then $Node
@@ -145,15 +162,17 @@ declare function _xsparql:_binding_term($prefix as xs:string,
         case $e as xs:anyURI
         	return _xsparql:_binding("_sparql_result:uri",  $label, "", "")
         default
-          return if (fn:matches($label, "^_:[a-z]([a-z|0-9|_])*$", "i"))
+          return if (fn:matches($label, "^_:[a-z]([a-z|0-9|_])*$", "i")) 
             then _xsparql:_binding("_sparql_result:bnode",  fn:substring($label,3), "", "")
-            else if (fn:matches($Node, "^([a-zA-Z]*):(.+)$")) 
+            (: attempt to detect if it is a prefixed URI. :)
+            (:else if (fn:matches(xs:string($Node), "^([a-zA-Z]*):([a-zA-Z0-9_\-\.@]+)$")) :)
+            else if (fn:starts-with(xs:string($Node), "http://") or fn:starts-with(xs:string($Node), "mailto:") or fn:starts-with(xs:string($Node), "file:")) 
             then _xsparql:_binding("_sparql_result:uri",  $label, "", "")
             else _xsparql:_binding("_sparql_result:literal",  $label, $lang, $type)
 };
 
 
-declare function _xsparql:_binding_term($Node as xs:anyAtomicType?) as item()
+declare function _xsparql:_binding_term($Node as item()*) as item()
 {
   _xsparql:_binding_term("", $Node, "", "")
 };
@@ -161,9 +180,9 @@ declare function _xsparql:_binding_term($Node as xs:anyAtomicType?) as item()
 
 (: Creates an element of RDF type :)
 declare function _xsparql:_binding($node as xs:string, 
-                                   $value as xs:anyAtomicType, 
-                                   $lang as xs:string,
-                                   $type as xs:string) as item() {
+                                   $value as item()*, 
+                                   $lang as xs:string?,
+                                   $type as xs:string?) as item() {
 
     let $langAtt := if (string-length($lang) > 0) then attribute xml:lang { $lang } else ()
     let $typeAtt := if (string-length($type) > 0) then attribute datatype { $type } else ()
@@ -213,8 +232,8 @@ declare function _xsparql:_sqlResults ( $doc as item()* )  {
 
 (: returns the value of a variable from SQL XML results  :)
 declare function _xsparql:_sqlResultNode($xml as item()?, $var as xs:string) {
-  (: $xml//SQLbinding[@name = $var or @label = $var] :)
-  element {"SQLbinding"} {$xml//*[name() = $var]}
+  $xml//*[@name = $var or @label = $var] 
+  (: element {"SQLbinding"} {$xml//*[name() = $var]} :)
 };
 
 

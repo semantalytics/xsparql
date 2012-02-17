@@ -5,7 +5,7 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
@@ -14,7 +14,7 @@ parser grammar XSPARQL;
 
 options {
   output=AST;
-  k=2;
+//  k=2;
 }
 
 tokens {
@@ -33,7 +33,7 @@ tokens {
   TO;DIV;IDIV;MOD;UNION;INTERSECT;EXCEPT;INSTANCE;TREAT;CASTABLE;CAST;OF;EMPTYSEQUENCE;ITEM;NODE;DOCUMENTNODE;
   TEXT;COMMENT;PROCESSINGINSTRUCTION;SCHEMAATTRIBUTE;SCHEMAELEMENT;DOCUMENT;NAMED;OPTIONAL;FILTER;STR;LANG;
   LANGMATCHES;DATATYPE;BOUND;ISIRI;ISURI;ISBLANK;ISLITERAL;REGEX;TRUE;FALSE;GRAPH;GREATERTHANGREATERTHAN;
-  DISTINCT;GROUP;HAVING;ENDPOINT;
+  DISTINCT;GROUP;HAVING;ENDPOINT;ROW;
 
   // AST tokens
   T_NAMESPACE;
@@ -53,6 +53,12 @@ tokens {
   T_ORDER;
   T_RETURN;
   T_UNION;
+
+  T_SQL_FOR;
+  T_SQL_WHERE;
+  T_SQL_FROM;
+  T_VAR;
+  T_TABLE;
 
   T_BLANK;
   T_ANON_BLANK;
@@ -140,8 +146,6 @@ tokens {
 @header {
   package org.deri.xsparql.rewriter;
 
-  import java.util.Collection;
-  import java.util.ArrayList;
   import java.util.Set;
   import java.util.HashSet;
 }
@@ -153,13 +157,28 @@ tokens {
 
   public static boolean sparqlnamespaces = false;
 
+  private boolean debug = false;
+  
+  public void setDebug(boolean debug) {
+    this.debug = debug;
+  }
+  
+  private String outputmethod = null;
+  private void setOutputMethod(String outputmethod) {
+    this.outputmethod = outputmethod;
+  }
+  
+  public String getOutputMethod() {
+    return outputmethod;
+  }
+
   /**
   * Prints current method name preceeded by a number of spaces dependant on the depth of the parse tree.
   * Doesn't do anything if not in debug mode
   * If used by all parser methods the result output is the parse tree.
   */
   private void trace() {
-    if(Configuration.debug()) {
+    if(this.debug) {
       StackTraceElement[] stack = Thread.currentThread().getStackTrace();
       StringBuffer sb = new StringBuffer();
 
@@ -186,7 +205,7 @@ tokens {
   /**
   * Returs a tree from a stringSet
   */
-  private CommonTree createTree(Set<String> s) {
+  private static CommonTree createTree(Set<String> s) {
     org.antlr.runtime.tree.CommonTree ret = new org.antlr.runtime.tree.CommonTree();
     
     for(String st : s) {
@@ -449,23 +468,14 @@ exprSingle
   ;
 
 /* XQuery [33] */
-//flworExpr
-//  : forletClause+ whereClause? orderByClause? (c=CONSTRUCT constructTemplate {sparqlnamespaces = true; graphoutput=true;} |  r=RETURN exprSingle )
-//  -> ^(T_FLWOR forletClause*
-//          ^(T_WHERE whereClause)?
-//          ^(T_ORDER orderByClause)?
-//          ^(T_CONSTRUCT[$c] constructTemplate)?
-//          ^(T_RETURN[$r] exprSingle)?
-//      )
-//  ;
-
 flworExpr
 @init {trace();}
   : forletClause (
-        whereClause? orderByClause? (c=CONSTRUCT constructTemplate {sparqlnamespaces = true; graphoutput=true; org.deri.xsparql.rewriter.Configuration.setOutputMethod("text");} |  r=RETURN {org.deri.xsparql.rewriter.Configuration.setOutputMethod("xml");} exprSingle )
+            (
+                c=CONSTRUCT constructTemplate {sparqlnamespaces = true; graphoutput=true; this.setOutputMethod("text"); } 
+             |  r=RETURN exprSingle 
+        )
         -> ^(T_FLWOR forletClause
-                ^(T_WHERE whereClause)?
-                ^(T_ORDER orderByClause)?
                 ^(T_CONSTRUCT[$c] constructTemplate)?
                 ^(T_RETURN[$r] exprSingle)?
             )
@@ -477,34 +487,136 @@ flworExpr
 // plug sparql for clause in
 forletClause
 @init {trace();}
-  : FOR! ( forClause  | sparqlForClause )
-  | letClause
+  : FOR! 
+    ( 
+      (sparqlForClause)=> sparqlForClause
+    | (sqlForClause)=> sqlForClause
+    | (xqueryForClause whereClause? orderByClause?)=> xqueryForClause whereClause? orderByClause?
+    )
+  | letClause whereClause? orderByClause?
   ;
+
+// RDB -----------------------------------------------------------------
+
+sqlForClause
+@init {trace(); }
+  : DISTINCT? (s=STAR | sv=sqlVarOrFunctionList | r=ROW v=VAR) relationClause sqlWhereClause?
+  -> ^(T_SQL_FOR DISTINCT? $s? $sv? $r? $v?) relationClause sqlWhereClause? 
+  ;
+
+sqlVarOrFunctionList
+  : sqlVarOrFunction[false] (COMMA! sqlVarOrFunction[true])* 
+  ;
+   
+sqlVarOrFunction[boolean addComma]
+@init {
+  trace();
+  CommonTree comma = (CommonTree) adaptor.nil() ;
+  if(addComma)  { 
+    comma = new CommonTree(new CommonToken(COMMA,",")); 
+   } 
+  }
+  : qname (AS VAR)? 
+    -> ^(T_VAR { comma } qname VAR?)
+  | LPAR functionCall AS VAR RPAR
+    -> {comma} LPAR functionCall AS VAR RPAR
+  | VAR
+    //-> ^(T_VAR { comma } NCNAME[$v.text] $v)
+;
+
+
+relationClause
+@init {trace();}
+  : FROM rdbSourceSelector (COMMA rdbSourceSelector)*
+  -> ^(T_SQL_FROM rdbSourceSelector (COMMA rdbSourceSelector)*)
+  
+  | FROM qname LPAR rdbSourceSelectorFunctionParams? RPAR
+  -> ^(T_SQL_FROM ^(T_FUNCTION_CALL qname ^(T_PARAMS rdbSourceSelectorFunctionParams?)))
+  ;
+
+rdbSourceSelectorFunctionParams
+  : rdbSourceSelector (COMMA rdbSourceSelector)*
+  | QSTRING
+//  | VAR
+  ;
+  
+rdbSourceSelector
+@init {trace();}
+  : n=relationSchemaName a=relationAlias? 
+  -> ^(T_TABLE $n $a?) 
+//  | VAR
+//  -> ^(T_TABLE VAR) 
+  ;
+
+
+relationSchemaName
+  : (relationAlias DOT)? relationAlias  
+  ;
+
+
+relationAlias
+  : qname | VAR  
+  ;
+
+
+sqlWhereClause
+@init {trace(); }
+  : WHERE^ sqlWhereSpecList
+  ;
+  
+  
+sqlWhereSpecList   
+ : sqlAttrSpecList (sqlBooleanOp sqlAttrSpecList)*
+ ;
+ 
+sqlAttrSpecList
+  : sqlAttrSpec generalComp sqlAttrSpec
+  | LPAR sqlWhereSpecList RPAR
+  ;
+  
+sqlBooleanOp
+  : AND | OR
+  ;
+
+sqlAttrSpec
+  : qname
+  | VAR
+  | literal
+  | enclosedExpr
+  ;
+
+//ComparisonOp    ::=  "=" \(\mid\) "!=" \(\mid\) "!=" \(\mid\) "<" \(\mid\) "<=" \(\mid\) ">" \(\mid\) "=>"
+  
+  
+
+// END RDB -----------------------------------------------------------------
+
+
 
 /* XSPARQL [33b] */
 sparqlForClause
 @init {trace(); wherevariables = new HashSet<String>();}
-  :  DISTINCT? varOrFunction+ datasetClause* endpointClause? sWhereClause solutionmodifier { sparqlnamespaces = true; }
-  -> ^(T_SPARQL_FOR DISTINCT? varOrFunction+)  datasetClause* endpointClause? sWhereClause solutionmodifier?
+  :  DISTINCT? sparqlVarOrFunction+ datasetClause* endpointClause? sWhereClause solutionmodifier { sparqlnamespaces = true; }
+  -> ^(T_SPARQL_FOR DISTINCT? sparqlVarOrFunction+)  datasetClause* endpointClause? sWhereClause solutionmodifier?
   |  DISTINCT? STAR datasetClause* endpointClause? sWhereClause solutionmodifier { sparqlnamespaces = true; }
   -> ^(T_SPARQL_FOR DISTINCT? {createTree(wherevariables)}) datasetClause* endpointClause? sWhereClause solutionmodifier?
   ;
 
 endpointClause
+@init {trace();}
   : ENDPOINT sourceSelector
   ; 
 
-varOrFunction
+sparqlVarOrFunction
   : VAR
   | LPAR functionCall AS VAR RPAR
 ;
 
 
 /* XQuery [34] */
-forClause
+xqueryForClause
 @init {trace();}
-  :  {trace();}
-  singleForClause (COMMA! singleForClause)*
+  :  singleForClause (COMMA! singleForClause)*
   ;
 // singleForClause extracted for simpler AST generation
 
@@ -534,14 +646,14 @@ singleLetClause
 /* XQuery [37] */
 whereClause
 @init {trace();}
-  : WHERE^ exprSingle
+  : WHERE exprSingle -> ^(T_WHERE ^(WHERE exprSingle))
   ;
 
 /* XQuery [38] */
 orderByClause
 @init {trace();}
-  : o=ORDER BY orderSpecList -> ^(T_ORDER_BY[$o] orderSpecList)
-  | o=STABLE ORDER BY orderSpecList -> ^(T_STABLE_ORDER_BY[$o] orderSpecList)
+  : o=ORDER BY orderSpecList -> ^(T_ORDER  ^(T_ORDER_BY[$o] orderSpecList))
+  | o=STABLE ORDER BY orderSpecList -> ^(T_ORDER ^(T_STABLE_ORDER_BY[$o] orderSpecList))
   ;
 
 /* XQuery [39] */
@@ -565,8 +677,10 @@ orderModifier
 /* XQuery [42] */
 quantifiedExpr
 @init {trace();}
-  : (SOME^ | EVERY^) VAR typeDeclaration? IN exprSingle
-  (COMMA! VAR typeDeclaration? IN exprSingle)* SATISFIES exprSingle
+  : (op=SOME | op=EVERY) v1=VAR t1=typeDeclaration? IN e1=exprSingle
+  (COMMA v2=VAR t2=typeDeclaration? IN e2=exprSingle)* SATISFIES er=exprSingle
+  -> ^($op ^(T_VAR $v1 ^(T_TYPE $t1)? ^(IN $e1))
+  (^(T_VAR $v2 ^(T_TYPE $t2)? ^(IN $e2)))* ^(SATISFIES $er))
   ;
 
 /* XQuery [43] */
@@ -762,6 +876,9 @@ relativePathExpr
 
 /* XQuery [70] */
 stepExpr
+options {
+  backtrack=true;
+}
 @init {trace();}
   : filterExpr
   | axisStep
@@ -1073,7 +1190,8 @@ sequenceType
 /* XQuery [120] */
 occurrenceIndicator
 @init {trace();}
-  : kindTest | ITEM LPAR RPAR | atomicType;
+  : QUESTIONMARK// | PLUS | STAR
+  ;
 
 /* XQuery [121] */
 itemType
@@ -1248,7 +1366,7 @@ prefixDecl
 constructQuery
 @init {trace(); wherevariables = new HashSet<String>();}
   : c=CONSTRUCT constructTemplate datasetClause* sWhereClause solutionmodifier
-  { graphoutput = true;sparqlnamespaces=true;  org.deri.xsparql.rewriter.Configuration.setOutputMethod("text");}
+  { graphoutput = true;sparqlnamespaces=true;  this.setOutputMethod("text");}
   -> ^(T_FLWOR[$c] ^(T_SPARQL_FOR[$c] {createTree(wherevariables)}) datasetClause* sWhereClause solutionmodifier? ^(T_CONSTRUCT[$c] constructTemplate))
   ;
 
@@ -1491,7 +1609,7 @@ object_ @init{trace();}
   | blankConstruct
   | iriConstruct
   | triplesNode_*/
-  graphNode_
+  graphNode_ iri?
   ;
 
 /* SPARQL [37] */
@@ -1891,6 +2009,10 @@ qname
 keyword
 @init {trace();}
   : ITEM
+  | TO
+  | FROM
+  | COMMENT
+  | ROW
   | A; // add all the other keywords?
 
 unprefixedName

@@ -7,7 +7,7 @@
 
     The software in this package is published under the terms of the BSD style license a copy of which has been included
     with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
-    http://www.deri.ie/publications/tools/bsd_license.txt
+    http://xsparql.deri.ie/license/bsd_license.txt
 
     Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
     NUI Galway.
@@ -18,8 +18,8 @@
 
   <!-- Declare the existence of a servlet. -->
   <servlet>
-    <servlet-name>xsparqlServerServlet</servlet-name>
-    <servlet-class>org.deri.xsparql.webapp.xsparqlServerServlet</servlet-class>
+    <servlet-name>XsparqlServerServlet</servlet-name>
+    <servlet-class>org.deri.xsparql.webapp.XsparqlServerServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
     <init-param>
       <param-name>validatingXQuery</param-name>
@@ -29,7 +29,7 @@
 
   <!-- Map URLs to that servlet. -->
   <servlet-mapping>
-    <servlet-name>xsparqlServerServlet</servlet-name>
+    <servlet-name>XsparqlServerServlet</servlet-name>
     <url-pattern>/xsparql</url-pattern>
   </servlet-mapping>
 </web-app>

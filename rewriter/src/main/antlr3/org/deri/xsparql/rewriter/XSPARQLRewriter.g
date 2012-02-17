@@ -5,7 +5,7 @@
  *
  * The software in this package is published under the terms of the BSD style license a copy of which has been included
  * with this distribution in the bsb_license.txt file and/or available on NUI Galway Server at
- * http://www.deri.ie/publications/tools/bsd_license.txt
+ * http://xsparql.deri.ie/license/bsd_license.txt
  *
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
@@ -162,7 +162,7 @@ expression, the corresponding position variable will be pushed onto the stack.
 
 */
 scope VariableScope {
-  List<String> variables;
+  Map<String, Types> variables;
   List<String> positions;
   boolean scopedDataset;
   boolean sparqlClause;
@@ -175,10 +175,19 @@ scope VariableScope {
   import java.util.LinkedList;
   import java.util.UUID;
   import java.net.URL;
+  import java.util.Iterator;
+
+  import org.deri.xsparql.rewriter.Pair;
+  import org.deri.sql.SQLQuery;
 }
 
 @members {
   private static final Logger logger = Logger.getLogger(XSPARQLRewriter.class.getClass().getName());
+
+  /** Types for variables */
+  private enum Types {
+   XQUERY, SPARQL, SQL, SQL_ROW, RDF_GRAPH 
+ }
 
   /** Handle namespaces */
   private final Map<String, String> namespaces = new HashMap<String, String>();
@@ -188,6 +197,53 @@ scope VariableScope {
 
   /** final part of the tree, used for postprocesssing, e.g. delete scopedDatasets */
   private final CommonTree epilogue = (CommonTree) adaptor.nil();
+  
+  /**
+   * use validating XQuery engine
+   */
+  private boolean validatingXQuery = false;
+  
+  public void setValidatingXQuery(boolean b) {
+    this.validatingXQuery = b;
+  }
+  
+  private boolean warnIfNestedConstruct = false;
+  
+  public void setWarnIfNestedConstruct(boolean warnIfNestedConstruct) {
+    this.warnIfNestedConstruct = warnIfNestedConstruct;
+  }
+  
+  private String sparqlmethod;
+  
+  public void setSPARQLMethod(String sparqlmethod) {
+    this.sparqlmethod = sparqlmethod;
+  }
+  
+  private String endpointURI;
+  
+  public void setEndpointURI(String endpointURI) {
+    this.endpointURI = endpointURI;
+  }
+  
+  /*
+   * Create a debug version of the rewritten query
+   * The debug version will print all the SPARQL queries on the stdout before sending to the SPARQL engine
+   */
+  private boolean debugVersion = false;
+  
+  public void setDebugVersion(boolean debugVersion) {
+    this.debugVersion = debugVersion;
+  }
+  
+  
+  /**
+   * XQuery engine to be used for evaluation/code production.
+   */
+  private String xqueryEngine = "saxon-he";
+	
+  public void setXQueryEngine(String xqueryEngine) {
+    this.xqueryEngine = xqueryEngine;
+  }
 
   /** Add a namespace prefix and the corresponding IRI */
   private void addNamespace(final String name, final String iri) {
@@ -215,10 +271,6 @@ scope VariableScope {
   }
 
 
-  private String rdfTermVar(String var) {
-    return "\$_" + Helper.removeLeading(var,"\$") + "_RDFTerm";
-  }
-
   private String getRDFNamespaceDecls() {
      final StringBuffer sb = new StringBuffer();
      for(String key : namespaces.keySet()) {
@@ -233,6 +285,11 @@ scope VariableScope {
         sb.append(System.getProperties().getProperty("line.separator"));
      }
 
+     // if there are any prefixes, put a separator in the output
+     if (sb.length() > 0) {
+       sb.append(System.getProperties().getProperty("line.separator"));
+     }
+     
      return sb.toString();
   }
 
@@ -251,6 +308,8 @@ scope VariableScope {
   }
 
   private int posvarcnt = 0;
+  
+  @Deprecated
   private String getNewPosVariableName() {
     logger.entering(this.getClass().getCanonicalName(), "getNewPosVariableName");
     return "\$_pos" + posvarcnt++;
@@ -265,72 +324,105 @@ scope VariableScope {
   // Variable scoping
 
   private void addVariableToScope(final String name) {
-    logger.entering(this.getClass().getCanonicalName(), "addVariableToScope", name);
-    $VariableScope::variables.add(name);
+    addVariableToScope(name, Types.XQUERY);
   }
 
-  private void addVariablesToScope(final List<?> variables) {
+  private void addVariableToScope(final String name, final Types type) {
+    logger.info(this.getClass().getCanonicalName() + " addVariableToScope "+ name);
+
+    $VariableScope::variables.put(name, type);
+  }
+
+
+  private void addVariablesToScope(final List<?> variables, final Types type) {
     logger.entering(this.getClass().getCanonicalName(), "addVariablesToScope");
     String text;
     for(Object o : variables) {
        final CommonTree tree = (CommonTree) o;
        
-       if(tree.getChildCount() > 0 && ((CommonTree) tree.getChild(1)).getType() == T_FUNCTION_CALL)   // function_call
-         text = tree.getChild(3).getText();
-       else
-         text = tree.getText();
+       if (type == Types.SQL) {
+         int c = tree.getChildCount();
+         text = ((CommonTree) tree.getChild(c-1)).getText();
+       } else {
+         if(tree.getChildCount() > 0 && ((CommonTree) tree.getChild(1)).getType() == T_FUNCTION_CALL)   // function_call
+           text = tree.getChild(3).getText();
+         else
+           text  = tree.getText();
+       }
 
-       addVariableToScope(text);
+       addVariableToScope(text, type);
     }
   }
 
-  private void addGeneratedVariablesToScope(final List<?> variables) {
-    logger.entering(this.getClass().getCanonicalName(), "addGeneratedVariablesToScope");
-    for(Object o : variables) {
-       final CommonTree tree = (CommonTree) o;
-       String varname;
+  @Deprecated
+  private void addVariablesStringToScope(final List<String> variables, final Types type) {
+    logger.entering(this.getClass().getCanonicalName(), "addVariablesStringToScope");
 
-       if(tree.getChildCount() > 0 && ((CommonTree) tree.getChild(1)).getType() == T_FUNCTION_CALL)   // function_call
-         varname = tree.getChild(3).getText();
-       else
-         varname = tree.getText();
-
-       addVariableToScope(varname);// TODO: add all the variables here
-       addVariableToScope(rdfTermVar(varname));// TODO: add all the variables here
+    for(String o : variables) {
+       addVariableToScope("\$"+o, type);
     }
   }
+
 
   private void addPositionVariableToScope(final String name) {
     logger.entering(this.getClass().getCanonicalName(), "addPositionVariableToScope", name);
     $VariableScope::positions.add(name);
   }
 
-  //
+  private boolean isBound(final String name, Types type) {
+    logger.info(this.getClass().getCanonicalName() +" isBoundType "+ name+type);
+    
+    Types t = containsVar(name, 1);
+    if (t != null) {
+     return t.equals(type);
+    } else {
+      return false;
+    }
+  }
+  
+  private boolean isBoundEarlier(final String name, Types type) {
+    logger.info(this.getClass().getCanonicalName()+ "isBoundEarlierType"+ name+type);
+
+    Types t = containsVar(name, 2);
+    if (t != null) {
+     return t.equals(type);
+    } else {
+      return false;
+    }
+  }
 
   private boolean isBound(final String name) {
+    logger.info(this.getClass().getCanonicalName()+ "isBound"+ name);
+    return containsVar(name, 1) != null;
+  }
+  
+  private boolean isBoundEarlier(final String name) {
+    logger.info(this.getClass().getCanonicalName()+ "isBoundEarlier"+ name);
+    return containsVar(name, 2) != null;
+  }
+
+
+
+  private Types containsVar(final String name, int pos) {
     logger.entering(this.getClass().getCanonicalName(), "isBound", name);
-    for(int s=$VariableScope.size()-1; s >= 0; s--) {
-      if($VariableScope[s]::variables.contains(name)) {
+    for(int s=$VariableScope.size()-pos; s >= 0; s--) {
+      if($VariableScope[s]::variables.containsKey(name)) {
         logger.exiting(this.getClass().getCanonicalName(), "isBound", "true");
-        return true;
+
+       // Iterator iterator = $VariableScope[s]::variables.keySet().iterator();
+       // while (iterator.hasNext()) {
+       //    String key = iterator.next().toString();
+       //    String value = $VariableScope[s]::variables.get(key).toString();
+       //    System.out.println("VariableScope["+ s +"]: "+key + " " + value);
+       // }
+
+        return $VariableScope[s]::variables.get(name);
       }
     }
     logger.exiting(this.getClass().getCanonicalName(), "isBound", "false");
-    return false;
+    return null;
   }
 
-  private boolean isBoundEarlier(final String name) {
-    logger.entering(this.getClass().getCanonicalName(), "isBoundEarlier", name);
-    for(int s=$VariableScope.size()-2; s >= 0; s--) {
-      if($VariableScope[s]::variables.contains(name)) {
-        logger.exiting(this.getClass().getCanonicalName(), "isBoundEarlier", "true");
-        return true;
-      }
-    }
-    logger.exiting(this.getClass().getCanonicalName(), "isBoundEarlier", "false");
-    return false;
-  }
-  
   private CommonTree getPositionVarList() {
     CommonTree ret = (CommonTree) adaptor.nil();
     
@@ -350,7 +442,7 @@ scope VariableScope {
 
   private static final String xsparqlAbbrev = "_xsparql";
   private static final String javaExternalAbbrev = "_java";
-  private static String javaExternalURL;
+  private String javaExternalURL;
   private static final String serializeFunction = xsparqlAbbrev + ":_serialize";
   private static final String rdfTermFunction = xsparqlAbbrev + ":_rdf_term";
   private static final String bindingTermFunction = xsparqlAbbrev+":_binding_term";
@@ -360,7 +452,7 @@ scope VariableScope {
   private static String sparqlFunctionScopedDelete = xsparqlAbbrev+":deleteScopedDataset";
   private static String sparqlFunctionScopedPop = xsparqlAbbrev+":scopedDatasetPopResults";
 
-  private static String sparqlResultsFunctionNode;
+  private String sparqlResultsFunctionNode;
   private static String storeGraphFunction;
 
   private static final String schemaAbbrev = "_sparql_result";
@@ -371,14 +463,15 @@ scope VariableScope {
   private static final String validPredicateFunction = xsparqlAbbrev+":_validPredicate";
   private static final String validObjectFunction = xsparqlAbbrev+":_validObject";
 
+  private static final String sparqlNamespaceAbbrev = "xsparql";
+  private static final String sparqlFunctionsNamespace = "http://xsparql.deri.org/demo/xquery/sparql-functions.xquery";
   
-  private boolean constructFlag = false;
-  private boolean returnFlag = false;
-
   /*
   * set the library to be used
   */
   private String xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql-types.xquery";
+  private String sparqlLibURL  = "http://xsparql.deri.org/demo/xquery/sparql-functions.xquery";
+
 
   public void setLibraryVersion() {
 
@@ -387,7 +480,12 @@ scope VariableScope {
       xsparqlLibURL = local.toString();
     }
 
-    if (!Configuration.validatingXQuery()) {
+    local = XSPARQLRewriter.class.getResource("/xquery/sparql-functions.xquery");
+    if (local != null) {
+      sparqlLibURL = local.toString();
+    }
+
+    if (!this.validatingXQuery) {
       local = XSPARQLRewriter.class.getResource("/xquery/xsparql.xquery");
       if (local != null) {
         xsparqlLibURL = local.toString();
@@ -396,14 +494,14 @@ scope VariableScope {
       }
     }
 
-    if(Configuration.debugVersion()) {
-      local = XSPARQLRewriter.class.getResource("/xquery/xsparql-types.debug.xquery");
-      if (local != null) {
-        xsparqlLibURL = local.toString();
-      } else {
-        xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql-types.debug.xquery";
-      }
-    } 
+//    if(Configuration.debugVersion()) {
+//      local = XSPARQLRewriter.class.getResource("/xquery/xsparql-types.debug.xquery");
+//      if (local != null) {
+//        xsparqlLibURL = local.toString();
+//      } else {
+//        xsparqlLibURL = "http://xsparql.deri.org/demo/xquery/xsparql-types.debug.xquery";
+//      }
+//    } 
 
   }
   
@@ -412,7 +510,7 @@ scope VariableScope {
     CommonTree ret = (CommonTree) adaptor.nil();
     
     //    ^(T_SCHEMA_IMPORT ^(NAMESPACE NCNAME[schemaAbbrev]) QSTRING[schemaNamespace] ^(AT QSTRING[schemaURL]))
-    if (Configuration.validatingXQuery()) {
+    if (this.validatingXQuery) {
       URL local = XSPARQLRewriter.class.getResource("/xquery/sparql.xsd");
       if (local != null) {
         schemaURL = local.toString();
@@ -433,9 +531,21 @@ scope VariableScope {
     return ret;
   }       
 
+  private SQLQuery sqlQuery = null;
+
+  /**
+   * set the database connection
+   */
+  public void setDBconnection(SQLQuery q) {
+    this.sqlQuery = q;
+  }
 
   private String evaluationFunction = "";
   private String iterationFunction = "";
+
+  private String SQLevaluationFunction = "";
+  private String SQLiterationFunction = "";
+
 
   /**
    * set the evaluation method for SPARQL queries:
@@ -450,11 +560,14 @@ scope VariableScope {
     this.iterationFunction = xsparqlAbbrev+":_sparqlResults";
     this.evaluationFunction = xsparqlAbbrev+":_sparql";
 
+    this.SQLevaluationFunction = xsparqlAbbrev+":_sqlQuery";
+    this.SQLiterationFunction = xsparqlAbbrev+":_sqlResults";
+
     // Qexo engine
-    if (Configuration.xqueryEngine().equals("qexo")) {
+    if (this.xqueryEngine.equals("qexo")) {
       this.javaExternalURL = "class:org.deri.xquery.qexo.Sparql";
 
-      if (Configuration.SPARQLmethod().equals("arq")) {
+      if (this.sparqlmethod.equals("arq")) {
         this.evaluationFunction = javaExternalAbbrev+":sparqlResultsIterator";
         this.sparqlResultsFunctionNode = xsparqlAbbrev+":_sparqlResultsFromNode";
         this.iterationFunction = "iterator-items";
@@ -463,11 +576,11 @@ scope VariableScope {
     } 
 
     // saxon engine
-    if (Configuration.xqueryEngine().equals("saxon-he") || Configuration.xqueryEngine().equals("saxon-ee")) {
+    if (this.xqueryEngine.equals("saxon-he") || this.xqueryEngine.equals("saxon-ee")) {
       this.javaExternalURL = "java:org.deri.xquery.saxon.Sparql";
       externalFunctionAbbrev = xsparqlAbbrev;
 
-      if (Configuration.SPARQLmethod().equals("arq")) {
+      if (this.sparqlmethod.equals("arq")) {
         this.evaluationFunction = externalFunctionAbbrev+":_sparqlQuery";
         this.sparqlResultsFunctionNode = xsparqlAbbrev+":_sparqlResultsFromNode";
         this.iterationFunction = sparqlResultsFunctionNode; 
@@ -497,8 +610,8 @@ scope VariableScope {
 
     if(endpoint != null) {
       ret = new CommonTree(new CommonToken(QSTRING, endpoint));
-    } else if(Configuration.endpointURI() != null) {
-      ret = new CommonTree(new CommonToken(QSTRING, Configuration.endpointURI()));
+    } else if(this.endpointURI != null) {
+      ret = new CommonTree(new CommonToken(QSTRING, this.endpointURI));
     }
 
     return ret;
@@ -569,19 +682,18 @@ scope VariableScope {
 
     CommonTree res = (CommonTree) adaptor.nil();
     
-    if(!$sparqlForClause::containsVars) 
-      {
-        res = (CommonTree) adaptor.create(new CommonToken(REWRITEVNODE1));
-        adaptor.addChild(res, adaptor.create(VAR, "*"));
-      } 
-    else
-      {
-        for(Object o : variables) {
+     for(Object o : variables) {
+        if(((CommonTree) o).getType() == NOTHING) { continue; }
           CommonTree t = (CommonTree) adaptor.create(new CommonToken(REWRITEVNODE1));
           adaptor.addChild(t, (CommonTree) o);
           adaptor.addChild(res, t);
         }
-      }
+
+      if(res.getChildCount() == 0) 
+      {
+        res = (CommonTree) adaptor.create(new CommonToken(REWRITEVNODE1));
+        adaptor.addChild(res, adaptor.create(VAR, "*"));
+      } 
 
     return res;
   } 
@@ -615,6 +727,60 @@ scope VariableScope {
   } 
 
 
+  private CommonTree getVarNodes(final List<String> variables, String auxVariable) {
+
+    CommonTree res = (CommonTree) adaptor.nil();
+    
+    for(String o : variables) {
+      CommonTree v = (CommonTree) adaptor.create(new CommonToken(T_VAR));
+      adaptor.addChild(v, adaptor.create(new CommonToken(QSTRING, o)));
+      adaptor.addChild(v, adaptor.create(new CommonToken(VAR, o)));
+
+      CommonTree t = (CommonTree) adaptor.create(new CommonToken(REWRITEVNODE, auxVariable));
+      adaptor.addChild(t, v);
+      adaptor.addChild(res, t);
+    }
+
+    return res;
+  } 
+  
+  private CommonTree getVars(final List<String> variables) {
+
+    CommonTree res = (CommonTree) adaptor.nil();
+    
+    for(String o : variables) {
+      adaptor.addChild(res, adaptor.create(new CommonToken(VAR, "$"+o)));
+   }
+
+    return res;
+  } 
+
+// format the select line correctly
+protected String concat(List<String> list, String separator) {
+    String res = "";
+    String sep = "";
+    for (String s : list) {
+      res += sep + format(s) + " AS \"\"" + s +"\"\"";
+      sep = separator;
+    }
+     
+    return res;
+  }
+
+
+protected String format(String relation) {
+  logger.info("format: "+relation);
+  if (relation.matches("\\.")) {
+    logger.info("format-true");
+    String[] split = relation.split("\\.");
+    return "\"\"" + split[0] +"\"\".\"\"" + split[1] +"\"\"" ;
+  } else {
+    logger.info("format-false");
+    return relation;
+  }
+
+}
+
 
 }
 
@@ -644,7 +810,7 @@ mainModule
 scope VariableScope; 
 @init {
   // initialize global scopes
-  $VariableScope::variables = new LinkedList<String>();
+  $VariableScope::variables = new HashMap<String,Types>();
   $VariableScope::positions = new LinkedList<String>();
   logger.info("Creating new variable scope: mainModule");
 }
@@ -665,9 +831,14 @@ prolog
     prolog2*
   ->
     baseDecl?
+    COMMENT["modules imported by default"]
     ^(T_MODULE_IMPORT ^(NAMESPACE NCNAME[xsparqlAbbrev]) QSTRING[xsparqlNamespace] ^(AT QSTRING[xsparqlLibURL]))
+    ^(T_MODULE_IMPORT ^(NAMESPACE NCNAME[sparqlNamespaceAbbrev]) QSTRING[sparqlFunctionsNamespace] ^(AT QSTRING[sparqlLibURL]))
     { createSchemaImport() }
     prolog1*
+//    ^(T_VARIABLE_DECL VAR["_sparql_prefixes"] {addVariableToScope("_sparql_prefixes");} QSTRING[getSPARQLNamespaces()])
+    COMMENT["SPARQL prefix namespaces"]
+    ^(T_VARIABLE_DECL VAR["\$_sparql_prefixes"] ^(T_TYPE) QSTRING[getSPARQLNamespaces()])
     prolog2*
   ;
 
@@ -768,9 +939,9 @@ constructionDecl
   ;
 
 functionDecl
-scope VariableScope;
+scope VariableScope; 
 @init {
-  $VariableScope::variables = new LinkedList<String>();
+  $VariableScope::variables = new HashMap<String,Types>();
   logger.info("Creating new variable scope: functionDecl");
 }
   : ^(T_FUNCTION_DECL qname ^(T_PARAMS paramList?) (^(AS sequenceType))? (enclosedExpr | EXTERNAL))
@@ -781,7 +952,7 @@ paramList
   ;
 
 param
-  : ^(T_PARAM var=VAR ^(T_TYPE typeDeclaration?)) { addVariableToScope($var.text); }
+  : ^(T_PARAM var=VAR ^(T_TYPE typeDeclaration?)) {addVariableToScope($var.text);}
   ;
 
 enclosedExpr
@@ -821,8 +992,16 @@ backtrack=false;
   : exprSingle+
   ;
 
-exprSingle
-//@init { returnFlag = false; }
+exprSingle returns [Types type]
+scope {
+  boolean isConstruct;
+}
+@init{
+    logger.info("exprSingle");
+    $exprSingle::isConstruct = false;
+    $type = Types.XQUERY;
+}
+@after { if ($exprSingle::isConstruct) { $type = Types.RDF_GRAPH; }  }
   : flworExpr
   | quantifiedExpr
   | typeSwitchExpr
@@ -833,23 +1012,24 @@ exprSingle
 flworExpr
 scope VariableScope;
 @init {
-  $VariableScope::variables = new LinkedList<String>();
+  $VariableScope::variables = new HashMap<String,Types>();
   $VariableScope::positions = new LinkedList<String>();
   $VariableScope::scopedDataset = true;
   $VariableScope::sparqlClause = false;
   logger.info("Creating new variable scope: flworExpr");
 }
-  : ^(T_FLWOR forletClause
-      (^(T_WHERE whereClause))?
-      (^(T_ORDER orderByClause))?
+  : ^(T_FLWOR forletClause 
       returnClause?
      )
   ;
 
 returnClause
+@init {
+  logger.info("returnClause");
+}
 @after { if($VariableScope::sparqlClause) { scopedDataset.pop(); }}
-  : ^(T_RETURN {returnFlag =true;} exprSingle) -> ^(T_RETURN exprSingle {generatePop()})
-  | ^(c=T_CONSTRUCT  constructTemplate {constructFlag = true; })
+  : ^(T_RETURN exprSingle) -> ^(T_RETURN exprSingle { generatePop() })
+  | ^(c=T_CONSTRUCT  constructTemplate { $exprSingle::isConstruct = true; }) 
   -> COMMENT["SPARQL CONSTRUCT " + $c.text + " from " + $c.line + ":" + $c.pos]
      ^(T_RETURN[$c.token, "return"]
        ^(T_FUNCTION_CALL[$c.token, "T_FUNCTION_CALL"] NCNAME[serializeFunction]
@@ -858,16 +1038,287 @@ returnClause
         {generatePop()}
       )
   ;
-
+  
 forletClause
-  : forClause
+@init{ logger.info("forletClause"); }
+  : forClause (^(T_WHERE whereClause))? (^(T_ORDER orderByClause))?
   | sparqlForClause
-  | letClause
+  | sqlForClause
+  | letClause (^(T_WHERE whereClause))? (^(T_ORDER orderByClause))?
   ;
 
 distinct: 
   DISTINCT -> QSTRING[ " DISTINCT " ]
 ;
+
+
+
+
+
+
+// RDB -----------------------------------------------------------------
+
+
+
+sqlForClause
+scope { 
+  List<Pair<String,String>> relationsAlias; 
+  List<String> relations; 
+}
+@init {
+  String auxResults = getNewAuxResultsVariable();
+  String auxResult = getNewAuxResultVariable();
+  String auxResultPos = auxResult + "_pos";
+  
+  $sqlForClause::relationsAlias = new LinkedList<Pair<String,String>>();
+  $sqlForClause::relations = new LinkedList<String>();
+ }
+  : ^(fo=T_SQL_FOR distinct? var+=sqlVarOrFunction+)  { addVariablesToScope($var, Types.SQL); 
+                                                        addPositionVariableToScope(auxResultPos); }
+       relationClause sqlWhereClause?
+    -> COMMENT[$fo.token, "SQL FOR from " + $fo.line + ":" + $fo.pos]
+    ^(T_LET VAR[auxResults]
+      ^(T_FUNCTION_CALL
+        NCNAME[SQLevaluationFunction]
+        ^(T_PARAMS 
+          ^(T_FUNCTION_CALL
+            NCNAME["fn:concat"] 
+            ^(T_PARAMS 
+              QSTRING[" SELECT "]
+              distinct? 
+              ($var)+
+              relationClause
+              sqlWhereClause?
+              //                     solutionmodifier?
+            )
+          )
+        )
+      )
+    )
+    ^(T_FOR 
+      VAR[auxResult] 
+      ^(AT 
+         VAR[auxResultPos]
+       ) 
+      ^(IN
+        ^(T_FUNCTION_CALL 
+           NCNAME[SQLiterationFunction]
+          ^(T_PARAMS 
+             VAR[auxResults]
+           )
+         )
+       )
+     )
+    ^(REWRITEVNODE[$fo.token, auxResult] $var)+
+    
+  | ^(fo=T_SQL_FOR distinct? s=STAR)  relationClause sqlWhereClause? 
+    { if (sqlQuery != null) {
+        $sqlForClause::relations = sqlQuery.getRelationAttributes($sqlForClause::relationsAlias); 
+        addVariablesStringToScope($sqlForClause::relations, Types.SQL); 
+        addPositionVariableToScope(auxResultPos); 
+      } else {
+        logger.severe("Unable to connect to the database!");
+        System.exit(1);
+      }
+
+    }
+  -> COMMENT[$fo.token, "SQL FOR from " + $fo.line + ":" + $fo.pos]
+    ^(T_LET VAR[auxResults]
+      ^(T_FUNCTION_CALL
+        NCNAME[SQLevaluationFunction]
+        ^(T_PARAMS 
+          ^(T_FUNCTION_CALL
+            NCNAME["fn:concat"] 
+            ^(T_PARAMS 
+              QSTRING[" SELECT "]
+              distinct? 
+              QSTRING[concat($sqlForClause::relations, ", ")+" "]
+              relationClause
+              sqlWhereClause?
+              //                     solutionmodifier?
+            )
+          )
+        )
+      )
+    )
+    ^(T_FOR 
+      VAR[auxResult] 
+      ^(AT 
+         VAR[auxResultPos]
+       ) 
+      ^(IN
+        ^(T_FUNCTION_CALL 
+           NCNAME[SQLiterationFunction]
+          ^(T_PARAMS 
+             VAR[auxResults]
+           )
+         )
+       )
+     )
+     {getVarNodes($sqlForClause::relations, auxResult)}
+
+
+//  // run SQL query 
+  | ^(fo=T_SQL_FOR distinct? ROW v=VAR) { addVariableToScope($v.text, Types.SQL_ROW); addPositionVariableToScope(auxResultPos); } 
+       ^(T_SQL_FROM ^(T_FUNCTION_CALL qname ^(T_PARAMS sqlVarOrString))) 
+  -> COMMENT[$fo.token, "SQL FOR from " + $fo.line + ":" + $fo.pos]
+    ^(T_LET VAR[auxResults]
+      ^(T_FUNCTION_CALL
+        NCNAME[SQLevaluationFunction]
+        ^(T_PARAMS 
+          sqlVarOrString
+          )
+        )
+      )
+    ^(T_FOR 
+      $v 
+      ^(AT 
+         VAR[auxResultPos]
+       ) 
+      ^(IN
+        ^(T_FUNCTION_CALL 
+           NCNAME[SQLiterationFunction]
+          ^(T_PARAMS 
+             VAR[auxResults]
+           )
+         )
+       )
+     )
+
+
+  | ^(fo=T_SQL_FOR distinct? ROW v=VAR) {addVariableToScope($v.text, Types.SQL_ROW); addPositionVariableToScope(auxResultPos);}
+          relationClause sqlWhereClause? 
+  -> COMMENT[$fo.token, "SQL FOR from " + $fo.line + ":" + $fo.pos]
+    ^(T_LET VAR[auxResults]
+      ^(T_FUNCTION_CALL
+        NCNAME[SQLevaluationFunction]
+        ^(T_PARAMS 
+          ^(T_FUNCTION_CALL
+            NCNAME["fn:concat"] 
+            ^(T_PARAMS 
+              QSTRING[" SELECT "]
+              distinct? 
+              QSTRING[" * "]
+              relationClause
+              sqlWhereClause?
+              //                     solutionmodifier?
+            )
+          )
+        )
+      )
+    )
+    ^(T_FOR 
+      $v 
+      ^(AT 
+         VAR[auxResultPos]
+       ) 
+      ^(IN
+        ^(T_FUNCTION_CALL 
+           NCNAME[SQLiterationFunction]
+          ^(T_PARAMS 
+             VAR[auxResults]
+           )
+         )
+       )
+     )
+
+;
+ 
+
+sqlVarOrString
+  : ^(T_TABLE v=sqlQuerySpec) 
+  -> $v 
+  ;
+
+
+sqlQuerySpec
+  : v=qname -> QSTRING[$v.text]
+  | VAR  
+  ;
+  
+
+
+
+// variables present here must not be bound before or if so, their value is overritten
+sqlVarOrFunction
+  : ^(T_VAR COMMA? q=qname)
+    -> ^(T_VAR COMMA? QSTRING[$q.text] VAR["\$"+$q.text]) 
+  | ^(T_VAR COMMA? q=qname v2=VAR)
+    -> ^(T_VAR COMMA? QSTRING[$q.text] VAR) 
+  | COMMA? LPAR functionCall AS v3=VAR RPAR
+;
+
+
+relationClause
+  : ^(T_SQL_FROM rdbSourceSelector (COMMA rdbSourceSelector)*)
+    -> QSTRING["from "] rdbSourceSelector (QSTRING[", "] rdbSourceSelector)* 
+  ;
+
+rdbSourceSelector
+  : ^(T_TABLE v=relationSchemaName alias=relationAlias?) 
+     { $sqlForClause::relationsAlias.add(new Pair<String,String>($v.text, $alias.text)); } 
+  -> $v (QSTRING[" "] $alias)? 
+  ;
+
+
+relationSchemaName
+@init{ logger.info("relationSchemaName"); }
+  : p1=qname DOT q1=qname -> QSTRING["\"\""+$p1.text+"\"\".\"\""+$q1.text+"\"\""]
+  | relationAlias   
+  | p2=relationAlias DOT q2=relationAlias ->  
+    ^(T_FUNCTION_CALL NCNAME["fn:concat"] ^(T_PARAMS $p2 QSTRING["."] $q2))
+  ;
+
+
+relationAlias
+  : v=qname -> QSTRING["\"\""+$v.text+"\"\""]
+  | var=VAR  -> ^(T_FUNCTION_CALL NCNAME["fn:concat"] ^(T_PARAMS QSTRING["\"\""] $var QSTRING["\"\""]))
+  ;
+  
+sqlWhereClause
+  : ^(WHERE sqlWhereSpecList)
+  -> QSTRING[" where "] sqlWhereSpecList
+  ;
+
+sqlWhereSpecList   
+ : sqlAttrSpecList (b=sqlBooleanOp sqlWhereSpecList)*
+ -> sqlAttrSpecList (QSTRING[" "] QSTRING[$b.text] QSTRING[" "] sqlWhereSpecList)*  
+ ;
+ 
+ 
+sqlAttrSpecList
+  : sqlAttrSpec g=generalComp sqlAttrSpec
+ -> sqlAttrSpec QSTRING[" "] QSTRING[$g.text] QSTRING[" "] sqlAttrSpec 
+  | l=LPAR sqlWhereSpecList r=RPAR
+  -> QSTRING[$l.text] sqlWhereSpecList QSTRING[$r.text]
+  ;
+ 
+sqlBooleanOp
+  : AND | OR
+  ;
+
+sqlAttrSpec
+  : v=qname -> QSTRING[$v.text]
+  | VAR -> ^(T_FUNCTION_CALL
+               NCNAME["_xsparql:_sql_binding_term"]
+              ^(T_PARAMS VAR)
+            )
+  | nl=numericliteral -> QSTRING[$nl.text]
+  | sl=stringliteral -> QSTRING["'"+$sl.text+"'"]
+  | enclosedExpr
+  ;
+
+generalComp
+  : EQUALS
+  | LESSTHAN
+  | GREATERTHAN
+  | LESSTHANEQUALS
+  | GREATERTHANEQUALS
+  | HAFENEQUALS
+  ;
+
+
+// END RDB -----------------------------------------------------------------
 
 sparqlForClause
 scope {
@@ -893,6 +1344,7 @@ scope {
 
   $sparqlForClause::iterationFunction = iterationFunction;
   $sparqlForClause::evaluationFunction = evaluationFunction;
+  logger.info("sparqlForClause");
 
 
 }
@@ -911,8 +1363,8 @@ scope {
                                         auxResultPos); 
   scopedDataset.add(sd); 
 }
-  : ^(fo=T_SPARQL_FOR distinct? var+=varOrFunction+ { addVariablesToScope($var); 
-                                                      addGeneratedVariablesToScope($var); 
+  : ^(fo=T_SPARQL_FOR distinct? var+=varOrFunction+ { addVariablesToScope($var, Types.SPARQL); 
+//                                                      addGeneratedVariablesToScope($var); 
                                                       addPositionVariableToScope(auxResultPos); }
      ) datasetClause* e=endpointClause? sWhereClause solutionmodifier?
 
@@ -926,7 +1378,8 @@ scope {
                ^(T_FUNCTION_CALL
                NCNAME["fn:concat"] 
               ^(T_PARAMS 
-                 QSTRING[getSPARQLNamespaces()]
+//                 QSTRING[getSPARQLNamespaces()]
+                 VAR["\$_sparql_prefixes"]
                  QSTRING[" SELECT "]
                  distinct? 
                  {getVarList($var)}
@@ -958,43 +1411,86 @@ scope {
     ^(REWRITEVNODE[$fo.token, auxResult] $var)+
 
 
-  -> COMMENT[$fo.token, "XSPARQL FOR from " + $fo.line + ":" + $fo.pos]
+  -> {this.debugVersion}?
+     COMMENT[$fo.token, "XSPARQL FOR from " + $fo.line + ":" + $fo.pos]
      ^(T_LET VAR[auxResults]
-            ^(T_FUNCTION_CALL
-              { sparqlFunctionTree = new CommonTree(new CommonToken(NCNAME, $sparqlForClause::evaluationFunction)) }
-              ^(T_PARAMS 
-                { endpointURI($sparqlForClause::endpointURI) }
+       ^(T_FUNCTION_CALL
+         { sparqlFunctionTree = new CommonTree(new CommonToken(NCNAME, $sparqlForClause::evaluationFunction)) }
+         ^(T_PARAMS { endpointURI($sparqlForClause::endpointURI) }
+           ^(T_FUNCTION_CALL
+             NCNAME["fn:trace"]
+             ^(T_PARAMS
                ^(T_FUNCTION_CALL
-                   NCNAME["fn:concat"] 
-                  ^(T_PARAMS 
-                     QSTRING[getSPARQLNamespaces()]
-                     QSTRING[" SELECT "]
-                     distinct? 
-                     {getVarList($var)}
-                     datasetClause*
-                     sWhereClause
-                     solutionmodifier?
-                  )
-                )
+                 NCNAME["fn:concat"] 
+                 ^(T_PARAMS 
+//                 QSTRING[getSPARQLNamespaces()]
+                   VAR["\$_sparql_prefixes"]
+                   QSTRING[" SELECT "]
+                   distinct? {getVarList($var)}
+                   datasetClause*
+                   sWhereClause
+                   solutionmodifier?
+                 )
+               )
                { sparqlResultsIdTree = new CommonTree(new CommonToken(DELETEVNODE, "deleteNode")) }
+               QSTRING["XSPARQL FOR from " + $fo.line + ":" + $fo.pos]
              )
-          )
+           )
+         )
        )
-    ^(T_FOR 
-      VAR[auxResult] 
-      ^(AT 
+     )
+     ^(T_FOR 
+       VAR[auxResult] 
+       ^(AT 
          VAR[auxResultPos]
        ) 
-      ^(IN
-        ^(T_FUNCTION_CALL 
+       ^(IN
+         ^(T_FUNCTION_CALL 
            { sparqlResultsFunctionTree = new CommonTree(new CommonToken(NCNAME, $sparqlForClause::iterationFunction)) }
-          ^(T_PARAMS 
+           ^(T_PARAMS 
              VAR[auxResults]
            )
          )
        )
      )
-    ^(REWRITEVNODE[$fo.token, auxResult] $var)+
+     ^(REWRITEVNODE[$fo.token, auxResult] $var)+
+     
+  -> COMMENT[$fo.token, "XSPARQL FOR from " + $fo.line + ":" + $fo.pos]
+     ^(T_LET VAR[auxResults]
+       ^(T_FUNCTION_CALL
+         { sparqlFunctionTree = new CommonTree(new CommonToken(NCNAME, $sparqlForClause::evaluationFunction)) }
+         ^(T_PARAMS { endpointURI($sparqlForClause::endpointURI) }
+           ^(T_FUNCTION_CALL
+             NCNAME["fn:concat"] 
+             ^(T_PARAMS 
+//             QSTRING[getSPARQLNamespaces()]
+               VAR["\$_sparql_prefixes"]
+               QSTRING[" SELECT "]
+               distinct? {getVarList($var)}
+               datasetClause*
+               sWhereClause
+               solutionmodifier?
+             )
+           )
+           { sparqlResultsIdTree = new CommonTree(new CommonToken(DELETEVNODE, "deleteNode")) }
+         )
+       )
+     )
+     ^(T_FOR 
+       VAR[auxResult] 
+       ^(AT 
+         VAR[auxResultPos]
+       ) 
+       ^(IN
+         ^(T_FUNCTION_CALL 
+           { sparqlResultsFunctionTree = new CommonTree(new CommonToken(NCNAME, $sparqlForClause::iterationFunction)) }
+           ^(T_PARAMS 
+             VAR[auxResults]
+           )
+         )
+       )
+     )
+     ^(REWRITEVNODE[$fo.token, auxResult] $var)+
   ;
 
 endpointClause
@@ -1013,24 +1509,19 @@ varOrFunction
 ;
 
 forClause
-  : singleForClause+ { constructFlag = false; }
+  : singleForClause+
   ;
 
 singleForClause
-  : ^(T_FOR var=VAR {addVariableToScope($var.text);} (^(T_TYPE typeDeclaration))?
-      ( ^(a=AT p=positionalVar) {addPositionVariableToScope($p.text);} ^(IN exprSingle)
-      -> ^(T_FOR $var (^(T_TYPE typeDeclaration))? ^($a $p) ^(IN exprSingle))
-      | helper[$var.text]
-      -> ^(T_FOR $var (^(T_TYPE typeDeclaration))? helper)
-      )
-  )
+  : ^(T_FOR var=VAR (^(T_TYPE typeDeclaration))? optionalPosClause[$var.text] )
   ;
 
-// refactored this helper rule because of weird problems with creating the AT node
-// because an AT node was used in the other alternative
-helper[String var]
-  : ^(IN {addPositionVariableToScope($var + "_pos");} exprSingle)
+// inject positional variable if not already present, otherwise use the given one
+optionalPosClause[String var]
+  : ^(IN exprSingle) {addPositionVariableToScope($var + "_pos");}
   -> ^(AT VAR[$var + "_pos"]) ^(IN exprSingle)
+  | ^(a=AT p=positionalVar) ^(IN exprSingle) {addPositionVariableToScope($p.text);}
+  -> ^($a $p) ^(IN exprSingle)
   ;
 
 positionalVar
@@ -1038,13 +1529,22 @@ positionalVar
   ;
 
 letClause
-  : (singleLetClause {constructFlag = false;})+
+  : (singleLetClause)+
   ;
 
 singleLetClause
-  : ^(T_LET ^(var=VAR typeDeclaration?) {addVariableToScope($var.text); } exprSingle { if(constructFlag) addVariableToScope("\$_" + Helper.removeLeading($var.text,"\$")+"_graph");})
-  {if(Configuration.warnIfNestedConstruct()) {logger.severe("The evaluation will probably NOT work because you are using a nested construct and want to evaluate that on a SPARQL endpoint which is not located on your host. That doesn't work! If you want to evaluate a nested constuct, then the XQuery engine and the SPARQL engine have to be running on the same host.");}}
-  -> {constructFlag}? ^(T_LET ^($var typeDeclaration?) ^(T_FUNCTION_CALL NCNAME[serializeFunction] ^(T_PARAMS exprSingle))) ^(T_RETURN ^(T_FLWOR ^(T_LET VAR["\$_" + Helper.removeLeading($var.text,"\$")+"_graph"] ^(T_FUNCTION_CALL NCNAME[storeGraphFunction] ^(T_PARAMS QSTRING[getRDFNamespaceDecls()] $var)))))
+  : ^(T_LET 
+      ^(var=VAR typeDeclaration?)
+      exprSingle)
+      { addVariableToScope($var.text); 
+        if ( $exprSingle.type.equals(Types.RDF_GRAPH) ) {
+          addVariableToScope("\$_" + Helper.removeLeading($var.text,"\$")+"_graph");
+        } 
+        if(this.warnIfNestedConstruct) {
+          logger.severe("The evaluation will probably NOT work because you are using a nested construct and want to evaluate that on a SPARQL endpoint which is not located on your host. That doesn't work! If you want to evaluate a nested constuct, then the XQuery engine and the SPARQL engine have to be running on the same host.");
+        }
+      }
+  -> { $exprSingle.type.equals(Types.RDF_GRAPH) }? ^(T_LET ^($var typeDeclaration?) ^(T_FUNCTION_CALL NCNAME[serializeFunction] ^(T_PARAMS exprSingle))) ^(T_RETURN ^(T_FLWOR ^(T_LET VAR["\$_" + Helper.removeLeading($var.text,"\$")+"_graph"] ^(T_FUNCTION_CALL NCNAME[storeGraphFunction] ^(T_PARAMS QSTRING[getRDFNamespaceDecls()] $var)))))
   -> ^(T_LET ^($var typeDeclaration?) exprSingle)
   ;
 
@@ -1070,8 +1570,7 @@ orderModifier
   ;
 
 quantifiedExpr
-  : ^((SOME|EVERY) VAR typeDeclaration? IN exprSingle)
-  (VAR typeDeclaration? IN exprSingle)* SATISFIES exprSingle
+  : ^((SOME|EVERY) (^(T_VAR VAR (^(T_TYPE typeDeclaration))? ^(IN exprSingle)))+ ^(SATISFIES exprSingle))
   ;
 
 typeSwitchExpr
@@ -1089,7 +1588,7 @@ ifExpr
 
 orExpr
   : andExpr
-  | ^(OR andExpr orExpr)
+  | ^(OR orExpr andExpr)
   ;
 
 andExpr
@@ -1196,7 +1695,16 @@ pathExpr
   ;
 
 relativePathExpr
+scope {
+  boolean rdbVar;
+}
+@init {
+  $relativePathExpr::rdbVar = false;
+}
   : stepExpr (SLASH SLASH? stepExpr)*
+//  : s1=stepExpr (sl1+=SLASH sl2+=SLASH? s2+=stepExpr)*
+//   -> { $relativePathExpr::rdbVar }? ^(T_FUNCTION_CALL NCNAME["fn:data"] ^(T_PARAMS ^(XPATH $s1 ($sl1 $sl2? $s2)*)))
+//   -> $s1 ($sl1 $sl2? $s2)*
   ;
 
 stepExpr
@@ -1295,8 +1803,8 @@ numericliteral
   ;
 
 varRef
-  : v=VAR 
-    -> {returnFlag}? ^(T_FUNCTION_CALL NCNAME["_xsparql:_typeData"] ^(T_PARAMS $v))
+  : v=VAR { $relativePathExpr::rdbVar = isBound($v.text, Types.SQL); } 
+    -> { isBound($v.text, Types.SPARQL) || $relativePathExpr::rdbVar }? ^(T_FUNCTION_CALL NCNAME["_xsparql:_typeData"] ^(T_PARAMS $v))
     -> $v
   ;
 
@@ -1321,7 +1829,7 @@ unorderedExpr
   ;
 
 functionCall
-  :  { returnFlag = false; } ^(T_FUNCTION_CALL qname ^(T_PARAMS exprSingle*))
+  :  ^(T_FUNCTION_CALL qname ^(T_PARAMS exprSingle*))
   ;
 
 constructor
@@ -1353,7 +1861,6 @@ dirAttributeValue
   ;
 
 dirElemContent
-@init { returnFlag = true; }
   : directConstructor
   | commonContent
   | WHITESPACE //
@@ -1422,9 +1929,7 @@ sequenceType
   ;
 
 occurrenceIndicator
-  : kindTest
-  | ITEM LPAR RPAR
-  | atomicType
+  : QUESTIONMARK | STAR | PLUS
   ;
 
 itemType
@@ -1550,7 +2055,7 @@ baseDecl
   ;
 
 prefixDecl
-  : ^(T_NAMESPACE DEFAULT irix=QSTRING) {addNamespace(":", $irix.text);}
+  : ^(T_NAMESPACE DEFAULT irix=QSTRING) {addNamespace(":", $irix.text);} -> 
   | ^(T_NAMESPACE p=PNAME_NS irix=QSTRING) {addNamespace($p.text, $irix.text);}
   -> ^(T_NAMESPACE NCNAME[$p.token, $p.text] QSTRING)
   ;
@@ -1697,7 +2202,8 @@ constructTriples
   ;
 
 triplesSameSubject
-  : ^(T_SUBJECT subject propertyListNotEmpty)
+@init{logger.info("triplesSameSubject");}
+  : ^(T_SUBJECT subject propertyListNotEmpty )
   -> subject QSTRING[" "] propertyListNotEmpty QSTRING[" . \n"]
   | ^(T_SUBJECT triplesNode propertyListNotEmpty?)
   -> triplesNode propertyListNotEmpty? QSTRING[" . \n"]
@@ -1774,7 +2280,7 @@ scope {
               )
             )
           )
-      | (f=enclosedExpr|c=iriConstruct) 
+      | f=enclosedExpr 
         { $triplesSameSubject_::subject = new CommonTree(new CommonToken(VAR, rdfTermVar));  
           $triplesSameSubject_::separator = " .&#xA;"; } 
         propertyListNotEmpty_
@@ -1782,22 +2288,37 @@ scope {
            ^(T_LET
               VAR[rdfTermVar]
               ^(T_FUNCTION_CALL
-	         NCNAME[rdfTermFunction]
-	         ^(T_PARAMS 
-              $f?
-              $c?
+           NCNAME[bindingTermFunction]
+           ^(T_PARAMS 
+              $f
             )
           )
             )
            ^(T_RETURN
              ^(IF
-               ^(T_FUNCTION_CALL NCNAME[validSubjectFunction] ^(T_PARAMS  $f?           ^(T_FUNCTION_CALL
-           NCNAME[bindingTermFunction]
-           ^(T_PARAMS 
-              $c?
+               ^(T_FUNCTION_CALL NCNAME[validSubjectFunction] ^(T_PARAMS  VAR[rdfTermVar]))
+               ^(T_PAR propertyListNotEmpty_)
+                QSTRING[""]
+              )
             )
           )
-))
+      | c=iriConstruct 
+        { $triplesSameSubject_::subject = new CommonTree(new CommonToken(VAR, rdfTermVar));  
+          $triplesSameSubject_::separator = " .&#xA;"; } 
+        propertyListNotEmpty_
+      -> ^(T_FLWOR
+           ^(T_LET
+              VAR[rdfTermVar]
+              ^(T_FUNCTION_CALL
+                NCNAME["xsparql:createURI"]
+                ^(T_PARAMS 
+                  $c
+                  )
+               )
+            )
+           ^(T_RETURN
+             ^(IF
+               ^(T_FUNCTION_CALL NCNAME[validSubjectFunction] ^(T_PARAMS  VAR[rdfTermVar]))
                ^(T_PAR propertyListNotEmpty_)
                 QSTRING[""]
               )
@@ -1829,7 +2350,7 @@ constructVar
   String rdftermvar = "";
 }
   : var=VAR { rdftermvar = $var.text; } 
-  -> {isBound(rdfTermVar(rdftermvar))}? VAR[$var.token, rdftermvar]
+  -> {isBound(rdftermvar, Types.SPARQL)}? VAR[$var.token, rdftermvar]
   -> ^(T_FUNCTION_CALL NCNAME[bindingTermFunction] 
        ^(T_PARAMS
             $var 
@@ -1856,7 +2377,7 @@ scope {
        ^(T_LET
           VAR[rdfTermVar]
           ^(T_FUNCTION_CALL
-           NCNAME[bindingTermFunction]
+           NCNAME["xsparql:createURI"]
            ^(T_PARAMS 
               $irix
             )
@@ -1871,11 +2392,11 @@ scope {
         )
       )
   // to be removed? no literals in predicate position
-  | ^(T_VERB v=constructVar {$verbObjectList_::verb = new CommonTree($v.tree);} objectList_)
+  | ^(T_VERB v=constructVar {$verbObjectList_::verb = new CommonTree(new CommonToken(VAR, rdfTermVar));} objectList_)
       -> ^(T_FLWOR
            ^(T_LET
               VAR[rdfTermVar]
-	             $v
+                $v
             )
            ^(T_RETURN
              ^(IF
@@ -1934,15 +2455,16 @@ subject
 resource
 @init {
   String rdftermvar = "";
+  logger.info("resource");
 }
   : p=PNAME_LN
   -> QSTRING[$p.token, $p.text]
   | s=PNAME_NS
   -> QSTRING[$s.token, $s.text]
-  | var=VAR {rdftermvar = rdfTermVar($var.text); }//var.text has a leading dollar sign
-  -> {isBoundEarlier(rdftermvar) && $VariableScope::scopedDataset}? { addJoinVar(QSTRING, $var.text) }
-  -> {isBoundEarlier($var.text) && $VariableScope::scopedDataset}? { addJoinVar(QSTRING, $var.text) }
-  -> {isBoundEarlier(rdftermvar)}? ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS $var))
+  | var=VAR //var.text has a leading dollar sign
+  -> {isBoundEarlier($var.text, Types.SPARQL) && $VariableScope::scopedDataset}? { addJoinVar(QSTRING, $var.text) }
+  -> {isBoundEarlier($var.text, Types.XQUERY) && $VariableScope::scopedDataset}? { addJoinVar(QSTRING, $var.text) }
+  -> {isBoundEarlier($var.text, Types.SPARQL)}? ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS $var))
   -> {isBoundEarlier($var.text)}? ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS ^(T_FUNCTION_CALL NCNAME[bindingTermFunction] ^(T_PARAMS $var))))
   -> QSTRING[$var.token, $var.text  ]
   ;
@@ -1963,10 +2485,10 @@ object_
 @init {
   String rdfTermVar = getNewTempRdfTermVariable();
 }
-  : s=verb_
-    -> {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] $s QSTRING[$triplesSameSubject_::separator]
+  : s=verb_ n=namedGraph?
+    -> {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] $s $n? QSTRING[$triplesSameSubject_::separator]
 
-  | cvar=constructVar
+  | cvar=constructVar n=namedGraph?
     -> ^(T_FLWOR
       ^(T_LET
         VAR[rdfTermVar]
@@ -1984,13 +2506,14 @@ object_
                   ) 
                   QSTRING[" "] 
                   ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS VAR[rdfTermVar]))
+                  $n?
                   QSTRING[$triplesSameSubject_::separator]
           )
           QSTRING[""]
         )
       )
     )
-  | bb=bnode
+  | bb=bnode n=namedGraph?
   ->  ^(T_FLWOR
         ^(T_LET
            VAR[rdfTermVar]
@@ -2012,24 +2535,24 @@ object_
          ^(T_RETURN
            ^(IF
              ^(T_FUNCTION_CALL NCNAME[validObjectFunction] ^(T_PARAMS VAR[rdfTermVar]))
-             ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] VAR[rdfTermVar] QSTRING[$triplesSameSubject_::separator])
+             ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] VAR[rdfTermVar] $n? QSTRING[$triplesSameSubject_::separator])
               QSTRING[""]
             )
           )
         )
-  | rdfLiteral
-  -> ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] rdfLiteral QSTRING[$triplesSameSubject_::separator])
-  | sNumericLiteral
-  -> ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] sNumericLiteral QSTRING[$triplesSameSubject_::separator])
-  | b=blankConstruct
+  | rdfLiteral n=namedGraph?
+  -> ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] rdfLiteral $n? QSTRING[$triplesSameSubject_::separator])
+  | sNumericLiteral n=namedGraph?
+  -> ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] sNumericLiteral $n? QSTRING[$triplesSameSubject_::separator])
+  | b=blankConstruct n=namedGraph?
   -> ^(T_FLWOR
          ^(IF
            ^(T_FUNCTION_CALL NCNAME[validObjectFunction] ^(T_PARAMS $b))
-           ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS $b)) QSTRING[$triplesSameSubject_::separator])
+           ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS $b)) $n? QSTRING[$triplesSameSubject_::separator])
             QSTRING[""]
           )
       )
-  | literalConstruct
+  | literalConstruct n=namedGraph?
   -> ^(T_FLWOR
        ^(T_LET
           VAR[rdfTermVar]
@@ -2038,17 +2561,17 @@ object_
        ^(T_RETURN
          ^(IF
            ^(T_FUNCTION_CALL NCNAME[validObjectFunction] ^(T_PARAMS VAR[rdfTermVar]))
-           ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS VAR[rdfTermVar])) QSTRING[$triplesSameSubject_::separator])
+           ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS VAR[rdfTermVar])) $n? QSTRING[$triplesSameSubject_::separator])
             QSTRING[""]
           )
         )
       )
-  | irix=iriConstruct
+  | irix=iriConstruct n=namedGraph?
   -> ^(T_FLWOR
        ^(T_LET
           VAR[rdfTermVar]
           ^(T_FUNCTION_CALL
-           NCNAME[bindingTermFunction]
+           NCNAME["xsparql:createURI"]
            ^(T_PARAMS 
               $irix
             )
@@ -2057,7 +2580,7 @@ object_
        ^(T_RETURN
          ^(IF
            ^(T_FUNCTION_CALL NCNAME[validObjectFunction] ^(T_PARAMS VAR[rdfTermVar]))
-           ^(T_PAR ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS {new CommonTree($triplesSameSubject_::subject)})) QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS VAR[rdfTermVar])) QSTRING[$triplesSameSubject_::separator])
+           ^(T_PAR ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS {new CommonTree($triplesSameSubject_::subject)})) QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS VAR[rdfTermVar])) $n? QSTRING[$triplesSameSubject_::separator])
             QSTRING[""]
           )
         )
@@ -2068,6 +2591,17 @@ object_
   -> ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" [ "]  ^(XPATH ^(T_PAR propertyListNotEmpty_) LBRACKET["["] ^(LT["lt"] ^(T_FUNCTION_CALL NCNAME["fn:position"] ^(T_PARAMS))  ^(T_FUNCTION_CALL NCNAME["fn:last"] ^(T_PARAMS))) RBRACKET["]"])  QSTRING[" ] "]  QSTRING[$triplesSameSubject_::separator])
   | T_EMPTY_ANON_BLANK propertyListNotEmpty_
   -> ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" [ ]"] propertyListNotEmpty_  QSTRING[$triplesSameSubject_::separator])
+  ;
+
+
+namedGraph
+  : irix=iri
+  ->
+         ^(IF
+           ^(T_FUNCTION_CALL NCNAME[validObjectFunction] ^(T_PARAMS ^(T_FUNCTION_CALL  NCNAME[bindingTermFunction] ^(T_PARAMS $irix))))
+           ^(T_PAR QSTRING[" "] ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS ^(T_FUNCTION_CALL  NCNAME[bindingTermFunction] ^(T_PARAMS $irix)))))
+            QSTRING[""]
+          )
   ;
 
 object
@@ -2302,8 +2836,8 @@ primaryExpression
   | booleanLiteral
   //| BLANK_NODE_LABEL // added in the implementation
   //| LBRACKET RBRACKET // added in the implementation
-  | var=VAR {rdftermvar = rdfTermVar($var.text);}
-  -> {isBoundEarlier(rdftermvar)}? ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS $var))
+  | var=VAR 
+  -> {isBoundEarlier($var.text, Types.SPARQL)}? ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS $var))
   -> {isBoundEarlier($var.text)}? ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS ^(T_FUNCTION_CALL NCNAME[bindingTermFunction] ^(T_PARAMS $var))))
   -> QSTRING[$var.token, $var.text  ]
   ;
@@ -2437,8 +2971,11 @@ qname
 
 keyword
   : ITEM
-  | A
-  ;
+  | TO
+  | FROM
+  | r=ROW -> NCNAME[$r.text]
+  | c=COMMENT -> NCNAME[$c.text]
+  | A; // add all the other keywords?
 
 unprefixedName
   : localPart

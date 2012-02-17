@@ -14,7 +14,7 @@
   <name>XSPARQL parent</name>
 
   <packaging>pom</packaging>
-  <version>0.3-SNAPSHOT</version>
+  <version>0.4-SNAPSHOT</version>
   <url>http://xsparql.deri.org/</url>
   <licenses>
     <license>
@@ -30,7 +30,6 @@
     <module>evaluator</module>
     <module>webapp</module>
     <module>cli</module>
-    <module>osgi-consumer</module>
   </modules>
 
   <organisation>
@@ -52,14 +51,13 @@
   
   <issueManagement>
     <system>Sourceforge</system>
-    <url>https://sourceforge.net/tracker/?group_id=243296</url>
+    <url>https://dev.deri.ie:8443/jira/browse/XSPARQL</url>
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:https://xsparql.svn.sourceforge.net/svnroot/xsparql/trunk/</connection>
-    <developerConnection>scm:svn:https://xsparql.svn.sourceforge.net/svnroot/xsparql/trunk/</developerConnection>
-    <tag>HEAD</tag>
-    <url>http://xsparql.svn.sourceforge.net/viewvc/xsparql/trunk/</url>
+    <connection>scm:svn:https://subversion.deri.ie/xsparql/trunk/</connection>
+    <developerConnection>scm:svn:https://subversion.deri.ie/xsparql/trunk/</developerConnection>
+    <url>http://websvn.deri.ie/xsparql/trunk/</url>
   </scm> 
 
   <mailingLists>
@@ -72,10 +70,25 @@
     </mailingList>
   </mailingLists>
   
+  <ciManagement>
+    <system>continuum</system>
+    <url>http://xsparql.deri.org:8081/continuum</url>
+    <notifiers>
+      <notifier>
+        <type>mail</type>
+        <sendOnError>true</sendOnError>
+        <sendOnFailure>true</sendOnFailure>
+        <sendOnSuccess>false</sendOnSuccess>
+        <sendOnWarning>true</sendOnWarning>
+        <configuration><address>continuum@127.0.0.1</address></configuration>
+      </notifier>
+    </notifiers>
+  </ciManagement>
   
   <!-- remove warning of being system dependent -->
   <properties> 
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <antlr.version>3.2</antlr.version>
   </properties>
   
   <build>
@@ -105,6 +118,9 @@
               <exclude>**/src/test/resources/examples/**</exclude>
               <exclude>**/**.stg</exclude>
               <exclude>**/site/**</exclude>
+              <exclude>**/**.xsd</exclude>
+              <exclude>**/**.xquery</exclude>
+              <exclude>**/**.xsparql</exclude>
             </excludes>
             <mapping>
               <!-- <jwc>XML_STYLE</jwc> -->
@@ -130,9 +146,9 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
+          <version>2.2.2</version>
           <configuration>
-            <source>1.6</source>
-            <target>1.6</target>
+            <tagBase>https://subversion.deri.ie/xsparql/tags</tagBase>
           </configuration>
         </plugin>
         
@@ -140,6 +156,12 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>2.7.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.antlr</groupId>
+          <artifactId>antlr3-maven-plugin</artifactId>
+          <version>${antlr.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -178,6 +200,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
         <configuration>
           <archive>
             <manifest>
@@ -234,6 +257,11 @@
         <groupId>org.deri.xsparql</groupId>
         <artifactId>osgi-consumer</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr-runtime</artifactId>
+        <version>${antlr.version}</version>
       </dependency>
       <dependency>
         <groupId>xerces</groupId>
@@ -314,6 +342,7 @@
       <id>osgi</id>
       <modules>
         <module>external</module>
+        <module>osgi-consumer</module>
       </modules>
     </profile>
   </profiles>
