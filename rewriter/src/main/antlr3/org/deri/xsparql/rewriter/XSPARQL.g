@@ -1609,8 +1609,21 @@ object_ @init{trace();}
   | blankConstruct
   | iriConstruct
   | triplesNode_*/
-  graphNode_ iri?
+    graphNode_ quad? 
   ;
+  
+quad
+@init{trace();}
+  : (iri) => iri 
+  | (literal_) => literal_
+  ; 
+
+literal_
+@init{trace();}
+  :  literalConstruct
+  |  rdfLiteral
+  ;
+
 
 /* SPARQL [37] */
 //verb  : varOrIRIref | A;
@@ -2013,6 +2026,7 @@ keyword
   | FROM
   | COMMENT
   | ROW
+  | NODE
   | A; // add all the other keywords?
 
 unprefixedName

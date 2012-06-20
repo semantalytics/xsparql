@@ -115,6 +115,16 @@ public class XSPARQLProcessor {
   private static String dbName = null;
   
   /**
+   * Specify the name of the server to connect to
+   */
+  private static String dbServer = null;
+
+  /**
+   * Specify the port number to connect to
+   */
+  private static String dbPort = null;
+
+  /**
    * Specify the instance name (MS SQL Server) to connect to
    */
   private static String dbInstance = null;
@@ -488,6 +498,20 @@ public class XSPARQLProcessor {
   }
 
   /**
+   * set the DB server
+   */
+  public void setDBServer(String server) {
+      dbServer = server;
+  }
+
+  /**
+   * set the DB port
+   */
+  public void setDBPort(String port) {
+      dbPort = port;
+  }
+  
+  /**
    * set the DB name
    */
   public void setDBName(String name) {
@@ -532,6 +556,16 @@ public class XSPARQLProcessor {
 	  setDBDriver(driver);
       }
       
+      String server = configFile.getProperty("dbServer");
+      if (server != null) {
+	  setDBServer(server);
+      }
+
+      String port = configFile.getProperty("dbPort");
+      if (port != null) {
+	  setDBPort(port);
+      }
+
       String name = configFile.getProperty("dbName");
       if (name != null) {
 	  setDBName(name);
@@ -554,10 +588,10 @@ public class XSPARQLProcessor {
   }
 
   /**
-   * instanciates the DB connection
+   * instantiates the DB connection
    */
   public void createDBconnection() {
-    sqlQuery = new SQLQuery(dbDriver, dbName, dbInstance, dbUser, dbPasswd);
+    sqlQuery = new SQLQuery(dbDriver, dbServer, dbPort, dbName, dbInstance, dbUser, dbPasswd);
   }
   
   /**

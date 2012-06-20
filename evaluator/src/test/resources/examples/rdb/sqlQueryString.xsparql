@@ -6,7 +6,7 @@ let $res := "
        "
 (: return $res :)
 for row $row from sqlQuery($res)
-return $row/bandId
+return data($row/*[@name="bandId"])
 
 (: let $y := <b><b><c/><c></c></b></b> :)
 (: for $x in $y/b :)

@@ -565,6 +565,9 @@ var               = [\$][a-zA-Z]([a-zA-Z0-9\_\-\.]*[a-zA-Z0-9\_\-]+)?
 
    "named"        { return symbol(XSPARQL.NAMED, yytext()); }
 
+   \)            { popState(); return symbol(XSPARQL.RPAR, yytext()); }  // hack to allow from in XPath expressions
+   \}            { popState(); return symbol(XSPARQL.RCURLY, yytext()); }  // hack to allow from in XPath expressions
+
    {PN_PREFIX}    {  popState();
                      return symbol(XSPARQL.NCNAME, yytext()); }
 

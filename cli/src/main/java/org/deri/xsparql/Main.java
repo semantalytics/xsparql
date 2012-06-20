@@ -32,7 +32,6 @@ import joptsimple.OptionSpec;
 import org.deri.xsparql.evaluator.XQueryEngine;
 import org.deri.xsparql.evaluator.XSPARQLEvaluator;
 import org.deri.xsparql.rewriter.Helper;
-import org.deri.xsparql.rewriter.SPARQLEngine;
 import org.deri.xsparql.rewriter.XSPARQLProcessor;
 
 /**
@@ -247,6 +246,8 @@ public class Main {
     oparser.accepts("psql", "Connect to a PostgreSQL database");
     oparser.accepts("mysql", "Connect to a MySQL database");
     oparser.accepts("sqlserver", "Connect to a SQL Server database");
+    oparser.accepts("dbServer", "Hostname to connect to").withRequiredArg().ofType(String.class);
+    oparser.accepts("dbPort", "Port number to connect to").withRequiredArg().ofType(String.class);
     oparser.accepts("dbName", "Name of database to connect to").withRequiredArg().ofType(String.class);
     oparser.accepts("dbInstance", "Named instance of SQL server to connect to").withRequiredArg().ofType(String.class);
     oparser.accepts("dbUser", "Username for database connection").withRequiredArg().ofType(String.class);
@@ -384,6 +385,16 @@ public class Main {
     if (options.has("dbName")) {
       proc.setDBName(options.valueOf("dbName").toString());
       createDBconnection = true;
+    }
+
+    if (options.has("dbServer")) {
+	proc.setDBServer(options.valueOf("dbServer").toString());
+	createDBconnection = true;
+    }
+
+    if (options.has("dbPort")) {
+	proc.setDBPort(options.valueOf("dbPort").toString());
+	createDBconnection = true;
     }
 
     if (options.has("dbInstance")) {

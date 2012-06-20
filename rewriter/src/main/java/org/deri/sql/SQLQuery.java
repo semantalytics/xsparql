@@ -50,6 +50,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.apache.commons.codec.binary.Hex;
+
 /**
  * Class used to perform SQL queries via JDBC.
  * 
@@ -77,32 +79,48 @@ public class SQLQuery {
      * @param dbPasswd 
      * 
      */
-    public SQLQuery(String driver, String database, String instance, String username, String password) {
-
-	 logger.info("dbDriver: " + driver + ", dbName: " + database + ", dbInstance: " + instance + ", dbUser: " + username + ", dbPass: " + password);
+    public SQLQuery(String driver, String dbServer, String dbPort, String database, String instance, String username, String password) {
+	logger.info("dbDriver: " + driver + ", dbServer: " + dbServer + ", dbPort: " + dbPort + ", dbName: " + database + ", dbInstance: " + instance + ", dbUser: " + username + ", dbPass: " + password);
 
 	if (driver == null || database == null || username == null) {
 	    System.err.println("Missing database configuration information");
 	    System.exit(1);
 	}
 
-	String connDriver = null;
+        if(dbServer == null) {
+            dbServer = "localhost";
+        }
+
+        String connDriver = null;
 	String connUrl = null;
 
-        if (driver.equals("mysql")) {
+	if (driver.equals("mysql")) {
+	    if(dbPort == null) {
+		dbPort = "3306";
+	    }
           connDriver = "com.mysql.jdbc.Driver";
-          connUrl = "jdbc:mysql://localhost:3306/" + database;
+          connUrl = "jdbc:mysql://"+dbServer+":"+dbPort+"/" + database;
         } else if (driver.equals("psql")) {
+	    if(dbPort == null) {
+		dbPort = "3306";
+	    }
           connDriver = "org.postgresql.Driver";
-          connUrl = "jdbc:postgresql:" + database;
+          connUrl = "jdbc:postgresql://"+dbServer+":"+dbPort+"/"+ database;
+          connUrl = "jdbc:postgresql:"+ database;
         } else if (driver.equals("sqlserver")) {
+	    if(dbPort == null) {
+		dbPort = "1433";
+	    }
           connDriver = "net.sourceforge.jtds.jdbc.Driver";
-          connUrl = "jdbc:jtds:sqlserver://localhost:1433/" + database;
+          connUrl = "jdbc:jtds:sqlserver://"+dbServer+":"+dbPort+"/" + database;
           if (instance != null) {
               connUrl+=";instance="+instance;
           }
         }
         
+	logger.info("dbDriver: " + driver + ", dbServer: " + dbServer + ", dbPort: " + dbPort + ", dbName: " + database + ", dbInstance: " + instance + ", dbUser: " + username + ", dbPass: " + password);
+	logger.info("connDriver: "+connDriver + ", connURL: "+connUrl);
+
         // load the driver
         try {
           Class.forName(connDriver);
@@ -148,16 +166,25 @@ public class SQLQuery {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public ResultSet getResults(String query) throws SQLException, ClassNotFoundException {
+    public ResultSet getResults(String query) throws ClassNotFoundException {
 
-	// create a statement that we can use later
-	Statement sql = db.createStatement();
+	ResultSet res = null;
+	
+	try {
+	    // create a statement that we can use later
+	    Statement sql = db.createStatement();
 
-	 // print the query to be executed
-	logger.info("Executing query: " + query);
+	    // print the query to be executed
+	    logger.info("Executing query: " + query);
 
-	// execute the query
-	return sql.executeQuery(query);
+	    // execute the query
+	    res = sql.executeQuery(query);
+	} catch (SQLException e) {
+	    System.err.println("SQL ERROR: " + e.getMessage());
+	    System.exit(1);
+	}
+	
+	return res;
     }
 
     /**
@@ -187,8 +214,13 @@ public class SQLQuery {
 		    xtw.writeStartElement("", "result");
 		    for (int i = 1; i <= columns; i++) {
 			String label = rsmd.getColumnLabel(i);
+
+                        label = "\""+label+"\"";
+
 			int type = rsmd.getColumnType(i);
 			xtw.writeStartElement("", "SQLbinding");
+
+			xtw.writeAttribute("type", rsmd.getColumnTypeName(i));
 
 			// split the label if of type relation.attributes
 			xtw.writeAttribute("name", label);
@@ -241,20 +273,32 @@ public class SQLQuery {
 			    switch (type) {
 			    case java.sql.Types.BINARY:
 			    case java.sql.Types.VARBINARY:
-				xtw.writeCData(results.getObject(i).toString());
+				// encode binary data in hex
+				Hex h = new Hex();
+				xtw.writeCData(new String(h.encode(results.getBytes(i)),"UTF-8").toUpperCase());
 				break;
 //			    case java.sql.Types.DATE:
 //				xtw.writeCharacters(results.getDate(i).toString());
 //				break;
-			    case java.sql.Types.CHAR:  // PostgreSQL returns all spaces for CHAR(20)
-				xtw.writeCharacters(value.trim());
-				break;
+//			    case java.sql.Types.CHAR:  // PostgreSQL returns all spaces for CHAR(20)
+//				xtw.writeCharacters(value.trim());
+//				break;
 			    case java.sql.Types.TIMESTAMP:
-				xtw.writeCharacters(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(results.getTimestamp(i)));
+				xtw.writeCharacters(new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss").format(results.getTimestamp(i)));
 				break;
 			    case java.sql.Types.BOOLEAN:
 			    case java.sql.Types.BIT:
 				xtw.writeCharacters(new Boolean(results.getBoolean(i)).toString());
+				break;
+			    case java.sql.Types.FLOAT:
+			    case java.sql.Types.DECIMAL:
+			    case java.sql.Types.REAL:
+			    case java.sql.Types.DOUBLE:
+				xtw.writeCharacters(new Float(results.getFloat(i)).toString());
+				break;
+			    case java.sql.Types.INTEGER:
+			    case java.sql.Types.SMALLINT:
+				xtw.writeCharacters(new Integer(results.getInt(i)).toString());
 				break;
 			    default:
 				xtw.writeCharacters(new String(value.getBytes(),"UTF-8"));
@@ -410,37 +454,82 @@ public class SQLQuery {
 	    DatabaseMetaData dbmd = db.getMetaData();
 
 	    xtw.writeStartDocument("utf-8", "1.0");
-	    xtw.writeStartElement("", "columns");
+	    xtw.writeStartElement("", "metadata");
 
 	    // for each relation
 	    for (String relationName : relations) {
 
-		ResultSet results = dbmd.getColumns(null, null, relationName,
-			null);
+		
+		// strip " if capitalised 
+		if (relationName.matches("\".*\"")) {
+		    relationName=relationName.substring(1, relationName.length()-1);
+		}
+		
+		ResultSet results = dbmd.getColumns(null, null, relationName, null);
+		
 		// get the primary keys of the relation
 		ResultSet primaryKeys = dbmd.getPrimaryKeys(null, null,
 			relationName);
 		List<String> pks = new LinkedList<String>();
 		while (primaryKeys.next()) {
-		    pks.add(primaryKeys.getString("COLUMN_NAME"));
+		    String pk = primaryKeys.getString("COLUMN_NAME");
+		    // if relation name is capitalised, add ""
+                    pk = "\""+pk+"\"";
+		    pks.add(pk);
 		}
 
 		// get the foreign keys of the relation
 		ResultSet foreignKeys = dbmd.getImportedKeys(null, null,
 			relationName);
 		Map<String, Pair<String,String>> fks = new HashMap<String, Pair<String,String>>();
+		xtw.writeStartElement("", "foreignKeys");
+
+//		group the all the elements of the foreignKeys
+		boolean firstElem = true;
 		while (foreignKeys.next()) {
+		    int pos = foreignKeys.getInt("KEY_SEQ");
+		    
+		    if (pos == 1) {
+			if (!firstElem) {
+			    xtw.writeEndElement();
+			}
+			xtw.writeStartElement("", "foreignKey");
+			firstElem = false;
+		    }
+
 		    String attributeFK = foreignKeys.getString("FKCOLUMN_NAME");
+		    // if relation name is capitalised, add ""
+                    attributeFK = "\""+attributeFK+"\"";
+
+                    xtw.writeStartElement("", "foreignKeyElem");
+		    xtw.writeAttribute("name", attributeFK);
+
 		    String fkTableName = foreignKeys.getString("PKTABLE_NAME");
+		    // if relation name is capitalised, add ""
+                    fkTableName = "\""+fkTableName+"\"";
 		    String fkColumnName = foreignKeys
 			    .getString("PKCOLUMN_NAME");
+		    fkColumnName = "\""+fkColumnName+"\"";
 		    fks.put(attributeFK, new Pair<String,String>(fkTableName, fkColumnName));
-		}
 
+		    xtw.writeAttribute("foreignKeyTable", fkTableName);
+		    xtw.writeAttribute("foreignKeyAttribute", fkColumnName);
+
+		    xtw.writeEndElement();  // </foreignKeyElem>
+		}	
+
+		if(!firstElem) {
+		    xtw.writeEndElement();  // </foreignKey>
+		}
+		xtw.writeEndElement();  // </foreignKeys>
+
+		xtw.writeStartElement("", "columns");
 		// iterate over the attributes
 		while (results.next()) {
 		    // determine the column alias
 		    String columnName = results.getString("COLUMN_NAME");
+		    // if relation name is capitalised, add ""
+                    columnName = "\""+columnName+"\"";
 		    xtw.writeStartElement("", "column");
 
 		    // write the column type as an attribute
@@ -466,6 +555,8 @@ public class SQLQuery {
 	    }
 
 	    xtw.writeEndElement(); // </columns>
+
+	    xtw.writeEndElement(); // </metadata>
 
 	    xtw.flush();
 	    xtw.close();
@@ -498,7 +589,11 @@ public class SQLQuery {
 	    ResultSet results = dbmd.getTables(null, null, null, types);
 
 	    while (results.next()) {
-		res.add(results.getString("TABLE_NAME"));
+		String relationName = results.getString("TABLE_NAME");
+		// if relation name is capitalised, add ""
+                relationName = "\""+relationName+"\"";
+
+		res.add(relationName);
 	    }
 
 	    if (res.size() == 0) {
