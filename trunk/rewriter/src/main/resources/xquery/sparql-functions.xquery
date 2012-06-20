@@ -124,11 +124,18 @@ declare function sparql:createTerm($term as item()?) {
   else ()
 };
 
+(: try to determine the type of term from the input:)
+declare function sparql:createTerm($term as item()?, $lang as item()?, $datatype as item()?) {
+  if($term) then
+    _xsparql:_binding_term("", $term, $lang, $datatype)
+  else ()
+};
+
 
 (: get the value of a column from an SQLResult :)
 declare function sparql:value($result as item()?, $var as xs:string) {
-  (: data($result//SQLbinding[@label=$var]) :)
-  data($result/SQLbinding[@name = $var])
+  (: $result/SQLbinding[@name = $var or @name = fn:lower-case($var) or @name = fn:concat("""", $var, """") or @name = fn:concat("""", fn:lower-case($var), """")]/text() :)
+  $result/SQLbinding[@name = $var or @name = fn:concat("""", $var, """") or @name = fn:concat("""", fn:lower-case($var), """")]/text()
 };
 
 

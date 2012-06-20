@@ -24,11 +24,11 @@ if [ -z $XSPARQLHOME ]; then
     XSPARQLHOME=`pwd`
 fi
 
-CLASSPATH="$CLASSPATH:$XSPARQLHOME/cli/target/cli-0.3-SNAPSHOT-bin/libs/*"
+CLASSPATH="$CLASSPATH:$XSPARQLHOME/cli/target/cli-0.4-SNAPSHOT-bin/libs/*"
 OPTS=
 
 XSPARQL="java $OPTS -cp $CLASSPATH org.deri.xsparql.Main $@" 
-XSPARQL="java $OPTS -cp $CLASSPATH org.deri.xsparql.Main -dbConfig psql.properties -dbName xsparql $@" 
+XSPARQL="java $OPTS -cp $CLASSPATH org.deri.xsparql.Main -dbConfig mysql.properties -dbName xsparql $@" 
 
 EXAMPLESDIR=evaluator/src/test/resources/examples/
 

@@ -967,11 +967,17 @@ queryBody
   : ^(T_QUERY_BODY (^(T_BODY_PART exprSingle))+ epilogue)
   -> {XSPARQL.graphoutput}?
      ^(T_QUERY_BODY
-       ^(T_BODY_PART
-            COMMENT["N3 namespace declaration"]
-            QSTRING[getRDFNamespaceDecls()]
-          )
-       (^(T_BODY_PART exprSingle))+
+        ^(T_FUNCTION_CALL
+          NCNAME[serializeFunction] 
+          ^(T_PARAMS ^(T_PAR 
+            ^(T_BODY_PART
+              COMMENT["N3 namespace declaration"]
+              QSTRING[getRDFNamespaceDecls()]
+            )
+         (^(T_BODY_PART exprSingle))+
+         )
+       )
+       )
       )
   ->  ^(T_QUERY_BODY (^(T_BODY_PART exprSingle))+ epilogue)
   ;
@@ -1271,8 +1277,10 @@ relationSchemaName
 
 
 relationAlias
-  : v=qname -> QSTRING["\"\""+$v.text+"\"\""]
-  | var=VAR  -> ^(T_FUNCTION_CALL NCNAME["fn:concat"] ^(T_PARAMS QSTRING["\"\""] $var QSTRING["\"\""]))
+//  : v=qname -> QSTRING["\"\""+$v.text+"\"\""]
+//  | var=VAR  -> ^(T_FUNCTION_CALL NCNAME["fn:concat"] ^(T_PARAMS QSTRING["\"\""] $var QSTRING["\"\""]))
+  : v=qname -> QSTRING[$v.text]
+  | var=VAR
   ;
   
 sqlWhereClause
@@ -2485,10 +2493,10 @@ object_
 @init {
   String rdfTermVar = getNewTempRdfTermVariable();
 }
-  : s=verb_ n=namedGraph?
+  : s=verb_ n=nquad?
     -> {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] $s $n? QSTRING[$triplesSameSubject_::separator]
 
-  | cvar=constructVar n=namedGraph?
+  | cvar=constructVar n=nquad?
     -> ^(T_FLWOR
       ^(T_LET
         VAR[rdfTermVar]
@@ -2513,7 +2521,7 @@ object_
         )
       )
     )
-  | bb=bnode n=namedGraph?
+  | bb=bnode n=nquad?
   ->  ^(T_FLWOR
         ^(T_LET
            VAR[rdfTermVar]
@@ -2540,11 +2548,11 @@ object_
             )
           )
         )
-  | rdfLiteral n=namedGraph?
+  | rdfLiteral n=nquad?
   -> ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] rdfLiteral $n? QSTRING[$triplesSameSubject_::separator])
-  | sNumericLiteral n=namedGraph?
+  | sNumericLiteral n=nquad?
   -> ^(T_PAR {new CommonTree($triplesSameSubject_::subject)} QSTRING[" "] {new CommonTree($verbObjectList_::verb)} QSTRING[" "] sNumericLiteral $n? QSTRING[$triplesSameSubject_::separator])
-  | b=blankConstruct n=namedGraph?
+  | b=blankConstruct n=nquad?
   -> ^(T_FLWOR
          ^(IF
            ^(T_FUNCTION_CALL NCNAME[validObjectFunction] ^(T_PARAMS $b))
@@ -2552,7 +2560,7 @@ object_
             QSTRING[""]
           )
       )
-  | literalConstruct n=namedGraph?
+  | literalConstruct n=nquad?
   -> ^(T_FLWOR
        ^(T_LET
           VAR[rdfTermVar]
@@ -2566,7 +2574,7 @@ object_
           )
         )
       )
-  | irix=iriConstruct n=namedGraph?
+  | irix=iriConstruct n=nquad?
   -> ^(T_FLWOR
        ^(T_LET
           VAR[rdfTermVar]
@@ -2594,14 +2602,20 @@ object_
   ;
 
 
-namedGraph
-  : irix=iri
+nquad
+  : 
+   (irix=iri | lit=literal_) 
   ->
          ^(IF
-           ^(T_FUNCTION_CALL NCNAME[validObjectFunction] ^(T_PARAMS ^(T_FUNCTION_CALL  NCNAME[bindingTermFunction] ^(T_PARAMS $irix))))
-           ^(T_PAR QSTRING[" "] ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS ^(T_FUNCTION_CALL  NCNAME[bindingTermFunction] ^(T_PARAMS $irix)))))
+           ^(T_FUNCTION_CALL NCNAME[validObjectFunction] ^(T_PARAMS ^(T_FUNCTION_CALL  NCNAME[bindingTermFunction] ^(T_PARAMS $irix? $lit?))))
+           ^(T_PAR QSTRING[" "] ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS ^(T_FUNCTION_CALL  NCNAME[bindingTermFunction] ^(T_PARAMS $irix? $lit?)))))
             QSTRING[""]
           )
+  ;
+
+literal_
+  :  literalConstruct
+  |  rdfLiteral
   ;
 
 object
@@ -2971,10 +2985,11 @@ qname
 
 keyword
   : ITEM
-  | TO
-  | FROM
+  | t=TO -> NCNAME[$t.text]
+  | f=FROM -> NCNAME[$f.text]
   | r=ROW -> NCNAME[$r.text]
   | c=COMMENT -> NCNAME[$c.text]
+  | n=NODE -> NCNAME[$n.text]
   | A; // add all the other keywords?
 
 unprefixedName

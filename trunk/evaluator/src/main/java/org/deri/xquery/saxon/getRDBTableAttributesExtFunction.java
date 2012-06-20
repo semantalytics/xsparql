@@ -102,11 +102,7 @@ class getRDBTableAttributesExtFunction extends ExtensionFunctionDefinition {
 	        String doc = null;
 	        List<String> relations = new LinkedList<String>();
 	        relations.add(table);
-	        try { 
-	            doc = query.getRelationInfoAsXMLString(relations);
-	        } catch (Exception e){
-	            System.out.println("ERROR: "+e.getMessage());
-	        }
+	        doc = query.getRelationInfoAsXMLString(relations);
 
 	        // convert results to XML...
 	        ByteArrayInputStream inputStream = 

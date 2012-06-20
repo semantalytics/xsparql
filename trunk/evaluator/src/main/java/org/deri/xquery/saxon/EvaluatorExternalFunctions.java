@@ -83,7 +83,8 @@ class EvaluatorExternalFunctions {
       // Write to temp file
       BufferedWriter out = new BufferedWriter(new FileWriter(temp));
       out.write(prefix);
-      out.write(n3.replace("\\", "\\\\"));  // re-escape any blackslashes
+//      out.write(n3.replace("\\", "\\\\"));  // re-escape any blackslashes
+      out.write(n3);  // re-escape any blackslashes
       out.close();
 
       ret = "file://" + temp.getAbsolutePath();

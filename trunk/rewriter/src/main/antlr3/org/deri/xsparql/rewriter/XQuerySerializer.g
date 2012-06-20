@@ -93,6 +93,8 @@ main
     -> var(var={$v.text}, type={$tm.st}, in={$m.st})
   |  ^(T_LET b=main (d1+=main)+)
     -> letClause(var={$b.st}, expr={$d1})
+  |  ^(T_INSTANCEOF test=main type=main)
+    -> instanceOf(test={$test.st}, type={$type.st})
   |  ^(XPATH xp+=main+)
     -> generic(content={$xp})
   |  ^(TO from=main to=main)

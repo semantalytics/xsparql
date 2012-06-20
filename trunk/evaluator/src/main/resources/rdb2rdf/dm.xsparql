@@ -1,3 +1,9 @@
+
+(::::::::::::::::::::::::::::::::::::::::::::::::)
+(: RDB2RDF Direct Mapping processing in XSPARQL :)
+(::::::::::::::::::::::::::::::::::::::::::::::::)
+
+
 prefix rr: <http://www.w3.org/ns/r2rml#>
 prefix foaf: <http://xmlns.com/foaf/0.1/>
 prefix ex: <http://example.com/>
@@ -11,90 +17,148 @@ declare variable $baseURI external;
 (:::::::::::::::::::::::::::::::::::::::::::::::)
 (: creates an RDF term with the specified type :)
 (:::::::::::::::::::::::::::::::::::::::::::::::)
+
 declare function local:createTermWithType($value, $type) {
-  (: let $type := fn:trace($type, "type") return :)
+
+  (: let $type := fn:trace($type, "createTermWithType-type") return :)
+
   if($type eq "BIGINT UNSIGNED" or $type eq "TEXT" or $type eq "CHAR")
     then xsparql:createLiteral($value)
-  else if($type eq "FLOAT")
-    then xsparql:createLiteral($value, "", "xsd:float")
-  else if($type eq "INT")
-    then xsparql:createLiteral($value, "", "xsd:integer")
+  else if($type eq "FLOAT" or $type eq "float4" or $type eq "float8")
+    then if($value instance of xs:integer) then
+      xsparql:createLiteral(fn:concat($value div 10, ".0E1"), "", "<http://www.w3.org/2001/XMLSchema#double>")
+      else if(fn:not(fn:contains(fn:replace($value, ".0$", ""), "."))) then xsparql:createLiteral(fn:concat($value div 10, ".0E1"), "", "<http://www.w3.org/2001/XMLSchema#double>") else (: corner case :)
+           xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#double>") 
+  else if($type eq "INT" or $type eq "int4")
+    then xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#integer>")
+  else if($type eq "bytea")
+    then xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#hexBinary>")
+  else if($type eq "date")
+    then xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#date>")
+  else if($type eq "timestamp")
+    then xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#dateTime>")
+  else if($type eq "bool")
+    then xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#boolean>")
   else xsparql:createTerm($value)
 };
+
 
 (::::::::::::::::::::::::::::)
 (: url escaping as per spec :)
 (::::::::::::::::::::::::::::)
+
 declare function local:escape($string) {
-  fn:replace(fn:normalize-space($string), " ", "+")
+  let $res := fn:normalize-space($string) return
+  let $res := fn:replace($res, " ", "%20") return
+  let $res := fn:replace($res, ",", "%2C") return
+  let $res := fn:replace($res, "/", "%2F") return
+  let $res := fn:replace($res, ":", "%3A") return
+  $res
 };
 
 
 (:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
 (: return the primary keys of a relation, used to generate the subject URI :)
 (:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
 declare function local:getPKs($row, $tableMetadata) {
   let $pks := $tableMetadata//*[@primaryKey]
   for $pk in $pks
   let $pkName := $pk/@name
-  return fn:concat($pkName, ".",local:escape($row//*[@name eq $pkName])) (: xsparql:value :)
+  return local:escape(fn:concat(fn:replace($pkName, """",""), "=",xsparql:value($row,$pkName)))
 };
-
-
-(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
-(: Missing / TODO:                                             :)
-(: does not perform validation                                 :)
-(: eliminate duplicate rows                                    :)
-(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
-
 
 
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
 (: creates the subject for a row from the database                            :)
 (: if there exist PK create URI based on those, otherwise create a blank node :)
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
 declare function local:createS($tableName, $row, $rowPos, $tableMetadata) {
   let $pks := local:getPKs($row, $tableMetadata)
-    (: how up-to-date is the "#_" terminator? can't find a mention of it: http://www.w3.org/TR/2011/WD-rdb-direct-mapping-20110920/ :) 
-  return if(not(fn:empty($pks))) then xsparql:createURI(fn:concat($baseURI, local:escape($tableName), "/", fn:string-join($pks, "_"), "#_"))
+  return if(not(fn:empty($pks))) 
+    then xsparql:createURI(fn:concat($baseURI, local:escape(fn:replace($tableName, """", "")), "/", fn:string-join($pks, ";")))
     else xsparql:createBNode(fn:concat($tableName,$rowPos))
 };
 
-
-(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
-(: creates the predicate of a tuple from the database        :)
-(: simple concatenation according to the rules from the spec :)
-(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
-declare function local:createP($tableName, $attribute) {
-  xsparql:createURI(fn:concat($baseURI, local:escape($tableName), "#", local:escape(data($attribute/@name))))
-};
 
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
 (: creates the object of a tuple from the database                    :)
 (: if is a foreign key create the respective URI, otherwise a literal :)
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
-declare function local:createO($attribute, $rowMetadata) {
-  if ($rowMetadata[@foreignKeyTable]) then
-    let $value := $attribute/text() return
-    if ($value) then xsparql:createURI(fn:concat($baseURI, $rowMetadata/@foreignKeyTable, "/", $rowMetadata/@foreignKeyAttribute, ".", local:escape($value), "#_"))
-    else ()
-  else
-  let $type := data($rowMetadata/@type)
-  return if (data($attribute)) then local:createTermWithType($attribute, $type) else ()
+
+declare function local:createO($subject, $predicate,  $value, $rowMetadata) {
+  let $object :=
+      let $type := data($rowMetadata/@type)
+      return if ($value) then local:createTermWithType($value, $type) else ()
+   construct { $subject <{$predicate}> $object }
 };
+
+
+(::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: creates the reference predicates, currently needs to retrieve all the data :)
+(: from the referenced table in case blank nodes are generated                :)
+(::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
+declare function local:createRefs($subject, $row, $tableName, $tableMetadata) {
+
+  (: get all the foreign tables :)
+  for $foreignKey in $tableMetadata//foreignKeys/foreignKey 
+
+  return
+
+      (: create the reference ID :)
+      let $refs := fn:string-join(
+      for $key in $foreignKey//@name return fn:replace($key,"""","")
+        , ";")
+
+      (: create the reference predicate URI :)
+      let $predicate := xsparql:createURI(fn:concat($baseURI, local:escape(fn:replace($tableName,"""","")), "#ref-", $refs))
+
+      let $foreignTableName := distinct-values($foreignKey//@foreignKeyTable)
+
+      let $attributesWithForeignMetadata := $foreignKey/foreignKeyElem
+
+
+      (: get all the rows in the foreign table :)
+      let $foreignRows := for row $row from $foreignTableName return $row
+
+      let $object :=
+        (: for each result from the foreign table :)
+        for $foreignRow at $foreignRowPos in $foreignRows return
+
+        (: check if it matches the current row :)
+        if (every $join in $attributesWithForeignMetadata, $join in $attributesWithForeignMetadata
+            satisfies (: (fn:empty(xsparql:value($row, $join/@name)) and fn:empty(xsparql:value($foreignRow, $join/@foreignKeyAttribute))) or  :)
+                      (xsparql:value($row, $join/@name) eq xsparql:value($foreignRow, $join/@foreignKeyAttribute))
+        ) then
+
+          (: collect the attributes of the foreign relation :)
+          let $foreignTableMetadata := xsparql:getRDBTableAttributes($foreignTableName) return
+          local:createS(fn:replace($foreignTableName,"""",""), $foreignRow, $foreignRowPos, $foreignTableMetadata)
+        else ()
+
+    construct { $subject $predicate $object }
+      
+};
+
+
 
 
 (:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
 (: creates the triples for a specific result from a relation in the input database :)
 (: given the subject, generates the predicate and object and outputs the triples   :)
 (:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
 declare function local:createPO($tableName, $row, $tableMetadata, $subject) {
+
   for $attribute in $row/*
-    let $row1 := fn:trace($attribute/@name, "row") 
-    let $predicate :=  local:createP($tableName, $attribute)
     let $rowMetadata := $tableMetadata//column[@name eq data($attribute/@name)]
-    let $object := local:createO($attribute, $rowMetadata)
-    construct { $subject <{$predicate}> $object }
+    let $value := $attribute/text()
+    let $attribute := fn:replace($attribute/@name,"""","") (: cleanup attribute name :)
+    let $predicate :=  xsparql:createURI(fn:concat($baseURI, local:escape($tableName), "#", local:escape($attribute)))
+
+    construct { {local:createO($subject, $predicate, $value, $rowMetadata) }  }
 };
 
 
@@ -102,14 +166,18 @@ declare function local:createPO($tableName, $row, $tableMetadata, $subject) {
 (: determines the URI of the relation, the subject URI and outputs the rdf:type triple :)
 (: uses auxiliary function to create the triples for the data                          :)
 (:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
 declare function local:createSPO($tableName, $rows, $tableMetadata) {
-  let $tableURI := xsparql:createURI(fn:concat($baseURI, $tableName))
+  let $tableName := fn:replace($tableName,"""","") (: cleanup table name :)
+  let $tableURI := xsparql:createURI(fn:concat($baseURI, local:escape($tableName)))
   for $row at $rowPos in $rows                                               (: for each result from the database :)
   let $subject := local:createS($tableName, $row, $rowPos, $tableMetadata)   (: create the subject :)
-   (: return <row><tableName>{$tableName}</tableName><row>{$row}</row><tableMetadata>{$tableMetadata}</tableMetadata><s>{$subject}</s><p>{$predicate}</p><o>{$object}</o></row> :)
+
    (: output rdf:type triples and call createPO to create triples for data :)
-  construct { $subject rdf:type $tableURI . 
-              { local:createPO($tableName, $row, $tableMetadata, $subject) } }
+  construct { $subject <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> $tableURI .
+              { (local:createRefs($subject, $row, $tableName, $tableMetadata),
+                local:createPO($tableName, $row, $tableMetadata, $subject)) } }
+
 };
 
 
@@ -123,3 +191,5 @@ for $table in $tables//relation                 (: iterating over the relations 
   let $tableMetadata := xsparql:getRDBTableAttributes($tableName)   (: collect the attributes of the relation :)
   let $rows := for row $row from $tableName return $row             (: collect the data from the database :)
   return local:createSPO($tableName, $rows, $tableMetadata)         (: generate the triples:)
+
+

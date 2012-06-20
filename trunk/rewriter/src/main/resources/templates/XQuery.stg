@@ -66,6 +66,10 @@ let $var$ := $expr$
 
 >>
 
+instanceOf(test, type) ::= <<
+$test$ instance of $type$
+>>
+
 forClause(var, type, at, in) ::= <<
 for $var$$if(type)$ as $type$$endif$$if(at)$ at $at$$endif$ in $in$
 

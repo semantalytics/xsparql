@@ -2,6 +2,15 @@
 (: RDB2RDF R2RML processing in XSPARQL :)
 (:::::::::::::::::::::::::::::::::::::::)
 
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: ----------------------------------------------------------- :)
+(: ------------------------------------------ R2RML processing :)
+(: Missing / TODO:                                             :)
+(: does not perform validation                                 :)
+(: 7.7 Inverse Expressions                                     :)
+(: build SQL query with join conditions                        :)
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
 
 prefix rr: <http://www.w3.org/ns/r2rml#> 
 prefix foaf: <http://xmlns.com/foaf/0.1/> 
@@ -11,43 +20,125 @@ prefix test: <http://www.w3.org/2006/03/test-description#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 declare variable $r2rml_mapping external ;
-
 declare variable $ds := xsparql:skolemiseGraph($r2rml_mapping);
-
-
-(: ----------------------------------------------------------- :)
-(: ----------------------------------------------AUX FUNCTIONS :)
+declare variable $base := "http://example.com/base/";
 
 
 declare function local:cmp($a, $b) {
   data($a) eq fn:concat("http://www.w3.org/ns/r2rml#",$b)
 };
 
+(::::::::::::::::::::::::::::)
+(: url escaping as per spec :)
+(::::::::::::::::::::::::::::)
 
-(::::::::::::::::::::::::::::::::::::::::::::::::)
-(: aux function: create specific types of terms :)
-(::::::::::::::::::::::::::::::::::::::::::::::::)
-declare function local:createTermWithType($value, $type, $lang, $datatype) {
-  if(local:cmp($type, "IRI"))
-    then xsparql:createURI($value)
-  else if(local:cmp($type, "BlankNode"))
-    then xsparql:createBNode($value)
-  else if(local:cmp($type, "Literal") or fn:not(fn:empty($lang)) or fn:not(fn:empty($datatype)))
-    then xsparql:createLiteral($value, $lang, $datatype)
+declare function local:escape($string) {
+  let $res := fn:normalize-space($string) return
+  let $res := fn:replace($res, " ", "%20") return
+  let $res := fn:replace($res, ",", "%2C") return
+  let $res := fn:replace($res, "/", "%2F") return
+  let $res := fn:replace($res, ":", "%3A") return
+  $res
+};
+
+
+(::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: determines the default type for a specific value :)
+(::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
+declare function local:defaultType($row, $datatype, $termType, $specValue) {
+
+  if (fn:not(fn:empty($datatype))) 
+  then $datatype
   else 
-    xsparql:createTerm($value)
+    if(local:cmp($termType, "IRI")) then $termType
+    else 
+      let $spec := if (starts-with($specValue,"""")) then $specValue else fn:concat("""", fn:lower-case($specValue), """")
+      let $type := fn:data($row/SQLbinding[@name = $spec]/@type) return
+
+      if($type eq "BIGINT UNSIGNED" or $type eq "TEXT" or $type eq "CHAR")
+      then $datatype
+      else if($type eq "FLOAT" or $type eq "float4" or $type eq "float8")
+        (: then "xsd:double" :)
+        then "<http://www.w3.org/2001/XMLSchema#double>"
+      else if($type eq "INT" or $type eq "int4" or $type eq "int8")
+        (: then "xsd:integer" :)
+        then "<http://www.w3.org/2001/XMLSchema#integer>"
+      else if($type eq "date")
+        then "<http://www.w3.org/2001/XMLSchema#date>"
+      else if($type eq "bool")
+        then "<http://www.w3.org/2001/XMLSchema#boolean>"
+      else if($type eq "timestamp")
+        then "<http://www.w3.org/2001/XMLSchema#dateTime>"
+      else $datatype
 };
 
+
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: determines the default term type for a specific value :)
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
+declare function local:defaultTermType($termType, $specType, $position) {
+
+  if (fn:not(fn:empty($termType))) then $termType
+
+  else if($position eq "subject") then
+    "http://www.w3.org/ns/r2rml#IRI" 
+
+  else if($position eq "predicate") then
+    "http://www.w3.org/ns/r2rml#IRI" 
+
+  else if($position eq "object") then
+    if (local:cmp($specType, "template")) then
+      "http://www.w3.org/ns/r2rml#IRI"
+    else 
+      "http://www.w3.org/ns/r2rml#Literal"
+
+  else if($position eq "graph") then
+    "http://www.w3.org/ns/r2rml#IRI" 
+
+  else $termType
+
+};
+
+
+(:::::::::::::::::::::::::::::::::::::::::)
+(: creates a URI in the defined base URI :)
+(:::::::::::::::::::::::::::::::::::::::::)
+
+declare function local:createURIWithBase($value) {
+  if (fn:starts-with($value, "http://")) then xsparql:createURI($value)
+  else xsparql:createURI(fn:concat($base, $value))
+};
 
 (::::::::::::::::::::::::::::::::::::::::::::::::)
 (: aux function: create specific types of terms :)
 (::::::::::::::::::::::::::::::::::::::::::::::::)
-declare function local:createTermWithType($value, $type) {
-  local:createTermWithType($value, $type, "", "")
+
+declare function local:createTermWithType($value, $termType, $lang, $datatype) {
+
+  if(local:cmp($termType, "IRI"))
+    then local:createURIWithBase($value)
+
+  else if(local:cmp($termType, "BlankNode"))
+    then xsparql:createBNode($value)
+
+  else if(local:cmp($termType, "Literal")) 
+       then if (fn:not(fn:empty($lang)) or fn:not(fn:empty($datatype)))
+            then if ($datatype eq "<http://www.w3.org/2001/XMLSchema#double>") 
+                 then if($value instance of xs:integer) 
+                     then xsparql:createLiteral(fn:concat($value div 10, ".0E1"), $lang, $datatype)
+                    else xsparql:createLiteral($value, $lang, $datatype) 
+                else xsparql:createLiteral($value, $lang, $datatype)
+            else xsparql:createLiteral($value)
+        else xsparql:createTerm($value, $lang, $datatype)
 };
 
 
-(: retreive all the join conditions specified in a rr:refObjectMap:)
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+(: retreive all the join conditions specified in a rr:refObjectMap :)
+(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
 declare function local:getJoins($map) {
   for * from $ds 
   where { $map rr:joinCondition [ rr:child $child; rr:parent $parent ] } 
@@ -55,22 +146,10 @@ declare function local:getJoins($map) {
 };
 
 
-
-(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
-(: ----------------------------------------------------------- :)
-(: ------------------------------------------ R2RML processing :)
-(: Missing / TODO:                                             :)
-(: does not perform validation                                 :)
-(: defults for termTypes                                       :)
-(: 7.7 Inverse Expressions                                     :)
-(: build SQL query with join conditions                        :)
-(: capitalisation for table and attribute names                :)
-(:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
-
-
 (::::::::::::::::::::::::::::)
 (: tokenize template string :)
 (::::::::::::::::::::::::::::)
+
 declare function local:tokenize($codepoints, $string) {
     if (fn:empty($codepoints)) then fn:codepoints-to-string($string)
     else if ($codepoints[1] eq 92) then 
@@ -87,27 +166,27 @@ declare function local:tokenize($codepoints, $string) {
 (: replace enclosed { fields } with their value from the RDB in a template string :)
 (: doesn't handle escape chars \{ and \}                                          :)
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
 declare function local:parseTemplate($spec, $row, $type) {
   fn:string-join(
-    (: for $tok at $pos in fn:tokenize($spec, "\{|\}") :)
     for $tok at $pos in local:tokenize(fn:string-to-codepoints($spec), ())
     return
       if (($pos mod 2) eq 0) then
-        if($type eq "IRI" or fn:empty($type)) then     (: assume IRI is the default and encode it :)
-          fn:encode-for-uri($row//*[@name = $tok]/text())     (: xsparql:value($row, $tok) :)
+        if(local:cmp($type, "IRI") or fn:empty($type)) then     (: assume IRI is the default and encode it :)
+          local:escape(xsparql:value($row, $tok))
         else
-          $row/*[@name = $tok]/text()
+          fn:replace(xsparql:value($row, $tok), ".0$", "")      (: fix bug of having .0 in blank nodes, is this a more general R2RML problem? :)
       else
         $tok
       , "")
 };
 
 
-
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
 (: handle foreignKey references                                                                                                 :)
 (: so far this is done in XQuery! If this becomes a performance issue, build an SQL query with the join conditions, not pretty! :)
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
 declare function local:foreignKey($row, $map) {
 
   for $foreignTable $parentSubject from $ds
@@ -119,7 +198,7 @@ declare function local:foreignKey($row, $map) {
     for $foreignRow in $foreignTableResults      (: for each row of the foreign table :)
    return
      (: test if each join condition is satisfied :)
-     if (every $join in $joins, $join in $joins satisfies $row/*[@name = $join/c]/text() eq $foreignRow/*[@name = $join/p]/text()) then
+     if (every $join in $joins, $join in $joins satisfies xsparql:value($row, $join/c) eq xsparql:value($foreignRow,$join/p)) then
         local:processMap($foreignRow, $parentSubject)
       else ()
 };
@@ -129,68 +208,75 @@ declare function local:foreignKey($row, $map) {
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
 (: creates an RDF term according to the information  the mapping file :)
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
 declare function local:createTerm($row, $specType, $specValue, $termType, $lang, $datatype) {
-  (: let $specType := fn:trace($specType, "specType") return :)
-  (: let $specValue := fn:trace($specValue, "specValue") return :)
+
   if(local:cmp($specType, "template")) then 
-    let $template := local:parseTemplate($specValue, $row, $termType) return local:createTermWithType($template, $termType, $lang, $datatype)
+    let $template := local:parseTemplate($specValue, $row, $termType) 
+    return local:createTermWithType($template, $termType, $lang, $datatype)
+
   else if(local:cmp($specType, "subject")) then
     local:createTermWithType($specValue, $termType, $lang, $datatype)
+
   else if(local:cmp($specType, "predicate")) then
-    local:createTermWithType($specValue, fn:concat("http://www.w3.org/ns/r2rml#", "IRI"))
+    local:createTermWithType($specValue, "http://www.w3.org/ns/r2rml#IRI", "", "")
+
   else if(local:cmp($specType, "object")) then
     local:createTermWithType($specValue, $termType, $lang, $datatype) 
+
   else if(local:cmp($specType, "column")) then 
-    local:createTermWithType($row/*[@name = $specValue]/text(), $termType, $lang, $datatype)
+    let $dt := local:defaultType($row, $datatype, $termType, $specValue) return 
+    local:createTermWithType(xsparql:value($row, $specValue), $termType, $lang, $dt) 
+
   else if(local:cmp($specType, "constant")) then 
     local:createTermWithType($specValue, $termType, $lang, $datatype)
-  else if(local:cmp($specType, "graph")) then
-    if (local:cmp($specValue,"defaultGraph")) then () else local:createTermWithType($specValue, fn:concat("http://www.w3.org/ns/r2rml#", "IRI"))
   else ()
  };
-
-declare function local:createTerm($specType, $specValue) {
-  local:createTerm((), $specType, $specValue, (), (), ())
-};
 
 
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
 (: this function is equivalent to processing an rr:termMap                        :)
 (: creates an RDF term according to the information specified in the mapping file :)
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
-declare function local:processMap($row, $term) {
+
+declare function local:processMap($row, $term, $position) {
+
   if ($term) then
     for * from $ds 
     where { $term $specType $specValue . 
             optional { $term rr:termType $termType }
             optional { $term rr:language $lang }
             optional { $term rr:datatype $datatype }
-            filter ($specType != "rr:termType" && $specType != "rr:language" &&  $specType != "rr:datatype" &&  $specType != "rr:graphMap" )
+            filter ($specType != "rr:termType" && $specType != "rr:language" &&  $specType != "rr:datatype" &&  $specType != "rr:graphMap" &&  $specType != "rr:graph")
     }
     return
-      local:createTerm($row, $specType, $specValue, $termType, $lang, $datatype)
+      let $defaultTT := local:defaultTermType($termType, $specType, $position) return
+      local:createTerm($row, $specType, $specValue, $defaultTT, $lang, $datatype)
   else ()
 };
 
+declare function local:processMap($row, $term) {
+  local:processMap($row, $term, ()) 
+};
 
 
 (:::::::::::::::::::::::::::::::::::::::::::::)
 (: collect all tuples from the logical table :)
 (:::::::::::::::::::::::::::::::::::::::::::::)
+
 declare function local:getLogicalTable($table) {
   for * from $ds
   where {
     { $table rr:tableName $tableName . }
-    union { $table rr:sqlQuery $sql . optional { $map rr:sqlVersion $sqlVersion }}
-  }
+      union { $table rr:sqlQuery $sql . optional { $map rr:sqlVersion $sqlVersion }} }
   return
     if (fn:empty($sql)) then         (: rr:tableName specified :)
       (: logical table specified in the mapping file :)
-      for row $row from $tableName
+      for distinct row $row from $tableName
       return $row
    else
       (: logical table given as an SQL query :)
-      for row $row from sqlQuery($sql)
+      for distinct row $row from sqlQuery($sql)
       return  $row
 };
 
@@ -198,60 +284,56 @@ declare function local:getLogicalTable($table) {
 (:::::::::::::::::::::::::::::::::::::::)
 (: check for object shortcut notations :)
 (:::::::::::::::::::::::::::::::::::::::)
-declare function local:createObject($row, $po) {
+
+declare function local:createObject($row, $po, $subject, $predicate, $graph) {
   for * from $ds
   where { optional { $po rr:object $o } .
-          optional { $po rr:objectMap $om } .
-          optional { $po rr:refObjectMap $ref } . 
-        }
+          optional { $po rr:objectMap $om . 
+                     optional { $om a rr:RefObjectMap; rr:parentTriplesMap $parent } . }
+  }
   return 
-    if ($ref) then local:foreignKey($row, $ref) else
-    if ($o) then local:createTerm("http://www.w3.org/ns/r2rml#constant", $o) else 
-    local:processMap($row, $om)
- 
+    let $object := if ($parent) then local:foreignKey($row, $om) 
+                   else if ($o) then local:createTerm((), "http://www.w3.org/ns/r2rml#constant", $o, (), (), ()) 
+                   else local:processMap($row, $om, "object")
+    construct { $subject <{$predicate}> $object <{$graph}> }
 };
-
-
-(::::::::::::::::::::::::::::::::::::::::::)
-(: check for predicate shortcut notations :)
-(::::::::::::::::::::::::::::::::::::::::::)
-declare function local:createPredicate($row, $po) {
-  for * from $ds
-  where { optional { $po rr:predicateMap $pm } . 
-          optional { $po rr:predicate $p } . 
-        }
-  return 
-    if ($pm) then local:processMap($row, $pm)
-    else local:createTerm("http://www.w3.org/ns/r2rml#constant", $p)
- };
 
 
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::)
 (: This function processes each rr:predicateObjectMap :)
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::)
-declare function local:createPO($row, $map, $subject, $graph) {
+
+declare function local:createPO($row, $map, $subject, $graphS) {
   for * from $ds
-  where { $map rr:predicateObjectMap $po.  }
+  where { $map rr:predicateObjectMap $po. 
+          optional { $po rr:predicateMap $pm } . 
+          optional { $po rr:predicate $p } .     }
   return 
-    let $predicate := local:createPredicate($row, $po) (: check different syntax for predicates :)
-    let $object := local:createObject($row, $po)       (: and objects (also for foreign keys) :)
-    construct { $subject <{$predicate}> $object <{$graph}> }
-    (: return <row><s>{$subject}</s><p>{$predicate}</p><o>{$object}</o></row> :)
+    let $graphPO := local:createGraph($row, $po)   (: determine the graph in which to create the triples :)
+    let $predicate := if ($pm) then local:processMap($row, $pm)
+                      else local:createTerm((), "http://www.w3.org/ns/r2rml#constant", $p, (), (), ())
+    let $graphs := ($graphPO, $graphS)
+    return if ($graphs) then
+      for $graph in fn:distinct-values($graphs)
+      construct { { local:createObject($row, $po, $subject, $predicate, $graph) } }
+    else 
+      let $graph := ()
+      construct { { local:createObject($row, $po, $subject, $predicate, $graph) } }
 };
 
 
 (::::::::::::::::::::::::::::::::::::::)
 (: check for graph shortcut notations :)
 (::::::::::::::::::::::::::::::::::::::)
+
 declare function local:createGraph($row, $s) {
   for * from $ds
   where { optional { $s rr:graphMap $graphNode } .
-          optional { $s rr:graph $g } .
-        }
+          optional { $s rr:graph $g } .            }
   return 
     if ($graphNode) then local:processMap($row, $graphNode)   (: determine the graph in which to create the triples :)
-    else local:createTerm("http://www.w3.org/ns/r2rml#constant", $g)
- 
+    else if (local:cmp($g,"defaultGraph")) then ()
+         else local:createTerm((), "http://www.w3.org/ns/r2rml#constant", $g, (), (), ())
 };
 
 
@@ -259,6 +341,7 @@ declare function local:createGraph($row, $s) {
 (: Given a specific TriplesMap, this function gets the rows from the logical table  :)
 (: and, for each row creates the triples                                            :)
 (::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::)
+
 declare function local:createSPO($map) {
   for * from $ds
   where { $map a rr:TriplesMap;
@@ -269,12 +352,12 @@ declare function local:createSPO($map) {
   return 
     let $rows := local:getLogicalTable($table)
     for $row in $rows                                    (: iterates over the sequence returned by local:getLogicalTable :)
-      let $subject := if ($sm) then local:processMap($row, $sm)         (: create subject :)
-        else local:createTerm("http://www.w3.org/ns/r2rml#constant", $s)
-      let $graph := local:createGraph($row, $sm)   (: determine the graph in which to create the triples :)
-      construct { $subject rdf:type $class  <{$graph}> .
+      let $subject := if ($sm) then local:processMap($row, $sm, "subject")         (: create subject :)
+        else local:createTerm((), "http://www.w3.org/ns/r2rml#constant", $s, (), (), ())
+      let $graph := local:createGraph($row, $sm)         (: determine the graph in which to create the triples :)
+      construct { $subject <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> $class  <{$graph}> .
                   { local:createPO($row, $map, $subject, $graph) } }
-     (: return local:createPO($row, $map, $subject, $graph) :)
+
 };
 
 

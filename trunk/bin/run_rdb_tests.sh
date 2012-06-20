@@ -21,14 +21,14 @@ fi
 export JENAROOT=/Users/nl/work/deri/sw/Jena-2.6.4/
 RDFCOMP=$JENAROOT/bin/rdfcompare
 
-CLASSPATH="$CLASSPATH:$XSPARQLHOME/cli/target/cli-0.3-SNAPSHOT-bin/libs/*"
-OPTS=
+CLASSPATH="$CLASSPATH:$XSPARQLHOME/cli/target/cli-0.4-SNAPSHOT-bin/libs/*"
+OPTS="-Dfile.encoding=UTF-8"
 
 
 
 EXAMPLESDIR=rdb2rdf/rdb2rdf-tests/
-PSQL="psql91"
-MYSQL="mysql5"
+PSQL="psql"
+MYSQL="mysql"
 
 
 function usage() {
@@ -98,17 +98,45 @@ failed=0
 ntests=0
 
 
+function compare_quad() {
+    MAP=$1
+
+    cat $TMPFILE | sed 's/@prefix .*//g' | sed 's/@base .*//g' | \
+        sed 's/^ //g' | \
+        sed 's/rdf:type/\<http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#type\>/g' | \
+        sort -b | \
+        sed '/^$/d' > $TMPFILE.1
+    mv $TMPFILE.1 $TMPFILE
+
+    cat $MAP      | sed 's/@prefix .*//g' | sed 's/@base .*//g' | sed 's/^ //g' | sort -b | sed '/^$/d' > $TMPFILE.2
+#    | sed 's/.$//g'
+
+    dos2unix $TMPFILE.2 &>/dev/null
+
+    diff -Bbwq $TMPFILE $TMPFILE.2 &> /dev/null
+    RES=$?
+
+    rm -f $TMPFILE.1 $TMPFILE.2
+
+    return $RES;
+}
+
+
+
 function compare_result() {
 
     # function arguments
     RES=$1
     MAP=$2/$3
 
+    QUAD_STRING=""
+
     # compare the datasets
+    # echo $RDFCOMP $TMPFILE $MAP N3 N3 
     $RDFCOMP $TMPFILE $MAP N3 N3 &> /dev/null
     COMP=$?
 
-    # no result expected
+    # negative test: no result expected
     if [ -z $3 ] ; then
         if [ $COMP -ne 0 ]  &> /dev/null
         then 
@@ -118,18 +146,27 @@ function compare_result() {
 	    let failed++
         fi
     else
-        if [ $RES -eq 0 ] && [ $COMP -eq 0 ]  &> /dev/null
+        # positive
+        QUAD=1
+        if [ $COMP -eq 255 ]; 
         then
-	    echo -e " PASS"
+            QUAD_STRING=" (NQUAD)"
+	    compare_quad $MAP
+            QUAD=$?
+        fi
+
+        if [ $RES -eq 0 ] && ([ $COMP -eq 0 ] || [ $QUAD -eq 0 ])  &> /dev/null
+        then
+	    echo -e " PASS$QUAD_STRING"
         else
             
-            if [ $COMP -eq 255 ]; 
-            then
-	        echo -e " NQUAD"
-            else
-	        echo -e " FAIL"
+            # if [ $COMP -eq 255 ]; 
+            # then
+	    #     echo -e " NQUAD"
+            # else
+	        echo -e " FAIL$QUAD_STRING"
 	        let failed++
-            fi
+            # fi
             
             echo -e ">>>> $MAP"
             cat $MAP
@@ -176,12 +213,19 @@ EOF
         echo -ne "        $IDENT: `dirname $1`/$MAP .... "
         let ntests++
 #        $XSPARQLRDB -dbName $dbName  evaluator/src/main/resources/rdb2rdf/r2rml.xsparql r2rml_mapping=file:`dirname $1`/$MAP > $TMPFILE 
+#        echo $XSPARQLRDB -dbName $dbName -r2rml `dirname $1`/$MAP 
         $XSPARQLRDB -dbName $dbName -r2rml `dirname $1`/$MAP > $TMPFILE 2>/dev/null
         RES=$?
         
         sed 's/&gt;/>/g' < $TMPFILE >$TMPFILE.2
         sed 's/&lt;/</g' < $TMPFILE.2 >$TMPFILE
         rm $TMPFILE.2
+
+        # copy file to the final directory
+        if [ $OUTPUT ] ; then
+            cat $TMPFILE | sed 's/@prefix .*//g' | sed 's/^ //g' > `dirname $1`/${OUTPUT/.nq/}-xsparql.nq
+        # cp $TMPFILE `dirname $1`/${OUTPUT/.nq/}-xsparql.nq
+        fi
 
         compare_result $RES `dirname $1` $OUTPUT
 
@@ -211,12 +255,18 @@ EOF
     echo -en "        $IDENT ... "
     let ntests++
 #    $XSPARQLRDB -dbName $dbName evaluator/src/main/resources/rdb2rdf/dm.xsparql baseURI=""  > $TMPFILE
-    $XSPARQLRDB -dbName $dbName -dm "" > $TMPFILE 2>/dev/null
+    $XSPARQLRDB -dbName $dbName -dm "http://example.com/base/" > $TMPFILE 2>/dev/null
     RES=$?
 
     sed 's/&gt;/>/g' < $TMPFILE >$TMPFILE.2
     sed 's/&lt;/</g' < $TMPFILE.2 >$TMPFILE
     rm $TMPFILE.2
+
+    # copy file to the final directory
+    if [ $OUTPUT ] ; then
+        cat $TMPFILE | sed 's/@prefix .*//g'| sed 's/^ //g'  > `dirname $1`/directGraph-xsparql.ttl
+    # cp $TMPFILE `dirname $1`/directGraph-xsparql.ttl
+    fi
 
     compare_result $RES `dirname $1` $OUTPUT
   
@@ -243,31 +293,34 @@ EOF
     if [ -z "$SQL" ]; then
         return 0;
     fi
-
+    
+    if [ -a `dirname $1`/"${SQL/.sql/-$DEFAULTDB.sql}" ]; then
+        # echo "$DB $dbName < `dirname $1`/${SQL/.sql/-$DEFAULTDB.sql}"
+        $DB $dbName < `dirname $1`/"${SQL/.sql/-$DEFAULTDB.sql}" &> /dev/null
+    else
     # create database contents from SQL script file
-    $DB $dbName < `dirname $1`/$SQL &> /dev/null
+        $DB $dbName < `dirname $1`/$SQL &> /dev/null
+    fi
 
-    # echo "  => Direct Mapping"
-    # test_direct_mapping $1
+    echo "  => Direct Mapping"
+    test_direct_mapping $1
 
     echo "  => R2RML"
     test_r2rml $1
 
     
-#     # delete the database
-#     $DB $DEFAULTDB <<EOF &> /dev/null
-# DROP DATABASE $dbName;
-# EOF
-
+    # delete the database
+    $DB $DEFAULTDB <<EOF &> /dev/null
+DROP DATABASE $dbName;
+EOF
 }
 
 
 function test_files() {
 #    FILES=$(find $EXAMPLESDIR -iname manifest.ttl );
-    # D010 - invalid characters
-    # D011 - duplicate entries
     # D016 - BINARY data
-#    FILES=$(find $EXAMPLESDIR -iname manifest.ttl | egrep -v "(D010|D011|D016)" | grep  "$GREP" );
+    # D017 - i18n characters
+    # FILES=$(find $EXAMPLESDIR -iname manifest.ttl | grep -e  "$GREP" | egrep -v "(D016|D017)"  );
     FILES=$(find $EXAMPLESDIR -iname manifest.ttl | grep  "$GREP" );
     for FILE in $FILES
     do
