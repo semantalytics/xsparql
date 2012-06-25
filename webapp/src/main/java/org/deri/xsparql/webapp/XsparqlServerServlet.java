@@ -12,18 +12,24 @@
  */
 package org.deri.xsparql.webapp;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import net.sf.saxon.s9api.*;
-
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.deri.xsparql.evaluator.XSPARQLEvaluator;
-import org.deri.xsparql.rewriter.*;
+import org.deri.xsparql.rewriter.XSPARQLProcessor;
 
 /**
  * @author stefan
@@ -38,7 +44,7 @@ public class XsparqlServerServlet extends HttpServlet {
   private Map<String, String> externalVars;
 
   // do not use the licensed version
-  private boolean licensedSaxon = false;
+  //  private boolean licensedSaxon = false;
 
   private XSPARQLEvaluator eval;
 
@@ -50,8 +56,8 @@ public class XsparqlServerServlet extends HttpServlet {
 
       //System.out.println("Starting XSPARQL servlet...");
 
-      this.licensedSaxon = Boolean
-          .parseBoolean(getInitParameter("validatingXQuery"));
+//      this.licensedSaxon = Boolean
+//          .parseBoolean(getInitParameter("validatingXQuery"));
       // System.out.println(licensedSaxon);
       // System.out.println(System.getenv("SAXON_HOME"));
 
@@ -203,7 +209,7 @@ public class XsparqlServerServlet extends HttpServlet {
 
 //    Serializer serializer = processor.getSerializer();
 //    serializer.setOutputProperty(Serializer.Property.METHOD, format);
-//
+
 //    // TODO: can be xml, html, xhtml, or text. Set it to xml for the FOAF KML
 //    // demo
 //    if (format == null || !format.equals("xml")) {
@@ -213,10 +219,12 @@ public class XsparqlServerServlet extends HttpServlet {
 //      serializer.setOutputProperty(Serializer.Property.OMIT_XML_DECLARATION,
 //          null);
 //    }
-//
-//    processor.setSerializer(serializer);
+
+//    proc.setSerializer(serializer);
 //    processor.evaluate(xquery, new PrintStream(out), externalVars);
 
-  }
+      eval.setXqueryExternalVars(externalVars);
+      eval.evaluateRewrittenQuery(new StringReader(xquery), new OutputStreamWriter(out));
+}
 
 }
