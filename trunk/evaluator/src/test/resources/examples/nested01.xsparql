@@ -1,5 +1,6 @@
 prefix foaf: <http://xmlns.com/foaf/0.1/>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix ex:  <http://example.org/>
 
 for * from <http://xsparql.deri.org/data/foaf.rdf>
 where {$p foaf:name $n; rdfs:seeAlso $g}

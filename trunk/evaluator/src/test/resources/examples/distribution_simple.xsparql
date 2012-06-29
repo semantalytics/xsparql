@@ -2,6 +2,8 @@ prefix :     <http://www.example.org>
 prefix foaf: <http://xmlns.com/foaf/0.1/>
 prefix dct:  <http://purl.org/dc/terms/>
 
+
+<days>{
 let $results :=
   for $entry $date
   from <http://xsparql.deri.org/data/sample_distribution_data.n3>
@@ -15,3 +17,4 @@ return
     return <day
 n="{$day}">{count($results[day-from-dateTime(xs:dateTime(@date)) =
 $day])}</day>
+}</days>

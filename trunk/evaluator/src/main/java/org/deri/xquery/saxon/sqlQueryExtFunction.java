@@ -108,6 +108,7 @@ class sqlQueryExtFunction extends ExtensionFunctionDefinition {
             doc = query.getResultsAsXMLString(queryString); 
         } catch (Exception e){
             System.err.println("Error executing SQL query: "+e.getMessage());
+            System.exit(1);
         }
 
         // convert results to XML...

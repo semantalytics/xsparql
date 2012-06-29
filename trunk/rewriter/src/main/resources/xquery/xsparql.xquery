@@ -118,7 +118,7 @@ declare function _xsparql:_rdf_term($Node as item()) as xs:string
     if (_xsparql:_validBNode($Node)) then
             fn:concat("_:", data($Node), "")
     else if (_xsparql:_validUri($Node)) 
-         then if (fn:starts-with($Node, "https://") or fn:starts-with($Node, "http://") or fn:starts-with($Node, "mailto:") or fn:starts-with($Node, "file:") or fn:not(fn:contains($Node, ":"))) then
+         then if (fn:starts-with($Node, "tel:") or fn:starts-with($Node, "https://") or fn:starts-with($Node, "http://") or fn:starts-with($Node, "mailto:") or fn:starts-with($Node, "file:") or fn:not(fn:contains($Node, ":"))) then
                fn:concat("<", data($Node), ">")
                else data($Node)
          else if (_xsparql:_validLiteral($Node)) 
