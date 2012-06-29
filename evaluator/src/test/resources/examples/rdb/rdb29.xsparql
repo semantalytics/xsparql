@@ -1,4 +1,5 @@
-
+<rows>{
 let $table := "person"
 for row $row from bands.$table
 return $row
+}</rows>

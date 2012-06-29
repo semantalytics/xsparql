@@ -1,2 +1,4 @@
+<id>{
 for student.id from student
-return <id>{$student.id}</id>
+return $student.id
+}</id>

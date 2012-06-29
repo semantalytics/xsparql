@@ -1,5 +1,7 @@
 prefix : <http://www.example.org>
 prefix foaf: <http://xmlns.com/foaf/0.1/>
+
+<all>{
 let $y := "<http://www.example.org/knownPerson>"
 for * from <http://xsparql.deri.org/data/foaf.rdf>
 where {$s foaf:knows $x}
@@ -8,4 +10,4 @@ return <aa>{
      where {$x foaf:knows $y}
     return <b>{$y}</b>
  }</aa>
-
+}</all>

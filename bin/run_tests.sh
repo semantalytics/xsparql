@@ -32,7 +32,44 @@ XSPARQL="java $OPTS -cp $CLASSPATH org.deri.xsparql.Main -dbConfig mysql.propert
 
 EXAMPLESDIR=evaluator/src/test/resources/examples/
 
+export JENAROOT=/Users/nl/work/deri/sw/Jena-2.6.4/
+RDFPARSE="$JENAROOT/bin/rdfcat -out N3 -n3 " 
+# RDFPARSE="rapper -i guess -cq -I \"http://ex.org/tt\""
+
+XMLLINT="xmllint --noout"
+
 echo ============ XSPARQL tests start ============
+
+function validate () {
+
+    # try to validate as XML
+    echo "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?> " > $TMPFILE.xml
+    cat $1 >> $TMPFILE.xml
+    # cat $TMPFILE.xml
+    $XMLLINT $TMPFILE.xml &> /dev/null
+    XML=$?
+    # echo "XML: $XML"
+    if [ $XML -eq 0 ] ; then
+        return 0;
+    fi
+
+    rm $TMPFILE.xml
+    
+
+    # try to validate as RDF
+    sed 's/&gt;/>/g' < $1 >$TMPFILE.2
+    sed 's/&lt;/</g' < $TMPFILE.2 >$1.ttl
+#    cat $TMPFILE.ttl
+    $RDFPARSE $TMPFILE.ttl &> /dev/null
+    RDF=$?
+    # echo "RDF: $RDF"
+    rm $TMPFILE.ttl $TMPFILE.2
+    if [ $RDF -eq 0 ] ; then
+        return 0;
+    fi
+    
+    return 1;
+}
 
 
 function test_file () {
@@ -41,12 +78,15 @@ function test_file () {
     let ntests++
 
     if [ $EXEC ]; then
-        $XSPARQL $1 -e &> /dev/null
+        $XSPARQL $1 -e &> $TMPFILE
     else
         $XSPARQL $1 > $TMPFILE
     fi
 
-    if [ $? -eq 0 ] #&& cmp -s $TMPFILE $RESULT
+    validate $TMPFILE
+    VAL=$?
+
+    if [ $? -eq 0 ] && [ $VAL -eq 0 ] #&& cmp -s $TMPFILE $RESULT
     then
 	echo PASS: $1
     else

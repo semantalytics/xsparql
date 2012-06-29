@@ -1,3 +1,4 @@
-
+<rows>{
 for row $row from bands.person
 return $row
+}</rows>

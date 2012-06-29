@@ -14,6 +14,7 @@ declare function local:_distribution_count($s, $i, $c) {
   return $x
 };
 
+<days>{
 let $days  := 
   for $entry $date
   from <http://xsparql.deri.org/data/sample_distribution_data.n3>
@@ -22,4 +23,5 @@ let $days  :=
   order by $day
   return $day
 
-return local:_distribution_count($days, 1, 1)
+return <day>{local:_distribution_count($days, 1, 1)}</day>
+}</days>
