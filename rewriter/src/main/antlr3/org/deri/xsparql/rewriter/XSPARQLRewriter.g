@@ -146,6 +146,14 @@ tokens {
   T_IRI_CONSTRUCT;
 
   T_EPILOGUE;
+  
+  T_SQL_FOR;
+  T_SQL_FROM;
+  T_TABLE;
+  T_VAR;
+  ENDPOINT;
+  DECIMAL;
+  ROW;
 }
 
 /*
@@ -770,10 +778,11 @@ protected String concat(List<String> list, String separator) {
 
 protected String format(String relation) {
   logger.info("format: "+relation);
-  if (relation.matches("\\.")) {
+  if (relation.matches(".*\\..*")) {
     logger.info("format-true");
     String[] split = relation.split("\\.");
-    return "\"\"" + split[0] +"\"\".\"\"" + split[1] +"\"\"" ;
+    logger.info("format-true: "+split.length);
+    return new String("\"\"" + split[0] +"\"\".\"\"" + split[1] +"\"\"") ;
   } else {
     logger.info("format-false");
     return relation;
@@ -1249,7 +1258,7 @@ sqlQuerySpec
 sqlVarOrFunction
   : ^(T_VAR COMMA? q=qname)
     -> ^(T_VAR COMMA? QSTRING[$q.text] VAR["\$"+$q.text]) 
-  | ^(T_VAR COMMA? q=qname v2=VAR)
+  | ^(T_VAR COMMA? q=qname VAR)
     -> ^(T_VAR COMMA? QSTRING[$q.text] VAR) 
   | COMMA? LPAR functionCall AS v3=VAR RPAR
 ;
@@ -1306,7 +1315,7 @@ sqlBooleanOp
   ;
 
 sqlAttrSpec
-  : v=qname -> QSTRING[$v.text]
+  : v=qname -> QSTRING[format($v.text)]
   | VAR -> ^(T_FUNCTION_CALL
                NCNAME["_xsparql:_sql_binding_term"]
               ^(T_PARAMS VAR)
