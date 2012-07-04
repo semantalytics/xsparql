@@ -12,6 +12,7 @@
  */
 package org.deri.xsparql;
 
+import java.io.StringReader;
 import org.deri.xsparql.rewriter.XSPARQLProcessor;
 
 /**
@@ -22,7 +23,13 @@ public class App
 {
     public static void main( String[] args )
     {
+      try {
         System.out.println( "Hello World!" );
-		XSPARQLProcessor xp = new XSPARQLProcessor();
+        String xquery = new String("let $x := \"Foo: Hello World\" construct { [] a {$x} }");
+        XSPARQLProcessor xp = new XSPARQLProcessor();
+        String q = xp.process(new StringReader(xquery));
+        System.out.println( "Result: "+ q );
+      } catch (Exception e) {System.err.println(e.getMessage());}
+
     }
 }
