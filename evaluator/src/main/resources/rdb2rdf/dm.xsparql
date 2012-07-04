@@ -14,6 +14,18 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 declare variable $baseURI external;
 
 
+declare function local:canonical($d, $exponent, $inc) {
+    if ($d < 10) then 
+        let $pad := if ($d instance of xs:integer or ($d - xs:integer(xs:float($d)) eq 0)) then ".0" else ""
+        return fn:concat($d, $pad, "E", $exponent)
+    else local:canonical($d div 10, $exponent + $inc, $inc)
+};
+
+declare function local:canonical($d) {
+    if ($d < 0) then local:canonical($d, 0, 1)  (: local:canonical(-$d, 0, -1) :)
+    else local:canonical($d, 0, 1)
+};
+
 (:::::::::::::::::::::::::::::::::::::::::::::::)
 (: creates an RDF term with the specified type :)
 (:::::::::::::::::::::::::::::::::::::::::::::::)
@@ -24,20 +36,17 @@ declare function local:createTermWithType($value, $type) {
 
   if($type eq "BIGINT UNSIGNED" or $type eq "TEXT" or $type eq "CHAR")
     then xsparql:createLiteral($value)
-  else if($type eq "FLOAT" or $type eq "float4" or $type eq "float8")
-    then if($value instance of xs:integer) then
-      xsparql:createLiteral(fn:concat($value div 10, ".0E1"), "", "<http://www.w3.org/2001/XMLSchema#double>")
-      else if(fn:not(fn:contains(fn:replace($value, ".0$", ""), "."))) then xsparql:createLiteral(fn:concat($value div 10, ".0E1"), "", "<http://www.w3.org/2001/XMLSchema#double>") else (: corner case :)
-           xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#double>") 
+  else if($type eq "FLOAT" or $type eq "float4" or $type eq "float8" or $type eq "DOUBLE")
+    then xsparql:createLiteral(local:canonical($value), "", "<http://www.w3.org/2001/XMLSchema#double>")
   else if($type eq "INT" or $type eq "int4")
     then xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#integer>")
-  else if($type eq "bytea")
+  else if($type eq "bytea" or $type eq "VARBINARY")
     then xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#hexBinary>")
-  else if($type eq "date")
+  else if($type eq "date" or $type eq "DATE")
     then xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#date>")
-  else if($type eq "timestamp")
+  else if($type eq "timestamp"  or $type eq "TIMESTAMP")
     then xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#dateTime>")
-  else if($type eq "bool")
+  else if($type eq "bool" or $type eq "BIT" or $type eq "TINYINT")
     then xsparql:createLiteral($value, "", "<http://www.w3.org/2001/XMLSchema#boolean>")
   else xsparql:createTerm($value)
 };

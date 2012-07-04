@@ -223,8 +223,8 @@ EOF
 
         # copy file to the final directory
         if [ $OUTPUT ] ; then
-            cat $TMPFILE | sed 's/@prefix .*//g' | sed 's/^ //g' > `dirname $1`/${OUTPUT/.nq/}-xsparql.nq
-        # cp $TMPFILE `dirname $1`/${OUTPUT/.nq/}-xsparql.nq
+            cat $TMPFILE | sed 's/@prefix .*//g' | sed 's/^ //g' > `dirname $1`/${OUTPUT/.nq/}-XSPARQL.nq
+        # cp $TMPFILE `dirname $1`/${OUTPUT/.nq/}-XSPARQL.nq
         fi
 
         compare_result $RES `dirname $1` $OUTPUT
@@ -264,8 +264,8 @@ EOF
 
     # copy file to the final directory
     if [ $OUTPUT ] ; then
-        cat $TMPFILE | sed 's/@prefix .*//g'| sed 's/^ //g'  > `dirname $1`/directGraph-xsparql.ttl
-    # cp $TMPFILE `dirname $1`/directGraph-xsparql.ttl
+        cat $TMPFILE | sed 's/@prefix .*//g'| sed 's/^ //g'  > `dirname $1`/directGraph-XSPARQL.ttl
+    # cp $TMPFILE `dirname $1`/directGraph-XSPARQL.ttl
     fi
 
     compare_result $RES `dirname $1` $OUTPUT

@@ -67,6 +67,8 @@ public class SQLQuery {
 
     private Connection db;
     
+    private String dbDriver;
+    
     private final static Logger logger = Logger.getLogger(XSPARQLProcessor.class
 	      .getClass().getName());
 
@@ -87,6 +89,8 @@ public class SQLQuery {
 	    System.exit(1);
 	}
 
+        dbDriver = driver;
+	
         if(dbServer == null) {
             dbServer = "localhost";
         }
@@ -181,6 +185,7 @@ public class SQLQuery {
 	    res = sql.executeQuery(query);
 	} catch (SQLException e) {
 	    System.err.println("SQL ERROR: " + e.getMessage());
+	    logger.info("SQL ERROR (getResults): " + e.getMessage());
 	    System.exit(1);
 	}
 	
@@ -229,9 +234,10 @@ public class SQLQuery {
 			    xtw.writeAttribute("label", tokens[1]);
 			}
 			String value = results.getString(i);
-//			logger.info("OBJECT: "+value.toString()+ ", type: "+type);
 
 			if (value != null) {
+                           logger.info("OBJECT: "+value.toString()+ ", type: "+type);
+
 //			    cf. http://docs.oracle.com/javase/6/docs/api/constant-values.html#java.sql.Types.ARRAY
 //				-1             LONGVARCHAR	
 //				-15            NCHAR		
@@ -280,9 +286,13 @@ public class SQLQuery {
 //			    case java.sql.Types.DATE:
 //				xtw.writeCharacters(results.getDate(i).toString());
 //				break;
-//			    case java.sql.Types.CHAR:  // PostgreSQL returns all spaces for CHAR(20)
-//				xtw.writeCharacters(value.trim());
-//				break;
+			    case java.sql.Types.CHAR:  // MySQL does not pad 
+			        if(dbDriver.equals("mysql")) {
+			            xtw.writeCharacters(String.format("%1$-" + rsmd.getPrecision(i) + "s" , new String(value.getBytes(),"UTF-8")));
+			        } else {
+			            xtw.writeCharacters(new String(value.getBytes(),"UTF-8"));
+			        }
+			        break;
 			    case java.sql.Types.TIMESTAMP:
 				xtw.writeCharacters(new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss").format(results.getTimestamp(i)));
 				break;
@@ -319,6 +329,7 @@ public class SQLQuery {
 
 	} catch (Exception e) {
 	    System.err.println("SQL ERROR: " + e.getMessage());
+	    logger.info("SQL ERROR (getResultsAsXMLString): " + e.getMessage());
 	    System.exit(1);
 	}
 
@@ -386,6 +397,7 @@ public class SQLQuery {
 
 	} catch (Exception e) {
 	    System.err.println("SQL ERROR: " + e.getMessage());
+	    logger.info("SQL ERROR (getResultsAsDocument): " + e.getMessage());
 	    System.exit(1);
 	}
 

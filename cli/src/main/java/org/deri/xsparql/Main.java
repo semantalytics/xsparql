@@ -260,11 +260,11 @@ public class Main {
     final OptionSpec<File> tdbDirOption = oparser
         .accepts("tdbdir", "TDB directory").withRequiredArg()
         .ofType(File.class);
-    final OptionSpec<String> xqueryEval = oparser
-        .accepts(
-            "e",
-            "Evaluate result query with the specified XQuery engine to use (saxon-he | saxon-ee | qexo). Default: evaluate with Saxon-HE.")
-        .withRequiredArg().ofType(String.class);
+//    final OptionSpec<String> xqueryEval = oparser
+//        .accepts(
+//            "e",
+//            "Evaluate result query with the specified XQuery engine to use (saxon-he | saxon-ee | qexo). Default: evaluate with Saxon-HE.")
+//        .withRequiredArg().ofType(String.class);
 
     final OptionSet options = oparser.parse(args);
 
@@ -320,13 +320,13 @@ public class Main {
 
     // XQuery engine specification
 
-    if ("saxon-ee".equals(options.valueOf(xqueryEval))) {
-      xe.setXQueryEngine(XQueryEngine.SAXONEE);
-    } else if ("qexo".equals(options.valueOf(xqueryEval))) {
-      xe.setXQueryEngine(XQueryEngine.QEXO);
-    } else {
-      // use default
-    }
+//    if ("saxon-ee".equals(options.valueOf(xqueryEval))) {
+//      xe.setXQueryEngine(XQueryEngine.SAXONEE);
+//    } else if ("qexo".equals(options.valueOf(xqueryEval))) {
+//      xe.setXQueryEngine(XQueryEngine.QEXO);
+//    } else {
+//      // use default
+//    }
 
     // serverMode = options.has("s");
 

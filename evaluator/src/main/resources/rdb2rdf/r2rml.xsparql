@@ -28,6 +28,20 @@ declare function local:cmp($a, $b) {
   data($a) eq fn:concat("http://www.w3.org/ns/r2rml#",$b)
 };
 
+
+declare function local:canonical($d, $exponent, $inc) {
+    if ($d < 10) then 
+        let $pad := if ($d instance of xs:integer or ($d - xs:integer(xs:float($d)) eq 0)) then ".0" else ""
+        return fn:concat($d, $pad, "E", $exponent)
+    else local:canonical($d div 10, $exponent + $inc, $inc)
+};
+
+declare function local:canonical($d) {
+    if ($d < 0) then local:canonical($d, 0, 1)  (: local:canonical(-$d, 0, -1) :)
+    else local:canonical($d, 0, 1)
+};
+
+
 (::::::::::::::::::::::::::::)
 (: url escaping as per spec :)
 (::::::::::::::::::::::::::::)
@@ -53,22 +67,22 @@ declare function local:defaultType($row, $datatype, $termType, $specValue) {
   else 
     if(local:cmp($termType, "IRI")) then $termType
     else 
-      let $spec := if (starts-with($specValue,"""")) then $specValue else fn:concat("""", fn:lower-case($specValue), """")
-      let $type := fn:data($row/SQLbinding[@name = $spec]/@type) return
+      let $spec := if (starts-with($specValue,"""")) then $specValue else fn:concat("""", $specValue, """")
+      let $type := fn:data($row/SQLbinding[@name = $spec or @name = fn:lower-case($spec)]/@type) return
 
       if($type eq "BIGINT UNSIGNED" or $type eq "TEXT" or $type eq "CHAR")
       then $datatype
-      else if($type eq "FLOAT" or $type eq "float4" or $type eq "float8")
+      else if($type eq "FLOAT" or $type eq "float4" or $type eq "float8" or $type eq "DOUBLE")
         (: then "xsd:double" :)
         then "<http://www.w3.org/2001/XMLSchema#double>"
-      else if($type eq "INT" or $type eq "int4" or $type eq "int8")
+      else if($type eq "INT" or $type eq "int4" or $type eq "int8" or $type eq "BIGINT")
         (: then "xsd:integer" :)
         then "<http://www.w3.org/2001/XMLSchema#integer>"
-      else if($type eq "date")
+      else if($type eq "date" or $type eq "DATE")
         then "<http://www.w3.org/2001/XMLSchema#date>"
-      else if($type eq "bool")
+      else if($type eq "bool" or $type eq "BIT" or $type eq "TINYINT")
         then "<http://www.w3.org/2001/XMLSchema#boolean>"
-      else if($type eq "timestamp")
+      else if($type eq "timestamp" or $type eq "TIMESTAMP")
         then "<http://www.w3.org/2001/XMLSchema#dateTime>"
       else $datatype
 };
@@ -126,9 +140,7 @@ declare function local:createTermWithType($value, $termType, $lang, $datatype) {
   else if(local:cmp($termType, "Literal")) 
        then if (fn:not(fn:empty($lang)) or fn:not(fn:empty($datatype)))
             then if ($datatype eq "<http://www.w3.org/2001/XMLSchema#double>") 
-                 then if($value instance of xs:integer) 
-                     then xsparql:createLiteral(fn:concat($value div 10, ".0E1"), $lang, $datatype)
-                    else xsparql:createLiteral($value, $lang, $datatype) 
+                 then xsparql:createLiteral(local:canonical($value), $lang, $datatype) 
                 else xsparql:createLiteral($value, $lang, $datatype)
             else xsparql:createLiteral($value)
         else xsparql:createTerm($value, $lang, $datatype)
@@ -331,7 +343,9 @@ declare function local:createGraph($row, $s) {
   where { optional { $s rr:graphMap $graphNode } .
           optional { $s rr:graph $g } .            }
   return 
-    if ($graphNode) then local:processMap($row, $graphNode)   (: determine the graph in which to create the triples :)
+    if ($graphNode) then
+      let $g := local:processMap($row, $graphNode)       (: determine the graph in which to create the triples :)
+      return if (xsparql:isIRI($g)) then $g else ()      (: graphs can only be URIs :)
     else if (local:cmp($g,"defaultGraph")) then ()
          else local:createTerm((), "http://www.w3.org/ns/r2rml#constant", $g, (), (), ())
 };
