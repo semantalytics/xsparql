@@ -314,6 +314,9 @@ class EvaluatorExternalFunctions {
       XMLSerializer serializer = new XMLSerializer(); 
       JSON json = JSONSerializer.toJSON( jsonData ); 
       serializer.setTypeHintsEnabled(false);
+      serializer.setObjectName("jsonObject");
+      serializer.setElementName("arrayElement");
+      serializer.setArrayName("array");
       xml = serializer.write( json );  
 
       
