@@ -5,7 +5,7 @@
   <parent>
     <artifactId>parent</artifactId>
     <groupId>org.deri.xsparql</groupId>
-    <version>0.5</version>
+    <version>0.6-SNAPSHOT</version>
   </parent>
 
   <groupId>org.deri.xsparql</groupId>
@@ -13,7 +13,7 @@
   <name>XSPARQL evaluator</name>
   <description>XSPARQL evaluator</description>
 
-  <version>0.5</version>
+  <version>0.6-SNAPSHOT</version>
 
   <dependencies>
 
