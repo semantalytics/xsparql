@@ -14,7 +14,7 @@
   <name>XSPARQL parent</name>
 
   <packaging>pom</packaging>
-  <version>0.5</version>
+  <version>0.6-SNAPSHOT</version>
   <url>http://xsparql.deri.org/</url>
   <licenses>
     <license>
@@ -55,9 +55,9 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:https://subversion.deri.ie/xsparql/tags/parent-0.5</connection>
-    <developerConnection>scm:svn:https://subversion.deri.ie/xsparql/tags/parent-0.5</developerConnection>
-    <url>http://websvn.deri.ie/xsparql/tags/parent-0.5</url>
+    <connection>scm:svn:https://subversion.deri.ie/xsparql/trunk/</connection>
+    <developerConnection>scm:svn:https://subversion.deri.ie/xsparql/trunk/</developerConnection>
+    <url>http://websvn.deri.ie/xsparql/trunk/</url>
   </scm> 
 
   <mailingLists>
