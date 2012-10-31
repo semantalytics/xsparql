@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.deri.xsparql</groupId>
   <artifactId>webapp</artifactId>
-  <version>0.5-SNAPSHOT</version>
+  <version>0.5</version>
   <packaging>war</packaging>
 
   <name>XSPARQL webapp</name>

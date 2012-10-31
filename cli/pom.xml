@@ -4,11 +4,11 @@
   <parent>
     <artifactId>parent</artifactId>
     <groupId>org.deri.xsparql</groupId>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.5</version>
   </parent>
   <groupId>org.deri.xsparql</groupId>
   <artifactId>cli</artifactId>
-  <version>0.5-SNAPSHOT</version>
+  <version>0.5</version>
   <packaging>jar</packaging>
 
   <name>XSPARQL CLI</name>
