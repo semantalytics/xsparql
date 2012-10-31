@@ -69,7 +69,7 @@ public final class XSPARQLEvaluator {
    * Directory containing the TDB database
    */
   private File tdbDir = null;
-  private XQueryEngine xqueryEngine;
+  private XQueryEngine xqueryEngine = XQueryEngine.SAXONHE;
   private Map<String, String> externalVars = new HashMap<String, String>();
   private Source source;
   private String queryFilename;
