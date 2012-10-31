@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.deri.xsparql</groupId>
   <artifactId>external</artifactId>
-  <version>0.3</version>
+  <version>0.5-SNAPSHOT</version>
   <name>External Bundles</name>
   <packaging>pom</packaging>
   <description>External dependencies repackaged as OSGi bundles</description>

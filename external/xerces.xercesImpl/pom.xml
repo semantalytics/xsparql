@@ -5,7 +5,7 @@
   <parent>
     <artifactId>external</artifactId>
     <groupId>org.deri.xsparql</groupId>
-    <version>0.3</version>
+    <version>0.5-SNAPSHOT</version>
   </parent>
   <groupId>org.deri.xsparql</groupId>
   <artifactId>xerces.xercesImpl</artifactId>

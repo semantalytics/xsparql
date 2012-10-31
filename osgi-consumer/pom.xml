@@ -5,11 +5,11 @@
   <parent>
     <artifactId>parent</artifactId>
     <groupId>org.deri.xsparql</groupId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.5-SNAPSHOT</version>
   </parent>
   <groupId>org.deri.xsparql</groupId>
   <artifactId>osgi-consumer</artifactId>
-  <version>0.3-SNAPSHOT</version>
+  <version>0.5-SNAPSHOT</version>
   <name>osgi-consumer</name>
   <description>OSGi Bundle to test the XSPARQL interface in an OSGi container</description>
   <packaging>bundle</packaging>
