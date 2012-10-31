@@ -177,6 +177,8 @@ main
     -> defaultnamespace(value={$e.st})
   |  ^(T_DEFAULT_DECL dd1=main dd2=main dd3=main)
     -> defaultDecl(dd1={$dd1.st}, dd2={$dd2.st}, dd3={$dd3.st})
+  |  ^(T_OPTION_DECL dd1=main dd2=main)
+    -> optionDecl(dd1={$dd1.st}, dd2={$dd2.st})
   |  ^(FROM f=main)
     -> template(a={$f.text}) "from $a$"
   |  ^(T_FLWOR flcs+=main+)
@@ -247,6 +249,8 @@ main
     -> infixOpExpr(p1={$or1.st}, p2={$or2.st}, op={$OR.text})
   |  ^(AND or1=main or2=main)
     -> infixOpExpr(p1={$or1.st}, p2={$or2.st}, op={$AND.text})
+  |  ^(EXCEPT or1=main or2=main)
+    -> infixOpExpr(p1={$or1.st}, p2={$or2.st}, op={$EXCEPT.text})
   |  ^(T_OBJECT a5=main)
     -> objectClause(object={$a5.st})
   |  ^(T_TYPE type=main?)

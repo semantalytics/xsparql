@@ -24,7 +24,7 @@ if [ -z $XSPARQLHOME ]; then
     XSPARQLHOME=`pwd`
 fi
 
-CLASSPATH="$CLASSPATH:$XSPARQLHOME/cli/target/cli-0.4-SNAPSHOT-bin/libs/*"
+CLASSPATH="$CLASSPATH:$XSPARQLHOME/cli/target/cli-0.5-bin/libs/*"
 OPTS=
 
 XSPARQL="java $OPTS -cp $CLASSPATH org.deri.xsparql.Main $@" 

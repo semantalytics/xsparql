@@ -4,11 +4,11 @@
   <parent>
     <artifactId>parent</artifactId>
     <groupId>org.deri.xsparql</groupId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.5</version>
   </parent>
   <groupId>org.deri.xsparql</groupId>
   <artifactId>rewriter</artifactId>
-  <version>0.4-SNAPSHOT</version>
+  <version>0.5</version>
 
   <name>XSPARQL rewriter</name>
   <description>Rewrites an XSPARQL query to an XQuery query containing external function calls</description>

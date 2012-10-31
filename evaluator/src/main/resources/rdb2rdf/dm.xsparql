@@ -11,6 +11,8 @@ prefix xsd: <http://www.w3.org/2001/XMLSchema#>
 prefix test: <http://www.w3.org/2006/03/test-description#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
+declare option saxon:output "method=text";
+
 declare variable $baseURI external;
 
 

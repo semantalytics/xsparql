@@ -21,7 +21,7 @@ fi
 export JENAROOT=/Users/nl/work/deri/sw/Jena-2.6.4/
 RDFCOMP=$JENAROOT/bin/rdfcompare
 
-CLASSPATH="$CLASSPATH:$XSPARQLHOME/cli/target/cli-0.4-SNAPSHOT-bin/libs/*"
+CLASSPATH="$CLASSPATH:$XSPARQLHOME/cli/target/cli-0.5-bin/libs/*"
 OPTS="-Dfile.encoding=UTF-8"
 
 

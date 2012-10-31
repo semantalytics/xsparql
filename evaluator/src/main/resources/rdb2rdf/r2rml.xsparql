@@ -19,6 +19,8 @@ prefix xsd: <http://www.w3.org/2001/XMLSchema#>
 prefix test: <http://www.w3.org/2006/03/test-description#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
+declare option saxon:output "method=text";
+
 declare variable $r2rml_mapping external ;
 declare variable $ds := xsparql:skolemiseGraph($r2rml_mapping);
 declare variable $base := "http://example.com/base/";
@@ -304,9 +306,10 @@ declare function local:createObject($row, $po, $subject, $predicate, $graph) {
                      optional { $om a rr:RefObjectMap; rr:parentTriplesMap $parent } . }
   }
   return 
-    let $object := if ($parent) then local:foreignKey($row, $om) 
+    let $objects := if ($parent) then local:foreignKey($row, $om) 
                    else if ($o) then local:createTerm((), "http://www.w3.org/ns/r2rml#constant", $o, (), (), ()) 
                    else local:processMap($row, $om, "object")
+    for $object in $objects            
     construct { $subject <{$predicate}> $object <{$graph}> }
 };
 

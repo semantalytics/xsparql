@@ -71,7 +71,7 @@ class EvaluatorExternalFunctions {
    * @return URI of local file containing string s
    */
   public static String turtleGraphToURI(String prefix, String n3) {
-    String ret = "";
+    URL retURL = null;
 
     try {
       // Create temp file.
@@ -87,12 +87,12 @@ class EvaluatorExternalFunctions {
       out.write(n3);  // re-escape any blackslashes
       out.close();
 
-      ret = "file://" + temp.getAbsolutePath();
+      retURL = temp.toURI().toURL();
     } catch (IOException e) {
 
     }
 
-    return ret;
+    return retURL.toString();
 
   }
 

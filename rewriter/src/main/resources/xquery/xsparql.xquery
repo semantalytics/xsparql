@@ -218,11 +218,11 @@ declare function _xsparql:_validSQLTerm($NType as item()) as xs:boolean
 declare function _xsparql:_sql_binding_term($Node as xs:anyAtomicType?) as item()
 {
   let $d := fn:data($Node)
-  return typeswitch ($d)
-        case $e as xs:string
+  (: return typeswitch ($d) :)
+  (:       case $e as xs:string :)
         	return fn:concat("'",$d,"'")
-        default
-          return $d
+        (: default :)
+        (:   return $d :)
 };
 
 

@@ -69,8 +69,8 @@ declare function sparql:skolemiseGraph ($graph as xs:string ) {
 declare function sparql:skolemiseGraph($graph, $prefix) {
 _xsparql:turtleGraphToURI( "",   _xsparql:_serialize( (
   let $_aux_results0 := _xsparql:_sparqlQuery( fn:concat( "SELECT $p $s $o from ", 
-                                                        _xsparql:_rdf_term( _xsparql:_binding_term( $graph ) ), 
-                                                        "where  { $s $p $o . } " ) )
+                                                        _xsparql:_rdf_term( _xsparql:_binding_term( fn:replace($graph, "\\", "/") ) ), 
+                                                        " where  { $s $p $o . } " ) )
 for $_aux_result0 at $_aux_result0_pos in _xsparql:_sparqlResultsFromNode( $_aux_results0 )
 
 let $p := _xsparql:_resultNode( $_aux_result0, "p" )
