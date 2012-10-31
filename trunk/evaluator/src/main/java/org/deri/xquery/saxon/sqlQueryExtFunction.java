@@ -38,7 +38,7 @@ import org.w3c.dom.Document;
  * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
  * @version 1.0
  */
-class sqlQueryExtFunction extends ExtensionFunctionDefinition {
+public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
 
  
   private static final long serialVersionUID = 6029071845119045349L;
@@ -56,6 +56,10 @@ class sqlQueryExtFunction extends ExtensionFunctionDefinition {
       "http://xsparql.deri.org/demo/xquery/xsparql.xquery", "_sqlQuery");
 
 
+  public sqlQueryExtFunction() {
+      this.query = null;
+    }
+
   public sqlQueryExtFunction(SQLQuery q) {
     this.query = q;
   }
@@ -72,7 +76,7 @@ class sqlQueryExtFunction extends ExtensionFunctionDefinition {
 
   @Override
   public int getMaximumNumberOfArguments() {
-    return 1;
+    return 5;
   }
 
   @Override
@@ -98,6 +102,14 @@ class sqlQueryExtFunction extends ExtensionFunctionDefinition {
 
         String queryString = arguments[0].next().getStringValue();
 
+        if(query == null && arguments.length > 1) {
+            String db = arguments[1].next().getStringValue();
+            String engine = arguments[2].next().getStringValue();
+            String user = arguments[3].next().getStringValue();
+//            String password = arguments[4].next().getStringValue();
+            query = new SQLQuery(engine,null,null,db,null,user,null);
+        }
+        
         logger.info("sqlQueryExtFunction: " +queryString);
         // SQLQuery query = new SQLQuery(queryString);
 

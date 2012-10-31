@@ -16,15 +16,20 @@
 package org.deri.sql;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,24 +38,13 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.apache.commons.codec.binary.Hex;
 import org.deri.xsparql.rewriter.Helper;
+import org.deri.xsparql.rewriter.Pair;
 import org.deri.xsparql.rewriter.XSPARQLProcessor;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import java.sql.*;
-import java.text.SimpleDateFormat;
-
-import org.deri.xsparql.rewriter.Pair;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
-
-import org.apache.commons.codec.binary.Hex;
 
 /**
  * Class used to perform SQL queries via JDBC.
@@ -345,7 +339,7 @@ public class SQLQuery {
      */
     public Document getResultsAsDocument(String query) {
 
-	OutputStream sb = new ByteArrayOutputStream();
+//	OutputStream sb = new ByteArrayOutputStream();
 
 	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder builder = null;
@@ -369,7 +363,7 @@ public class SQLQuery {
 
 	    if (results != null) {
 		while (results.next()) {
-		   Element resultXML = doc.createElement("result");
+//		   Element resultXML = doc.createElement("result");
 		    for (int i = 1; i <= columns; i++) {
 			String label = rsmd.getColumnLabel(i);
 			int type = rsmd.getColumnType(i);

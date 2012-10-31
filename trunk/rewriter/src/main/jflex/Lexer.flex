@@ -343,6 +343,7 @@ var               = [\$][a-zA-Z]([a-zA-Z0-9\_\-\.]*[a-zA-Z0-9\_\-]+)?
 "namespace"              { return symbol(XSPARQL.NAMESPACE, yytext()); }
 "default"                { return symbol(XSPARQL.DEFAULT, yytext()); }
 "element"                { return symbol(XSPARQL.ELEMENT, yytext()); }
+"option"                 { return symbol(XSPARQL.OPTION, yytext()); }
 "function"               { return symbol(XSPARQL.FUNCTION, yytext()); }
 "base-uri"               { return symbol(XSPARQL.BASEURI, yytext()); }
 "prefix"                 { pushStateAndSwitch(SPARQL);

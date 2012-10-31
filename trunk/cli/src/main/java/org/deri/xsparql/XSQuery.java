@@ -3,6 +3,9 @@
  */
 package org.deri.xsparql;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import net.sf.saxon.Configuration;
 import net.sf.saxon.Query;
 import net.sf.saxon.trans.CommandLineOptions;
@@ -17,6 +20,10 @@ import org.deri.xquery.saxon.sparqlQueryExtFunction;
 import org.deri.xquery.saxon.sparqlQueryTDBExtFunction;
 import org.deri.xquery.saxon.sparqlScopedDatasetExtFunction;
 import org.deri.xquery.saxon.turtleGraphToURIExtFunction;
+import org.deri.xquery.saxon.sqlQueryExtFunction;
+import org.deri.xquery.saxon.getRDBTablesExtFunction;
+import org.deri.xquery.saxon.getRDBTableAttributesExtFunction;
+import org.deri.xsparql.rewriter.XSPARQLProcessor;
 
 /**
  * @author nl
@@ -38,8 +45,13 @@ public class XSQuery extends Query {
 	new XSQuery().doQuery(args, "org.deri.xsparql.XSQuery");
     }
     
-public void applyLocalOptions(CommandLineOptions options, Configuration config) {
+    private final static Logger logger = Logger.getLogger(XSPARQLProcessor.class
+	      .getClass().getName());
+
+    public void applyLocalOptions(CommandLineOptions options, Configuration config) {
 	super.applyLocalOptions(options, config);
+
+	logger.setLevel(Level.WARNING);
 
 	try { 
 	    config.registerExtensionFunction(new sparqlQueryExtFunction());
@@ -52,15 +64,16 @@ public void applyLocalOptions(CommandLineOptions options, Configuration config) 
 	    config.registerExtensionFunction(new createNamedGraphExtFunction());
 	    config.registerExtensionFunction(new deleteNamedGraphExtFunction());
 	    config.registerExtensionFunction(new sparqlQueryTDBExtFunction());
+
+	    // RDB functions
+	    config.registerExtensionFunction(new sqlQueryExtFunction());
+	    config.registerExtensionFunction(new getRDBTablesExtFunction());
+	    config.registerExtensionFunction(new getRDBTableAttributesExtFunction());
+
         } catch (Exception ex) {
             throw new IllegalArgumentException();
 	}
 	    
-//	// RDB functions
-//	proc.registerExtensionFunction(new sqlQueryExtFunction());
-//	proc.registerExtensionFunction(new getRDBTablesExtFunction());
-//	proc.registerExtensionFunction(new getRDBTableAttributesExtFunction());
-
 
     }
 

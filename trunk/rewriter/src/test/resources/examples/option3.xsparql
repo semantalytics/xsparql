@@ -1,0 +1,4 @@
+declare option saxon:output "method=text";
+
+let $url := "http://nunolopes.org/foaf.rdf"
+construct { <{$url}> <{$url}> <{$url}> }

@@ -33,7 +33,7 @@ import org.deri.sql.SQLQuery;
  * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
  * @version 1.0
  */
-class getRDBTablesExtFunction extends ExtensionFunctionDefinition {
+public class getRDBTablesExtFunction extends ExtensionFunctionDefinition {
 
   /**
 	 * 
@@ -51,6 +51,8 @@ class getRDBTablesExtFunction extends ExtensionFunctionDefinition {
 
   // new StructuredQName("_java", "java:org.deri.sparql.Sparql",
   // "turtleGraphToURI");
+
+  public getRDBTablesExtFunction() { }
 
   public getRDBTablesExtFunction(SQLQuery q) {
       this.query = q;

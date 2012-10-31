@@ -163,6 +163,10 @@ defaultDecl(dd1, dd2, dd3) ::= <<
 declare default $dd1$ $dd2$ $dd3$;
 >>
 
+optionDecl(dd1, dd2) ::= <<
+declare option $dd1$ $dd2$;
+>>
+
 comment(comment) ::= <<
 
 (: $comment$ :)
