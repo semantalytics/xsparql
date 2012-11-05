@@ -6,12 +6,12 @@
   <parent>
     <artifactId>external</artifactId>
     <groupId>org.deri.xsparql</groupId>
-    <version>0.5-SNAPSHOT</version>
+    <version>20121105-SNAPSHOT</version>
   </parent>
   <packaging>bundle</packaging>
   <groupId>org.deri.xsparql</groupId>
   <artifactId>net.sf.saxon</artifactId>
-  <version>9.3</version>
+  <version>9.4</version>
   <name>Saxon Bundle</name>
   <dependencies>
     <dependency>

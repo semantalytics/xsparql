@@ -29,7 +29,6 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 
-import org.deri.xsparql.evaluator.XQueryEngine;
 import org.deri.xsparql.evaluator.XSPARQLEvaluator;
 import org.deri.xsparql.rewriter.Helper;
 import org.deri.xsparql.rewriter.XSPARQLProcessor;
@@ -237,9 +236,9 @@ public class Main {
     oparser.accepts("h", "Show Help");
     oparser.accepts("version", "Show version information");
     oparser.accepts("v", "Show debug information (verbose mode)");
-    oparser.accepts("noval", "Use non-validating XQuery engine (default)");
-    oparser.accepts("val", "Use validating XQuery engine");
-    oparser.accepts("arq", "use ARQ API to perform SPARQL queries (default)");
+//    oparser.accepts("noval", "Use non-validating XQuery engine (default)");
+//    oparser.accepts("val", "Use validating XQuery engine");
+//    oparser.accepts("arq", "use ARQ API to perform SPARQL queries (default)");
 //    oparser.accepts("joseki", "use Joseki endpoint to perform SPARQL queries");
     oparser.accepts("rewrite-only", "Only perform rewriting to XQuery");
 
@@ -271,6 +270,8 @@ public class Main {
     // parameters which lead to early exit
 
     if (options.has("h")) {
+      System.out.println(getClass().getPackage().getImplementationTitle()
+	          + " version " + getClass().getPackage().getImplementationVersion());
       System.out
           .println("USAGE: java -jar xsparql.jar [OPTIONS] [FILE]* [PARAMETERS]*");
       System.out.println();
@@ -292,13 +293,13 @@ public class Main {
 
     // Validating XQuery
 
-    if (options.has("noval") && options.has("val")) {
-      System.err.println("Use either \"val\" or \"noval\". Using default.");
-    } else if (options.has("noval") || options.has("val")) {
-      proc.setValidating(options.has("val"));
-    } else {
-      // use default
-    }
+//    if (options.has("noval") && options.has("val")) {
+//      System.err.println("Use either \"val\" or \"noval\". Using default.");
+//    } else if (options.has("noval") || options.has("val")) {
+//      proc.setValidating(options.has("val"));
+//    } else {
+//      // use default
+//    }
 
     // simple commandline switches
     proc.setVerbose(options.has("v"));

@@ -6,7 +6,7 @@
   <parent>
     <artifactId>external</artifactId>
     <groupId>org.deri.xsparql</groupId>
-    <version>0.5-SNAPSHOT</version>
+    <version>20121105-SNAPSHOT</version>
   </parent>
   <packaging>bundle</packaging>
   <groupId>org.deri.xsparql</groupId>
