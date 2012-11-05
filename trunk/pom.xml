@@ -14,7 +14,7 @@
   <name>XSPARQL parent</name>
 
   <packaging>pom</packaging>
-  <version>0.6-SNAPSHOT</version>
+  <version>20121105-SNAPSHOT</version>
   <url>http://xsparql.deri.org/</url>
   <licenses>
     <license>
@@ -92,6 +92,7 @@
   </properties>
   
   <build>
+    <finalName>${artifactId}</finalName>
     <pluginManagement>
       <plugins>
         <plugin>        
@@ -137,11 +138,6 @@
               </goals>
             </execution>
           </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>2.3.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -197,19 +193,7 @@
         </configuration>
       </plugin>
       
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-      
+     
       <!-- Could be used to create a zipfile with sources -->
       <!--plugin>
         <artifactId>maven-assembly-plugin</artifactId>
