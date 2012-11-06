@@ -51,13 +51,13 @@
   
   <issueManagement>
     <system>Sourceforge</system>
-    <url>https://dev.deri.ie:8443/jira/browse/XSPARQL</url>
+    <url>http://sourceforge.net/tracker/?group_id=243296&amp;atid=1121918</url>
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:https://subversion.deri.ie/xsparql/trunk/</connection>
-    <developerConnection>scm:svn:https://subversion.deri.ie/xsparql/trunk/</developerConnection>
-    <url>http://websvn.deri.ie/xsparql/trunk/</url>
+    <connection>scm:svn:https://xsparql.svn.sourceforge.net/svnroot/xsparql/trunk/</connection>
+    <developerConnection>scm:svn:https://xsparql.svn.sourceforge.net/svnroot/xsparql/trunk/</developerConnection>
+    <url>http://xsparql.svn.sourceforge.net/viewvc/xsparql/trunk/</url>
   </scm> 
 
   <mailingLists>
@@ -144,7 +144,7 @@
           <artifactId>maven-release-plugin</artifactId>
           <version>2.2.2</version>
           <configuration>
-            <tagBase>https://subversion.deri.ie/xsparql/tags</tagBase>
+            <tagBase>https://xsparql.svn.sourceforge.net/svnroot/xsparql/tags</tagBase>
           </configuration>
         </plugin>
         
