@@ -46,8 +46,8 @@ filterExpr(main) ::= <<
 filter $main$
 >>
 
-orderExpr(main) ::= <<
-order by $main$
+orderExpr(main, ordering) ::= <<
+order by $main$ $if(ordering)$ $ordering$$endif$
 
 >>
 

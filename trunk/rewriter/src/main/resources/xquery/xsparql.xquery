@@ -164,7 +164,7 @@ declare function _xsparql:_binding_term($prefix as xs:string,
         case $e as xs:anyURI
         	return _xsparql:_binding("_sparql_result:uri",  $label, "", "")
         default
-          return if (fn:matches($label, "^_:[a-z]([a-z|0-9|_])*$", "i")) 
+          return if (fn:matches(xs:string($label), "^_:[a-z]([a-z|0-9|_])*$", "i")) 
             then _xsparql:_binding("_sparql_result:bnode",  fn:substring($label,3), "", "")
             (: attempt to detect if it is a prefixed URI. :)
             (:else if (fn:matches(xs:string($Node), "^([a-zA-Z]*):([a-zA-Z0-9_\-\.@]+)$")) :)

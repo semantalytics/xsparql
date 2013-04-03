@@ -56,7 +56,6 @@ import org.w3c.dom.Element;
  * @author nl
  * 
  */
-@SuppressWarnings("restriction")
 public class SQLQuery {
 
     private Connection db;
@@ -202,7 +201,7 @@ public class SQLQuery {
 
 	    XMLOutputFactory xof = XMLOutputFactory.newInstance();
 	    XMLStreamWriter xtw;
-	    xtw = xof.createXMLStreamWriter(sb);
+	    xtw = xof.createXMLStreamWriter(sb, "UTF-8");
 
 	    xtw.writeStartDocument("utf-8", "1.0");
 	    xtw.writeStartElement("", "sql");

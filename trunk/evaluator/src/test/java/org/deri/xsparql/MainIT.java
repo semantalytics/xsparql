@@ -12,9 +12,6 @@
  */
 package org.deri.xsparql;
 
-import java.io.File;
-import java.io.IOException;
-
 import junit.framework.TestCase;
 
 public class MainIT extends TestCase {
@@ -23,6 +20,7 @@ public class MainIT extends TestCase {
     fail("Not yet implemented"); // TODO
   }
 
+  /*
   private String main(String[] args) {
     File jar = new File("target/lang-1.0-SNAPSHOT.jar");
 
@@ -44,5 +42,5 @@ public class MainIT extends TestCase {
     }
     return p.getInputStream().toString();
   }
-
+*/
 }

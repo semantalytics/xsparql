@@ -90,6 +90,7 @@ public class scopedDatasetPopResultsExtFunction extends ExtensionFunctionDefinit
 
       private static final long serialVersionUID = -1452266931467431145L;
 
+      @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
       public SequenceIterator call(SequenceIterator[] arguments,
           XPathContext context) throws XPathException {

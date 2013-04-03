@@ -56,55 +56,11 @@ public class XsparqlServerServlet extends HttpServlet {
 
       //System.out.println("Starting XSPARQL servlet...");
 
-//      this.licensedSaxon = Boolean
-//          .parseBoolean(getInitParameter("validatingXQuery"));
-      // System.out.println(licensedSaxon);
-      // System.out.println(System.getenv("SAXON_HOME"));
-
-      // saxon xquery
-//      processor = new xqueryEvaluatorSaxon(licensedSaxon);
-//      if (licensedSaxon) {
-//        Configuration.setXQueryEngine("saxon-ee");
-//      } else {
-//        Configuration.setXQueryEngine("saxon-he");
-//      }
-
       // xsparqlProcessor
       proc = new XSPARQLProcessor();
       eval = new XSPARQLEvaluator();
-
-      // TODO: bug in saxon (or our library), loading the library by default
-      // does not work
-      // if (licensedSaxon) {
-      // // load the xsd
-      // URL xsd = new
-      // URL("http://xsparql.deri.org/demo/xquery/sparql.xsd");
-      // BufferedReader xsdIn = new BufferedReader(new
-      // InputStreamReader(xsd.openStream()));
-      // schemaManager.load(new StreamSource(xsdIn));
-
-      // // load the XSPARQL library
-      // URL module = new
-      // URL("http://xsparql.deri.org/demo/xquery/xsparql-types.xquery");
-      // BufferedReader in = new BufferedReader(new
-      // InputStreamReader(module.openStream()));
-      // xqueryComp.compileLibrary(in);
-      // }
-
-      // } catch (MalformedURLException e) {
-      // System.err.println(e.getMessage());
-      // } catch (IOException e) {
-      // System.err.println(e.getMessage());
-      // } catch (SaxonApiException e) {
-      // System.err.println(e.getMessage());
-    
-
   }
 
-  //TODO: rewrite this method
-  /* (non-Javadoc)
-   * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-   */
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
@@ -119,8 +75,8 @@ public class XsparqlServerServlet extends HttpServlet {
       String exec = null;
       Reader is = null;
 
-      // TODO: is there a better way to do this?
-      for (Enumeration<String> e = req.getParameterNames(); e.hasMoreElements();) {
+      Enumeration<String> e = req.getParameterNames();
+      while(e.hasMoreElements()) {
         String key = e.nextElement();
         String value = req.getParameter(key);
         System.out.println(key + " = " + value);

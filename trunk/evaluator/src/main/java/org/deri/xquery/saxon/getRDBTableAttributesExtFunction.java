@@ -92,6 +92,7 @@ public class getRDBTableAttributesExtFunction extends ExtensionFunctionDefinitio
 
       private static final long serialVersionUID = 154082133874153698L;
 
+      @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
       public SequenceIterator call(SequenceIterator[] arguments,
           XPathContext context) throws XPathException {

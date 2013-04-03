@@ -1530,7 +1530,7 @@ forClause
   ;
 
 singleForClause
-  : ^(T_FOR var=VAR (^(T_TYPE typeDeclaration))? optionalPosClause[$var.text] )
+  : ^(T_FOR var=VAR { addVariableToScope($var.text); } (^(T_TYPE typeDeclaration))? optionalPosClause[$var.text] )
   ;
 
 // inject positional variable if not already present, otherwise use the given one
@@ -2128,12 +2128,13 @@ limitoffsetclauses
   ;
 
 orderclause
-  : ^(o=ORDER orderCondition)
-  -> QSTRING[$o.token, $o.text + " by "] orderCondition
+  : ^(o=ORDER orderCondition*)
+  -> QSTRING[$o.token, $o.text + " by "] orderCondition*
   ;
 
 orderCondition
   : (ASC | DESC) brackettedExpression
+  | NCNAME brackettedExpression
   | constraint
   | v=VAR -> QSTRING[$v.token, $v.text+ " "]
   ;
@@ -2634,6 +2635,8 @@ object
   | rdfLiteral
   | sNumericLiteral
   | triplesNode
+  | l=literalConstruct ->
+    ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS $l))
   ;
 
 triplesNode

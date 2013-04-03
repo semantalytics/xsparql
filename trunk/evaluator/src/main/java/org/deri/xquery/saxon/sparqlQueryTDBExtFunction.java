@@ -104,6 +104,7 @@ public class sparqlQueryTDBExtFunction extends ExtensionFunctionDefinition {
 
       private static final long serialVersionUID = 6073685306203679400L;
 
+      @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
       public SequenceIterator call(SequenceIterator[] arguments,
           XPathContext context) throws XPathException {

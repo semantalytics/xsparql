@@ -83,6 +83,7 @@ public class deleteScopedDatasetExtFunction extends ExtensionFunctionDefinition 
 
       private static final long serialVersionUID = 8278533150880474564L;
 
+      @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
       public SequenceIterator call(SequenceIterator[] arguments,
           XPathContext context) throws XPathException {

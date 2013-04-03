@@ -87,6 +87,7 @@ public class createScopedDatasetExtFunction extends ExtensionFunctionDefinition 
 		 */
       private static final long serialVersionUID = 7030338651481369238L;
 
+      @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
       public SequenceIterator call(SequenceIterator[] arguments,
           XPathContext context) throws XPathException {

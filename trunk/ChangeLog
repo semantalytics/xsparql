@@ -1,3 +1,14 @@
+2013-04-03  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* rewriter/src/main/antlr3/org/deri/xsparql/rewriter/XSPARQLSimplifier.g: allow SPARQL 1.1 like aggregators including '*' as variable selection
+
+	* rewriter/src/main/antlr3/org/deri/xsparql/rewriter/XSPARQLRewriter.g: added order specification to ORDER_BY
+	Add FOR variable to the list of bound variables
+
+	* rewriter/src/main/antlr3/org/deri/xsparql/rewriter/XSPARQL.g: added order specification to ORDER_BY
+
+	* rewriter/src/main/antlr3/org/deri/xsparql/rewriter/XQuerySerializer.g: added order specification to ORDER_BY
+
 2010-11-17  Nuno Lopes  <nuno.lopes@deri.org>
 
 	* moved the directory structure and build system to maven
