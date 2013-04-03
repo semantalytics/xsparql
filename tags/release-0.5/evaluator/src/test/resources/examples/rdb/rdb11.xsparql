@@ -1,0 +1,6 @@
+<names>{
+for id as $one, name as $two  from student
+where id = 1 and name = "Nuno"
+return <name>{$two}</name>
+}</names>
+(: where (((id) = (1))  and (id = (1))) :)

@@ -1,0 +1,5 @@
+<names>{
+let $r := "address"
+for student.id as $one, name as $two  from student,$r
+return <name>{$two}</name>
+}</names>

@@ -1,0 +1,3 @@
+mvntest - a small maven project to test xsparql in the snapshot repository (or central repository)
+
+be sure to delete the xsparql artifacts in your own repository (~/.m2/repository/org/deri/xsparql) before trying "mvn package" or similar.

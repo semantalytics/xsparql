@@ -1,0 +1,5 @@
+<names>{
+for id as $one, name as $two  from student
+where id = 1
+return <name>{$two}</name>
+}</names>

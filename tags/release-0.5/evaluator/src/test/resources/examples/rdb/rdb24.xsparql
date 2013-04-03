@@ -1,0 +1,2 @@
+for row $row from band
+return data($row/id)

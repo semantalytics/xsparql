@@ -1,0 +1,2 @@
+for * from student
+return <name>{$student.name}</name>

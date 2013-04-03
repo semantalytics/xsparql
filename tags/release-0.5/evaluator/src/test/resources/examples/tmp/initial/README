@@ -1,0 +1,50 @@
+Some explanations:
+
+
+------------------- Example 1: Lifting, howmyfriendsknoweachother  -----------------------
+
+howmyfriendsknoweachother.xml ... the sources xml file.
+
+Alternative1:
+
+howmyfriendsknoweachother_lifting.xsparql ... the xsparql query in the syntax I suggest.
+
+howmyfriendsknoweachother_lifting.xquery ... a slight variant which illustrates what I would expect would be fed into a standard xquery processor... as you see, I had to fill in some dummy <turtle> tags, otherwise the standard xquery (I used oXygen) wouldn't eat it.
+
+howmyfriendsknoweachother_lifting.out_ttl ... expected turtle output, note that the @prefix declaration needs to be filled in for ALL declared namespaces in the xQuery!!!
+
+howmyfriendsknoweachother_lifting.out_xml ... expected rdf/xml output
+note that the xmlns declaration needs to be filled in for ALL declared namespaces in the xQuery!!!
+
+
+Alternative2: (the same stuff for alternative 2 of the query)
+
+howmyfriendsknoweachother2_lifting.xsparql
+howmyfriendsknoweachother2_lifting.out_ttl howmyfriendsknoweachother2_lifting.out_xml howmyfriendsknoweachother2_lifting.xquery ... note that in the xquery variant I illustrated the addition of the counter indexes qhich need to be added to ANY bnode identifier in the return path.
+
+Now another thing which is important in this context:
+
+FOR THIS TO WORK we have to forbid "_" in bnode names and variable names in XSPARQL!
+
+Why?
+
+1) If we allow "_" in bnode IDs in XSPARQL, queries with a return path
+
+ return
+ {
+ _:a_1 :p _:a.
+ }
+
+might become ambiguous, I am afraid.
+
+2) If we allow "_" in variable names in XSPARQL, queries with for part
+
+  for ?a ... , ?a_count
+  ...
+
+might become ambiguous.
+
+So, summarizing, to be on the safe side, I suggest we simply disallow "_" in bnode identifiers as well as in variable names in XSPARQL.
+This should be the ONLY language restriction I can think of at the moment compared with the source languages SPARQL and XQuery.
+
+------------------------------------------------------------------------------------------

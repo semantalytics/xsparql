@@ -1,0 +1,6 @@
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+
+let $class := "foaf:Person"
+let $name1 := "Stefan"
+let $name2 := "Bischof"
+construct { [ a $class; foaf:name $name1, $name2 ] }

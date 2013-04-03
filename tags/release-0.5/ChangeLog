@@ -1,0 +1,620 @@
+2010-11-17  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* moved the directory structure and build system to maven
+
+2010-09-07  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/templates/XQuery.stg: added template for schemaImport.
+
+	* src/parser/XSPARQLRewriter.g: added schema import to the
+	rewritten query.  Needed to run with XQilla.
+
+	* src/parser/XQuerySerializer.g (root): added serialise rule for
+	schema import.
+
+	* build.xml: updated URL for Xerces-J
+
+2010-03-24  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQLSimplifier.g: fixed static concat
+
+	* src/parser/XQuerySerializer.g: fixed static concat
+
+	* src/parser/Lexer.flex: fixed DECIMAL
+
+2010-03-23  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: generate pop statements for the
+	scoped dataset stack.
+
+	* src/parser/XQuerySerializer.g: new node T_XML_CONTENTS replaces
+	the { and } on the tree.  Needed for the correct serialisation of
+	XML contents.
+
+2010-03-22  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/parser/XSPARQL.g:  added code to delete the
+	scopedDataset id on exit of the query.
+
+	* src/parser/XSPARQLRewriter.g: added code to delete the
+	scopedDataset id on exit of the query.
+	updated rewriter grammar to match the XSPARQL grammar
+	(enclosedExpr_ includes { and })
+	check if the select queries contain at least one var to select,
+	otherwise output select
+
+	* src/parser/XSPARQLRewriter.g: use declared variable for the
+	bnode object rewriting.
+
+
+2010-03-21  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xquery/xsparql-types.xquery: Code for the scoped dataset.
+	Changed _sparql to receive an already concatenated string with the
+	query.
+
+	* src/parser/XSPARQLSimplifier.g: Code for the scoped dataset.
+
+	* src/java/org/deri/sparql/Sparql.java: Code for the scoped
+	dataset.
+
+2010-03-02  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: only adds $var_graph to the scope
+	if the let assigment was from a construct query. solves JIRA #25.
+	(backtrack): removed the invalid subject, predicate and object
+	comments.
+
+	* src/parser/XSPARQL.g: default assignment of graphoutput variable
+	is done in the parser: otherwise, when running the server, the
+	prefixes are outputed when returning XML if there was a construct
+	query before.
+
+	* src/java/servlet/xsparqlServerServlet.java: accept an URL
+	encoded query as parameter. If there is an error it needs to
+	restart the server..
+
+	* bin/run_tests.sh: run the tests through the command line.
+
+	* examples/sioc2rss.xsparql: jonhbreslin.com no longer has this
+	url. Changed it to my blog instead.
+
+2010-02-17  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: added call to _binding_term for labeled blank nodes in constructs
+
+2010-02-12  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* xsparql: possibility of still running the command line version,
+	using the -c and -v options for nonverbose and verbose mode
+	respectively
+
+	* src/java/servlet/xsparqlServerServlet.java: load the XSD and
+	module at startup
+
+2010-02-11  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/java/org/deri/xsparql/Main.java: start the server correctly now.
+
+2010-02-10  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* xsparql: adapted script to use the server for running queries
+	* build.xml: added option to remove directories when uncompressing
+
+2010-02-08  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* xsparql: fixed the path to the jetty jars when using ant getdevtools
+
+2010-02-08  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/java/org/deri/xsparql/Main.java (Main::startServer): added
+	option to start an XSPARQL server using Jetty.
+
+2009-02-08  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQL.g: cleanup
+	* src/parser/XSPARQLRewriter.g: cleanup
+
+2009-02-04  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: changed multiplicity of exprSingle in expire. Maybe breaks something.
+
+2010-02-04  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/xquery/xsparql.xquery: removed old commented functions and
+	added some comments for the functions
+
+2009-01-26  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: fixed URL of debug version of XQuery lib
+
+2009-01-25  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: fixed outdated rewriting in sparql filter expressions
+
+2009-01-25  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: fixed a bug that occurred during rewriting of dependent variables
+	* src/parser/XSPARQLSimplifier.g: fixed a bug that occurred during rewriting of dependent variables
+
+2009-01-20  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/org/deri/xsparql/Main.java: pipe external variables to XQuery engine
+
+2009-01-18  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQL.g: fixed small bug with external variable declarations
+	* src/parser/XSPARQLRewriter.g: fixed small bug with external variable declarations
+	* src/parser/XSPARQLSerializer.g: fixed small bug with external variable declarations
+	* src/templates/XQuery.stg: fixed small bug with external variable declarations
+
+2009-01-13  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/Lexer.flex: fixed XSPARQL comments
+
+2009-12-10  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* benchmarks/run.sh: more functionality for the script, run
+	xsparql and xquery tests
+
+2009-12-10  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: fixed specification bug with for * and already bound variables
+	* src/parser/XSPARQLSerializer.g: fixed specification bug with for * and already bound variables
+
+2009-12-10  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* xsparql: add a command-line option for verbose mode.
+
+2009-12-10  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* bin/run-tests.sh: removed reference to old xsparql-all.jar and use xsparql-quiet
+	* xsparql-quiet: added a script for executing xsparql without any debug output, this should be a commandline switch
+
+2009-11-30  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/parser/XSPARQLSimplifier.g: allow function calls in SPARQL
+	select (use of ARQ defined functions)
+
+
+	* src/parser/Lexer.flex: added decimals
+	(var): added ARQ keywords
+
+	* src/parser/XQuerySerializer.g: added decimals
+	* src/parser/XSPARQL.g: added decimals
+	: allow function calls in SPARQL select (use of ARQ defined functions)
+
+	* src/parser/XSPARQLRewriter.g: added decimals
+	: allow function calls in SPARQL select (use of ARQ defined functions)
+
+
+2009-11-25  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* build.xml: update Saxon to version 9.2, get rid off the xsparql-all.jar which was probably violating some license, fix "doc" target
+	* xsparql: added shell script to start xsparql since xsparql-all.jar is not available anymore
+	* src/java/*: added some comments and mode some classes public
+	* src/parser/Lexer.flex: temporarily disabled the "text" keyword for the XMark benchmark queries, see comment in JIRA XSPARQL-19
+
+2009-11-27  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: added returnFlag to be able to
+	conditionally change the rewritting on return clauses.
+
+2009-11-26  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/templates/XQuery.stg: new function declaration syntax
+	tree. solves JIRA bug XSPARQL-22.
+
+	* src/parser/XSPARQLRewriter.g: new function declaration syntax
+	tree. solves JIRA bug XSPARQL-22.
+
+	* src/parser/XSPARQL.g: new function declaration syntax
+	tree. solves JIRA bug XSPARQL-22.
+
+	* src/parser/XQuerySerializer.g: added serialising for new
+	function declaration trees. solves JIRA bug XSPARQL-22.
+
+	* src/java/org/deri/xsparql/Main.java: use saxon ee. Need for the
+	schema aware queries.
+
+	* bin/run_tests.sh: Added the option of also testing the execution
+	of the rewritten queries using the parameter -e.
+
+2009-11-25  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* build.xml: include edition.properties of the saxon 9.2 jar file in the resulting xsparql-all.jar
+
+2009-11-23  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/xquery/xsparql.xquery: added XSPARQL functions for XQuery
+	* src/xquery/sparql.xquery: added SPARQL functions for XQuery
+
+2009-11-21  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/java/org/deri/xsparql/Main.java: added nested construct warning
+	* src/java/org/deri/xsparql/XSPARQLProcessor.java: added nested construct warning
+	* src/parser/XSPARQLRewriter.g: fix a bug when using FILTER in OPTIONAL; added nested construct warning
+
+2009-11-16  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* benchmarks/XMark/2.XSPARQL/query02.xsparql: fix the query
+	* benchmarks/XMark/2.XSPARQL/query03.xsparql: fix the query
+
+2009-11-16  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* benchmarks/XMark/2.XSPARQL/query11.xsparql: fix the query
+	* benchmarks/XMark/2.XSPARQL/query15.xsparql: fix the query
+	* benchmarks/XMark/2.XSPARQL/query16.xsparql: fix the query
+	* benchmarks/XMark/2.XSPARQL/query09.xsparql: fix the query
+	* benchmarks/XMark/2.XSPARQL/query18.xsparql: fix the query
+
+2009-11-09  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/java/org/der/xsparql/Main.java: introduce commandline parameter XSPARQL endpoint URI
+	* src/java/org/deri/xsparql/XSPARQLProcessor.java: introduce commandline parameter XSPARQL endpoint URI
+	* src/parser/XSPARQLRewriter.g: introduce commandline parameter XSPARQL endpoint URI
+	* benchmarks/XMark/2.XSPARQL/query09.xsparql: change back to working version without trying to match blank nodes
+
+2009-10-09  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* benchmarks/XMark/2.XSPARQL/query11: added foaf namespace
+
+2009-10-06  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: fix SPARQL filter regex
+	* src/parser/Lexer.flex: disable xml start tags in SPARQL where
+
+2009-10-05  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: fixed a stupid bug in SPARQL filter expressions when using multiplication
+
+2009-09-24  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: fixed typo which lead to NullPointerException when using bound in filter expression; see #XSPARQL-16
+
+2009-09-24  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* src/parser/XSPARQL.g: fixed multiple unions; see #XSPARQL-17
+
+        * src/parser/XSPARQLRewriter.g: fixed multiple unions; see #XSPARQL-17
+
+2009-09-15  Stefan Bischof  <stefan.bischof@deri.org>
+
+	* bin/run_tests.sh: fix the test script because of the moved test queries
+
+2009-08-25  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/parser/XSPARQLRewriter.g (backtrack): fix the rewriting of
+	anonymous blank nodes
+
+	* src/parser/XQuerySerializer.g (root): added LT, GT, GE, LE nodes
+
+	* src/java/org/deri/xsparql/Main.java: added option to remove xml
+	declaration from the output
+
+	* build.xml: removed cup targets from the file
+
+
+2009-08-19  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: changed rewritting for queries
+
+	* src/parser/XSPARQL.g: replaced STRING_LITERALs with QSTRINGs
+
+	* src/parser/Lexer.flex: replaced yytext() with actual text
+
+2009-08-18  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/parser/XQuerySerializer.g (root): add new keyword tokens
+
+	* src/parser/XSPARQLRewriter.g: split rdfliteral and
+	sNumericLiteral to be inline with the specs grammar
+	added " to the rewriting of rdfLiterals
+	not generate lexer rules with ANTLR
+	new structure for union queries
+	allow nested expressions in construct queries
+	changed tree of SPARQL filter function calls
+
+
+	* src/parser/Lexer.flex: renamed XsparqlLexer to XSPARQLLexer
+	not generate lexer rules with ANTLR
+
+
+	* src/java/org/deri/xsparql/XSPARQLProcessor.java: renamed
+	XsparqlLexer to XSPARQLLexer
+	not generate lexer rules with ANTLR
+
+	* src/parser/XSPARQL.g: replaced propertyList with
+	propertyListNotEmpty?
+	Removed non used propertyList and propertyList_ rules
+	split rdfliteral and sNumericLiteral to be inline with the specs grammar
+	not generate lexer rules with ANTLR
+	new structure for union queries
+	allow nested expressions in construct queries
+	changed tree of SPARQL filter function calls
+
+2009-08-17  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQL.g: moved iriConstruct from graphTerm_ to varOrTerm_
+
+2009-08-17  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: add namespaces to function
+	turtleGraphToURI
+
+	* src/java/org/deri/sparql/Sparql.java: add namespaces to
+	function turtleGraphToURI
+
+2009-08-17  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQLRewriter.g: introduced constructed from clause
+   * src/java/org/deri/sparql/Sparql.java: introduced constructed from clause
+
+2009-08-17  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQLRewriter.g: fixed rewriting of labeled blank nodes in nested for clauses
+
+2009-08-17  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQLRewriter.g: fixed rewriting of labeled blank nodes in construct clauses
+
+2009-08-15  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/parser/XSPARQLRewriter.g: replace && with &amp;
+
+	* src/parser/XQuerySerializer.g: added rewritting for the DOT node.
+
+	* src/templates/XQuery.stg: added xquery emacs mode.
+
+2009-08-14  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQLRewriter.g: changed debug mode, deleted sparql results namespace
+
+   * src/parser/XSPARQLSimplifier.g: changed namespace prefix
+
+2009-08-14  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQLSimplifier.g: changed the sparql for variable rewriting to a simpler form
+
+   * src/templates/XQuery.stg: remove a newline before let clauses for a nicer rewriting
+
+2009-08-14  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/java/org/deri/xsparql/Main.javas: added switch for debug version
+
+   * src/java/org/deri/xsparql/XSPARQLProcessor.java: added switch for debug version, fixed error counting
+
+   * src/parser/XSPARQLRewriter.g: added switch for debug version, fixed multiplicity for propertyListNotEmpty
+
+2009-08-14  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQLRewriter.g: changed BNODE to BLANK_NODE_LABEL
+
+   * src/parser/Lexer.flex: changed BNODE to BLANK_NODE_LABEL
+
+   * src/parser/XSPARQLRewriter.g: changed BNODE to BLANK_NODE_LABEL, added rewriting for variables in filters
+
+   * examples/extra-queries/use-case.xsparql: removed duplicate namspace declaration
+
+2009-08-14  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQLRewriter.g: added rewrite rules for some of the filter subrules, added groups in ANTLRWorks
+
+   * src/templates/XQuery.stg: added indenting for return clauses
+
+2009-08-13  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/templates/XQuery.stg: print a newline before a let
+
+	* src/parser/XSPARQLRewriter.g: changed rewriting of nodes.
+
+	* src/parser/XSPARQL.g: uncommented needed alternatives in
+	object. Check the new 'graphNode' grammar.
+
+	* src/java/org/deri/xsparql/XSPARQLProcessor.java (XSPARQLProcessor::printAST):  moved file directory from XSPARQLProcessor to Helper
+
+
+	* src/java/org/deri/xsparql/Helper.java (Helper::writeDotFile):
+	moved file directory from XSPARQLProcessor to Helper
+	(Helper::writeDotFile): rename graphviz output
+
+2009-08-11  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQLRewriter.g: fixed iri construct in predicate position and multiple rewritings of the same predicate
+
+2009-08-12  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* src/templates/XQuery.stg: new templates.
+
+	* src/parser/XSPARQLSimplifier.g: changed the rewriting for SPARQL variables.
+
+	* src/parser/XSPARQLRewriter.g: slight change in the structure of
+	the tree.
+
+	* src/parser/XSPARQL.g: added rule to keep the braces in enclosedExpr.
+
+	* src/parser/XQuerySerializer.g: slight change in the structure of
+	the tree.  Added some of the missing operators.
+
+	* src/parser/Lexer.flex: remove unsued imports.
+
+	* src/java/org/deri/xsparql/Main.java: change output format of saxon
+
+	* src/java/org/deri/xsparql/Helper.java: check if tree in null in
+	printTree method.
+	new path for tree image files.
+
+	* build.xml: minor fixes to includes and compile options
+
+2009-08-11  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/java/org/deri/xsparql/Main.java: bugfixing
+   * src/java/org/deri/xsparql/XSPARQLProcessor.java: bugfixing
+   * src/parser/XSPARQLRewriter.g: bugfixing
+   * src/parser/XSPARQL.g: bugfixing
+   * src/parser/XQuerySerializer.g: bugfixing
+   * src/parser/XSPARQLSimplifier.g: added
+
+2009-07-29  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/java/org/deri/xsparql/Helper.java: refactored some static methods in this helper class for reuse
+   * src/java/org/deri/xsparql/Main.java: refactored a method to Helper
+   * src/java/org/deri/xsparql/XSPARQLProcessor.java: changed to new XSPARQLRewriter
+   * src/parser/XSPARQLRewriter.g: complete rewrite of this rewriter for enabling correctly working variable scoping
+   * src/parser/XSPARQL.g: unify form of trace(); calls, rename some rules
+
+2009-07-22  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQL.g: fixed function declaration, comparison expression, added XPATH root node for XQuery pathExpr, removed T_PAR from filter
+   * src/parser/XSPARQLRewriter.g: optional from clause, added solution modifier, added optional parts
+   * src/parser/XQuerySerializer.g: function declaration, xpath expressions, allow star in xpath expressions, added or and and expressions, added some simple terminals and cdata
+   * src/templates/XQuery.stg: added function declaration
+
+2009-07-22  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * bin/run_tests.sh: only take queries from the examples directory
+   * src/java/org/deri/xsparql/Main.java: Use Saxon s9 API, fixed return code bug
+   * src/java/org/deri/xsparql/AbstractMyTreeRewriter.java: Removed unused import
+   * build.xml: Added Saxon s9 api library
+   * src/parser/XSPARQL.g: Reordered some rules, added iri construct and literal construct
+   * src/parser/XSPARQLRewriter.g: fixed anonymous blank node handling, added iri and literal construct, made some constants explicit
+   * src/parser/XQuerySerializer.g: added filter
+   * src/templates/XQuery.stg: added filter
+   * doc/grammar.html: added XSPARQL grammar
+
+2009-07-15  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQL.g: for *, construct rewriting, fixed blank nodes for where clauses
+   * src/parser/XSPARQLRewriter.g: introduced query body parts, fixed blank nodes, added simplification rule
+   * src/parser/XQuerySerializer.g: removed SPARQL parts
+   * src/templates/XQuery.stg: added newline after order by clause
+
+2009-07-14  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/java/org/deri/xsparql/StopWatch.java: added documentation
+   * src/java/org/deri/xsparql/AbstractMyTreeRewriter.java: added documentation
+   * src/java/org/deri/xsparql/Main.java: added saxon xquery evaluation
+   * src/java/org/deri/xsparql/XSPARQLProcessor.java: error handling, cleanup
+   * build.xml: added saxon xquery evaluation
+   * README: added saxon
+
+2009-07-09  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/java/org/deri/xsparql/Main.java: refactored
+   * src/java/org/deri/xsparql/Environment.java: added for variable scoping
+   * src/java/org/deri/xsparql/XSPARQLProcessor.java: introduced a parameter for graphviz output format, measure time needed for different phases, refactored ast picture creation, console output to stderr
+   * src/java/org/deri/xsparql/StopWatch.java: added to measure time needed of the different phases
+   * src/java/org/deri/xsparql/AbstractMyTreeRewriter.java: added to get rid of console outputs
+   * src/parser/XSPARQL.g: introduced query parts, for * rewriting, new flwor expression, rudimentary construct query rewriting; corrected sparql namespace parsing
+   * src/parser/XSPARQLRewriter.g: introduced logging, sparql and turtle namespaces, body parts, variable binding, new where rewriting, construct rewriting
+   * src/parser/XQuerySerializer.g: introduced body parts, default namespaces, xpath expressions and where clauses
+   * src/templates/XQuery.stg: introduced new templates
+   * build.xml: correct order of code generators
+   * logging.properties: added for logging configuration
+   * README: added section "Running xsparql"
+
+
+2009-06-19  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/java/org/deri/xsparql/Main.java: refactored
+   * src/java/org/deri/xsparql/XSPARQLProcessor: refactored
+   * src/parser/XSPARQL.g: refactored
+   * src/parser/XQuerySerializer.g: refactored
+   * src/parser/XSPARQLRewriter.g: refactored
+   * src/templates/XQuery.stg: new templates
+
+2009-06-10  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/java/org/deri/xsparql/Main.java: introduce XSPARQL rewriter
+   * src/java/org/deri/xsparql/XSPARQLProcessor: introduce XSPARQL rewriter
+   * src/parser/XSPARQL.g: introduce XSPARQL rewriter
+   * src/parser/Lexer.flex: introduce XSPARQL rewriter
+   * src/parser/XQuerySerializer.g: introduce XSPARQL rewriter
+   * src/parser/XSPARQLRewriter.g: introduce XSPARQL rewriter
+   * build.xml: introduce XSPARQL rewriter
+   * src/templates/XQuery.stg: introduce XSPARQL rewriter
+
+2009-06-03  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/java/org/deri/xsparql/Main.java: added XQuery Serializer, refactored XSPARQLProcessor, added AST png generation
+   * build.xml: added XQuery Serializer
+   * src/parser/Lexer.flex: added XQuery Serializer
+   * src/parser/XSPARQL.g: added XQuery Serializer
+   * src/parser/XQuerySerializer.g: added XQuery Serializer
+   * src/templates/XQuery.stg: added XQuery Serializer
+   * src/java/org/deri/xsparql/XSPARQLProcessor: refactored XSPARQLProcessor, added AST png generation
+   * README.txt: added optional Graphviz part
+
+2009-06-02  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQL.g: restructured grammar
+   * src/parser/Lexer.flex: restructured grammar
+
+2009-05-28  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQL.g: added comments for corresponding XQuery rules, increased XQuery compatibility
+   * src/parser/Lexer.flex: increased XQuery compatibility
+   * examples/extra-queries/queryFilter10.xsparql: changed filter expression to lower case
+   * examples/extra-queries/queryFilter04.xsparql: changed filter expression to lower case
+
+2009-05-28  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQL.g: fixed parser bug for construct subject
+
+2009-05-27  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/parser/XSPARQL.g: added AST generation
+
+2009-05-26  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * src/java/org/deri/xsparql/Main.java: added Graphviz dot AST output option
+   * README.txt: added Graphviz dot AST output option
+   * build.xml: added Graphviz dot AST output option
+   * src/parser/Lexer.flex: ignore enclosing "" for QSTRINGs and <> for IRIs
+
+2009-05-25  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * Main.java: Change parser to ANTLR, moved Main.java to package org.deri.xsparql
+   * Lexer.flex: Change parser to ANTLR
+   * XSPARQL.g: Change parser to ANTLR
+   * build.xml: Change parser to ANTLR
+   * README.txt: Change parser to ANTLR
+
+2009-05-14  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * build.xml: ANTLR development
+   * Main.java: ANTLR development
+   * XSPARQL.g: ANTLR development
+   * Lexer.flex: : ANTLR development
+
+2009-05-14  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * build.xml: get code generators with ant
+   * Grammar.cup: included rules for directElemConstructor
+   * Lexer.flex: included rules for directElemConstructor
+
+2009-05-13  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * Lexer.flex: added XQuery comment parsing, removed STAR_COLON_NCNAME, NCNAME_COLON_STAR, made SPARQL states exclusive
+   * Grammar.cup: removed STAR_COLON_NCNAME, NCNAME_COLON_STAR
+
+2009-05-13  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * Main.java: added Lexer debug switch -d, changed commandline syntax: file(s) is default argument, any number of files possible
+   * Lexer.flex: added Lexer debug switch, consolidated the states definitions, introduced SPARQL states, improved debug state output
+   * Grammar.cup: introduced SPARQL states
+   * run_tests.sh: changed commandline syntax
+   * comment.xquery: added as reminder for missing XQuery comment support
+
+2009-05-12  Stefan Bischof  <stefan.bischof@deri.org>
+
+   * Main.java: added some comments, no tabs anymore
+   * build.xml: cleanup, added some comments
+   * Grammar.cup: cleanup, added some comments, replaced PREFIXED_NAME, PREFIXED_COLON, UPREFIXED_NAME with PNAME_LN and PNAME_NS
+   * Lexer.flex: added some comments, replaced PREFIXED_NAME, PREFIXED_COLON, UPREFIXED_NAME with PNAME_LN and PNAME_NS, consolidated the states definitions
+   * examples/extra-queries/*: removed space between namespace prefix and colon
+
+2009-05-12  Nuno Lopes  <nuno.lopes@deri.org>
+
+	* Main.java: removed DOS encoded newlines.
+

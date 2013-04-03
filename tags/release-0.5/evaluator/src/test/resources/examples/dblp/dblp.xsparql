@@ -1,0 +1,28 @@
+(: List the number of publications the co-authors of Axel Polleres share between them 
+   This is currently restricted to publications Axel is an author :)
+
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix dc:      <http://purl.org/dc/elements/1.1/>
+
+(: $ds will contain all the authors that co-author publications with Axel Polleres :)
+let $ds := for * from <http://dblp.l3s.de/d2r/resource/authors/Axel_Polleres>
+           where { $pub dc:creator [] }
+           construct {
+                      { for * from $pub where { $p dc:creator $o . }
+                        construct { $p dc:creator $o } } 
+           }
+
+(: allauthors contains the distinct authors :)
+let $allauthors := distinct-values(
+                      for $o from $ds where {$p dc:creator $o}
+                      order by $o
+                      return $o
+                   )
+
+for $auth at $auth_pos in $allauthors
+ for $coauth in $allauthors[position() > $auth_pos]
+    let $commonPubs := count(
+     { for $pub from $ds where { $pub dc:creator $auth, $coauth } return $pub }
+    )
+where ($commonPubs > 0)
+construct { [ :author1 $auth; :author2 $coauth; :commonPubs $commonPubs ] }

@@ -1,0 +1,9 @@
+prefix vc: <http://www.w3.org/2001/vcard-rdf/3.0#>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix app: <http://example.org/ns#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema>
+
+for $Person $Name from <http://xsparql.deri.org/data/relations.rdf>
+where { $Person foaf:name $Name .    
+        filter ( app:customDate($date) > "2005-02-28T00:00:00Z"^^xsd:dateTime ) .}
+return $Name

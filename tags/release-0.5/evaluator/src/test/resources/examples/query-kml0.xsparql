@@ -1,0 +1,23 @@
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+<kml xmlns="http://www.opengis.net/kml/2.2">
+{
+for $person $fn $ln $long $lat
+from <http://xsparql.deri.org/data/sample_person_geodata.rdf>
+where {
+ $person rdf:type foaf:Person.
+ $person foaf:based_near $gps.
+ $gps rdf:type geo:Point.
+ $gps geo:long $long.
+ $gps geo:lat $lat.
+ $person foaf:firstName $fn.
+ $person foaf:lastName $ln.
+}
+return <Placemark>
+        <name>{fn:concat("Location of ", $fn, " ", $ln)}</name>
+         <Point><coordinates>{fn:concat($long, ",", $lat, ",0")}</coordinates></Point>
+       </Placemark>
+}
+</kml>

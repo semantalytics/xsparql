@@ -1,0 +1,9 @@
+(: should be turned into an ASK query! :)
+
+prefix foaf: <http://xmlns.com/foaf/0.1/> 
+
+let $a := "Axel Polleres" 
+let $b := "Nuno Lopes" 
+for * from <http://xsparql.deri.org/data/foaf.rdf> 
+where { $a foaf:knows $b } 
+construct { $a foaf:knows $b } 

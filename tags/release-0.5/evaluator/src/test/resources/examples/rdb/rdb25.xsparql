@@ -1,0 +1,7 @@
+<row>{
+(: let $table := "person" :)
+for row $row from student
+return xsparql:value($row, "id")
+(: return   data($row/*[@name = "id"]) :)
+(: data($row/SQLbinding[@name="id"]) :)
+}</row>

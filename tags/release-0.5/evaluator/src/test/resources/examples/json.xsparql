@@ -1,0 +1,5 @@
+
+<json>{
+for $elem in xsparql:json-doc("http://xsparql.deri.org/data/json-example1.json")//title
+return <elem>{$elem}</elem>
+}</json>

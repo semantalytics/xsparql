@@ -1,0 +1,5 @@
+<rows>{
+let $schema.person  := fn:concat("bands", ".", "person")
+for row $row from $schema.person
+return $row
+}</rows>

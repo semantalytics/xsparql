@@ -1,0 +1,5 @@
+
+let $schema  := "bands"
+let $table := "person"
+for row $row from $schema.$table
+return $row

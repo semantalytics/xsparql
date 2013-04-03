@@ -1,0 +1,17 @@
+prefix mo: <http://purl.org/ontology/mo/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix lfm: <http://purl.org/ontology/last-fm/>
+prefix dc: <http://purl.org/dc/elements/1.1/>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+prefix event: <http://purl.org/NET/c4dm/event.owl#>
+
+declare variable $user := 'jacktrades';
+
+<kml ><Document>{
+let $lastfm := fn:concat("http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&amp;api_key=16307daa8ce0d0cc1dab015e0fdab8ec&amp;user=", $user)
+for $artistInfo in doc($lastfm)//artist
+where xs:int($artistInfo/@rank) lt 2
+return data($artistInfo/@rank)
+}</Document></kml>

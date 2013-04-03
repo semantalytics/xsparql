@@ -1,0 +1,13 @@
+declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+let $x := 
+  for $person in doc("http://xsparql.deri.org/data/relations.xml")//person,
+   $nameA in $person/@name,
+   $nameB in $person/knows
+  construct
+  { [ foaf:name {data($nameA)}; a foaf:Person ]
+    foaf:knows
+    [ foaf:name {data($nameB)}; a foaf:Person ]. }
+return 
+  for $name from $x 
+  where { [] foaf:name $name }
+  construct { [] foaf:name $name }

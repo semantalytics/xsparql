@@ -1,0 +1,4 @@
+<id>{
+for student.id as $id1 from student
+return $id1
+}</id>
