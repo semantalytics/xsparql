@@ -15,7 +15,6 @@ package org.deri.xquery.saxon;
 import java.io.ByteArrayInputStream;
 import java.util.logging.Logger;
 
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 
 import net.sf.saxon.expr.XPathContext;
@@ -29,7 +28,6 @@ import net.sf.saxon.value.SequenceType;
 
 import org.deri.sql.SQLQuery;
 import org.deri.xsparql.rewriter.XSPARQLProcessor;
-import org.w3c.dom.Document;
 
 
 /**
@@ -96,6 +94,7 @@ public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
 
     private static final long serialVersionUID = 3289758364063781529L;
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
       public SequenceIterator call(SequenceIterator[] arguments,
           XPathContext context) throws XPathException {

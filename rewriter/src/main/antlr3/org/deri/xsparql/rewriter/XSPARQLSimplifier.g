@@ -166,6 +166,7 @@ tokens {
   import java.util.logging.Logger;
   import java.util.Collection;
   import java.util.ArrayList;
+
 }
 
 @members {
@@ -248,6 +249,20 @@ varrewrite
           )
         )
      )
+  |  ^(r=REWRITEVNODE LPAR ^(T_FUNCTION_CALL n=NCNAME ^(T_PARAMS ^(XPATH v=STAR))) AS v2=VAR RPAR) {varName=Helper.removeLeading($v2.text, "$");}
+  -> ^(T_FLWOR[$v2.token,"i'm a stupid flworExpr"] // avoid "Can't set single child to a list"
+       COMMENT["SPARQL variable " + $v.text + " from " + $v.line + ":" + $v.pos]
+       ^(T_LET[$v2.token,"LET"] 
+          VAR[$v2.token, "\$" + varName ]
+         ^(T_FUNCTION_CALL
+            NCNAME[nodeFunction]
+           ^(T_PARAMS
+              VAR[$r.text]
+              QSTRING[varName]
+            )
+          )
+        )
+     )
   |  ^(r=REWRITEVNODE LPAR ^(T_FUNCTION_CALL n=NCNAME ^(T_PARAMS ^(XPATH v=VAR))) AS v2=VAR RPAR) {varName=Helper.removeLeading($v2.text, "$");}
   -> ^(T_FLWOR[$v2.token,"i'm a stupid flworExpr"] // avoid "Can't set single child to a list"
        COMMENT["SPARQL variable " + $v.text + " from " + $v.line + ":" + $v.pos]
@@ -272,6 +287,8 @@ varrewrite
   -> QSTRING[$v.token, $v.text + " "]
   | ^(REWRITEVNODE1 vv=NOTHING)
   -> QSTRING[$vv.token, " "]
+  | ^(REWRITEVNODE1 LPAR ^(T_FUNCTION_CALL n=NCNAME ^(T_PARAMS ^(XPATH v=STAR))) AS v2=VAR RPAR)
+  -> QSTRING[$n.token, "(" + $n.text + "(*) AS " + $v2.text + ")"]
   | ^(REWRITEVNODE1 LPAR ^(T_FUNCTION_CALL n=NCNAME ^(T_PARAMS ^(XPATH v=VAR))) AS v2=VAR RPAR)
   -> QSTRING[$n.token, "(" + $n.text + "(" + $v.text + ") AS " + $v2.text + ")"]
   // SQL variable assigments, take only column name

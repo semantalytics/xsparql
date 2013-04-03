@@ -8,12 +8,9 @@
     <version>20121105-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.deri.xsparql</groupId>
   <artifactId>evaluator</artifactId>
   <name>XSPARQL evaluator</name>
   <description>XSPARQL evaluator</description>
-
-  <version>20121105-SNAPSHOT</version>
 
   <dependencies>
 

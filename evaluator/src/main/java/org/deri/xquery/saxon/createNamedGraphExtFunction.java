@@ -90,6 +90,7 @@ public class createNamedGraphExtFunction extends ExtensionFunctionDefinition {
 		 */
       private static final long serialVersionUID = -7278616556002243718L;
 
+      @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
       public SequenceIterator call(SequenceIterator[] arguments,
           XPathContext context) throws XPathException {

@@ -1437,13 +1437,14 @@ limitoffsetclauses
 /* SPARQL [16] */
 orderclause
 @init {trace();}
-  : ORDER^ BY! orderCondition
+  : ORDER^ BY! orderCondition*
   ;
 
 /* SPARQL [17] */
 orderCondition
 @init {trace();}
   : (ASC | DESC) brackettedExpression
+  | NCNAME brackettedExpression
   | constraint
   | VAR
   ;
@@ -1595,6 +1596,7 @@ object @init {trace();}
   | rdfLiteral
   | sNumericLiteral
   | triplesNode
+  | literalConstruct
 //  graphNode
   ;
 

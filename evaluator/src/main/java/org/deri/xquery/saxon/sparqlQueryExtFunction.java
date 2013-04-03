@@ -84,6 +84,7 @@ public class sparqlQueryExtFunction extends ExtensionFunctionDefinition {
 
       private static final long serialVersionUID = -2933876244790032821L;
 
+      @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
       public SequenceIterator call(SequenceIterator[] arguments,
           XPathContext context) throws XPathException {

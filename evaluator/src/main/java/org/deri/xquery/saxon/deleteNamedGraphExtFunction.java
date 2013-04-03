@@ -82,6 +82,7 @@ public class deleteNamedGraphExtFunction extends ExtensionFunctionDefinition {
 
       private static final long serialVersionUID = 7607214804733059361L;
 
+      @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
       public SequenceIterator call(SequenceIterator[] arguments,
           XPathContext context) throws XPathException {
