@@ -207,14 +207,20 @@ declare function local:foreignKey($row, $map) {
   where { $map rr:parentTriplesMap $parent .
           $parent rr:subjectMap $parentSubject; rr:logicalTable $foreignTable }
   return
-    let $foreignTableResults := local:getLogicalTable($foreignTable)
     let $joins := local:getJoins($map)           (: get all the join conditions:)
+    let $foreignTableResults := local:getLogicalTable($foreignTable)
     for $foreignRow in $foreignTableResults      (: for each row of the foreign table :)
-   return
-     (: test if each join condition is satisfied :)
-     if (every $join in $joins, $join in $joins satisfies xsparql:value($row, $join/c) eq xsparql:value($foreignRow,$join/p)) then
-        local:processMap($foreignRow, $parentSubject)
-      else ()
+    return 
+      if(data($joins) ne "") then
+        (: test if each join condition is satisfied :)
+        if (every $join in $joins, $join in $joins satisfies xsparql:value($row, $join/c) eq xsparql:value($foreignRow,$join/p)) then
+           local:processMap($foreignRow, $parentSubject)
+        else ()
+        (: simulate 1-1 mapping, use only the ones that match the row entirely :)
+    else 
+        if(fn:deep-equal($row, $foreignRow)) then
+           local:processMap($foreignRow, $parentSubject, "object")
+        else ()
 };
 
 
@@ -303,7 +309,7 @@ declare function local:createObject($row, $po, $subject, $predicate, $graph) {
   for * from $ds
   where { optional { $po rr:object $o } .
           optional { $po rr:objectMap $om . 
-                     optional { $om a rr:RefObjectMap; rr:parentTriplesMap $parent } . }
+                     optional { $om rr:parentTriplesMap $parent } . }  
   }
   return 
     let $objects := if ($parent) then local:foreignKey($row, $om) 
@@ -361,8 +367,7 @@ declare function local:createGraph($row, $s) {
 
 declare function local:createSPO($map) {
   for * from $ds
-  where { $map a rr:TriplesMap;
-               rr:logicalTable $table .
+  where { $map rr:logicalTable $table .
          optional { $map rr:subjectMap $sm . optional { $sm rr:class $class } . }
          optional { $map rr:subject $s    .  }
    }  
@@ -382,7 +387,7 @@ declare function local:createSPO($map) {
 (: Let's start, iterate over mappings :)
 (::::::::::::::::::::::::::::::::::::::)
 for * from $ds
-where { $map a rr:TriplesMap }
+where { $map rr:logicalTable $table }  (: typing is optional, should check if contains an rr:logicalTable property :)
 return local:createSPO($map)
 
 
