@@ -1511,7 +1511,8 @@ scope {
   ;
 
 endpointClause
-  : ENDPOINT e=sourceSelector { $sparqlForClause::iterationFunction = xsparqlAbbrev+":_sparqlResults";
+  : ENDPOINT e=sourceSelector { $VariableScope::scopedDataset = false; 
+                                $sparqlForClause::iterationFunction = xsparqlAbbrev+":_sparqlResults";
                                 $sparqlForClause::evaluationFunction = xsparqlAbbrev+":_sparql";
                                 $sparqlForClause::endpointURI = $e.text;
   }
