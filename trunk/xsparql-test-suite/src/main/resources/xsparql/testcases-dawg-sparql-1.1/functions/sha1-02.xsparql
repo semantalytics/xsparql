@@ -1,0 +1,11 @@
+prefix : <http://example.org/>
+<results>
+{for (sha1($l) as $hash) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/hash-unicode.ttl> where {
+	:s8 :str $l
+}
+
+return 
+ <result>
+	<binding name="hash">{$hash}</binding>
+</result>}
+</results>

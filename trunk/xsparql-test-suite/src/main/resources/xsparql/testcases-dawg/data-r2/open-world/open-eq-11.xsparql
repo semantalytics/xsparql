@@ -1,0 +1,19 @@
+prefix     :    <http://example/>
+prefix  xsd:    <http://www.w3.org/2001/xmlschema#>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/open-world/data-2.ttl> where{
+    $x :p $v1 .
+    $y :q $v2 .
+    filter ( $v1 != $v2 || $v1 = $v2 )
+}
+
+return 
+ <result>
+	<binding name="v1">{$v1}</binding>
+	<binding name="v2">{$v2}</binding>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

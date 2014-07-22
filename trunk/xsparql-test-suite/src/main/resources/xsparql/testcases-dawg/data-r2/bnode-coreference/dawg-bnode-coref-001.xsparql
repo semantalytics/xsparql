@@ -1,0 +1,15 @@
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix  foaf:       <http://xmlns.com/foaf/0.1/>
+
+<results>
+{for $x $y
+from <src/main/resources/xsparql/testcases-dawg/data-r2/bnode-coreference/data.ttl> where {
+  $x foaf:knows $y .
+}
+
+return 
+ <result>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

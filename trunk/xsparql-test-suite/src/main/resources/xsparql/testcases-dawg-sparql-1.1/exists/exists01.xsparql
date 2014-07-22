@@ -1,0 +1,15 @@
+prefix ex: <http://www.example.org/>
+
+<results>
+{for * from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/exists/exists01.ttl> where {
+$s $p $o
+filter exists {$s $p ex:o}
+}
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="p">{$p}</binding>
+	<binding name="o">{$o}</binding>
+</result>}
+</results>

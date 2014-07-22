@@ -1,0 +1,3 @@
+prefix : <http://example.org/>
+
+construct where { $s $p $o}

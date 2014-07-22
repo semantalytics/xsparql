@@ -1,0 +1,247 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+@prefix sparql: <http://www.w3.org/ns/sparql#> .
+
+<http://xsparql.deri.org#agg01> <http://xsparql.deri.org#derivedFrom> :agg01 ;
+	mf:name "COUNT 1" ;
+	mf:result <agg01.srx> ;
+	rdfs:comment "Simple count" .
+
+_:node18l628sr5x376 qt:data <agg01.ttl> ;
+	qt:query <agg01.xsparql> .
+
+<http://xsparql.deri.org#agg01> mf:action _:node18l628sr5x376 .
+
+<http://xsparql.deri.org#agg02> <http://xsparql.deri.org#derivedFrom> :agg02 ;
+	mf:name "COUNT 2" ;
+	mf:result <agg02.srx> ;
+	rdfs:comment "Count with grouping" .
+
+_:node18l628sr5x377 qt:data <agg01.ttl> ;
+	qt:query <agg02.xsparql> .
+
+<http://xsparql.deri.org#agg02> mf:action _:node18l628sr5x377 .
+
+<http://xsparql.deri.org#agg03> <http://xsparql.deri.org#derivedFrom> :agg03 ;
+	mf:name "COUNT 3" ;
+	mf:result <agg03.srx> ;
+	rdfs:comment "Count with grouping and HAVING clause" .
+
+_:node18l628sr5x378 qt:data <agg01.ttl> ;
+	qt:query <agg03.xsparql> .
+
+<http://xsparql.deri.org#agg03> mf:action _:node18l628sr5x378 .
+
+<http://xsparql.deri.org#agg04> <http://xsparql.deri.org#derivedFrom> :agg04 ;
+	mf:name "COUNT 4" ;
+	mf:result <agg04.srx> ;
+	rdfs:comment "Count(*)" .
+
+_:node18l628sr5x379 qt:data <agg01.ttl> ;
+	qt:query <agg04.xsparql> .
+
+<http://xsparql.deri.org#agg04> mf:action _:node18l628sr5x379 .
+
+<http://xsparql.deri.org#agg05> <http://xsparql.deri.org#derivedFrom> :agg05 ;
+	mf:name "COUNT 5" ;
+	mf:result <agg05.srx> ;
+	rdfs:comment "Count(*) with grouping" .
+
+_:node18l628sr5x380 qt:data <agg01.ttl> ;
+	qt:query <agg05.xsparql> .
+
+<http://xsparql.deri.org#agg05> mf:action _:node18l628sr5x380 .
+
+<http://xsparql.deri.org#agg06> <http://xsparql.deri.org#derivedFrom> :agg06 ;
+	mf:name "COUNT 6" ;
+	mf:result <agg06.srx> ;
+	rdfs:comment "Count(*) with HAVING Count(*)" .
+
+_:node18l628sr5x381 qt:data <agg01.ttl> ;
+	qt:query <agg06.xsparql> .
+
+<http://xsparql.deri.org#agg06> mf:action _:node18l628sr5x381 .
+
+<http://xsparql.deri.org#agg07> <http://xsparql.deri.org#derivedFrom> :agg07 ;
+	mf:name "COUNT 7" ;
+	mf:result <agg07.srx> ;
+	rdfs:comment "Count(*) with grouping and HAVING Count(*)" .
+
+_:node18l628sr5x382 qt:data <agg01.ttl> ;
+	qt:query <agg07.xsparql> .
+
+<http://xsparql.deri.org#agg07> mf:action _:node18l628sr5x382 .
+
+<http://xsparql.deri.org#agg08b> <http://xsparql.deri.org#derivedFrom> :agg08b ;
+	mf:name "COUNT 8b" ;
+	mf:result <agg08b.srx> ;
+	rdfs:comment "grouping by expression, done correctly" .
+
+_:node18l628sr5x383 qt:data <agg08.ttl> ;
+	qt:query <agg08b.xsparql> .
+
+<http://xsparql.deri.org#agg08b> mf:action _:node18l628sr5x383 .
+
+<http://xsparql.deri.org#agg-groupconcat-02> <http://xsparql.deri.org#derivedFrom> :agg-groupconcat-02 ;
+	mf:name "GROUP_CONCAT 2" ;
+	mf:result <agg-groupconcat-2.srx> .
+
+_:node18l628sr5x384 qt:data <agg-groupconcat-1.ttl> ;
+	qt:query <agg-groupconcat-02.xsparql> .
+
+<http://xsparql.deri.org#agg-groupconcat-02> mf:action _:node18l628sr5x384 .
+
+<http://xsparql.deri.org#agg-avg-01> <http://xsparql.deri.org#derivedFrom> :agg-avg-01 ;
+	mf:name "AVG" ;
+	mf:result <agg-avg-01.srx> .
+
+_:node18l628sr5x385 qt:data <agg-numeric.ttl> ;
+	qt:query <agg-avg-01.xsparql> .
+
+<http://xsparql.deri.org#agg-avg-01> mf:action _:node18l628sr5x385 .
+
+<http://xsparql.deri.org#agg-avg-02> <http://xsparql.deri.org#derivedFrom> :agg-avg-02 ;
+	mf:name "AVG with GROUP BY" ;
+	mf:result <agg-avg-02.srx> .
+
+_:node18l628sr5x386 qt:data <agg-numeric2.ttl> ;
+	qt:query <agg-avg-02.xsparql> .
+
+<http://xsparql.deri.org#agg-avg-02> mf:action _:node18l628sr5x386 .
+
+<http://xsparql.deri.org#agg-min-01> <http://xsparql.deri.org#derivedFrom> :agg-min-01 ;
+	mf:name "MIN" ;
+	mf:result <agg-min-01.srx> .
+
+_:node18l628sr5x387 qt:data <agg-numeric.ttl> ;
+	qt:query <agg-min-01.xsparql> .
+
+<http://xsparql.deri.org#agg-min-01> mf:action _:node18l628sr5x387 .
+
+<http://xsparql.deri.org#agg-min-02> <http://xsparql.deri.org#derivedFrom> :agg-min-02 ;
+	mf:name "MIN with GROUP BY" ;
+	mf:result <agg-min-02.srx> .
+
+_:node18l628sr5x388 qt:data <agg-numeric.ttl> ;
+	qt:query <agg-min-02.xsparql> .
+
+<http://xsparql.deri.org#agg-min-02> mf:action _:node18l628sr5x388 .
+
+<http://xsparql.deri.org#agg-max-01> <http://xsparql.deri.org#derivedFrom> :agg-max-01 ;
+	mf:name "MAX" ;
+	mf:result <agg-max-01.srx> .
+
+_:node18l628sr5x389 qt:data <agg-numeric.ttl> ;
+	qt:query <agg-max-01.xsparql> .
+
+<http://xsparql.deri.org#agg-max-01> mf:action _:node18l628sr5x389 .
+
+<http://xsparql.deri.org#agg-max-02> <http://xsparql.deri.org#derivedFrom> :agg-max-02 ;
+	mf:name "MAX with GROUP BY" ;
+	mf:result <agg-max-02.srx> .
+
+_:node18l628sr5x390 qt:data <agg-numeric.ttl> ;
+	qt:query <agg-max-02.xsparql> .
+
+<http://xsparql.deri.org#agg-max-02> mf:action _:node18l628sr5x390 .
+
+<http://xsparql.deri.org#agg-sum-01> <http://xsparql.deri.org#derivedFrom> :agg-sum-01 ;
+	mf:name "SUM" ;
+	mf:result <agg-sum-01.srx> .
+
+_:node18l628sr5x391 qt:data <agg-numeric.ttl> ;
+	qt:query <agg-sum-01.xsparql> .
+
+<http://xsparql.deri.org#agg-sum-01> mf:action _:node18l628sr5x391 .
+
+<http://xsparql.deri.org#agg-sum-02> <http://xsparql.deri.org#derivedFrom> :agg-sum-02 ;
+	mf:name "SUM with GROUP BY" ;
+	mf:result <agg-sum-02.srx> .
+
+_:node18l628sr5x392 qt:data <agg-numeric2.ttl> ;
+	qt:query <agg-sum-02.xsparql> .
+
+<http://xsparql.deri.org#agg-sum-02> mf:action _:node18l628sr5x392 .
+
+<http://xsparql.deri.org#agg-err-01> <http://xsparql.deri.org#derivedFrom> :agg-err-01 ;
+	mf:name "Error in AVG" ;
+	mf:result <agg-err-01.srx> ;
+	rdfs:comment "Error in AVG return no binding" .
+
+_:node18l628sr5x393 qt:data <agg-err-01.ttl> ;
+	qt:query <agg-err-01.xsparql> .
+
+<http://xsparql.deri.org#agg-err-01> mf:action _:node18l628sr5x393 .
+
+<http://xsparql.deri.org#agg-err-02> <http://xsparql.deri.org#derivedFrom> :agg-err-02 ;
+	mf:name "Protect from error in AVG" ;
+	mf:result <agg-err-02.srx> ;
+	rdfs:comment "Protect from error in AVG using IF and COALESCE" .
+
+_:node18l628sr5x394 qt:data <agg-err-02.ttl> ;
+	qt:query <agg-err-02.xsparql> .
+
+<http://xsparql.deri.org#agg-err-02> mf:action _:node18l628sr5x394 .
+
+_:node18l628sr5x396 rdf:first <http://xsparql.deri.org#agg01> ;
+	rdf:rest _:node18l628sr5x398 .
+
+_:node18l628sr5x398 rdf:first <http://xsparql.deri.org#agg02> ;
+	rdf:rest _:node18l628sr5x399 .
+
+_:node18l628sr5x399 rdf:first <http://xsparql.deri.org#agg03> ;
+	rdf:rest _:node18l628sr5x400 .
+
+_:node18l628sr5x400 rdf:first <http://xsparql.deri.org#agg04> ;
+	rdf:rest _:node18l628sr5x401 .
+
+_:node18l628sr5x401 rdf:first <http://xsparql.deri.org#agg05> ;
+	rdf:rest _:node18l628sr5x402 .
+
+_:node18l628sr5x402 rdf:first <http://xsparql.deri.org#agg06> ;
+	rdf:rest _:node18l628sr5x403 .
+
+_:node18l628sr5x403 rdf:first <http://xsparql.deri.org#agg07> ;
+	rdf:rest _:node18l628sr5x404 .
+
+_:node18l628sr5x404 rdf:first <http://xsparql.deri.org#agg08b> ;
+	rdf:rest _:node18l628sr5x395 .
+
+_:node18l628sr5x395 rdf:first <http://xsparql.deri.org#agg-groupconcat-02> ;
+	rdf:rest _:node18l628sr5x397 .
+
+_:node18l628sr5x397 rdf:first <http://xsparql.deri.org#agg-avg-01> ;
+	rdf:rest _:node18l628sr5x405 .
+
+_:node18l628sr5x405 rdf:first <http://xsparql.deri.org#agg-avg-02> ;
+	rdf:rest _:node18l628sr5x412 .
+
+_:node18l628sr5x412 rdf:first <http://xsparql.deri.org#agg-min-01> ;
+	rdf:rest _:node18l628sr5x413 .
+
+_:node18l628sr5x413 rdf:first <http://xsparql.deri.org#agg-min-02> ;
+	rdf:rest _:node18l628sr5x410 .
+
+_:node18l628sr5x410 rdf:first <http://xsparql.deri.org#agg-max-01> ;
+	rdf:rest _:node18l628sr5x411 .
+
+_:node18l628sr5x411 rdf:first <http://xsparql.deri.org#agg-max-02> ;
+	rdf:rest _:node18l628sr5x408 .
+
+_:node18l628sr5x408 rdf:first <http://xsparql.deri.org#agg-sum-01> ;
+	rdf:rest _:node18l628sr5x409 .
+
+_:node18l628sr5x409 rdf:first <http://xsparql.deri.org#agg-sum-02> ;
+	rdf:rest _:node18l628sr5x406 .
+
+_:node18l628sr5x406 rdf:first <http://xsparql.deri.org#agg-err-01> ;
+	rdf:rest _:node18l628sr5x407 .
+
+_:node18l628sr5x407 rdf:first <http://xsparql.deri.org#agg-err-02> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg-sparql-1.1/aggregates/> mf:entries _:node18l628sr5x396 .

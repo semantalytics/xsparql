@@ -1,0 +1,99 @@
+XSPARQL 1.1 Release note
+================
+New features
+-------------------------
+ * Support to SPARQL 1.1 (Jena Arq 2.11.1):
+  * BIND
+  * EXISTS
+  * GROUP BY
+  * HAVING BY
+  * SERVICE
+  * IN/NOT IN
+  * new functions from SPARQL1.1, cf. http://www.w3.org/TR/sparql11-query/#SparqlOps
+  * aggregates
+  * property paths
+  * inline data (VALUES)
+ * Added signed integers as allowed datatype 
+ * New test
+  * Test methods for each single rewriter component (parser, rewriter, simplifier, serialiser)
+  * Test methods for the evaluator with and without a ground truth
+ * New test suite derived from the  SPARQL testsuite:
+  * DAWG SPARQL 1.0 [http://www.w3.org/2001/sw/DataAccess/tests/]
+  * DAWG SPARQL 1.1 [http://www.w3.org/2009/sparql/docs/tests/]
+  * OpenRdf Sesame tests [https://bitbucket.org/openrdf/sesame/src/344c7976bba504905614d38097df3454a2721e99/testsuites/sparql/src/main/resources/testcases-sparql-1.1]
+ * It is now possible to define the SPARQL dataset in the Evaluator through the methods addDefaultGraph and addNamedGraph
+ * Added  --default-graph-uri and --named-graph-uri commands from command line (to define the SPARQL dataset)
+
+Notes
+-----------------
+ * Package names now start with org.sourceforge.xsparql.*, so projects that relies on older version of XSPARQL would require to be modified to use this version
+ * SPARQL 1.1 SERVICE clause is similar to the (deprecated) XSPARQL ‘endpoint’ clause. Anyway, their behaviour is different: 
+  * ENDPOINT allows to specify the remote dataset, as described in the SPARQL protocol: (http://www.w3.org/TR/sparql11-protocol/#dataset), i.e. additional FROM and FROM NAMED clauses are allowed, that will be “pushed” to the remote endpoint, whereas SERVICE only allows to query the default dataset of the remote endpoint.
+  * While SERVICE require the address of the SPARQL endpoint, ENDPOINT requires also the GET parameter to specify the query (i.e. ?query=)
+
+Fixed bugs (from previous release)
+-----------------
+ * FIXED: An exception was raised when the WHERE clause in a SPARQL expression was empty
+ * FIXED: The BASE construct worked as the default namespace, now BASE works as intended.
+ * FIXED: An exception was raised when a XSPARQL query with a SPARQL expression lacked the FROM clause, now fixed.
+
+Known Issues
+------------------------
+
+* When outputting Turtle (in a SPARQL-style CONSTRUCT query), the default output of XSPARQL escapes angle brackets around URIs, e.g. in the following query:
+
+
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix : <http://www.example.org/>
+
+for ...
+where {...}
+construct { :alice  foaf:knows <http://www.example.org/bob> } 
+
+it will output:
+
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix : &lt;http://www.example.org/&gt; .
+
+
+:alice  foaf:knows  &lt;http://www.example.org/bob&gt; .
+       
+W workaround to get the right output is to explicitly add the a clause defining the output method as text. Note that this declaration has to be added after the prefixes:
+
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix : <http://www.example.org/>
+
+    declare option saxon:output "method=text";
+
+for ...
+where {...}
+construct { :alice  foaf:knows <http://www.example.org/bob> } 
+
+which will correctly output:
+
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix : <http://www.example.org/> .
+
+:alice  foaf:knows  <http://www.example.org/bob> .
+
+
+ * shortcut notation for datatypes xsd:double and xsd:decimal in SPARQL are disabled: The issue is related to some error (bug?) in JFlex which we were not able to pin down so far. Although it occurred non-deterministally in our tests, we preferred to leave the feature of supporting shortcut notation for double values out for the moment, so, whenever you want to use double/decimal constants in the query, you have to use the long notion, i.e.
+     you can use for instance: “1E10”^^<xsd:double> —> works (that’s the workaround)
+
+ * A Note about re-using variables in XQuery/SPARQL: it is possible to define queries such as:
+   let ?x : = 
+   for * from …
+   where { … ( … AS ?x) … }
+
+but we  discourage to use this. It should be forbidden by the parser, but we don’t check it at the moment, the behaviour might be counter-intuitive.
+ * [test-suite] The ground-truth based tests may fail even if the result is correct
+ * There is a known bug when running the Antlr 3 Maven plugin in Java 8. When xsparql is packaged, an error is raised. A workaround of this bug is to let Maven run two times, e.g. mvn package -> error -> mvn package -> success.
+
+* The combination of ‘for *’ with an empty where clause, i.e. a query of the form 
+for * 
+where {}
+  does not work (such a query also does practically not much sense, probably, but theoretically it should be possible to write this). 
+
+
+
+

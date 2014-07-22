@@ -1,0 +1,22 @@
+prefix :    <http://example/>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/algebra/opt-filter-2.ttl> where{ 
+  $x :p $v .
+  optional
+  { 
+    $y :q $w .
+    filter($v=2)
+    filter($w=3)
+  }
+}
+
+return 
+ <result>
+	<binding name="w">{$w}</binding>
+	<binding name="v">{$v}</binding>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

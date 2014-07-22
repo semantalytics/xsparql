@@ -1,0 +1,14 @@
+prefix  xsd: <http://www.w3.org/2001/xmlschema#>
+prefix  : <http://example.org/ns#>
+<results>
+{for  $a
+from <src/main/resources/xsparql/testcases-dawg/data-r2/boolean-effective-value/data-1.ttl> where
+    { $a :p $v . 
+      filter ("true"^^xsd:boolean && $v) .
+    }
+
+return 
+ <result>
+	<binding name="a">{$a}</binding>
+</result>}
+</results>

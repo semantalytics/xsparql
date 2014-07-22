@@ -1,0 +1,12 @@
+prefix : <http://example.org/>
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+<results>
+{for $s from <src/main/resources/xsparql/testcases-dawg/data-r2/sort/data-sort-function.ttl> where {
+  $s :p $o .
+} order by xsd:integer($o)
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

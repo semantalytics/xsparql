@@ -1,0 +1,16 @@
+declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+<relations>
+{ 
+	let $name := "Alice"
+	return
+		for $name (count($friend) as $totalFriends) 
+		from <http://xsparql.deri.org/data/relations.ttl>
+	  	where { $person foaf:knows $friend ; foaf:name $name }
+	  	group by $name
+	  	order by $totalFriends
+	  	return 
+	  		<person id="{$person}">{
+	  			<totalFriends>{$totalFriends}</totalFriends>
+	        </person>
+}
+</relations>

@@ -1,0 +1,218 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#pp30> <http://xsparql.deri.org#derivedFrom> :pp30 ;
+	mf:name "(pp30) Operator precedence 1" ;
+	mf:result <path-p1.srx> .
+
+_:node18l628sr5x1149 qt:data <path-p1.ttl> ;
+	qt:query <pp30.xsparql> .
+
+<http://xsparql.deri.org#pp30> mf:action _:node18l628sr5x1149 .
+
+<http://xsparql.deri.org#pp31> <http://xsparql.deri.org#derivedFrom> :pp31 ;
+	mf:name "(pp31) Operator precedence 2" ;
+	mf:result <path-p2.srx> .
+
+_:node18l628sr5x1150 qt:data <path-p1.ttl> ;
+	qt:query <pp31.xsparql> .
+
+<http://xsparql.deri.org#pp31> mf:action _:node18l628sr5x1150 .
+
+<http://xsparql.deri.org#pp32> <http://xsparql.deri.org#derivedFrom> :pp32 ;
+	mf:name "(pp32) Operator precedence 3" ;
+	mf:result <path-p3.srx> .
+
+_:node18l628sr5x1151 qt:data <path-p3.ttl> ;
+	qt:query <pp32.xsparql> .
+
+<http://xsparql.deri.org#pp32> mf:action _:node18l628sr5x1151 .
+
+<http://xsparql.deri.org#pp33> <http://xsparql.deri.org#derivedFrom> :pp33 ;
+	mf:name "(pp33) Operator precedence 4" ;
+	mf:result <path-p4.srx> .
+
+_:node18l628sr5x1152 qt:data <path-p3.ttl> ;
+	qt:query <pp33.xsparql> .
+
+<http://xsparql.deri.org#pp33> mf:action _:node18l628sr5x1152 .
+
+<http://xsparql.deri.org#pp01> <http://xsparql.deri.org#derivedFrom> :pp01 ;
+	mf:name "(pp01) Simple path" ;
+	mf:result <pp01.srx> .
+
+_:node18l628sr5x1153 qt:data <pp01.ttl> ;
+	qt:query <pp01.xsparql> .
+
+<http://xsparql.deri.org#pp01> mf:action _:node18l628sr5x1153 .
+
+<http://xsparql.deri.org#pp02> <http://xsparql.deri.org#derivedFrom> :pp02 ;
+	mf:name "(pp02) Star path" ;
+	mf:result <pp02.srx> .
+
+_:node18l628sr5x1154 qt:data <pp01.ttl> ;
+	qt:query <pp02.xsparql> .
+
+<http://xsparql.deri.org#pp02> mf:action _:node18l628sr5x1154 .
+
+<http://xsparql.deri.org#pp03> <http://xsparql.deri.org#derivedFrom> :pp03 ;
+	mf:name "(pp03) Simple path with loop" ;
+	mf:result <pp03.srx> .
+
+_:node18l628sr5x1155 qt:data <pp03.ttl> ;
+	qt:query <pp03.xsparql> .
+
+<http://xsparql.deri.org#pp03> mf:action _:node18l628sr5x1155 .
+
+<http://xsparql.deri.org#pp09> <http://xsparql.deri.org#derivedFrom> :pp09 ;
+	mf:name "(pp09) Reverse sequence path" ;
+	mf:result <pp09.srx> .
+
+_:node18l628sr5x1156 qt:data <pp09.ttl> ;
+	qt:query <pp09.xsparql> .
+
+<http://xsparql.deri.org#pp09> mf:action _:node18l628sr5x1156 .
+
+<http://xsparql.deri.org#pp10> <http://xsparql.deri.org#derivedFrom> :pp10 ;
+	mf:name "(pp10) Path with negation" ;
+	mf:result <pp10.srx> .
+
+_:node18l628sr5x1157 qt:data <pp10.ttl> ;
+	qt:query <pp10.xsparql> .
+
+<http://xsparql.deri.org#pp10> mf:action _:node18l628sr5x1157 .
+
+<http://xsparql.deri.org#pp11> <http://xsparql.deri.org#derivedFrom> :pp11 ;
+	mf:name "(pp11) Simple path and two paths to same target node" ;
+	mf:result <pp11.srx> .
+
+_:node18l628sr5x1158 qt:data <pp11.ttl> ;
+	qt:query <pp11.xsparql> .
+
+<http://xsparql.deri.org#pp11> mf:action _:node18l628sr5x1158 .
+
+<http://xsparql.deri.org#pp12> <http://xsparql.deri.org#derivedFrom> :pp12 ;
+	mf:name "(pp12) Variable length path and two paths to same target node" ;
+	mf:result <pp12.srx> .
+
+_:node18l628sr5x1159 qt:data <pp11.ttl> ;
+	qt:query <pp12.xsparql> .
+
+<http://xsparql.deri.org#pp12> mf:action _:node18l628sr5x1159 .
+
+<http://xsparql.deri.org#pp14> <http://xsparql.deri.org#derivedFrom> :pp14 ;
+	mf:name "(pp14) Star path over foaf:knows" ;
+	mf:result <pp14.srx> .
+
+_:node18l628sr5x1160 qt:data <pp14.ttl> ;
+	qt:query <pp14.xsparql> .
+
+<http://xsparql.deri.org#pp14> mf:action _:node18l628sr5x1160 .
+
+<http://xsparql.deri.org#pp16> <http://xsparql.deri.org#derivedFrom> :pp16 ;
+	mf:name "(pp16) Duplicate paths and cycles through foaf:knows*" ;
+	mf:result <pp16.srx> .
+
+_:node18l628sr5x1161 qt:data <pp16.ttl> ;
+	qt:query <pp16.xsparql> .
+
+<http://xsparql.deri.org#pp16> mf:action _:node18l628sr5x1161 .
+
+<http://xsparql.deri.org#pp21> <http://xsparql.deri.org#derivedFrom> :pp21 ;
+	mf:name "(pp21) Diamond -- :p+" ;
+	mf:result <diamond-2.srx> .
+
+_:node18l628sr5x1162 qt:data <data-diamond.ttl> ;
+	qt:query <pp21.xsparql> .
+
+<http://xsparql.deri.org#pp21> mf:action _:node18l628sr5x1162 .
+
+<http://xsparql.deri.org#pp23> <http://xsparql.deri.org#derivedFrom> :pp23 ;
+	mf:name "(pp23) Diamond, with tail -- :p+" ;
+	mf:result <diamond-tail-2.srx> .
+
+_:node18l628sr5x1163 qt:data <data-diamond-tail.ttl> ;
+	qt:query <pp23.xsparql> .
+
+<http://xsparql.deri.org#pp23> mf:action _:node18l628sr5x1163 .
+
+<http://xsparql.deri.org#pp25> <http://xsparql.deri.org#derivedFrom> :pp25 ;
+	mf:name "(pp25) Diamond, with loop -- :p+" ;
+	mf:result <diamond-loop-2.srx> .
+
+_:node18l628sr5x1164 qt:data <data-diamond-loop.ttl> ;
+	qt:query <pp25.xsparql> .
+
+<http://xsparql.deri.org#pp25> mf:action _:node18l628sr5x1164 .
+
+<http://xsparql.deri.org#pp28> <http://xsparql.deri.org#derivedFrom> :pp28 ;
+	mf:name "(pp28) Diamond, with loop -- (:p/:p)?" ;
+	mf:result <diamond-loop-5.srx> .
+
+_:node18l628sr5x1165 qt:data <data-diamond-loop.ttl> ;
+	qt:query <pp28.xsparql> .
+
+<http://xsparql.deri.org#pp28> mf:action _:node18l628sr5x1165 .
+
+_:node18l628sr5x1167 rdf:first <http://xsparql.deri.org#pp30> ;
+	rdf:rest _:node18l628sr5x1169 .
+
+_:node18l628sr5x1169 rdf:first <http://xsparql.deri.org#pp31> ;
+	rdf:rest _:node18l628sr5x1170 .
+
+_:node18l628sr5x1170 rdf:first <http://xsparql.deri.org#pp32> ;
+	rdf:rest _:node18l628sr5x1171 .
+
+_:node18l628sr5x1171 rdf:first <http://xsparql.deri.org#pp33> ;
+	rdf:rest _:node18l628sr5x1172 .
+
+_:node18l628sr5x1172 rdf:first <http://xsparql.deri.org#pp01> ;
+	rdf:rest _:node18l628sr5x1173 .
+
+_:node18l628sr5x1173 rdf:first <http://xsparql.deri.org#pp02> ;
+	rdf:rest _:node18l628sr5x1174 .
+
+_:node18l628sr5x1174 rdf:first <http://xsparql.deri.org#pp03> ;
+	rdf:rest _:node18l628sr5x1175 .
+
+_:node18l628sr5x1175 rdf:first <http://xsparql.deri.org#pp06> ;
+	rdf:rest _:node18l628sr5x1166 .
+
+_:node18l628sr5x1166 rdf:first <http://xsparql.deri.org#pp07> ;
+	rdf:rest _:node18l628sr5x1168 .
+
+_:node18l628sr5x1168 rdf:first <http://xsparql.deri.org#pp09> ;
+	rdf:rest _:node18l628sr5x1176 .
+
+_:node18l628sr5x1176 rdf:first <http://xsparql.deri.org#pp10> ;
+	rdf:rest _:node18l628sr5x1183 .
+
+_:node18l628sr5x1183 rdf:first <http://xsparql.deri.org#pp11> ;
+	rdf:rest _:node18l628sr5x1184 .
+
+_:node18l628sr5x1184 rdf:first <http://xsparql.deri.org#pp12> ;
+	rdf:rest _:node18l628sr5x1181 .
+
+_:node18l628sr5x1181 rdf:first <http://xsparql.deri.org#pp14> ;
+	rdf:rest _:node18l628sr5x1182 .
+
+_:node18l628sr5x1182 rdf:first <http://xsparql.deri.org#pp16> ;
+	rdf:rest _:node18l628sr5x1179 .
+
+_:node18l628sr5x1179 rdf:first <http://xsparql.deri.org#pp21> ;
+	rdf:rest _:node18l628sr5x1180 .
+
+_:node18l628sr5x1180 rdf:first <http://xsparql.deri.org#pp23> ;
+	rdf:rest _:node18l628sr5x1177 .
+
+_:node18l628sr5x1177 rdf:first <http://xsparql.deri.org#pp25> ;
+	rdf:rest _:node18l628sr5x1178 .
+
+_:node18l628sr5x1178 rdf:first <http://xsparql.deri.org#pp28> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg-sparql-1.1/property-path/> mf:entries _:node18l628sr5x1167 .

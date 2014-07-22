@@ -1,0 +1,16 @@
+prefix  xsd: <http://www.w3.org/2001/xmlschema#>
+prefix  : <http://example.org/things#>
+<results>
+{for  $v1 $v2
+from <src/main/resources/xsparql/testcases-dawg/data-r2/expr-equals/data-eq.ttl> where
+    { $x1 :p $v1 .
+      $x2 :p $v2 . 
+      filter ( $v1 = $v2 ) .
+    }
+
+return 
+ <result>
+	<binding name="v1">{$v1}</binding>
+	<binding name="v2">{$v2}</binding>
+</result>}
+</results>

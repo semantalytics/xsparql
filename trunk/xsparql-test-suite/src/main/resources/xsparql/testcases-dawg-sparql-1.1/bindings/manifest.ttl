@@ -1,0 +1,128 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bindings/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#values1> <http://xsparql.deri.org#derivedFrom> :values1 ;
+	mf:name "Post-query VALUES with subj-var, 1 row" ;
+	mf:result <values01.srx> .
+
+_:node18lnpv59hx1894 qt:data <data01.ttl> ;
+	qt:query <values1.xsparql> .
+
+<http://xsparql.deri.org#values1> mf:action _:node18lnpv59hx1894 .
+
+<http://xsparql.deri.org#values2> <http://xsparql.deri.org#derivedFrom> :values2 ;
+	mf:name "Post-query VALUES with obj-var, 1 row" ;
+	mf:result <values02.srx> .
+
+_:node18lnpv59hx1895 qt:data <data02.ttl> ;
+	qt:query <values2.xsparql> .
+
+<http://xsparql.deri.org#values2> mf:action _:node18lnpv59hx1895 .
+
+<http://xsparql.deri.org#values3> <http://xsparql.deri.org#derivedFrom> :values3 ;
+	mf:name "Post-query VALUES with 2 obj-vars, 1 row" ;
+	mf:result <values03.srx> .
+
+_:node18lnpv59hx1896 qt:data <data03.ttl> ;
+	qt:query <values3.xsparql> .
+
+<http://xsparql.deri.org#values3> mf:action _:node18lnpv59hx1896 .
+
+<http://xsparql.deri.org#values4> <http://xsparql.deri.org#derivedFrom> :values4 ;
+	mf:name "Post-query VALUES with 2 obj-vars, 1 row with UNDEF" ;
+	mf:result <values04.srx> .
+
+_:node18lnpv59hx1897 qt:data <data04.ttl> ;
+	qt:query <values4.xsparql> .
+
+<http://xsparql.deri.org#values4> mf:action _:node18lnpv59hx1897 .
+
+<http://xsparql.deri.org#values5> <http://xsparql.deri.org#derivedFrom> :values5 ;
+	mf:name "Post-query VALUES with 2 obj-vars, 2 rows with UNDEF" ;
+	mf:result <values05.srx> .
+
+_:node18lnpv59hx1898 qt:data <data05.ttl> ;
+	qt:query <values5.xsparql> .
+
+<http://xsparql.deri.org#values5> mf:action _:node18lnpv59hx1898 .
+
+<http://xsparql.deri.org#values6> <http://xsparql.deri.org#derivedFrom> :values6 ;
+	mf:name "Post-query VALUES with pred-var, 1 row" ;
+	mf:result <values06.srx> .
+
+_:node18lnpv59hx1899 qt:data <data06.ttl> ;
+	qt:query <values6.xsparql> .
+
+<http://xsparql.deri.org#values6> mf:action _:node18lnpv59hx1899 .
+
+<http://xsparql.deri.org#values7> <http://xsparql.deri.org#derivedFrom> :values7 ;
+	mf:name "Post-query VALUES with (OPTIONAL) obj-var, 1 row" ;
+	mf:result <values07.srx> .
+
+_:node18lnpv59hx1900 qt:data <data07.ttl> ;
+	qt:query <values7.xsparql> .
+
+<http://xsparql.deri.org#values7> mf:action _:node18lnpv59hx1900 .
+
+<http://xsparql.deri.org#values8> <http://xsparql.deri.org#derivedFrom> :values8 ;
+	mf:name "Post-query VALUES with subj/obj-vars, 2 rows with UNDEF" ;
+	mf:result <values08.srx> .
+
+_:node18lnpv59hx1901 qt:data <data08.ttl> ;
+	qt:query <values8.xsparql> .
+
+<http://xsparql.deri.org#values8> mf:action _:node18lnpv59hx1901 .
+
+<http://xsparql.deri.org#inline1> <http://xsparql.deri.org#derivedFrom> :inline1 ;
+	mf:name "Inline VALUES graph pattern" ;
+	mf:result <inline01.srx> .
+
+_:node18lnpv59hx1902 qt:data <data01.ttl> ;
+	qt:query <inline1.xsparql> .
+
+<http://xsparql.deri.org#inline1> mf:action _:node18lnpv59hx1902 .
+
+<http://xsparql.deri.org#inline2> <http://xsparql.deri.org#derivedFrom> :inline2 ;
+	mf:name "Post-subquery VALUES" ;
+	mf:result <inline02.srx> .
+
+_:node18lnpv59hx1903 qt:data <data02.ttl> ;
+	qt:query <inline2.xsparql> .
+
+<http://xsparql.deri.org#inline2> mf:action _:node18lnpv59hx1903 .
+
+_:node18lnpv59hx1905 rdf:first <http://xsparql.deri.org#values1> ;
+	rdf:rest _:node18lnpv59hx1907 .
+
+_:node18lnpv59hx1907 rdf:first <http://xsparql.deri.org#values2> ;
+	rdf:rest _:node18lnpv59hx1908 .
+
+_:node18lnpv59hx1908 rdf:first <http://xsparql.deri.org#values3> ;
+	rdf:rest _:node18lnpv59hx1909 .
+
+_:node18lnpv59hx1909 rdf:first <http://xsparql.deri.org#values4> ;
+	rdf:rest _:node18lnpv59hx1910 .
+
+_:node18lnpv59hx1910 rdf:first <http://xsparql.deri.org#values5> ;
+	rdf:rest _:node18lnpv59hx1911 .
+
+_:node18lnpv59hx1911 rdf:first <http://xsparql.deri.org#values6> ;
+	rdf:rest _:node18lnpv59hx1912 .
+
+_:node18lnpv59hx1912 rdf:first <http://xsparql.deri.org#values7> ;
+	rdf:rest _:node18lnpv59hx1913 .
+
+_:node18lnpv59hx1913 rdf:first <http://xsparql.deri.org#values8> ;
+	rdf:rest _:node18lnpv59hx1904 .
+
+_:node18lnpv59hx1904 rdf:first <http://xsparql.deri.org#inline1> ;
+	rdf:rest _:node18lnpv59hx1906 .
+
+_:node18lnpv59hx1906 rdf:first <http://xsparql.deri.org#inline2> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/dawg-sparql11-test-suite/bindings/> mf:entries _:node18lnpv59hx1905 .

@@ -1,0 +1,13 @@
+prefix : <http://example.org/>
+<results>
+{for $s $num from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {
+	$s $p $num
+	filter isnumeric($num)
+}
+
+return 
+ <result>
+	<binding name="num">{$num}</binding>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

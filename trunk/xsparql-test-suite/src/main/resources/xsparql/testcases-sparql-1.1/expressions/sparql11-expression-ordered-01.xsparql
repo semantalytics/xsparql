@@ -1,0 +1,15 @@
+prefix  dc:  <http://purl.org/dc/elements/1.1/>
+prefix  ns:  <http://example.org/ns#>
+<results>
+{for  $title ($p*(1-$discount) as $price)
+   from <src/main/resources/xsparql/testcases-sparql-1.1/expressions/data-02.ttl> where{ $x ns:price $p .
+     $x dc:title $title . 
+     $x ns:discount $discount 
+   }
+order by asc ($price)
+return 
+ <result>
+	<binding name="title">{$title}</binding>
+	<binding name="price">{$price}</binding>
+</result>}
+</results>

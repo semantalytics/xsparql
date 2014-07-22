@@ -1,0 +1,99 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/expr-ops/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#mul-1> mf:action _:node18l628sr5x1998 .
+
+<http://xsparql.deri.org#ge-1> <http://xsparql.deri.org#derivedFrom> :ge-1 ;
+	mf:name "Greater-than or equals" ;
+	mf:result <result-ge-1.srx> ;
+	rdfs:comment ">= in FILTER expressions" .
+
+_:node18l628sr5x1999 qt:data <data.ttl> ;
+	qt:query <ge-1.xsparql> .
+
+<http://xsparql.deri.org#ge-1> mf:action _:node18l628sr5x1999 .
+
+<http://xsparql.deri.org#le-1> <http://xsparql.deri.org#derivedFrom> :le-1 ;
+	mf:name "Less-than or equals" ;
+	mf:result <result-le-1.srx> ;
+	rdfs:comment "<= in FILTER expressions" .
+
+_:node18l628sr5x2000 qt:data <data.ttl> ;
+	qt:query <le-1.xsparql> .
+
+<http://xsparql.deri.org#le-1> mf:action _:node18l628sr5x2000 .
+
+<http://xsparql.deri.org#unplus-1> <http://xsparql.deri.org#derivedFrom> :unplus-1 ;
+	mf:name "Unary Plusn" ;
+	mf:result <result-unplus-1.srx> ;
+	rdfs:comment "+A in FILTER expressions" .
+
+_:node18l628sr5x1994 qt:data <data.ttl> ;
+	qt:query <unplus-1.xsparql> .
+
+<http://xsparql.deri.org#unplus-1> mf:action _:node18l628sr5x1994 .
+
+<http://xsparql.deri.org#unminus-1> <http://xsparql.deri.org#derivedFrom> :unminus-1 ;
+	mf:name "Unary Minus" ;
+	mf:result <result-unminus-1.srx> ;
+	rdfs:comment "-A in FILTER expressions" .
+
+_:node18l628sr5x1995 qt:data <data.ttl> ;
+	qt:query <unminus-1.xsparql> .
+
+<http://xsparql.deri.org#unminus-1> mf:action _:node18l628sr5x1995 .
+
+<http://xsparql.deri.org#plus-1> <http://xsparql.deri.org#derivedFrom> :plus-1 ;
+	mf:name "Addition" ;
+	mf:result <result-plus-1.srx> ;
+	rdfs:comment "A + B in FILTER expressions" .
+
+_:node18l628sr5x1996 qt:data <data.ttl> ;
+	qt:query <plus-1.xsparql> .
+
+<http://xsparql.deri.org#plus-1> mf:action _:node18l628sr5x1996 .
+
+<http://xsparql.deri.org#minus-1> <http://xsparql.deri.org#derivedFrom> :minus-1 ;
+	mf:name "Subtraction" ;
+	mf:result <result-minus-1.srx> ;
+	rdfs:comment "A - B in FILTER expressions" .
+
+_:node18l628sr5x1997 qt:data <data.ttl> ;
+	qt:query <minus-1.xsparql> .
+
+<http://xsparql.deri.org#minus-1> mf:action _:node18l628sr5x1997 .
+
+<http://xsparql.deri.org#mul-1> <http://xsparql.deri.org#derivedFrom> :mul-1 ;
+	mf:name "Multiplication" ;
+	mf:result <result-mul-1.srx> ;
+	rdfs:comment "A * B in FILTER expressions" .
+
+_:node18l628sr5x1998 qt:data <data.ttl> ;
+	qt:query <mul-1.xsparql> .
+
+_:node18l628sr5x2001 rdf:first <http://xsparql.deri.org#unplus-1> ;
+	rdf:rest _:node18l628sr5x2002 .
+
+_:node18l628sr5x2002 rdf:first <http://xsparql.deri.org#unminus-1> ;
+	rdf:rest _:node18l628sr5x2003 .
+
+_:node18l628sr5x2003 rdf:first <http://xsparql.deri.org#plus-1> ;
+	rdf:rest _:node18l628sr5x2004 .
+
+_:node18l628sr5x2004 rdf:first <http://xsparql.deri.org#minus-1> ;
+	rdf:rest _:node18l628sr5x2005 .
+
+_:node18l628sr5x2005 rdf:first <http://xsparql.deri.org#mul-1> ;
+	rdf:rest _:node18l628sr5x2006 .
+
+_:node18l628sr5x2006 rdf:first <http://xsparql.deri.org#ge-1> ;
+	rdf:rest _:node18l628sr5x2007 .
+
+_:node18l628sr5x2007 rdf:first <http://xsparql.deri.org#le-1> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/expr-ops/> mf:entries _:node18l628sr5x2001 .

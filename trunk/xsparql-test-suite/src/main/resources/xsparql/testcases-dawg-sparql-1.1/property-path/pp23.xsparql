@@ -1,0 +1,12 @@
+prefix : <http://example/> 
+
+<results>
+{for * from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/property-path/data-diamond-tail.ttl> where {
+    :a :p+ $z
+} 
+
+return 
+ <result>
+	<binding name="z">{$z}</binding>
+</result>}
+</results>

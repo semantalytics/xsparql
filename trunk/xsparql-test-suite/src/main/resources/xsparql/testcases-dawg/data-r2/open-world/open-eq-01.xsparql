@@ -1,0 +1,19 @@
+# sparql is defined over simple entailment so
+# only syntactic matches show.  
+# (some systems may match because they do
+# value-based matching in the graph (d-entailment))
+
+# does not strictly match "1"^xsd:integer
+
+prefix  :       <http://example/ns#>
+prefix  t:      <http://example/t#>
+prefix  xsd:    <http://www.w3.org/2001/xmlschema#>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/open-world/data-1.ttl> where{ $x :p "001"^^xsd:integer }
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

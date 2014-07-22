@@ -1,0 +1,19 @@
+prefix : <http://www.example.org/>
+<results>
+{for (count(*) as $c) 
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/aggregates/agg-groupconcat-1.ttl> 
+where {
+	{select $p (group_concat($o) as $g) where {
+		[] $p $o
+	} group by $p}
+	filter(
+		($p = :p1 && ($g = "1 22" || $g = "22 1"))
+		|| ($p = :p2 && ($g = "aaa bb c" || $g = "aaa c bb" || $g = "bb aaa c" || $g = "bb c aaa" || $g = "c aaa bb" || $g = "c bb aaa"))
+	)
+}
+
+return 
+ <result>
+	<binding name="c">{$c}</binding>
+</result>}
+</results>

@@ -1,0 +1,17 @@
+prefix :       <http://example/>
+prefix foaf:   <http://xmlns.com/foaf/0.1/>
+
+<results>
+{for distinct $s
+from <src/main/resources/xsparql/testcases-sparql-1.1/negation/data-02.ttl> where {
+   $s $p $o .
+   minus {
+      $s foaf:givenname "bob" .
+   }
+}
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

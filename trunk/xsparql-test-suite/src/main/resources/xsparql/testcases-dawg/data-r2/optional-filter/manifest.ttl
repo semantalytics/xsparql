@@ -1,0 +1,86 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/optional-filter/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#dawg-optional-filter-003> <http://xsparql.deri.org#derivedFrom> :dawg-optional-filter-003 ;
+	mf:name "OPTIONAL - Outer FILTER with BOUND" ;
+	mf:result <expr-3-result.ttl> ;
+	rdfs:comment "Use !bound to only run outer FILTERs against variables bound in an OPTIONAL" .
+
+_:node18l628sr5x2045 qt:data <data-1.ttl> ;
+	qt:query <dawg-optional-filter-003.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-filter-003> mf:action _:node18l628sr5x2045 .
+
+<http://xsparql.deri.org#dawg-optional-filter-004> <http://xsparql.deri.org#derivedFrom> :dawg-optional-filter-004 ;
+	mf:name "OPTIONAL - Inner FILTER with negative EBV for outer variables" ;
+	mf:result <expr-4-result.ttl> ;
+	rdfs:comment "FILTER inside an OPTIONAL does not corrupt the entire solution" .
+
+_:node18l628sr5x2046 qt:data <data-1.ttl> ;
+	qt:query <dawg-optional-filter-004.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-filter-004> mf:action _:node18l628sr5x2046 .
+
+<http://xsparql.deri.org#dawg-optional-filter-005-simplified> <http://xsparql.deri.org#derivedFrom> :dawg-optional-filter-005-simplified ;
+	mf:name "dawg-optional-filter-005-simplified" ;
+	mf:result <expr-5-result-simplified.ttl> ;
+	rdfs:comment "Double curly braces get simplified to single curly braces early on, before filters are scoped" .
+
+_:node18l628sr5x2047 qt:data <data-1.ttl> ;
+	qt:query <dawg-optional-filter-005-simplified.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-filter-005-simplified> mf:action _:node18l628sr5x2047 .
+
+<http://xsparql.deri.org#dawg-optional-filter-005-not-simplified> <http://xsparql.deri.org#derivedFrom> :dawg-optional-filter-005-not-simplified ;
+	mf:name "dawg-optional-filter-005-not-simplified" ;
+	mf:result <expr-5-result-not-simplified.ttl> ;
+	rdfs:comment "Double curly braces do NOT get simplified to single curly braces early on, before filters are scoped" .
+
+_:node18l628sr5x2048 qt:data <data-1.ttl> ;
+	qt:query <dawg-optional-filter-005-not-simplified.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-filter-005-not-simplified> mf:action _:node18l628sr5x2048 .
+
+<http://xsparql.deri.org#dawg-optional-filter-001> <http://xsparql.deri.org#derivedFrom> :dawg-optional-filter-001 ;
+	mf:name "OPTIONAL-FILTER" ;
+	mf:result <expr-1-result.ttl> ;
+	rdfs:comment "FILTER inside an OPTIONAL does not block an entire solution" .
+
+_:node18l628sr5x2049 qt:data <data-1.ttl> ;
+	qt:query <dawg-optional-filter-001.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-filter-001> mf:action _:node18l628sr5x2049 .
+
+<http://xsparql.deri.org#dawg-optional-filter-002> <http://xsparql.deri.org#derivedFrom> :dawg-optional-filter-002 ;
+	mf:name "OPTIONAL - Outer FILTER" ;
+	mf:result <expr-2-result.ttl> ;
+	rdfs:comment "FILTER outside an OPTIONAL tests bound and unbound variables" .
+
+_:node18l628sr5x2050 qt:data <data-1.ttl> ;
+	qt:query <dawg-optional-filter-002.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-filter-002> mf:action _:node18l628sr5x2050 .
+
+_:node18l628sr5x2051 rdf:first <http://xsparql.deri.org#dawg-optional-filter-003> ;
+	rdf:rest _:node18l628sr5x2052 .
+
+_:node18l628sr5x2052 rdf:first <http://xsparql.deri.org#dawg-optional-filter-004> ;
+	rdf:rest _:node18l628sr5x2053 .
+
+_:node18l628sr5x2053 rdf:first <http://xsparql.deri.org#dawg-optional-filter-005-simplified> ;
+	rdf:rest _:node18l628sr5x2054 .
+
+_:node18l628sr5x2054 rdf:first <http://xsparql.deri.org#dawg-optional-filter-005-not-simplified> ;
+	rdf:rest _:node18l628sr5x2055 .
+
+_:node18l628sr5x2055 rdf:first <http://xsparql.deri.org#dawg-optional-filter-001> ;
+	rdf:rest _:node18l628sr5x2056 .
+
+_:node18l628sr5x2056 rdf:first <http://xsparql.deri.org#dawg-optional-filter-002> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/optional-filter/> mf:entries _:node18l628sr5x2051 .

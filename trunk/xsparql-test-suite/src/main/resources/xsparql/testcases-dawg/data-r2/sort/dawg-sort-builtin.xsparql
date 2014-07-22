@@ -1,0 +1,11 @@
+prefix : <http://example.org/>
+<results>
+{for $s from <src/main/resources/xsparql/testcases-dawg/data-r2/sort/data-sort-builtin.ttl> where {
+  $s :p $o .
+} order by str($o)
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

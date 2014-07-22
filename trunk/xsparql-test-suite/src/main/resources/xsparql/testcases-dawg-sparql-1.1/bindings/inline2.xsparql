@@ -1,0 +1,22 @@
+# bindings with one element and one value in the object variable
+
+prefix : <http://example.org/> 
+
+<results>
+{for $s $o
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/bindings/data02.ttl> 
+where {
+	{
+		select * where {
+			$s $p $o .
+		}
+		values ($o) { (:b) }
+	}
+}
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="o">{$o}</binding>
+</result>}
+</results>

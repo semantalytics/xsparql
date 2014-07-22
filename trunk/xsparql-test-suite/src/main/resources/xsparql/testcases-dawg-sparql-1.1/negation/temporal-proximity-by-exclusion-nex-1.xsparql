@@ -1,0 +1,22 @@
+prefix ex: <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation#>
+prefix dc: <http://purl.org/dc/elements/1.1/>
+
+# the closest pre-operative physical examination
+<results>
+{for $exam $date from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/negation/temporalproximity01.ttl> where{ 
+  $exam a ex:physicalexamination; 
+        dc:date $date;
+        ex:precedes ex:operation1 .
+  $op   a ex:surgicalprocedure; dc:date $opdt .
+  filter not exists {
+    $otherexam a ex:physicalexamination; 
+               ex:follows $exam;
+               ex:precedes ex:operation1
+  } 
+}
+return 
+ <result>
+	<binding name="date">{$date}</binding>
+	<binding name="exam">{$exam}</binding>
+</result>}
+</results>

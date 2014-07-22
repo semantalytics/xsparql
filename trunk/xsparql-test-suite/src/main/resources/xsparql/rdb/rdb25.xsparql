@@ -1,0 +1,5 @@
+
+let $table := "person"
+for row $row from $table
+(: return sparql:value($row, "id") :)
+return $row

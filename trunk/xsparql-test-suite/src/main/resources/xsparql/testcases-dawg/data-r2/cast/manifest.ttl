@@ -1,0 +1,92 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/cast/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#cast-dbl> <http://xsparql.deri.org#derivedFrom> :cast-dbl ;
+	mf:name "Cast to xsd:double" ;
+	mf:result <cast-dbl.srx> .
+
+_:node18l628sr5x2705 qt:data <data.ttl> ;
+	qt:query <cast-dbl.xsparql> .
+
+<http://xsparql.deri.org#cast-dbl> mf:action _:node18l628sr5x2705 .
+
+<http://xsparql.deri.org#cast-dec> <http://xsparql.deri.org#derivedFrom> :cast-dec ;
+	mf:name "Cast to xsd:decimal" ;
+	mf:result <cast-dec.srx> .
+
+_:node18l628sr5x2706 qt:data <data.ttl> ;
+	qt:query <cast-dec.xsparql> .
+
+<http://xsparql.deri.org#cast-dec> mf:action _:node18l628sr5x2706 .
+
+<http://xsparql.deri.org#cast-int> <http://xsparql.deri.org#derivedFrom> :cast-int ;
+	mf:name "Cast to xsd:integer" ;
+	mf:result <cast-int.srx> .
+
+_:node18l628sr5x2707 qt:data <data.ttl> ;
+	qt:query <cast-int.xsparql> .
+
+<http://xsparql.deri.org#cast-int> mf:action _:node18l628sr5x2707 .
+
+<http://xsparql.deri.org#cast-dT> <http://xsparql.deri.org#derivedFrom> :cast-dT ;
+	mf:name "Cast to xsd:dateTime" ;
+	mf:result <cast-dT.srx> .
+
+_:node18l628sr5x2708 qt:data <data.ttl> ;
+	qt:query <cast-dT.xsparql> .
+
+<http://xsparql.deri.org#cast-dT> mf:action _:node18l628sr5x2708 .
+
+<http://xsparql.deri.org#cast-bool> <http://xsparql.deri.org#derivedFrom> :cast-bool ;
+	mf:name "Cast to xsd:boolean" ;
+	mf:result <cast-bool.srx> .
+
+_:node18l628sr5x2709 qt:data <data.ttl> ;
+	qt:query <cast-bool.xsparql> .
+
+<http://xsparql.deri.org#cast-bool> mf:action _:node18l628sr5x2709 .
+
+<http://xsparql.deri.org#cast-str> <http://xsparql.deri.org#derivedFrom> :cast-str ;
+	mf:name "Cast to xsd:string" ;
+	mf:result <cast-str.srx> .
+
+_:node18l628sr5x2710 qt:data <data.ttl> ;
+	qt:query <cast-str.xsparql> .
+
+<http://xsparql.deri.org#cast-str> mf:action _:node18l628sr5x2710 .
+
+<http://xsparql.deri.org#cast-flt> <http://xsparql.deri.org#derivedFrom> :cast-flt ;
+	mf:name "Cast to xsd:float" ;
+	mf:result <cast-flt.srx> .
+
+_:node18l628sr5x2711 qt:data <data.ttl> ;
+	qt:query <cast-flt.xsparql> .
+
+<http://xsparql.deri.org#cast-flt> mf:action _:node18l628sr5x2711 .
+
+_:node18l628sr5x2712 rdf:first <http://xsparql.deri.org#cast-dbl> ;
+	rdf:rest _:node18l628sr5x2713 .
+
+_:node18l628sr5x2713 rdf:first <http://xsparql.deri.org#cast-dec> ;
+	rdf:rest _:node18l628sr5x2714 .
+
+_:node18l628sr5x2714 rdf:first <http://xsparql.deri.org#cast-int> ;
+	rdf:rest _:node18l628sr5x2715 .
+
+_:node18l628sr5x2715 rdf:first <http://xsparql.deri.org#cast-dT> ;
+	rdf:rest _:node18l628sr5x2716 .
+
+_:node18l628sr5x2716 rdf:first <http://xsparql.deri.org#cast-bool> ;
+	rdf:rest _:node18l628sr5x2717 .
+
+_:node18l628sr5x2717 rdf:first <http://xsparql.deri.org#cast-str> ;
+	rdf:rest _:node18l628sr5x2718 .
+
+_:node18l628sr5x2718 rdf:first <http://xsparql.deri.org#cast-flt> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/cast/> mf:entries _:node18l628sr5x2712 .

@@ -1,0 +1,20 @@
+prefix ex:	<http://www.example.org/schema#>
+prefix in:	<http://www.example.org/instance#>
+
+<results>
+{for $x $y $z
+  (($y + $z) as $sum) 
+  ((2 * $sum) as $twice)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/project-expression/projexp03.ttl> where {
+  $x ex:p $y .
+  $x ex:q $z
+}
+return 
+ <result>
+	<binding name="twice">{$twice}</binding>
+	<binding name="sum">{$sum}</binding>
+	<binding name="z">{$z}</binding>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

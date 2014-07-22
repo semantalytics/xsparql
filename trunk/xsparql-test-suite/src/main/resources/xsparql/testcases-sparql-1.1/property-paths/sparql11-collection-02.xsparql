@@ -1,0 +1,16 @@
+prefix  rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix  ex:   <http://example.org/> 
+
+<results>
+{for $item
+from <src/main/resources/xsparql/testcases-sparql-1.1/property-paths/data-11.ttl> where 
+{
+    $x ex:haslist $l .
+    $l rdf:rest*/rdf:first $item .    
+}
+
+return 
+ <result>
+	<binding name="item">{$item}</binding>
+</result>}
+</results>

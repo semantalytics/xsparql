@@ -1,0 +1,32 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/distinct/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#reduced-2> <http://xsparql.deri.org#derivedFrom> :reduced-2 ;
+	mf:name "SELECT REDUCED ?x with strings" ;
+	mf:result <reduced-2.srx> .
+
+_:node18l628sr5x2903 qt:data <reduced-str.ttl> ;
+	qt:query <reduced-2.xsparql> .
+
+<http://xsparql.deri.org#reduced-2> mf:action _:node18l628sr5x2903 .
+
+<http://xsparql.deri.org#reduced-1> <http://xsparql.deri.org#derivedFrom> :reduced-1 ;
+	mf:name "SELECT REDUCED *" ;
+	mf:result <reduced-1.srx> .
+
+_:node18l628sr5x2904 qt:data <reduced-star.ttl> ;
+	qt:query <reduced-1.xsparql> .
+
+<http://xsparql.deri.org#reduced-1> mf:action _:node18l628sr5x2904 .
+
+_:node18l628sr5x2905 rdf:first <http://xsparql.deri.org#reduced-2> ;
+	rdf:rest _:node18l628sr5x2906 .
+
+_:node18l628sr5x2906 rdf:first <http://xsparql.deri.org#reduced-1> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/reduced/> mf:entries _:node18l628sr5x2905 .

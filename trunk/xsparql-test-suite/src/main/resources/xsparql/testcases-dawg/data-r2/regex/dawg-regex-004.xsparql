@@ -1,0 +1,14 @@
+prefix  rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix  ex: <http://example.com/#>
+<results>
+{for $val
+from <src/main/resources/xsparql/testcases-dawg/data-r2/regex/regex-data-01.ttl> where {
+	ex:foo rdf:value $val .
+	filter regex(str($val), "example\\.com")
+}
+
+return 
+ <result>
+	<binding name="val">{$val}</binding>
+</result>}
+</results>

@@ -1,0 +1,11 @@
+prefix :  <http://xmlns.com/foaf/0.1/>
+declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+for $UID2 $X2 $Y2 from <http://xsparql.deri.org/data/relations.rdf>
+where { [ :id $UID2 ] :hasGPSCoordinate [ :lat $X2; :long $Y2 ] }
+let $dist := $X2
+order by $dist
+return
+<user>
+<user>{$UID2}</user>
+<dist>{$dist}</dist>
+</user>

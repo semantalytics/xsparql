@@ -1,0 +1,10 @@
+prefix : <http://example/>
+<results>
+{for $x (min($r) as $rating)
+from <src/main/resources/xsparql/testcases-sparql-1.1/aggregates/data-02.ttl> where { $x :rating $r . } group by $x
+return 
+ <result>
+	<binding name="rating">{$rating}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

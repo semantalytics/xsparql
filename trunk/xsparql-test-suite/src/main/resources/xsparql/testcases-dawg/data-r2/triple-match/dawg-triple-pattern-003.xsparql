@@ -1,0 +1,10 @@
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/triple-match/data-02.ttl> where { $a $a $b . }
+
+return 
+ <result>
+	<binding name="b">{$b}</binding>
+	<binding name="a">{$a}</binding>
+</result>}
+</results>

@@ -1,0 +1,12 @@
+prefix : <http://example.org/>
+<results>
+{for $s (tz($date) as $x) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {
+	$s :date $date
+}
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

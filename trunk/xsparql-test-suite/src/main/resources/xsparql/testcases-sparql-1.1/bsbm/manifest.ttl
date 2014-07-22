@@ -1,0 +1,21 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/syntax-sparql1/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#bsbm-bi-q5> <http://xsparql.deri.org#derivedFrom> :bsbm-bi-q5 ;
+	mf:name "BSBM BI use case query 5" ;
+	mf:result <bsbm-bi-q5.srx> .
+
+_:node18l628sr5x1871 qt:data <bsbm-100.ttl> ;
+	qt:query <bsbm-bi-q5.xsparql> .
+
+<http://xsparql.deri.org#bsbm-bi-q5> mf:action _:node18l628sr5x1871 .
+
+_:node18l628sr5x1872 rdf:first <http://xsparql.deri.org#bsbm-bi-q5> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-sparql-1.1/bsbm/> mf:entries _:node18l628sr5x1872 .

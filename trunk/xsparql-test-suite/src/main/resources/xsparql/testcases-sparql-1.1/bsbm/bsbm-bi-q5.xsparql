@@ -1,0 +1,50 @@
+prefix bsbm: <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/vocabulary/>
+prefix bsbm-inst: <http://www4.wiwiss.fu-berlin.de/bizer/bsbm/v01/instances/>
+prefix rev: <http://purl.org/stuff/rev#>
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+<results>
+{for $country $product $nrofreviews $avgprice
+from <src/main/resources/xsparql/testcases-sparql-1.1/bsbm/bsbm-100.ttl> where{
+  { select $country (max($nrofreviews) as $maxreviews)
+    {
+      { select $country $product (count($review) as $nrofreviews)
+        {
+          $product a bsbm-inst:producttype1 .
+          $review bsbm:reviewfor $product ;
+                  rev:reviewer $reviewer .
+          $reviewer bsbm:country $country .
+        }
+        group by $country $product
+      }
+    }
+    group by $country
+  }
+  { select $product (avg(xsd:float(str($price))) as $avgprice)
+    {
+      $product a bsbm-inst:producttype1 .
+      $offer bsbm:product $product .
+      $offer bsbm:price $price .
+    }
+    group by $product
+  }
+  { select $country $product (count($review) as $nrofreviews)
+    {
+      $product a bsbm-inst:producttype1 .
+      $review bsbm:reviewfor $product .
+      $review rev:reviewer $reviewer .
+      $reviewer bsbm:country $country .
+    }
+    group by $country $product
+  }
+  filter($nrofreviews=$maxreviews)
+}
+order by desc($nrofreviews) $country $product
+return 
+ <result>
+	<binding name="maxreviews">{$maxreviews}</binding>
+	<binding name="product">{$product}</binding>
+	<binding name="avgprice">{$avgprice}</binding>
+	<binding name="nrofreviews">{$nrofreviews}</binding>
+	<binding name="country">{$country}</binding>
+</result>}
+</results>

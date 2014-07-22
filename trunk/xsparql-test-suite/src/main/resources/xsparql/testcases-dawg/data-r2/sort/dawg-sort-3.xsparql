@@ -1,0 +1,14 @@
+prefix foaf:       <http://xmlns.com/foaf/0.1/>
+<results>
+{for $name $mbox
+from <src/main/resources/xsparql/testcases-dawg/data-r2/sort/data-sort-3.ttl> where { $x foaf:name $name .
+           optional { $x foaf:mbox $mbox }
+      }
+order by asc($mbox)
+
+return 
+ <result>
+	<binding name="name">{$name}</binding>
+	<binding name="mbox">{$mbox}</binding>
+</result>}
+</results>

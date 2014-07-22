@@ -1,0 +1,22 @@
+# sparql filter test by value.
+# a processor knows about xsd integer
+# so 1 and 01 pass the filter
+
+prefix  :       <http://example/ns#>
+prefix  t:      <http://example/t#>
+prefix  rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix  rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+prefix  xsd:    <http://www.w3.org/2001/xmlschema#>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/open-world/data-1.ttl> where{ $x :p $v 
+  filter ( $v = 1 )
+}
+
+return 
+ <result>
+	<binding name="v">{$v}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

@@ -1,0 +1,13 @@
+prefix : <http://www.example.org/>
+
+   <results>
+{for $O12 (count($o1) as $C)
+   from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/aggregates/agg08.ttl> where { $s :p $o1; :q $o2 } group by (($o1 + $o2) as $O12)
+   order by $O12
+
+return 
+ <result>
+	<binding name="O12">{$O12}</binding>
+	<binding name="C">{$C}</binding>
+</result>}
+</results>

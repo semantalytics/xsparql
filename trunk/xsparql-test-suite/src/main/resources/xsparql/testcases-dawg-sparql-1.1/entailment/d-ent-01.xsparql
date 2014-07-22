@@ -1,0 +1,13 @@
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+<results>
+{for $l
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/entailment/d-ent-01.ttl> where {
+  $l a xsd:integer
+}
+
+
+return 
+ <result>
+	<binding name="l">{$l}</binding>
+</result>}
+</results>

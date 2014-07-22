@@ -1,0 +1,15 @@
+# example 1 from
+# http://lists.w3.org/archives/public/public-rdf-dawg/2005julsep/0096
+# $id: normalization-02.rq,v 1.1 2005/08/09 14:35:26 eric exp $
+prefix : <http://example/vocab#>
+prefix p1: <example://a/./b/../b/%63/%7bfoo%7d#>
+
+<results>
+{for $s from <src/main/resources/xsparql/testcases-dawg/data-r2/i18n/normalization-02.ttl> where { $s :p p1:xyz }
+
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

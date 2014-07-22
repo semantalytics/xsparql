@@ -1,0 +1,134 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/subquery/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#subquery04> <http://xsparql.deri.org#derivedFrom> :subquery04 ;
+	mf:name "sq04 - Subquery within graph pattern, default graph does not apply" ;
+	mf:result <sq04.srx> .
+
+_:node18l628sr5x717 qt:data <sq04.rdf> ;
+	qt:query <subquery04.xsparql> .
+
+<http://xsparql.deri.org#subquery04> mf:action _:node18l628sr5x717 .
+
+<http://xsparql.deri.org#subquery06> <http://xsparql.deri.org#derivedFrom> :subquery06 ;
+	mf:name "sq06 - Subquery with graph pattern, from named applies" ;
+	mf:result <sq06.srx> .
+
+_:node18l628sr5x718 qt:data <sq05.rdf> ;
+	qt:query <subquery06.xsparql> .
+
+<http://xsparql.deri.org#subquery06> mf:action _:node18l628sr5x718 .
+
+<http://xsparql.deri.org#subquery08> <http://xsparql.deri.org#derivedFrom> :subquery08 ;
+	mf:name "sq08 - Subquery with aggregate" ;
+	mf:result <sq08.srx> .
+
+_:node18l628sr5x719 qt:data <sq08.rdf> ;
+	qt:query <subquery08.xsparql> .
+
+<http://xsparql.deri.org#subquery08> mf:action _:node18l628sr5x719 .
+
+<http://xsparql.deri.org#subquery09> <http://xsparql.deri.org#derivedFrom> :subquery09 ;
+	mf:name "sq09 - Nested Subqueries" ;
+	mf:result <sq09.srx> .
+
+_:node18l628sr5x720 qt:data <sq09.rdf> ;
+	qt:query <subquery09.xsparql> .
+
+<http://xsparql.deri.org#subquery09> mf:action _:node18l628sr5x720 .
+
+<http://xsparql.deri.org#subquery10> <http://xsparql.deri.org#derivedFrom> :subquery10 ;
+	mf:name "sq10 - Subquery with exists" ;
+	mf:result <sq10.srx> .
+
+_:node18l628sr5x721 qt:data <sq10.rdf> ;
+	qt:query <subquery10.xsparql> .
+
+<http://xsparql.deri.org#subquery10> mf:action _:node18l628sr5x721 .
+
+<http://xsparql.deri.org#subquery11> <http://xsparql.deri.org#derivedFrom> :subquery11 ;
+	mf:name "sq11 - Subquery limit per resource" ;
+	mf:result <sq11.srx> ;
+	rdfs:comment "This query limits results per number of orders, rather than by number of rows" .
+
+_:node18l628sr5x722 qt:data <sq11.ttl> ;
+	qt:query <subquery11.xsparql> .
+
+<http://xsparql.deri.org#subquery11> mf:action _:node18l628sr5x722 .
+
+<http://xsparql.deri.org#subquery12> <http://xsparql.deri.org#derivedFrom> :subquery12 ;
+	mf:name "sq12 - Subquery in CONSTRUCT with built-ins" ;
+	mf:result <sq12_out.ttl> ;
+	rdfs:comment "This query constructs full names from first and last names" .
+
+_:node18l628sr5x723 qt:data <sq12.ttl> ;
+	qt:query <subquery12.xsparql> .
+
+<http://xsparql.deri.org#subquery12> mf:action _:node18l628sr5x723 .
+
+<http://xsparql.deri.org#subquery13> <http://xsparql.deri.org#derivedFrom> :subquery13 ;
+	mf:name "sq13 - Subqueries don't inject bindings" ;
+	mf:result <sq11.srx> ;
+	rdfs:comment "The result of this subquery is a Kartesian product of all orders, rather than paris of orders sharing products, since subqueries are evaluated independent from bindings from outside the subquery" .
+
+_:node18l628sr5x724 qt:data <sq11.ttl> ;
+	qt:query <subquery13.xsparql> .
+
+<http://xsparql.deri.org#subquery13> mf:action _:node18l628sr5x724 .
+
+<http://xsparql.deri.org#subquery14> <http://xsparql.deri.org#derivedFrom> :subquery14 ;
+	mf:name "sq14 - limit by resource" ;
+	mf:result <sq14-out.ttl> .
+
+_:node18l628sr5x725 qt:data <sq14.ttl> ;
+	qt:query <subquery14.xsparql> .
+
+<http://xsparql.deri.org#subquery14> mf:action _:node18l628sr5x725 .
+
+_:node18l628sr5x727 rdf:first <http://xsparql.deri.org#subquery01> ;
+	rdf:rest _:node18l628sr5x729 .
+
+_:node18l628sr5x729 rdf:first <http://xsparql.deri.org#subquery02> ;
+	rdf:rest _:node18l628sr5x730 .
+
+_:node18l628sr5x730 rdf:first <http://xsparql.deri.org#subquery03> ;
+	rdf:rest _:node18l628sr5x731 .
+
+_:node18l628sr5x731 rdf:first <http://xsparql.deri.org#subquery04> ;
+	rdf:rest _:node18l628sr5x732 .
+
+_:node18l628sr5x732 rdf:first <http://xsparql.deri.org#subquery05> ;
+	rdf:rest _:node18l628sr5x733 .
+
+_:node18l628sr5x733 rdf:first <http://xsparql.deri.org#subquery06> ;
+	rdf:rest _:node18l628sr5x734 .
+
+_:node18l628sr5x734 rdf:first <http://xsparql.deri.org#subquery07> ;
+	rdf:rest _:node18l628sr5x735 .
+
+_:node18l628sr5x735 rdf:first <http://xsparql.deri.org#subquery08> ;
+	rdf:rest _:node18l628sr5x726 .
+
+_:node18l628sr5x726 rdf:first <http://xsparql.deri.org#subquery09> ;
+	rdf:rest _:node18l628sr5x728 .
+
+_:node18l628sr5x728 rdf:first <http://xsparql.deri.org#subquery10> ;
+	rdf:rest _:node18l628sr5x736 .
+
+_:node18l628sr5x736 rdf:first <http://xsparql.deri.org#subquery11> ;
+	rdf:rest _:node18l628sr5x738 .
+
+_:node18l628sr5x738 rdf:first <http://xsparql.deri.org#subquery12> ;
+	rdf:rest _:node18l628sr5x739 .
+
+_:node18l628sr5x739 rdf:first <http://xsparql.deri.org#subquery13> ;
+	rdf:rest _:node18l628sr5x737 .
+
+_:node18l628sr5x737 rdf:first <http://xsparql.deri.org#subquery14> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg-sparql-1.1/subquery/> mf:entries _:node18l628sr5x727 .

@@ -1,0 +1,4 @@
+let $id := 1
+for id as $one, name as $two  from student
+where id = $id
+return <name>{$two}</name>

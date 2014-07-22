@@ -1,0 +1,17 @@
+prefix : <http://example/>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/algebra/var-scope-join-1.ttl> where{ 
+  $x  :name "paul"
+  {$y :name "george" . optional { $x :email $z } }
+}
+
+
+return 
+ <result>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+	<binding name="z">{$z}</binding>
+</result>}
+</results>

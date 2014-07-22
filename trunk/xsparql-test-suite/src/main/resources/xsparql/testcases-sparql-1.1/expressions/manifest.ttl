@@ -1,0 +1,56 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/syntax-sparql1/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#sparql11-alias-01> <http://xsparql.deri.org#derivedFrom> :sparql11-alias-01 ;
+	mf:name "sparql11-alias-01" ;
+	mf:result <sparql11-alias-01.srx> .
+
+_:node18l628sr5x1415 qt:data <data-01.ttl> ;
+	qt:query <sparql11-alias-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-alias-01> mf:action _:node18l628sr5x1415 .
+
+<http://xsparql.deri.org#sparql11-alias-02> <http://xsparql.deri.org#derivedFrom> :sparql11-alias-02 ;
+	mf:name "sparql11-alias-02" ;
+	mf:result <sparql11-alias-02.srx> .
+
+_:node18l628sr5x1416 qt:data <data-01.ttl> ;
+	qt:query <sparql11-alias-02.xsparql> .
+
+<http://xsparql.deri.org#sparql11-alias-02> mf:action _:node18l628sr5x1416 .
+
+<http://xsparql.deri.org#sparql11-numeric-01> <http://xsparql.deri.org#derivedFrom> :sparql11-numeric-01 ;
+	mf:name "sparql11-numeric-01" ;
+	mf:result <sparql11-numeric-01.srx> .
+
+_:node18l628sr5x1417 qt:data <data-02.ttl> ;
+	qt:query <sparql11-numeric-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-numeric-01> mf:action _:node18l628sr5x1417 .
+
+<http://xsparql.deri.org#sparql11-expression-ordered-01> <http://xsparql.deri.org#derivedFrom> :sparql11-expression-ordered-01 ;
+	mf:name "sparql11-expression-ordered-01" ;
+	mf:result <sparql11-expression-ordered-01.srx> .
+
+_:node18l628sr5x1418 qt:data <data-02.ttl> ;
+	qt:query <sparql11-expression-ordered-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-expression-ordered-01> mf:action _:node18l628sr5x1418 .
+
+_:node18l628sr5x1419 rdf:first <http://xsparql.deri.org#sparql11-alias-01> ;
+	rdf:rest _:node18l628sr5x1420 .
+
+_:node18l628sr5x1420 rdf:first <http://xsparql.deri.org#sparql11-alias-02> ;
+	rdf:rest _:node18l628sr5x1421 .
+
+_:node18l628sr5x1421 rdf:first <http://xsparql.deri.org#sparql11-numeric-01> ;
+	rdf:rest _:node18l628sr5x1422 .
+
+_:node18l628sr5x1422 rdf:first <http://xsparql.deri.org#sparql11-expression-ordered-01> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-sparql-1.1/expressions/> mf:entries _:node18l628sr5x1419 .

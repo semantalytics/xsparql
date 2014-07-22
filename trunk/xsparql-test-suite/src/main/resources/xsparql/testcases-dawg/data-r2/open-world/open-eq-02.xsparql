@@ -1,0 +1,15 @@
+# test matching in a graph pattern
+# unknown type
+
+prefix  :       <http://example/ns#>
+prefix  t:      <http://example/t#>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/open-world/data-1.ttl> where{ $x :p "a"^^t:type1 }
+
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

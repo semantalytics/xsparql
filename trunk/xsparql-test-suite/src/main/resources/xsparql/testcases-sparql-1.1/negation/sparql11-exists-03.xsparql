@@ -1,0 +1,16 @@
+<results>
+{for * 
+from <src/main/resources/xsparql/testcases-sparql-1.1/negation/data-03.ttl> where { $s $p $o 
+         filter not exists { $x $y $z } 
+}
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="p">{$p}</binding>
+	<binding name="o">{$o}</binding>
+	<binding name="z">{$z}</binding>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

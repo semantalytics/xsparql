@@ -1,0 +1,37 @@
+prefix :    <http://example/>
+prefix  rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+<results>
+{for ($s1 as $subset) ($s2 as $superset)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/negation/set-data.ttl> where
+{
+    # all pairs of sets
+    $s2 rdf:type :set .
+    $s1 rdf:type :set .
+
+    minus {
+        $s1 rdf:type :set .
+        $s2 rdf:type :set .
+        # assumes $s1 has at least one member 
+        $s1 :member $x .
+        # if we want to exclude a as a subset of a.
+        # this is not perfect as "$s1 = $s2" is not a
+        # contents based comparison.
+        filter ( $s1 = $s2 || not exists { $s2 :member $x . } )
+    }
+    minus {
+        # if we don't want the empty set being a subset of itself.
+        $s1 rdf:type :set .
+        $s2 rdf:type :set .
+        # choose the pair (empty set, empty set)
+        filter ( not exists { $s1 :member $y . } )
+        filter ( not exists { $s2 :member $y . } )
+    }
+}
+
+return 
+ <result>
+	<binding name="subset">{$subset}</binding>
+	<binding name="superset">{$superset}</binding>
+</result>}
+</results>

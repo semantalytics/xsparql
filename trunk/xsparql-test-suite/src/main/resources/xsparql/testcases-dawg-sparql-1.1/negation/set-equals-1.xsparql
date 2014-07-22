@@ -1,0 +1,36 @@
+prefix :    <http://example/>
+prefix  rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+# find sets that have exactly the same members.
+# find all (s1,s2) such that (s1 subset of s) and (s2 subset of s1).
+
+<results>
+{for distinct $s1 $s2
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/negation/set-data.ttl> where
+{
+    # all pairs of sets (no duplicates, not reveres pairs)
+    $s2 rdf:type :set .
+    $s1 rdf:type :set .
+    filter(str($s1) < str($s2))
+    minus 
+    {
+        $s1 rdf:type :set .
+        $s2 rdf:type :set .
+        $s1 :member $x .
+        filter not exists { $s2 :member $x . }
+    }
+    minus 
+    {
+        $s1 rdf:type :set .
+        $s2 rdf:type :set .
+        $s2 :member $x .
+        filter not exists { $s1 :member $x . }
+    }
+}
+
+return 
+ <result>
+	<binding name="s2">{$s2}</binding>
+	<binding name="s1">{$s1}</binding>
+</result>}
+</results>

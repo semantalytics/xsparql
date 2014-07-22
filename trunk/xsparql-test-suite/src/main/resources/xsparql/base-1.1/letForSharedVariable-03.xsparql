@@ -1,0 +1,17 @@
+declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+<relations>
+{ 
+	let $name := "Alice"
+	return
+  		{
+		for $name $friendsName
+		from <http://xsparql.deri.org/data/relations.ttl>
+	  	where { 
+	  		$person foaf:knows $friend ; foaf:name $name .
+	  		$friend foaf:name $friendName  
+	  	}
+	  	return 
+  			<friend id="{$name}">{$friendName}</friend>
+		}
+}
+</relations>

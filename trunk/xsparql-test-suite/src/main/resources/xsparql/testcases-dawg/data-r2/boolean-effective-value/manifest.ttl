@@ -1,0 +1,98 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/boolean-effective-value/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#dawg-boolean-literal> <http://xsparql.deri.org#derivedFrom> :dawg-boolean-literal ;
+	mf:name "Test literal 'true'" ;
+	mf:result <result-boolean-literal.ttl> .
+
+_:node18l628sr5x1887 qt:data <data-1.ttl> ;
+	qt:query <dawg-boolean-literal.xsparql> .
+
+<http://xsparql.deri.org#dawg-boolean-literal> mf:action _:node18l628sr5x1887 .
+
+<http://xsparql.deri.org#dawg-bev-1> <http://xsparql.deri.org#derivedFrom> :dawg-bev-1 ;
+	mf:name "Test 'boolean effective value' - true" ;
+	mf:result <result-bev-1.ttl> ;
+	rdfs:comment "Non-zero numerics, non-empty strings, and the true boolean have an EBV of true" .
+
+_:node18l628sr5x1888 qt:data <data-1.ttl> ;
+	qt:query <dawg-bev-1.xsparql> .
+
+<http://xsparql.deri.org#dawg-bev-1> mf:action _:node18l628sr5x1888 .
+
+<http://xsparql.deri.org#dawg-bev-2> <http://xsparql.deri.org#derivedFrom> :dawg-bev-2 ;
+	mf:name "Test 'boolean effective value' - false" ;
+	mf:result <result-bev-2.ttl> ;
+	rdfs:comment "Zero-valued numerics, the empty string, and the false boolean have an EBV of false" .
+
+_:node18l628sr5x1889 qt:data <data-1.ttl> ;
+	qt:query <dawg-bev-2.xsparql> .
+
+<http://xsparql.deri.org#dawg-bev-2> mf:action _:node18l628sr5x1889 .
+
+<http://xsparql.deri.org#dawg-bev-3> <http://xsparql.deri.org#derivedFrom> :dawg-bev-3 ;
+	mf:name "Test 'boolean effective value' - &&" ;
+	mf:result <result-bev-3.ttl> ;
+	rdfs:comment "The && operator takes the EBV of its operands" .
+
+_:node18l628sr5x1890 qt:data <data-1.ttl> ;
+	qt:query <dawg-bev-3.xsparql> .
+
+<http://xsparql.deri.org#dawg-bev-3> mf:action _:node18l628sr5x1890 .
+
+<http://xsparql.deri.org#dawg-bev-4> <http://xsparql.deri.org#derivedFrom> :dawg-bev-4 ;
+	mf:name "Test 'boolean effective value' - ||" ;
+	mf:result <result-bev-4.ttl> ;
+	rdfs:comment "The || operator takes the EBV of its operands" .
+
+_:node18l628sr5x1891 qt:data <data-1.ttl> ;
+	qt:query <dawg-bev-4.xsparql> .
+
+<http://xsparql.deri.org#dawg-bev-4> mf:action _:node18l628sr5x1891 .
+
+<http://xsparql.deri.org#dawg-bev-5> <http://xsparql.deri.org#derivedFrom> :dawg-bev-5 ;
+	mf:name "Test 'boolean effective value' - optional" ;
+	mf:result <result-bev-5.ttl> ;
+	rdfs:comment "The EBV of an unbound value  or a literal with an unknown datatype is a type error, which eliminates the solution in question" .
+
+_:node18l628sr5x1892 qt:data <data-2.ttl> ;
+	qt:query <dawg-bev-5.xsparql> .
+
+<http://xsparql.deri.org#dawg-bev-5> mf:action _:node18l628sr5x1892 .
+
+<http://xsparql.deri.org#dawg-bev-6> <http://xsparql.deri.org#derivedFrom> :dawg-bev-6 ;
+	mf:name "Test 'boolean effective value' - unknown types" ;
+	mf:result <result-bev-6.ttl> ;
+	rdfs:comment "Negating a type error is still a type error" .
+
+_:node18l628sr5x1893 qt:data <data-2.ttl> ;
+	qt:query <dawg-bev-6.xsparql> .
+
+<http://xsparql.deri.org#dawg-bev-6> mf:action _:node18l628sr5x1893 .
+
+_:node18l628sr5x1894 rdf:first <http://xsparql.deri.org#dawg-boolean-literal> ;
+	rdf:rest _:node18l628sr5x1895 .
+
+_:node18l628sr5x1895 rdf:first <http://xsparql.deri.org#dawg-bev-1> ;
+	rdf:rest _:node18l628sr5x1896 .
+
+_:node18l628sr5x1896 rdf:first <http://xsparql.deri.org#dawg-bev-2> ;
+	rdf:rest _:node18l628sr5x1897 .
+
+_:node18l628sr5x1897 rdf:first <http://xsparql.deri.org#dawg-bev-3> ;
+	rdf:rest _:node18l628sr5x1898 .
+
+_:node18l628sr5x1898 rdf:first <http://xsparql.deri.org#dawg-bev-4> ;
+	rdf:rest _:node18l628sr5x1899 .
+
+_:node18l628sr5x1899 rdf:first <http://xsparql.deri.org#dawg-bev-5> ;
+	rdf:rest _:node18l628sr5x1900 .
+
+_:node18l628sr5x1900 rdf:first <http://xsparql.deri.org#dawg-bev-6> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/boolean-effective-value/> mf:entries _:node18l628sr5x1894 .

@@ -1,0 +1,21 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/bnode-coreference/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#dawg-bnode-coref-001> <http://xsparql.deri.org#derivedFrom> :dawg-bnode-coref-001 ;
+	mf:name "dawg-bnode-coreference" ;
+	mf:result <result.ttl> ;
+	rdfs:comment "Query results must maintain bnode co-references in the dataset" .
+
+_:node18l628sr5x2023 qt:data <data.ttl> ;
+	qt:query <dawg-bnode-coref-001.xsparql> .
+
+<http://xsparql.deri.org#dawg-bnode-coref-001> mf:action _:node18l628sr5x2023 .
+
+_:node18l628sr5x2024 rdf:first <http://xsparql.deri.org#dawg-bnode-coref-001> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/bnode-coreference/> mf:entries _:node18l628sr5x2024 .

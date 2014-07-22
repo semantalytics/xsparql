@@ -1,0 +1,19 @@
+# bindings with two variables and two sets of values
+
+prefix : <http://example.org/> 
+prefix foaf: <http://xmlns.com/foaf/0.1/> 
+<results>
+{for $s $o1 $o2
+from <src/main/resources/xsparql/testcases-service/data04.ttl> where{
+  $s $p1 $o1 
+  optional { service <http://localhost:18080/openrdf/repositories/endpoint1> {$s foaf:knows $o2 }}
+} bindings $o2 {
+ (:b)
+}
+return 
+ <result>
+	<binding name="o2">{$o2}</binding>
+	<binding name="o1">{$o1}</binding>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

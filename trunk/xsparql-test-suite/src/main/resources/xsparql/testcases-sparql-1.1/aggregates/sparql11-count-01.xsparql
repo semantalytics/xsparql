@@ -1,0 +1,10 @@
+prefix : <http://example/>
+<results>
+{for (count($x) as $nrofbooks)
+from <src/main/resources/xsparql/testcases-sparql-1.1/aggregates/data-01.ttl> where { $author :writesbook $x . }
+
+return 
+ <result>
+	<binding name="nrofbooks">{$nrofbooks}</binding>
+</result>}
+</results>

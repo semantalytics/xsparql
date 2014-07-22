@@ -1,0 +1,9 @@
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix  foaf:       <http://xmlns.com/foaf/0.1/>
+
+construct { [ rdf:subject $s ;
+              rdf:predicate $p ;
+              rdf:object $o ] . }
+where {
+  $s $p $o .
+}

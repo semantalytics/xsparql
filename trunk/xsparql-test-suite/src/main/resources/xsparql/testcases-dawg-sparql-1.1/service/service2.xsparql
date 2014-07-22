@@ -1,0 +1,21 @@
+# service and optional
+
+prefix : <http://example.org/> 
+
+<results>
+{for $s $o1 $o2
+where{
+  service <http://example1.org/sparql> {
+  $s $p $o1 . }
+  optional {
+	service <http://example2.org/sparql> {
+    $s $p2 $o2 }
+  }
+}
+return 
+ <result>
+	<binding name="o2">{$o2}</binding>
+	<binding name="o1">{$o1}</binding>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

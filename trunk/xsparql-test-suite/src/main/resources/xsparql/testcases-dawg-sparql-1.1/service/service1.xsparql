@@ -1,0 +1,19 @@
+# service join with pattern in the default graph
+
+prefix : <http://example.org/> 
+
+<results>
+{for $s $o1 $o2 
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/service/data01.ttl> where{
+  $s $p1 $o1 .
+  service <http://example.org/sparql> {
+    $s $p2 $o2
+  }
+} 
+return 
+ <result>
+	<binding name="o2">{$o2}</binding>
+	<binding name="o1">{$o1}</binding>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

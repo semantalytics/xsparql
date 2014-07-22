@@ -1,0 +1,311 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/expr-builtin/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#dawg-lang-1> <http://xsparql.deri.org#derivedFrom> :dawg-lang-1 ;
+	mf:name "lang-1 : Literals with a lang tag of some kind" ;
+	mf:result <result-lang-1.srx> ;
+	rdfs:comment "updated from original test case: eliminated ordering from test" .
+
+_:node18l628sr5x2591 qt:data <data-builtin-2.ttl> ;
+	qt:query <dawg-lang-1.xsparql> .
+
+<http://xsparql.deri.org#dawg-lang-1> mf:action _:node18l628sr5x2591 .
+
+<http://xsparql.deri.org#dawg-lang-2> <http://xsparql.deri.org#derivedFrom> :dawg-lang-2 ;
+	mf:name "lang-2 : Literals with a lang tag of ''" ;
+	mf:result <result-lang-2.srx> ;
+	rdfs:comment "updated from original test case: eliminated ordering from test" .
+
+_:node18l628sr5x2592 qt:data <data-builtin-2.ttl> ;
+	qt:query <dawg-lang-2.xsparql> .
+
+<http://xsparql.deri.org#dawg-lang-2> mf:action _:node18l628sr5x2592 .
+
+<http://xsparql.deri.org#dawg-lang-3> <http://xsparql.deri.org#derivedFrom> :dawg-lang-3 ;
+	mf:name "lang-3 : Graph matching with lang tag being a different case" ;
+	mf:result <result-lang-3.srx> ;
+	rdfs:comment "updated from original test case: eliminated ordering from test" .
+
+_:node18l628sr5x2593 qt:data <data-builtin-2.ttl> ;
+	qt:query <dawg-lang-3.xsparql> .
+
+<http://xsparql.deri.org#dawg-lang-3> mf:action _:node18l628sr5x2593 .
+
+<http://xsparql.deri.org#dawg-isURI-1> <http://xsparql.deri.org#derivedFrom> :dawg-isURI-1 ;
+	mf:name "isURI-1" ;
+	mf:result <result-uri-1.ttl> .
+
+_:node18l628sr5x2594 qt:data <data-builtin-1.ttl> ;
+	qt:query <dawg-isURI-1.xsparql> .
+
+<http://xsparql.deri.org#dawg-isURI-1> mf:action _:node18l628sr5x2594 .
+
+<http://xsparql.deri.org#dawg-isIRI-1> <http://xsparql.deri.org#derivedFrom> :dawg-isIRI-1 ;
+	mf:name "isIRI-1" ;
+	mf:result <result-iri-1.ttl> .
+
+_:node18l628sr5x2595 qt:data <data-builtin-1.ttl> ;
+	qt:query <dawg-isIRI-1.xsparql> .
+
+<http://xsparql.deri.org#dawg-isIRI-1> mf:action _:node18l628sr5x2595 .
+
+<http://xsparql.deri.org#dawg-langMatches-1> <http://xsparql.deri.org#derivedFrom> :dawg-langMatches-1 ;
+	mf:name "LangMatches-1" ;
+	mf:result <result-langMatches-1.ttl> ;
+	rdfs:comment "langMatches(lang(?v), 'en-GB') matches 'abc'@en-gb" .
+
+_:node18l628sr5x2596 qt:data <data-langMatches.ttl> ;
+	qt:query <dawg-langMatches-1.xsparql> .
+
+<http://xsparql.deri.org#dawg-langMatches-1> mf:action _:node18l628sr5x2596 .
+
+<http://xsparql.deri.org#dawg-langMatches-2> <http://xsparql.deri.org#derivedFrom> :dawg-langMatches-2 ;
+	mf:name "LangMatches-2" ;
+	mf:result <result-langMatches-2.ttl> ;
+	rdfs:comment "langMatches(lang(?v), 'en') matches 'abc'@en, 'abc'@en-gb" .
+
+_:node18l628sr5x2597 qt:data <data-langMatches.ttl> ;
+	qt:query <dawg-langMatches-2.xsparql> .
+
+<http://xsparql.deri.org#dawg-langMatches-2> mf:action _:node18l628sr5x2597 .
+
+<http://xsparql.deri.org#dawg-langMatches-3> <http://xsparql.deri.org#derivedFrom> :dawg-langMatches-3 ;
+	mf:name "LangMatches-3" ;
+	mf:result <result-langMatches-3.ttl> ;
+	rdfs:comment "langMatches(lang(?v), '*') matches 'abc'@en, 'abc'@en-gb, 'abc'@fr" .
+
+_:node18l628sr5x2598 qt:data <data-langMatches.ttl> ;
+	qt:query <dawg-langMatches-3.xsparql> .
+
+<http://xsparql.deri.org#dawg-langMatches-3> mf:action _:node18l628sr5x2598 .
+
+<http://xsparql.deri.org#dawg-langMatches-4> <http://xsparql.deri.org#derivedFrom> :dawg-langMatches-4 ;
+	mf:name "LangMatches-4" ;
+	mf:result <result-langMatches-4.ttl> ;
+	rdfs:comment "! langMatches(lang(?v), '*') matches 'abc'" .
+
+_:node18l628sr5x2599 qt:data <data-langMatches.ttl> ;
+	qt:query <dawg-langMatches-4.xsparql> .
+
+<http://xsparql.deri.org#dawg-langMatches-4> mf:action _:node18l628sr5x2599 .
+
+<http://xsparql.deri.org#dawg-langMatches-basic> <http://xsparql.deri.org#derivedFrom> :dawg-langMatches-basic ;
+	mf:name "LangMatches-basic" ;
+	mf:result <result-langMatches-de.ttl> ;
+	rdfs:comment "the basic range 'de-de' does not match 'de-Latn-de'" .
+
+_:node18l628sr5x2600 qt:data <data-langMatches-de.ttl> ;
+	qt:query <dawg-langMatches-basic.xsparql> .
+
+<http://xsparql.deri.org#dawg-langMatches-basic> mf:action _:node18l628sr5x2600 .
+
+<http://xsparql.deri.org#lang-case-insensitive-eq> <http://xsparql.deri.org#derivedFrom> :lang-case-insensitive-eq ;
+	mf:name "lang-case-insensitive-eq" ;
+	mf:result <lang-case-insensitive-eq.srx> ;
+	rdfs:comment "'xyz'@en = 'xyz'@EN" .
+
+_:node18l628sr5x2601 qt:data <lang-case-sensitivity.ttl> ;
+	qt:query <lang-case-insensitive-eq.xsparql> .
+
+<http://xsparql.deri.org#lang-case-insensitive-eq> mf:action _:node18l628sr5x2601 .
+
+<http://xsparql.deri.org#lang-case-insensitive-ne> <http://xsparql.deri.org#derivedFrom> :lang-case-insensitive-ne ;
+	mf:name "lang-case-insensitive-ne" ;
+	mf:result <lang-case-insensitive-ne.srx> ;
+	rdfs:comment "'xyz'@en != 'xyz'@EN" .
+
+_:node18l628sr5x2602 qt:data <lang-case-sensitivity.ttl> ;
+	qt:query <lang-case-insensitive-ne.xsparql> .
+
+<http://xsparql.deri.org#lang-case-insensitive-ne> mf:action _:node18l628sr5x2602 .
+
+<http://xsparql.deri.org#sameTerm-simple> <http://xsparql.deri.org#derivedFrom> :sameTerm-simple ;
+	mf:name "sameTerm-simple" ;
+	mf:result <result-sameTerm.ttl> ;
+	rdfs:comment "sameTerm(?v1, ?v2)" .
+
+_:node18l628sr5x2603 qt:data <data-builtin-1.ttl> ;
+	qt:query <sameTerm-simple.xsparql> .
+
+<http://xsparql.deri.org#sameTerm-simple> mf:action _:node18l628sr5x2603 .
+
+<http://xsparql.deri.org#sameTerm-eq> <http://xsparql.deri.org#derivedFrom> :sameTerm-eq ;
+	mf:name "sameTerm-eq" ;
+	mf:result <result-sameTerm-eq.ttl> ;
+	rdfs:comment "sameTerm(?v1, ?v2) && ?v1 = ?v2" .
+
+_:node18l628sr5x2604 qt:data <data-builtin-1.ttl> ;
+	qt:query <sameTerm-eq.xsparql> .
+
+<http://xsparql.deri.org#sameTerm-eq> mf:action _:node18l628sr5x2604 .
+
+<http://xsparql.deri.org#sameTerm-not-eq> <http://xsparql.deri.org#derivedFrom> :sameTerm-not-eq ;
+	mf:name "sameTerm-not-eq" ;
+	mf:result <result-sameTerm-not-eq.ttl> ;
+	rdfs:comment "!sameTerm(?v1, ?v2) && ?v1 = ?v2" .
+
+_:node18l628sr5x2605 qt:data <data-builtin-1.ttl> ;
+	qt:query <sameTerm-not-eq.xsparql> .
+
+<http://xsparql.deri.org#sameTerm-not-eq> mf:action _:node18l628sr5x2605 .
+
+<http://xsparql.deri.org#dawg-isLiteral-1> <http://xsparql.deri.org#derivedFrom> :dawg-isLiteral-1 ;
+	mf:name "isLiteral" ;
+	mf:result <result-isliteral-1.ttl> .
+
+_:node18l628sr5x2606 qt:data <data-builtin-2.ttl> ;
+	qt:query <dawg-isLiteral-1.xsparql> .
+
+<http://xsparql.deri.org#dawg-isLiteral-1> mf:action _:node18l628sr5x2606 .
+
+<http://xsparql.deri.org#dawg-str-1> <http://xsparql.deri.org#derivedFrom> :dawg-str-1 ;
+	mf:name "str-1" ;
+	mf:result <result-str-1.ttl> .
+
+_:node18l628sr5x2607 qt:data <data-builtin-1.ttl> ;
+	qt:query <dawg-str-1.xsparql> .
+
+<http://xsparql.deri.org#dawg-str-1> mf:action _:node18l628sr5x2607 .
+
+<http://xsparql.deri.org#dawg-str-2> <http://xsparql.deri.org#derivedFrom> :dawg-str-2 ;
+	mf:name "str-2" ;
+	mf:result <result-str-2.ttl> .
+
+_:node18l628sr5x2608 qt:data <data-builtin-1.ttl> ;
+	qt:query <dawg-str-2.xsparql> .
+
+<http://xsparql.deri.org#dawg-str-2> mf:action _:node18l628sr5x2608 .
+
+<http://xsparql.deri.org#dawg-str-3> <http://xsparql.deri.org#derivedFrom> :dawg-str-3 ;
+	mf:name "str-3" ;
+	mf:result <result-str-3.ttl> .
+
+_:node18l628sr5x2609 qt:data <data-builtin-1.ttl> ;
+	qt:query <dawg-str-3.xsparql> .
+
+<http://xsparql.deri.org#dawg-str-3> mf:action _:node18l628sr5x2609 .
+
+<http://xsparql.deri.org#dawg-str-4> <http://xsparql.deri.org#derivedFrom> :dawg-str-4 ;
+	mf:name "str-4" ;
+	mf:result <result-str-4.ttl> .
+
+_:node18l628sr5x2610 qt:data <data-builtin-1.ttl> ;
+	qt:query <dawg-str-4.xsparql> .
+
+<http://xsparql.deri.org#dawg-str-4> mf:action _:node18l628sr5x2610 .
+
+<http://xsparql.deri.org#dawg-isBlank-1> <http://xsparql.deri.org#derivedFrom> :dawg-isBlank-1 ;
+	mf:name "isBlank-1" ;
+	mf:result <result-blank-1.ttl> .
+
+_:node18l628sr5x2611 qt:data <data-builtin-1.ttl> ;
+	qt:query <dawg-isBlank-1.xsparql> .
+
+<http://xsparql.deri.org#dawg-isBlank-1> mf:action _:node18l628sr5x2611 .
+
+<http://xsparql.deri.org#dawg-datatype-1> <http://xsparql.deri.org#derivedFrom> :dawg-datatype-1 ;
+	mf:name "datatype-1" ;
+	mf:result <result-datatype-1.ttl> .
+
+_:node18l628sr5x2612 qt:data <data-builtin-1.ttl> ;
+	qt:query <dawg-datatype-1.xsparql> .
+
+<http://xsparql.deri.org#dawg-datatype-1> mf:action _:node18l628sr5x2612 .
+
+<http://xsparql.deri.org#dawg-datatype-2> <http://xsparql.deri.org#derivedFrom> :dawg-datatype-2 ;
+	mf:name "datatype-2 : Literals with a datatype" ;
+	mf:result <result-datatype-2.srx> ;
+	rdfs:comment "updated from original test case: eliminated ordering from test" .
+
+_:node18l628sr5x2613 qt:data <data-builtin-2.ttl> ;
+	qt:query <dawg-datatype-2.xsparql> .
+
+<http://xsparql.deri.org#dawg-datatype-2> mf:action _:node18l628sr5x2613 .
+
+<http://xsparql.deri.org#dawg-datatype-3> <http://xsparql.deri.org#derivedFrom> :dawg-datatype-3 ;
+	mf:name "datatype-3 : Literals with a datatype of xsd:string" ;
+	mf:result <result-datatype-3.srx> ;
+	rdfs:comment "updated from original test case: eliminated ordering from test" .
+
+_:node18l628sr5x2614 qt:data <data-builtin-2.ttl> ;
+	qt:query <dawg-datatype-3.xsparql> .
+
+<http://xsparql.deri.org#dawg-datatype-3> mf:action _:node18l628sr5x2614 .
+
+_:node18l628sr5x2638 rdf:first <http://xsparql.deri.org#dawg-lang-1> ;
+	rdf:rest _:node18l628sr5x2619 .
+
+_:node18l628sr5x2619 rdf:first <http://xsparql.deri.org#dawg-lang-2> ;
+	rdf:rest _:node18l628sr5x2620 .
+
+_:node18l628sr5x2620 rdf:first <http://xsparql.deri.org#dawg-lang-3> ;
+	rdf:rest _:node18l628sr5x2621 .
+
+_:node18l628sr5x2621 rdf:first <http://xsparql.deri.org#dawg-isURI-1> ;
+	rdf:rest _:node18l628sr5x2622 .
+
+_:node18l628sr5x2622 rdf:first <http://xsparql.deri.org#dawg-isIRI-1> ;
+	rdf:rest _:node18l628sr5x2623 .
+
+_:node18l628sr5x2623 rdf:first <http://xsparql.deri.org#dawg-langMatches-1> ;
+	rdf:rest _:node18l628sr5x2624 .
+
+_:node18l628sr5x2624 rdf:first <http://xsparql.deri.org#dawg-langMatches-2> ;
+	rdf:rest _:node18l628sr5x2625 .
+
+_:node18l628sr5x2625 rdf:first <http://xsparql.deri.org#dawg-langMatches-3> ;
+	rdf:rest _:node18l628sr5x2615 .
+
+_:node18l628sr5x2615 rdf:first <http://xsparql.deri.org#dawg-langMatches-4> ;
+	rdf:rest _:node18l628sr5x2616 .
+
+_:node18l628sr5x2616 rdf:first <http://xsparql.deri.org#dawg-langMatches-basic> ;
+	rdf:rest _:node18l628sr5x2628 .
+
+_:node18l628sr5x2628 rdf:first <http://xsparql.deri.org#lang-case-insensitive-eq> ;
+	rdf:rest _:node18l628sr5x2636 .
+
+_:node18l628sr5x2636 rdf:first <http://xsparql.deri.org#lang-case-insensitive-ne> ;
+	rdf:rest _:node18l628sr5x2637 .
+
+_:node18l628sr5x2637 rdf:first <http://xsparql.deri.org#sameTerm-simple> ;
+	rdf:rest _:node18l628sr5x2634 .
+
+_:node18l628sr5x2634 rdf:first <http://xsparql.deri.org#sameTerm-eq> ;
+	rdf:rest _:node18l628sr5x2635 .
+
+_:node18l628sr5x2635 rdf:first <http://xsparql.deri.org#sameTerm-not-eq> ;
+	rdf:rest _:node18l628sr5x2632 .
+
+_:node18l628sr5x2632 rdf:first <http://xsparql.deri.org#dawg-isLiteral-1> ;
+	rdf:rest _:node18l628sr5x2633 .
+
+_:node18l628sr5x2633 rdf:first <http://xsparql.deri.org#dawg-str-1> ;
+	rdf:rest _:node18l628sr5x2630 .
+
+_:node18l628sr5x2630 rdf:first <http://xsparql.deri.org#dawg-str-2> ;
+	rdf:rest _:node18l628sr5x2631 .
+
+_:node18l628sr5x2631 rdf:first <http://xsparql.deri.org#dawg-str-3> ;
+	rdf:rest _:node18l628sr5x2629 .
+
+_:node18l628sr5x2629 rdf:first <http://xsparql.deri.org#dawg-str-4> ;
+	rdf:rest _:node18l628sr5x2618 .
+
+_:node18l628sr5x2618 rdf:first <http://xsparql.deri.org#dawg-isBlank-1> ;
+	rdf:rest _:node18l628sr5x2617 .
+
+_:node18l628sr5x2617 rdf:first <http://xsparql.deri.org#dawg-datatype-1> ;
+	rdf:rest _:node18l628sr5x2626 .
+
+_:node18l628sr5x2626 rdf:first <http://xsparql.deri.org#dawg-datatype-2> ;
+	rdf:rest _:node18l628sr5x2627 .
+
+_:node18l628sr5x2627 rdf:first <http://xsparql.deri.org#dawg-datatype-3> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/expr-builtin/> mf:entries _:node18l628sr5x2638 .

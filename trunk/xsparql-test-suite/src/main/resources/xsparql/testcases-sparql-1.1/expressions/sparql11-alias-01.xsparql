@@ -1,0 +1,13 @@
+prefix : <http://example.org/> 
+prefix foaf: <http://xmlns.com/foaf/0.1/> 
+
+<results>
+{for (lang($y) as $z)
+from <src/main/resources/xsparql/testcases-sparql-1.1/expressions/data-01.ttl> where {
+	:john foaf:name $y .
+}
+return 
+ <result>
+	<binding name="z">{$z}</binding>
+</result>}
+</results>

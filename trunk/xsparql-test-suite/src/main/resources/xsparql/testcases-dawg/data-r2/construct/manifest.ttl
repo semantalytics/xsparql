@@ -1,0 +1,73 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/construct/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+_:node18l628sr5x2920 qt:data <data-reif.ttl> ;
+	qt:query <construct-3.xsparql> .
+
+<http://xsparql.deri.org#construct-3> mf:action _:node18l628sr5x2920 .
+
+<http://xsparql.deri.org#construct-4> <http://xsparql.deri.org#derivedFrom> :construct-4 ;
+	mf:name "dawg-construct-reification-2" ;
+	mf:result <result-reif.ttl> ;
+	rdfs:comment "Reification of the default graph" .
+
+_:node18l628sr5x2921 qt:data <data-reif.ttl> ;
+	qt:query <construct-4.xsparql> .
+
+<http://xsparql.deri.org#construct-4> mf:action _:node18l628sr5x2921 .
+
+<http://xsparql.deri.org#construct-5> <http://xsparql.deri.org#derivedFrom> :construct-5 ;
+	mf:name "dawg-construct-optional" ;
+	mf:result <result-construct-optional.ttl> ;
+	rdfs:comment "Reification of the default graph" .
+
+_:node18l628sr5x2922 qt:data <data-opt.ttl> ;
+	qt:query <construct-5.xsparql> .
+
+<http://xsparql.deri.org#construct-5> mf:action _:node18l628sr5x2922 .
+
+<http://xsparql.deri.org#construct-1> <http://xsparql.deri.org#derivedFrom> :construct-1 ;
+	mf:name "dawg-construct-identity" ;
+	mf:result <result-ident.ttl> ;
+	rdfs:comment "Graph equivalent result graph" .
+
+_:node18l628sr5x2918 qt:data <data-ident.ttl> ;
+	qt:query <construct-1.xsparql> .
+
+<http://xsparql.deri.org#construct-1> mf:action _:node18l628sr5x2918 .
+
+<http://xsparql.deri.org#construct-2> <http://xsparql.deri.org#derivedFrom> :construct-2 ;
+	mf:name "dawg-construct-subgraph" ;
+	mf:result <result-subgraph.ttl> ;
+	rdfs:comment "Result subgraph of original graph" .
+
+_:node18l628sr5x2919 qt:data <data-ident.ttl> ;
+	qt:query <construct-2.xsparql> .
+
+<http://xsparql.deri.org#construct-2> mf:action _:node18l628sr5x2919 .
+
+<http://xsparql.deri.org#construct-3> <http://xsparql.deri.org#derivedFrom> :construct-3 ;
+	mf:name "dawg-construct-reification-1" ;
+	mf:result <result-reif.ttl> ;
+	rdfs:comment "Reification of the default graph" .
+
+_:node18l628sr5x2923 rdf:first <http://xsparql.deri.org#construct-1> ;
+	rdf:rest _:node18l628sr5x2924 .
+
+_:node18l628sr5x2924 rdf:first <http://xsparql.deri.org#construct-2> ;
+	rdf:rest _:node18l628sr5x2925 .
+
+_:node18l628sr5x2925 rdf:first <http://xsparql.deri.org#construct-3> ;
+	rdf:rest _:node18l628sr5x2926 .
+
+_:node18l628sr5x2926 rdf:first <http://xsparql.deri.org#construct-4> ;
+	rdf:rest _:node18l628sr5x2927 .
+
+_:node18l628sr5x2927 rdf:first <http://xsparql.deri.org#construct-5> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/construct/> mf:entries _:node18l628sr5x2923 .

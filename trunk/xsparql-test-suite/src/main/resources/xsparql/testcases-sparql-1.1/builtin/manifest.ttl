@@ -1,0 +1,440 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/syntax-sparql1/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#sparql11-in-03> <http://xsparql.deri.org#derivedFrom> :sparql11-in-03 ;
+	mf:name "sparql11-in-03" ;
+	mf:result <sparql11-in-03.srx> .
+
+_:node18l628sr5x1587 qt:data <data-01.ttl> ;
+	qt:query <sparql11-in-03.xsparql> .
+
+<http://xsparql.deri.org#sparql11-in-03> mf:action _:node18l628sr5x1587 .
+
+<http://xsparql.deri.org#sparql11-not-in-01> <http://xsparql.deri.org#derivedFrom> :sparql11-not-in-01 ;
+	mf:name "sparql11-not-in-01" ;
+	mf:result <sparql11-not-in-01.srx> .
+
+_:node18l628sr5x1588 qt:data <data-01.ttl> ;
+	qt:query <sparql11-not-in-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-not-in-01> mf:action _:node18l628sr5x1588 .
+
+<http://xsparql.deri.org#sparql11-not-in-02> <http://xsparql.deri.org#derivedFrom> :sparql11-not-in-02 ;
+	mf:name "sparql11-not-in-02" ;
+	mf:result <sparql11-not-in-02.srx> .
+
+_:node18l628sr5x1589 qt:data <data-01.ttl> ;
+	qt:query <sparql11-not-in-02.xsparql> .
+
+<http://xsparql.deri.org#sparql11-not-in-02> mf:action _:node18l628sr5x1589 .
+
+<http://xsparql.deri.org#sparql11-not-in-03> <http://xsparql.deri.org#derivedFrom> :sparql11-not-in-03 ;
+	mf:name "sparql11-not-in-03" ;
+	mf:result <sparql11-not-in-03.srx> .
+
+_:node18l628sr5x1590 qt:data <data-01.ttl> ;
+	qt:query <sparql11-not-in-03.xsparql> .
+
+<http://xsparql.deri.org#sparql11-not-in-03> mf:action _:node18l628sr5x1590 .
+
+<http://xsparql.deri.org#sparql11-strstarts-01> <http://xsparql.deri.org#derivedFrom> :sparql11-strstarts-01 ;
+	mf:name "sparql11-strstarts-01" ;
+	mf:result <sparql11-strstarts-01.srx> .
+
+_:node18l628sr5x1591 qt:data <data-02.ttl> ;
+	qt:query <sparql11-strstarts-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-strstarts-01> mf:action _:node18l628sr5x1591 .
+
+<http://xsparql.deri.org#sparql11-strends-01> <http://xsparql.deri.org#derivedFrom> :sparql11-strends-01 ;
+	mf:name "sparql11-strends-01" ;
+	mf:result <sparql11-strends-01.srx> .
+
+_:node18l628sr5x1592 qt:data <data-02.ttl> ;
+	qt:query <sparql11-strends-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-strends-01> mf:action _:node18l628sr5x1592 .
+
+<http://xsparql.deri.org#sparql11-abs-01> <http://xsparql.deri.org#derivedFrom> :sparql11-abs-01 ;
+	mf:name "sparql11-abs-01" ;
+	mf:result <sparql11-abs-01.srx> .
+
+_:node18l628sr5x1593 qt:data <data-02.ttl> ;
+	qt:query <sparql11-abs-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-abs-01> mf:action _:node18l628sr5x1593 .
+
+<http://xsparql.deri.org#sparql11-round-01> <http://xsparql.deri.org#derivedFrom> :sparql11-round-01 ;
+	mf:name "sparql11-round-01" ;
+	mf:result <sparql11-round-01.srx> .
+
+_:node18l628sr5x1594 qt:data <data-02.ttl> ;
+	qt:query <sparql11-round-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-round-01> mf:action _:node18l628sr5x1594 .
+
+<http://xsparql.deri.org#sparql11-round-02> <http://xsparql.deri.org#derivedFrom> :sparql11-round-02 ;
+	mf:name "sparql11-round-02" ;
+	mf:result <sparql11-round-02.srx> .
+
+_:node18l628sr5x1595 qt:data <data-02.ttl> ;
+	qt:query <sparql11-round-02.xsparql> .
+
+<http://xsparql.deri.org#sparql11-round-02> mf:action _:node18l628sr5x1595 .
+
+<http://xsparql.deri.org#sparql11-ceil-01> <http://xsparql.deri.org#derivedFrom> :sparql11-ceil-01 ;
+	mf:name "sparql11-ceil-01" ;
+	mf:result <sparql11-ceil-01.srx> .
+
+_:node18l628sr5x1596 qt:data <data-02.ttl> ;
+	qt:query <sparql11-ceil-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-ceil-01> mf:action _:node18l628sr5x1596 .
+
+<http://xsparql.deri.org#sparql11-floor-01> <http://xsparql.deri.org#derivedFrom> :sparql11-floor-01 ;
+	mf:name "sparql11-floor-01" ;
+	mf:result <sparql11-floor-01.srx> .
+
+_:node18l628sr5x1597 qt:data <data-02.ttl> ;
+	qt:query <sparql11-floor-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-floor-01> mf:action _:node18l628sr5x1597 .
+
+<http://xsparql.deri.org#sparql11-encodeforuri-01> <http://xsparql.deri.org#derivedFrom> :sparql11-encodeforuri-01 ;
+	mf:name "sparql11-encodeforuri-01" ;
+	mf:result <sparql11-encodeforuri-01.srx> .
+
+_:node18l628sr5x1598 qt:data <data-02.ttl> ;
+	qt:query <sparql11-encodeforuri-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-encodeforuri-01> mf:action _:node18l628sr5x1598 .
+
+<http://xsparql.deri.org#sparql11-concat-01> <http://xsparql.deri.org#derivedFrom> :sparql11-concat-01 ;
+	mf:name "sparql11-concat-01" ;
+	mf:result <sparql11-concat-01.srx> .
+
+_:node18l628sr5x1599 qt:data <data-02.ttl> ;
+	qt:query <sparql11-concat-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-concat-01> mf:action _:node18l628sr5x1599 .
+
+<http://xsparql.deri.org#sparql11-concat-02> <http://xsparql.deri.org#derivedFrom> :sparql11-concat-02 ;
+	mf:name "sparql11-concat-02" ;
+	mf:result <sparql11-concat-02.srx> .
+
+_:node18l628sr5x1600 qt:data <data-02.ttl> ;
+	qt:query <sparql11-concat-02.xsparql> .
+
+<http://xsparql.deri.org#sparql11-concat-02> mf:action _:node18l628sr5x1600 .
+
+<http://xsparql.deri.org#sparql11-concat-03> <http://xsparql.deri.org#derivedFrom> :sparql11-concat-03 ;
+	mf:name "sparql11-concat-03" ;
+	mf:result <sparql11-concat-03.srx> .
+
+_:node18l628sr5x1601 qt:data <data-02.ttl> ;
+	qt:query <sparql11-concat-03.xsparql> .
+
+<http://xsparql.deri.org#sparql11-concat-03> mf:action _:node18l628sr5x1601 .
+
+<http://xsparql.deri.org#sparql11-strlen-01> <http://xsparql.deri.org#derivedFrom> :sparql11-strlen-01 ;
+	mf:name "sparql11-strlen-01" ;
+	mf:result <sparql11-strlen-01.srx> .
+
+_:node18l628sr5x1602 qt:data <data-02.ttl> ;
+	qt:query <sparql11-strlen-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-strlen-01> mf:action _:node18l628sr5x1602 .
+
+<http://xsparql.deri.org#sparql11-strlen-02> <http://xsparql.deri.org#derivedFrom> :sparql11-strlen-02 ;
+	mf:name "sparql11-strlen-02" ;
+	mf:result <sparql11-strlen-02.srx> .
+
+_:node18l628sr5x1603 qt:data <data-02.ttl> ;
+	qt:query <sparql11-strlen-02.xsparql> .
+
+<http://xsparql.deri.org#sparql11-strlen-02> mf:action _:node18l628sr5x1603 .
+
+<http://xsparql.deri.org#sparql11-ucase-01> <http://xsparql.deri.org#derivedFrom> :sparql11-ucase-01 ;
+	mf:name "sparql11-ucase-01" ;
+	mf:result <sparql11-ucase-01.srx> .
+
+_:node18l628sr5x1604 qt:data <data-02.ttl> ;
+	qt:query <sparql11-ucase-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-ucase-01> mf:action _:node18l628sr5x1604 .
+
+<http://xsparql.deri.org#sparql11-lcase-01> <http://xsparql.deri.org#derivedFrom> :sparql11-lcase-01 ;
+	mf:name "sparql11-lcase-01" ;
+	mf:result <sparql11-lcase-01.srx> .
+
+_:node18l628sr5x1605 qt:data <data-02.ttl> ;
+	qt:query <sparql11-lcase-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-lcase-01> mf:action _:node18l628sr5x1605 .
+
+<http://xsparql.deri.org#sparql11-substr-01> <http://xsparql.deri.org#derivedFrom> :sparql11-substr-01 ;
+	mf:name "sparql11-substr-01" ;
+	mf:result <sparql11-substr-01.srx> .
+
+_:node18l628sr5x1606 qt:data <data-02.ttl> ;
+	qt:query <sparql11-substr-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-substr-01> mf:action _:node18l628sr5x1606 .
+
+<http://xsparql.deri.org#sparql11-substr-02> <http://xsparql.deri.org#derivedFrom> :sparql11-substr-02 ;
+	mf:name "sparql11-substr-02" ;
+	mf:result <sparql11-substr-02.srx> .
+
+_:node18l628sr5x1607 qt:data <data-02.ttl> ;
+	qt:query <sparql11-substr-02.xsparql> .
+
+<http://xsparql.deri.org#sparql11-substr-02> mf:action _:node18l628sr5x1607 .
+
+<http://xsparql.deri.org#sparql11-substr-03> <http://xsparql.deri.org#derivedFrom> :sparql11-substr-03 ;
+	mf:name "sparql11-substr-03" ;
+	mf:result <sparql11-substr-03.srx> .
+
+_:node18l628sr5x1608 qt:data <data-02.ttl> ;
+	qt:query <sparql11-substr-03.xsparql> .
+
+<http://xsparql.deri.org#sparql11-substr-03> mf:action _:node18l628sr5x1608 .
+
+<http://xsparql.deri.org#sparql11-concat-04> <http://xsparql.deri.org#derivedFrom> :sparql11-concat-04 ;
+	mf:name "sparql11-concat-04" ;
+	mf:result <sparql11-concat-04.srx> .
+
+_:node18l628sr5x1609 qt:data <data-02.ttl> ;
+	qt:query <sparql11-concat-04.xsparql> .
+
+<http://xsparql.deri.org#sparql11-concat-04> mf:action _:node18l628sr5x1609 .
+
+<http://xsparql.deri.org#sparql11-concat-05> <http://xsparql.deri.org#derivedFrom> :sparql11-concat-05 ;
+	mf:name "sparql11-concat-05" ;
+	mf:result <sparql11-concat-05.srx> .
+
+_:node18l628sr5x1610 qt:data <data-02.ttl> ;
+	qt:query <sparql11-concat-05.xsparql> .
+
+<http://xsparql.deri.org#sparql11-concat-05> mf:action _:node18l628sr5x1610 .
+
+<http://xsparql.deri.org#sparql11-isnumeric-01> <http://xsparql.deri.org#derivedFrom> :sparql11-isnumeric-01 ;
+	mf:name "sparql11-isnumeric-01" ;
+	mf:result <sparql11-isnumeric-01.srx> .
+
+_:node18l628sr5x1611 qt:data <data-01.ttl> ;
+	qt:query <sparql11-isnumeric-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-isnumeric-01> mf:action _:node18l628sr5x1611 .
+
+<http://xsparql.deri.org#sparql11-if-01> <http://xsparql.deri.org#derivedFrom> :sparql11-if-01 ;
+	mf:name "sparql11-if-01" ;
+	mf:result <sparql11-if-01.srx> .
+
+_:node18l628sr5x1612 qt:data <data-02.ttl> ;
+	qt:query <sparql11-if-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-if-01> mf:action _:node18l628sr5x1612 .
+
+<http://xsparql.deri.org#sparql11-if-02> <http://xsparql.deri.org#derivedFrom> :sparql11-if-02 ;
+	mf:name "sparql11-if-02" ;
+	mf:result <sparql11-if-02.srx> .
+
+_:node18l628sr5x1613 qt:data <data-02.ttl> ;
+	qt:query <sparql11-if-02.xsparql> .
+
+<http://xsparql.deri.org#sparql11-if-02> mf:action _:node18l628sr5x1613 .
+
+<http://xsparql.deri.org#sparql11-iri-01> <http://xsparql.deri.org#derivedFrom> :sparql11-iri-01 ;
+	mf:name "sparql11-iri-01" ;
+	mf:result <sparql11-iri-01.srx> .
+
+_:node18l628sr5x1614 qt:data <data-02.ttl> ;
+	qt:query <sparql11-iri-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-iri-01> mf:action _:node18l628sr5x1614 .
+
+<http://xsparql.deri.org#sparql11-uri-01> <http://xsparql.deri.org#derivedFrom> :sparql11-uri-01 ;
+	mf:name "sparql11-uri-01" ;
+	mf:result <sparql11-uri-01.srx> .
+
+_:node18l628sr5x1615 qt:data <data-02.ttl> ;
+	qt:query <sparql11-uri-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-uri-01> mf:action _:node18l628sr5x1615 .
+
+<http://xsparql.deri.org#sparql11-bnode-01> <http://xsparql.deri.org#derivedFrom> :sparql11-bnode-01 ;
+	mf:name "sparql11-bnode-01" ;
+	mf:result <sparql11-bnode-01.srx> .
+
+_:node18l628sr5x1616 qt:data <data-02.ttl> ;
+	qt:query <sparql11-bnode-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-bnode-01> mf:action _:node18l628sr5x1616 .
+
+<http://xsparql.deri.org#sparql11-bnode-02> <http://xsparql.deri.org#derivedFrom> :sparql11-bnode-02 ;
+	mf:name "sparql11-bnode-02" ;
+	mf:result <sparql11-bnode-02.srx> .
+
+_:node18l628sr5x1617 qt:data <data-02.ttl> ;
+	qt:query <sparql11-bnode-02.xsparql> .
+
+<http://xsparql.deri.org#sparql11-bnode-02> mf:action _:node18l628sr5x1617 .
+
+<http://xsparql.deri.org#sparql11-strdt-01> <http://xsparql.deri.org#derivedFrom> :sparql11-strdt-01 ;
+	mf:name "sparql11-strdt-01" ;
+	mf:result <sparql11-strdt-01.srx> .
+
+_:node18l628sr5x1618 qt:data <data-02.ttl> ;
+	qt:query <sparql11-strdt-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-strdt-01> mf:action _:node18l628sr5x1618 .
+
+<http://xsparql.deri.org#sparql11-strlang-01> <http://xsparql.deri.org#derivedFrom> :sparql11-strlang-01 ;
+	mf:name "sparql11-strlang-01" ;
+	mf:result <sparql11-strlang-01.srx> .
+
+_:node18l628sr5x1619 qt:data <data-02.ttl> ;
+	qt:query <sparql11-strlang-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-strlang-01> mf:action _:node18l628sr5x1619 .
+
+<http://xsparql.deri.org#sparql11-coalesce-01> <http://xsparql.deri.org#derivedFrom> :sparql11-coalesce-01 ;
+	mf:name "sparql11-coalesce-01" ;
+	mf:result <sparql11-coalesce-01.srx> .
+
+_:node18l628sr5x1620 qt:data <data-01.ttl> ;
+	qt:query <sparql11-coalesce-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-coalesce-01> mf:action _:node18l628sr5x1620 .
+
+<http://xsparql.deri.org#sparql11-in-01> <http://xsparql.deri.org#derivedFrom> :sparql11-in-01 ;
+	mf:name "sparql11-in-01" ;
+	mf:result <sparql11-in-01.srx> .
+
+_:node18l628sr5x1621 qt:data <data-01.ttl> ;
+	qt:query <sparql11-in-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-in-01> mf:action _:node18l628sr5x1621 .
+
+<http://xsparql.deri.org#sparql11-in-02> <http://xsparql.deri.org#derivedFrom> :sparql11-in-02 ;
+	mf:name "sparql11-in-02" ;
+	mf:result <sparql11-in-02.srx> .
+
+_:node18l628sr5x1622 qt:data <data-01.ttl> ;
+	qt:query <sparql11-in-02.xsparql> .
+
+<http://xsparql.deri.org#sparql11-in-02> mf:action _:node18l628sr5x1622 .
+
+_:node18l628sr5x1652 rdf:first <http://xsparql.deri.org#sparql11-in-03> ;
+	rdf:rest _:node18l628sr5x1627 .
+
+_:node18l628sr5x1627 rdf:first <http://xsparql.deri.org#sparql11-not-in-01> ;
+	rdf:rest _:node18l628sr5x1628 .
+
+_:node18l628sr5x1628 rdf:first <http://xsparql.deri.org#sparql11-not-in-02> ;
+	rdf:rest _:node18l628sr5x1629 .
+
+_:node18l628sr5x1629 rdf:first <http://xsparql.deri.org#sparql11-not-in-03> ;
+	rdf:rest _:node18l628sr5x1630 .
+
+_:node18l628sr5x1630 rdf:first <http://xsparql.deri.org#sparql11-strstarts-01> ;
+	rdf:rest _:node18l628sr5x1631 .
+
+_:node18l628sr5x1631 rdf:first <http://xsparql.deri.org#sparql11-strends-01> ;
+	rdf:rest _:node18l628sr5x1632 .
+
+_:node18l628sr5x1632 rdf:first <http://xsparql.deri.org#sparql11-abs-01> ;
+	rdf:rest _:node18l628sr5x1633 .
+
+_:node18l628sr5x1633 rdf:first <http://xsparql.deri.org#sparql11-round-01> ;
+	rdf:rest _:node18l628sr5x1623 .
+
+_:node18l628sr5x1623 rdf:first <http://xsparql.deri.org#sparql11-round-02> ;
+	rdf:rest _:node18l628sr5x1624 .
+
+_:node18l628sr5x1624 rdf:first <http://xsparql.deri.org#sparql11-ceil-01> ;
+	rdf:rest _:node18l628sr5x1642 .
+
+_:node18l628sr5x1642 rdf:first <http://xsparql.deri.org#sparql11-floor-01> ;
+	rdf:rest _:node18l628sr5x1650 .
+
+_:node18l628sr5x1650 rdf:first <http://xsparql.deri.org#sparql11-encodeforuri-01> ;
+	rdf:rest _:node18l628sr5x1651 .
+
+_:node18l628sr5x1651 rdf:first <http://xsparql.deri.org#sparql11-concat-01> ;
+	rdf:rest _:node18l628sr5x1648 .
+
+_:node18l628sr5x1648 rdf:first <http://xsparql.deri.org#sparql11-concat-02> ;
+	rdf:rest _:node18l628sr5x1649 .
+
+_:node18l628sr5x1649 rdf:first <http://xsparql.deri.org#sparql11-concat-03> ;
+	rdf:rest _:node18l628sr5x1646 .
+
+_:node18l628sr5x1646 rdf:first <http://xsparql.deri.org#sparql11-strlen-01> ;
+	rdf:rest _:node18l628sr5x1647 .
+
+_:node18l628sr5x1647 rdf:first <http://xsparql.deri.org#sparql11-strlen-02> ;
+	rdf:rest _:node18l628sr5x1644 .
+
+_:node18l628sr5x1644 rdf:first <http://xsparql.deri.org#sparql11-ucase-01> ;
+	rdf:rest _:node18l628sr5x1645 .
+
+_:node18l628sr5x1645 rdf:first <http://xsparql.deri.org#sparql11-lcase-01> ;
+	rdf:rest _:node18l628sr5x1643 .
+
+_:node18l628sr5x1643 rdf:first <http://xsparql.deri.org#sparql11-substr-01> ;
+	rdf:rest _:node18l628sr5x1626 .
+
+_:node18l628sr5x1626 rdf:first <http://xsparql.deri.org#sparql11-substr-02> ;
+	rdf:rest _:node18l628sr5x1625 .
+
+_:node18l628sr5x1625 rdf:first <http://xsparql.deri.org#sparql11-substr-03> ;
+	rdf:rest _:node18l628sr5x1638 .
+
+_:node18l628sr5x1638 rdf:first <http://xsparql.deri.org#sparql11-concat-04> ;
+	rdf:rest _:node18l628sr5x1639 .
+
+_:node18l628sr5x1639 rdf:first <http://xsparql.deri.org#sparql11-concat-05> ;
+	rdf:rest _:node18l628sr5x1640 .
+
+_:node18l628sr5x1640 rdf:first <http://xsparql.deri.org#sparql11-isnumeric-01> ;
+	rdf:rest _:node18l628sr5x1641 .
+
+_:node18l628sr5x1641 rdf:first <http://xsparql.deri.org#sparql11-if-01> ;
+	rdf:rest _:node18l628sr5x1634 .
+
+_:node18l628sr5x1634 rdf:first <http://xsparql.deri.org#sparql11-if-02> ;
+	rdf:rest _:node18l628sr5x1635 .
+
+_:node18l628sr5x1635 rdf:first <http://xsparql.deri.org#sparql11-iri-01> ;
+	rdf:rest _:node18l628sr5x1636 .
+
+_:node18l628sr5x1636 rdf:first <http://xsparql.deri.org#sparql11-uri-01> ;
+	rdf:rest _:node18l628sr5x1637 .
+
+_:node18l628sr5x1637 rdf:first <http://xsparql.deri.org#sparql11-bnode-01> ;
+	rdf:rest _:node18l628sr5x1655 .
+
+_:node18l628sr5x1655 rdf:first <http://xsparql.deri.org#sparql11-bnode-02> ;
+	rdf:rest _:node18l628sr5x1654 .
+
+_:node18l628sr5x1654 rdf:first <http://xsparql.deri.org#sparql11-strdt-01> ;
+	rdf:rest _:node18l628sr5x1653 .
+
+_:node18l628sr5x1653 rdf:first <http://xsparql.deri.org#sparql11-strlang-01> ;
+	rdf:rest _:node18l628sr5x1657 .
+
+_:node18l628sr5x1657 rdf:first <http://xsparql.deri.org#sparql11-coalesce-01> ;
+	rdf:rest _:node18l628sr5x1658 .
+
+_:node18l628sr5x1658 rdf:first <http://xsparql.deri.org#sparql11-in-01> ;
+	rdf:rest _:node18l628sr5x1656 .
+
+_:node18l628sr5x1656 rdf:first <http://xsparql.deri.org#sparql11-in-02> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-sparql-1.1/builtin/> mf:entries _:node18l628sr5x1652 .

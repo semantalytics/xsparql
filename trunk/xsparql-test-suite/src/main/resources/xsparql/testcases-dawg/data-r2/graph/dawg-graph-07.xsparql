@@ -1,0 +1,18 @@
+prefix : <http://example/> 
+
+<results>
+{for * 
+from <src/main/resources/xsparql/testcases-dawg/data-r2/graph/data-g1.ttl> where{ 
+   { $s $p $o }
+  union
+   { graph $g { $s $p $o } }
+}
+
+return 
+ <result>
+	<binding name="g">{$g}</binding>
+	<binding name="s">{$s}</binding>
+	<binding name="p">{$p}</binding>
+	<binding name="o">{$o}</binding>
+</result>}
+</results>

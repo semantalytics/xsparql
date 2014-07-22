@@ -1,0 +1,177 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/sort/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#dawg-sort-1> <http://xsparql.deri.org#derivedFrom> :dawg-sort-1 ;
+	mf:name "sort-1" ;
+	mf:result <result-sort-1.rdf> ;
+	rdfs:comment "Alphabetic sort (ascending) on untyped literals" .
+
+_:node18l628sr5x2343 qt:data <data-sort-1.ttl> ;
+	qt:query <dawg-sort-1.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-1> mf:action _:node18l628sr5x2343 .
+
+<http://xsparql.deri.org#dawg-sort-2> <http://xsparql.deri.org#derivedFrom> :dawg-sort-2 ;
+	mf:name "sort-2" ;
+	mf:result <result-sort-2.rdf> ;
+	rdfs:comment "Alphabetic sort (descending) on untyped literals" .
+
+_:node18l628sr5x2344 qt:data <data-sort-1.ttl> ;
+	qt:query <dawg-sort-2.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-2> mf:action _:node18l628sr5x2344 .
+
+<http://xsparql.deri.org#dawg-sort-3> <http://xsparql.deri.org#derivedFrom> :dawg-sort-3 ;
+	mf:name "sort-3" ;
+	mf:result <result-sort-3.rdf> ;
+	rdfs:comment "Sort on (possibly unbound) URIs" .
+
+_:node18l628sr5x2345 qt:data <data-sort-3.ttl> ;
+	qt:query <dawg-sort-3.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-3> mf:action _:node18l628sr5x2345 .
+
+<http://xsparql.deri.org#dawg-sort-4> <http://xsparql.deri.org#derivedFrom> :dawg-sort-4 ;
+	mf:name "sort-4" ;
+	mf:result <result-sort-4.rdf> ;
+	rdfs:comment "Sort on datatyped (integer) literals" .
+
+_:node18l628sr5x2346 qt:data <data-sort-4.ttl> ;
+	qt:query <dawg-sort-4.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-4> mf:action _:node18l628sr5x2346 .
+
+<http://xsparql.deri.org#dawg-sort-5> <http://xsparql.deri.org#derivedFrom> :dawg-sort-5 ;
+	mf:name "sort-5" ;
+	mf:result <result-sort-5.rdf> ;
+	rdfs:comment "Sort first on untyped literals (ascending), then on datatyped (integer) literals (descending" .
+
+_:node18l628sr5x2347 qt:data <data-sort-4.ttl> ;
+	qt:query <dawg-sort-5.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-5> mf:action _:node18l628sr5x2347 .
+
+<http://xsparql.deri.org#dawg-sort-6> <http://xsparql.deri.org#derivedFrom> :dawg-sort-6 ;
+	mf:name "sort-6" ;
+	mf:result <result-sort-6.rdf> ;
+	rdfs:comment "Sort on mixed result of uris and literals." .
+
+_:node18l628sr5x2348 qt:data <data-sort-6.ttl> ;
+	qt:query <dawg-sort-6.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-6> mf:action _:node18l628sr5x2348 .
+
+<http://xsparql.deri.org#dawg-sort-7> <http://xsparql.deri.org#derivedFrom> :dawg-sort-7 ;
+	mf:name "sort-7" ;
+	mf:result <result-sort-7.rdf> ;
+	rdfs:comment "Sort on comparable mixed typed literals (integer and float)" .
+
+_:node18l628sr5x2349 qt:data <data-sort-7.ttl> ;
+	qt:query <dawg-sort-7.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-7> mf:action _:node18l628sr5x2349 .
+
+<http://xsparql.deri.org#dawg-sort-8> <http://xsparql.deri.org#derivedFrom> :dawg-sort-8 ;
+	mf:name "sort-8" ;
+	mf:result <result-sort-8.rdf> ;
+	rdfs:comment "Sort on several mixed values (bnode, uri, literal)" .
+
+_:node18l628sr5x2350 qt:data <data-sort-8.ttl> ;
+	qt:query <dawg-sort-8.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-8> mf:action _:node18l628sr5x2350 .
+
+<http://xsparql.deri.org#dawg-sort-9> <http://xsparql.deri.org#derivedFrom> :dawg-sort-9 ;
+	mf:name "sort-9" ;
+	mf:result <result-sort-9.rdf> ;
+	rdfs:comment "Alphabetic sort (ascending) on datatyped (string) literals" .
+
+_:node18l628sr5x2351 qt:data <data-sort-9.ttl> ;
+	qt:query <dawg-sort-9.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-9> mf:action _:node18l628sr5x2351 .
+
+<http://xsparql.deri.org#dawg-sort-10> <http://xsparql.deri.org#derivedFrom> :dawg-sort-10 ;
+	mf:name "sort-10" ;
+	mf:result <result-sort-10.rdf> ;
+	rdfs:comment "Alphabetic sort (descending) on datatyped (string) literals" .
+
+_:node18l628sr5x2352 qt:data <data-sort-9.ttl> ;
+	qt:query <dawg-sort-10.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-10> mf:action _:node18l628sr5x2352 .
+
+<http://xsparql.deri.org#dawg-sort-numbers> <http://xsparql.deri.org#derivedFrom> :dawg-sort-numbers ;
+	mf:name "Expression sort" ;
+	mf:result <result-sort-numbers.ttl> ;
+	rdfs:comment "Sort by a bracketted expression" .
+
+_:node18l628sr5x2353 qt:data <data-sort-numbers.ttl> ;
+	qt:query <dawg-sort-numbers.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-numbers> mf:action _:node18l628sr5x2353 .
+
+<http://xsparql.deri.org#dawg-sort-builtin> <http://xsparql.deri.org#derivedFrom> :dawg-sort-builtin ;
+	mf:name "Builtin sort" ;
+	mf:result <result-sort-builtin.ttl> ;
+	rdfs:comment "Sort by a builtin operator" .
+
+_:node18l628sr5x2354 qt:data <data-sort-builtin.ttl> ;
+	qt:query <dawg-sort-builtin.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-builtin> mf:action _:node18l628sr5x2354 .
+
+<http://xsparql.deri.org#dawg-sort-function> <http://xsparql.deri.org#derivedFrom> :dawg-sort-function ;
+	mf:name "Function sort" ;
+	mf:result <result-sort-function.ttl> ;
+	rdfs:comment "Sort by function invocation" .
+
+_:node18l628sr5x2355 qt:data <data-sort-function.ttl> ;
+	qt:query <dawg-sort-function.xsparql> .
+
+<http://xsparql.deri.org#dawg-sort-function> mf:action _:node18l628sr5x2355 .
+
+_:node18l628sr5x2357 rdf:first <http://xsparql.deri.org#dawg-sort-1> ;
+	rdf:rest _:node18l628sr5x2359 .
+
+_:node18l628sr5x2359 rdf:first <http://xsparql.deri.org#dawg-sort-2> ;
+	rdf:rest _:node18l628sr5x2360 .
+
+_:node18l628sr5x2360 rdf:first <http://xsparql.deri.org#dawg-sort-3> ;
+	rdf:rest _:node18l628sr5x2361 .
+
+_:node18l628sr5x2361 rdf:first <http://xsparql.deri.org#dawg-sort-4> ;
+	rdf:rest _:node18l628sr5x2362 .
+
+_:node18l628sr5x2362 rdf:first <http://xsparql.deri.org#dawg-sort-5> ;
+	rdf:rest _:node18l628sr5x2363 .
+
+_:node18l628sr5x2363 rdf:first <http://xsparql.deri.org#dawg-sort-6> ;
+	rdf:rest _:node18l628sr5x2364 .
+
+_:node18l628sr5x2364 rdf:first <http://xsparql.deri.org#dawg-sort-7> ;
+	rdf:rest _:node18l628sr5x2365 .
+
+_:node18l628sr5x2365 rdf:first <http://xsparql.deri.org#dawg-sort-8> ;
+	rdf:rest _:node18l628sr5x2356 .
+
+_:node18l628sr5x2356 rdf:first <http://xsparql.deri.org#dawg-sort-9> ;
+	rdf:rest _:node18l628sr5x2358 .
+
+_:node18l628sr5x2358 rdf:first <http://xsparql.deri.org#dawg-sort-10> ;
+	rdf:rest _:node18l628sr5x2366 .
+
+_:node18l628sr5x2366 rdf:first <http://xsparql.deri.org#dawg-sort-numbers> ;
+	rdf:rest _:node18l628sr5x2367 .
+
+_:node18l628sr5x2367 rdf:first <http://xsparql.deri.org#dawg-sort-builtin> ;
+	rdf:rest _:node18l628sr5x2368 .
+
+_:node18l628sr5x2368 rdf:first <http://xsparql.deri.org#dawg-sort-function> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/sort/> mf:entries _:node18l628sr5x2357 .

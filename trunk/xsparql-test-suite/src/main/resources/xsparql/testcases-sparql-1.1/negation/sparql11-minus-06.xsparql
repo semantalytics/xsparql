@@ -1,0 +1,17 @@
+prefix : <http://example/>
+<results>
+{for * 
+from <src/main/resources/xsparql/testcases-sparql-1.1/negation/data-04.ttl> where {
+	$a :p $n
+	minus {
+		$a :q $m .
+		filter($n = $m)
+	}
+}
+return 
+ <result>
+	<binding name="a">{$a}</binding>
+	<binding name="n">{$n}</binding>
+	<binding name="m">{$m}</binding>
+</result>}
+</results>

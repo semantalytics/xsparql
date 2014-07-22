@@ -1,0 +1,12 @@
+prefix : <http://example.org/#>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/expr-builtin/data-langmatches.ttl> where{ :x $p $v . filter langmatches(lang($v), "en-gb") . }
+
+return 
+ <result>
+	<binding name="v">{$v}</binding>
+	<binding name="p">{$p}</binding>
+</result>}
+</results>

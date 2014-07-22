@@ -1,0 +1,14 @@
+prefix : <http://example.org/ns#>
+
+<results>
+{for $p $v $w
+from <src/main/resources/xsparql/testcases-dawg/data-r2/basic/data-2.ttl> where{ :x $p ($v $w) . }
+
+
+return 
+ <result>
+	<binding name="w">{$w}</binding>
+	<binding name="v">{$v}</binding>
+	<binding name="p">{$p}</binding>
+</result>}
+</results>

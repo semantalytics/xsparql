@@ -1,0 +1,14 @@
+prefix  dc:  <http://purl.org/dc/elements/1.1/>
+prefix  :  <http://example/>
+<results>
+{for  $y (iri($y) as $iri)
+ from <src/main/resources/xsparql/testcases-sparql-1.1/builtin/data-02.ttl> where {
+   	$x :uriasliteral $y . 
+}
+
+return 
+ <result>
+	<binding name="y">{$y}</binding>
+	<binding name="iri">{$iri}</binding>
+</result>}
+</results>

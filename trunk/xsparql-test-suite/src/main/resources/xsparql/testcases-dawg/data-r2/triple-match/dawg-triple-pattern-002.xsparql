@@ -1,0 +1,13 @@
+prefix : <http://example.org/data/>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/triple-match/data-01.ttl> where { $x :p $q . }
+
+
+return 
+ <result>
+	<binding name="q">{$q}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

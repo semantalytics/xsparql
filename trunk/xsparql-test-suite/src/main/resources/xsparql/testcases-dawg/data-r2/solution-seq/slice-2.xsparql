@@ -1,0 +1,13 @@
+prefix : <http://example.org/ns#>
+
+<results>
+{for $v
+from <src/main/resources/xsparql/testcases-dawg/data-r2/solution-seq/data.ttl> where { [] :num $v }
+order by $v
+offset 1
+limit 2
+return 
+ <result>
+	<binding name="v">{$v}</binding>
+</result>}
+</results>

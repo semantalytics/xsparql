@@ -1,0 +1,12 @@
+prefix : <http://www.example.org/>
+<results>
+{for (max($o) as $max)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/aggregates/agg-numeric.ttl> where {
+	$s $p $o
+}
+
+return 
+ <result>
+	<binding name="max">{$max}</binding>
+</result>}
+</results>

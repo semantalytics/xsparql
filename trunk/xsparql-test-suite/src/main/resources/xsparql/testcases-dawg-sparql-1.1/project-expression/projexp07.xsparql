@@ -1,0 +1,15 @@
+prefix ex:	<http://www.example.org/schema#>
+prefix in:	<http://www.example.org/instance#>
+
+<results>
+{for $x (datatype($l) as $dt) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/project-expression/projexp07.ttl> where {
+  $x ex:p $y .
+  optional {$x ex:q $l}
+}
+
+return 
+ <result>
+	<binding name="dt">{$dt}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

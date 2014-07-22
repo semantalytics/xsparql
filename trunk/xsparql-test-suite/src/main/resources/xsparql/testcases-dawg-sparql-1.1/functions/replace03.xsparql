@@ -1,0 +1,12 @@
+prefix : <http://example.org/>
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+<results>
+{for (replace($str,"(ab)|(a)", "[1=$1][2=$2]") as $new) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data3.ttl> where {
+	:s9 :str $str
+}
+
+return 
+ <result>
+	<binding name="new">{$new}</binding>
+</result>}
+</results>

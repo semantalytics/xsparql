@@ -1,0 +1,14 @@
+prefix : <http://example/>
+<results>
+{for (avg($lprice) as $avgprice)
+from <src/main/resources/xsparql/testcases-sparql-1.1/aggregates/data-01.ttl> where {
+  $org :affiliates $auth .
+  $auth :writesbook $book .
+  $book :price $lprice .
+}
+group by $org
+return 
+ <result>
+	<binding name="avgprice">{$avgprice}</binding>
+</result>}
+</results>

@@ -1,0 +1,17 @@
+prefix : <http://example.org/> 
+
+<results>
+{for $s $p $o $z
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/bind/data.ttl> where{
+  $s $p $o .
+  { bind($o+1 as $z) } union { bind($o+2 as $z) }
+}
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="p">{$p}</binding>
+	<binding name="o">{$o}</binding>
+	<binding name="z">{$z}</binding>
+</result>}
+</results>

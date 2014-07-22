@@ -1,0 +1,10 @@
+prefix : <http://example.org/>
+<results>
+{for $t
+from <src/main/resources/xsparql/testcases-sparql-1.1/property-paths/data-09.ttl> where { :a a $t . $t :p+ :a } 
+
+return 
+ <result>
+	<binding name="t">{$t}</binding>
+</result>}
+</results>

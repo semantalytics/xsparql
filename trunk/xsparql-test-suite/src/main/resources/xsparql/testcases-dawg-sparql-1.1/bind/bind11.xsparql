@@ -1,0 +1,19 @@
+prefix : <http://example.org/> 
+
+<results>
+{for $s $v $z
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/bind/data.ttl> where{
+  # see also bind10.rq
+  bind(4 as $z)
+  # $z is in scope at the time of filter execution.
+  $s :p $v . 
+  filter($v = $z)
+}
+
+return 
+ <result>
+	<binding name="v">{$v}</binding>
+	<binding name="s">{$s}</binding>
+	<binding name="z">{$z}</binding>
+</result>}
+</results>

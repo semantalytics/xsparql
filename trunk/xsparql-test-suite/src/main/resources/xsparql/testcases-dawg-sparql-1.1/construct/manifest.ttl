@@ -1,0 +1,47 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/construct/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#constructwhere01> <http://xsparql.deri.org#derivedFrom> :constructwhere01 ;
+	mf:name "constructwhere01 - CONSTRUCT WHERE" ;
+	mf:result <constructwhere01result.ttl> ;
+	rdfs:comment "CONSTRUCT WHERE { ?S ?P ?O }" .
+
+_:node18l628sr5x1373 qt:data <data.ttl> ;
+	qt:query <constructwhere01.xsparql> .
+
+<http://xsparql.deri.org#constructwhere01> mf:action _:node18l628sr5x1373 .
+
+<http://xsparql.deri.org#constructwhere02> <http://xsparql.deri.org#derivedFrom> :constructwhere02 ;
+	mf:name "constructwhere02 - CONSTRUCT WHERE" ;
+	mf:result <constructwhere02result.ttl> ;
+	rdfs:comment "CONSTRUCT WHERE  with join" .
+
+_:node18l628sr5x1374 qt:data <data.ttl> ;
+	qt:query <constructwhere02.xsparql> .
+
+<http://xsparql.deri.org#constructwhere02> mf:action _:node18l628sr5x1374 .
+
+<http://xsparql.deri.org#constructwhere03> <http://xsparql.deri.org#derivedFrom> :constructwhere03 ;
+	mf:name "constructwhere03 - CONSTRUCT WHERE" ;
+	mf:result <constructwhere03result.ttl> ;
+	rdfs:comment "CONSTRUCT WHERE  with join, using shortcut notation" .
+
+_:node18l628sr5x1375 qt:data <data.ttl> ;
+	qt:query <constructwhere03.xsparql> .
+
+<http://xsparql.deri.org#constructwhere03> mf:action _:node18l628sr5x1375 .
+
+_:node18l628sr5x1376 rdf:first <http://xsparql.deri.org#constructwhere01> ;
+	rdf:rest _:node18l628sr5x1377 .
+
+_:node18l628sr5x1377 rdf:first <http://xsparql.deri.org#constructwhere02> ;
+	rdf:rest _:node18l628sr5x1378 .
+
+_:node18l628sr5x1378 rdf:first <http://xsparql.deri.org#constructwhere03> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg-sparql-1.1/construct/> mf:entries _:node18l628sr5x1376 .

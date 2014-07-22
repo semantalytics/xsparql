@@ -1,0 +1,14 @@
+prefix : <http://example.org/>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-sparql-1.1/property-paths/data-05.ttl> where { $x a foaf:person. $x foaf:knows* $y } 
+order by $x $y
+
+return 
+ <result>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

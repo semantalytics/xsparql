@@ -1,0 +1,12 @@
+prefix : <http://example/>
+<results>
+{for (sum($lprice) as $totalprice)
+from <src/main/resources/xsparql/testcases-sparql-1.1/aggregates/data-04.ttl> where {
+  $book :price $lprice .
+}
+group by $book
+return 
+ <result>
+	<binding name="totalprice">{$totalprice}</binding>
+</result>}
+</results>

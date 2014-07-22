@@ -1,0 +1,140 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/distinct/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#no-distinct-1> <http://xsparql.deri.org#derivedFrom> :no-distinct-1 ;
+	mf:name "Numbers: No distinct" ;
+	mf:result <no-distinct-num.srx> .
+
+_:node18l628sr5x2970 qt:data <data-num.ttl> ;
+	qt:query <no-distinct-1.xsparql> .
+
+<http://xsparql.deri.org#no-distinct-1> mf:action _:node18l628sr5x2970 .
+
+<http://xsparql.deri.org#distinct-1> <http://xsparql.deri.org#derivedFrom> :distinct-1 ;
+	mf:name "Numbers: Distinct" ;
+	mf:result <distinct-num.srx> .
+
+_:node18l628sr5x2971 qt:data <data-num.ttl> ;
+	qt:query <distinct-1.xsparql> .
+
+<http://xsparql.deri.org#distinct-1> mf:action _:node18l628sr5x2971 .
+
+<http://xsparql.deri.org#no-distinct-2> <http://xsparql.deri.org#derivedFrom> :no-distinct-2 ;
+	mf:name "Strings: No distinct" ;
+	mf:result <no-distinct-str.srx> .
+
+_:node18l628sr5x2972 qt:data <data-str.ttl> ;
+	qt:query <no-distinct-2.xsparql> .
+
+<http://xsparql.deri.org#no-distinct-2> mf:action _:node18l628sr5x2972 .
+
+<http://xsparql.deri.org#distinct-2> <http://xsparql.deri.org#derivedFrom> :distinct-2 ;
+	mf:name "Strings: Distinct" ;
+	mf:result <distinct-str.srx> .
+
+_:node18l628sr5x2973 qt:data <data-str.ttl> ;
+	qt:query <distinct-2.xsparql> .
+
+<http://xsparql.deri.org#distinct-2> mf:action _:node18l628sr5x2973 .
+
+<http://xsparql.deri.org#no-distinct-3> <http://xsparql.deri.org#derivedFrom> :no-distinct-3 ;
+	mf:name "Nodes: No distinct" ;
+	mf:result <no-distinct-node.srx> .
+
+_:node18l628sr5x2974 qt:data <data-node.ttl> ;
+	qt:query <no-distinct-3.xsparql> .
+
+<http://xsparql.deri.org#no-distinct-3> mf:action _:node18l628sr5x2974 .
+
+<http://xsparql.deri.org#distinct-3> <http://xsparql.deri.org#derivedFrom> :distinct-3 ;
+	mf:name "Nodes: Distinct" ;
+	mf:result <distinct-node.srx> .
+
+_:node18l628sr5x2975 qt:data <data-node.ttl> ;
+	qt:query <distinct-3.xsparql> .
+
+<http://xsparql.deri.org#distinct-3> mf:action _:node18l628sr5x2975 .
+
+<http://xsparql.deri.org#no-distinct-4> <http://xsparql.deri.org#derivedFrom> :no-distinct-4 ;
+	mf:name "Opt: No distinct" ;
+	mf:result <no-distinct-opt.srx> .
+
+_:node18l628sr5x2976 qt:data <data-opt.ttl> ;
+	qt:query <no-distinct-4.xsparql> .
+
+<http://xsparql.deri.org#no-distinct-4> mf:action _:node18l628sr5x2976 .
+
+<http://xsparql.deri.org#distinct-4> <http://xsparql.deri.org#derivedFrom> :distinct-4 ;
+	mf:name "Opt: Distinct" ;
+	mf:result <distinct-opt.srx> .
+
+_:node18l628sr5x2977 qt:data <data-opt.ttl> ;
+	qt:query <distinct-4.xsparql> .
+
+<http://xsparql.deri.org#distinct-4> mf:action _:node18l628sr5x2977 .
+
+<http://xsparql.deri.org#no-distinct-9> <http://xsparql.deri.org#derivedFrom> :no-distinct-9 ;
+	mf:name "All: No distinct" ;
+	mf:result <no-distinct-all.srx> .
+
+_:node18l628sr5x2978 qt:data <data-all.ttl> ;
+	qt:query <no-distinct-9.xsparql> .
+
+<http://xsparql.deri.org#no-distinct-9> mf:action _:node18l628sr5x2978 .
+
+<http://xsparql.deri.org#distinct-9> <http://xsparql.deri.org#derivedFrom> :distinct-9 ;
+	mf:name "All: Distinct" ;
+	mf:result <distinct-all.srx> .
+
+_:node18l628sr5x2979 qt:data <data-all.ttl> ;
+	qt:query <distinct-9.xsparql> .
+
+<http://xsparql.deri.org#distinct-9> mf:action _:node18l628sr5x2979 .
+
+<http://xsparql.deri.org#distinct-star-1> <http://xsparql.deri.org#derivedFrom> :distinct-star-1 ;
+	mf:name "SELECT DISTINCT *" ;
+	mf:result <distinct-star-1.srx> .
+
+_:node18l628sr5x2980 qt:data <data-star.ttl> ;
+	qt:query <distinct-star-1.xsparql> .
+
+<http://xsparql.deri.org#distinct-star-1> mf:action _:node18l628sr5x2980 .
+
+_:node18l628sr5x2982 rdf:first <http://xsparql.deri.org#no-distinct-1> ;
+	rdf:rest _:node18l628sr5x2984 .
+
+_:node18l628sr5x2984 rdf:first <http://xsparql.deri.org#distinct-1> ;
+	rdf:rest _:node18l628sr5x2985 .
+
+_:node18l628sr5x2985 rdf:first <http://xsparql.deri.org#no-distinct-2> ;
+	rdf:rest _:node18l628sr5x2986 .
+
+_:node18l628sr5x2986 rdf:first <http://xsparql.deri.org#distinct-2> ;
+	rdf:rest _:node18l628sr5x2987 .
+
+_:node18l628sr5x2987 rdf:first <http://xsparql.deri.org#no-distinct-3> ;
+	rdf:rest _:node18l628sr5x2988 .
+
+_:node18l628sr5x2988 rdf:first <http://xsparql.deri.org#distinct-3> ;
+	rdf:rest _:node18l628sr5x2989 .
+
+_:node18l628sr5x2989 rdf:first <http://xsparql.deri.org#no-distinct-4> ;
+	rdf:rest _:node18l628sr5x2990 .
+
+_:node18l628sr5x2990 rdf:first <http://xsparql.deri.org#distinct-4> ;
+	rdf:rest _:node18l628sr5x2981 .
+
+_:node18l628sr5x2981 rdf:first <http://xsparql.deri.org#no-distinct-9> ;
+	rdf:rest _:node18l628sr5x2983 .
+
+_:node18l628sr5x2983 rdf:first <http://xsparql.deri.org#distinct-9> ;
+	rdf:rest _:node18l628sr5x2991 .
+
+_:node18l628sr5x2991 rdf:first <http://xsparql.deri.org#distinct-star-1> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/distinct/> mf:entries _:node18l628sr5x2982 .

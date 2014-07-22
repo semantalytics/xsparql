@@ -1,0 +1,12 @@
+prefix : <http://example.org/>
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+<results>
+{for (bnode() as $b1) (bnode() as $b2)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {}
+
+return 
+ <result>
+	<binding name="b1">{$b1}</binding>
+	<binding name="b2">{$b2}</binding>
+</result>}
+</results>

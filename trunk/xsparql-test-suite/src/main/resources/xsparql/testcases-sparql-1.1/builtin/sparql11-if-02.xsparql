@@ -1,0 +1,14 @@
+prefix  dc:  <http://purl.org/dc/elements/1.1/>
+prefix  :  <http://example/>
+<results>
+{for  $x (if($y != 42, "yes", "no") as $z)
+ from <src/main/resources/xsparql/testcases-sparql-1.1/builtin/data-02.ttl> where {
+   	$x :numericliteral $y . 
+}
+
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+	<binding name="z">{$z}</binding>
+</result>}
+</results>

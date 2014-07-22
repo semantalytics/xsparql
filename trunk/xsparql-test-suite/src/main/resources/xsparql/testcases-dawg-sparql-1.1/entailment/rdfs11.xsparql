@@ -1,0 +1,14 @@
+prefix ex: <http://example.org/ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+<results>
+{for $x
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/entailment/rdfs11.ttl> where {
+  $x rdfs:subclassof rdfs:container .
+}
+
+
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

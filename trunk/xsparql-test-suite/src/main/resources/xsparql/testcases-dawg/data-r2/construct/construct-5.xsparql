@@ -1,0 +1,10 @@
+prefix : <http://example/> 
+
+construct { $x :p2 $v }
+
+where
+{
+  $x :p $o .
+  optional {$o :q $v }
+}
+

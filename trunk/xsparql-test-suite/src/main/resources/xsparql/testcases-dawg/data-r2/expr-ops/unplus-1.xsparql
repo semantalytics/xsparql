@@ -1,0 +1,12 @@
+prefix : <http://example.org/>
+<results>
+{for $s from <src/main/resources/xsparql/testcases-dawg/data-r2/expr-ops/data.ttl> where {
+    $s :p $o .
+    filter($o = +3) .
+}
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

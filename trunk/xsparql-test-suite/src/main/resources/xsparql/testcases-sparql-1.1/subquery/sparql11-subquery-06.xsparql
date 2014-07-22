@@ -1,0 +1,19 @@
+prefix : <http://example/> 
+<results>
+{for $s $o
+from <src/main/resources/xsparql/testcases-sparql-1.1/subquery/data-01.ttl> where { 
+    {
+	  select $s 
+	  where {$s :knows $o}
+    }
+    {
+       select $o 
+       where { $o :knows $x }
+    } 
+}
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="o">{$o}</binding>
+</result>}
+</results>

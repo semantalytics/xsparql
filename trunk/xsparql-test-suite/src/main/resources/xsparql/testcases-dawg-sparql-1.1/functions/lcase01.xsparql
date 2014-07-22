@@ -1,0 +1,12 @@
+prefix : <http://example.org/>
+<results>
+{for $s (lcase($str) as $lstr) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {
+	$s :str $str
+}
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="lstr">{$lstr}</binding>
+</result>}
+</results>

@@ -1,0 +1,30 @@
+prefix :    <http://example/>
+prefix  rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+# sparql 1.1
+<results>
+{for ($s1 as $subset) ($s2 as $superset)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/negation/set-data.ttl> where
+{
+    # all pairs of sets except (s,s)
+    $s2 rdf:type :set .
+    $s1 rdf:type :set .
+    filter($s1 != $s2)
+    minus 
+    {
+    	# the minus rhs is ($s1, $s2) where 
+        # $s1 has a member not in $s2
+        $s1 rdf:type :set .
+        $s2 rdf:type :set .
+        filter($s1 != $s2)
+
+        $s1 :member $x .
+        filter not exists { $s2 :member $x . }
+    }
+}
+
+return 
+ <result>
+	<binding name="subset">{$subset}</binding>
+	<binding name="superset">{$superset}</binding>
+</result>}
+</results>

@@ -1,0 +1,18 @@
+prefix :    <http://example/>
+prefix  rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+# sparql 1.1
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/negation/set-data.ttl> where
+{
+	$set a :set .
+	filter exists {
+		$set :member 9
+	}
+}
+
+return 
+ <result>
+	<binding name="set">{$set}</binding>
+</result>}
+</results>

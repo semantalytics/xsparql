@@ -1,0 +1,15 @@
+prefix : <http://example.com/data/#>
+<results>
+{for $g (avg($p) as $avg) ((min($p) + max($p)) / 2 as $c)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/aggregates/agg-err-01.ttl> where {
+  $g :p $p .
+}
+group by $g
+
+return 
+ <result>
+	<binding name="g">{$g}</binding>
+	<binding name="c">{$c}</binding>
+	<binding name="avg">{$avg}</binding>
+</result>}
+</results>
