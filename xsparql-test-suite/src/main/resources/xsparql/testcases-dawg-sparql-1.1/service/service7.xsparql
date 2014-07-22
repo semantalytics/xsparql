@@ -1,0 +1,19 @@
+# invalid uri for a service with silent
+
+prefix : <http://example.org/> 
+
+<results>
+{for $s $o1 $o2
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/service/data07.ttl> where{
+  $s $p $o1 .
+  service silent <http://invalid.endpoint.org/sparql> {
+    $s $p2 $o2 }
+}
+
+return 
+ <result>
+	<binding name="o2">{$o2}</binding>
+	<binding name="o1">{$o1}</binding>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

@@ -1,0 +1,14 @@
+prefix : <http://www.example.org/>
+<results>
+{for $s (sum($o) as $sum)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/aggregates/agg-numeric2.ttl> where {
+	$s $p $o
+}
+group by $s
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="sum">{$sum}</binding>
+</result>}
+</results>

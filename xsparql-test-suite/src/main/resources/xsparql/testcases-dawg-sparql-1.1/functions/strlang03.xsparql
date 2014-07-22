@@ -1,0 +1,12 @@
+prefix : <http://example.org/>
+<results>
+{for $s (strlang($o,"en-us") as $str1) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {
+	$s $p $o
+}
+
+return 
+ <result>
+	<binding name="str1">{$str1}</binding>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

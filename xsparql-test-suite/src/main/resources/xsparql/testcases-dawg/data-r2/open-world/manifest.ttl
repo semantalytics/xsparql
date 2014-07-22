@@ -1,0 +1,242 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/open-world/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#open-eq-01> <http://xsparql.deri.org#derivedFrom> :open-eq-01 ;
+	mf:name "open-eq-01" ;
+	mf:result <open-eq-01-result.srx> ;
+	rdfs:comment "graph match - no lexical form in data (assumes no value matching)" .
+
+_:node18l628sr5x2275 qt:data <data-1.ttl> ;
+	qt:query <open-eq-01.xsparql> .
+
+<http://xsparql.deri.org#open-eq-01> mf:action _:node18l628sr5x2275 .
+
+<http://xsparql.deri.org#open-eq-02> <http://xsparql.deri.org#derivedFrom> :open-eq-02 ;
+	mf:name "open-eq-02" ;
+	mf:result <open-eq-02-result.srx> ;
+	rdfs:comment "graph match - unknown type" .
+
+_:node18l628sr5x2276 qt:data <data-1.ttl> ;
+	qt:query <open-eq-02.xsparql> .
+
+<http://xsparql.deri.org#open-eq-02> mf:action _:node18l628sr5x2276 .
+
+<http://xsparql.deri.org#open-eq-03> <http://xsparql.deri.org#derivedFrom> :open-eq-03 ;
+	mf:name "open-eq-03" ;
+	mf:result <open-eq-03-result.srx> ;
+	rdfs:comment "Filter(?v=1)" .
+
+_:node18l628sr5x2277 qt:data <data-1.ttl> ;
+	qt:query <open-eq-03.xsparql> .
+
+<http://xsparql.deri.org#open-eq-03> mf:action _:node18l628sr5x2277 .
+
+<http://xsparql.deri.org#open-eq-04> <http://xsparql.deri.org#derivedFrom> :open-eq-04 ;
+	mf:name "open-eq-04" ;
+	mf:result <open-eq-04-result.srx> ;
+	rdfs:comment "Filter(?v!=1)" .
+
+_:node18l628sr5x2278 qt:data <data-1.ttl> ;
+	qt:query <open-eq-04.xsparql> .
+
+<http://xsparql.deri.org#open-eq-04> mf:action _:node18l628sr5x2278 .
+
+<http://xsparql.deri.org#open-eq-05> <http://xsparql.deri.org#derivedFrom> :open-eq-05 ;
+	mf:name "open-eq-05" ;
+	mf:result <open-eq-05-result.srx> ;
+	rdfs:comment "FILTER(?v = unknown type)" .
+
+_:node18l628sr5x2279 qt:data <data-1.ttl> ;
+	qt:query <open-eq-05.xsparql> .
+
+<http://xsparql.deri.org#open-eq-05> mf:action _:node18l628sr5x2279 .
+
+<http://xsparql.deri.org#open-eq-06> <http://xsparql.deri.org#derivedFrom> :open-eq-06 ;
+	mf:name "open-eq-06" ;
+	mf:result <open-eq-06-result.srx> ;
+	rdfs:comment "FILTER(?v != unknown type)" .
+
+_:node18l628sr5x2280 qt:data <data-1.ttl> ;
+	qt:query <open-eq-06.xsparql> .
+
+<http://xsparql.deri.org#open-eq-06> mf:action _:node18l628sr5x2280 .
+
+<http://xsparql.deri.org#open-eq-07> <http://xsparql.deri.org#derivedFrom> :open-eq-07 ;
+	mf:name "open-eq-07" ;
+	mf:result <open-eq-07-result.srx> ;
+	rdfs:comment "Test of '=' " .
+
+_:node18l628sr5x2281 qt:data <data-2.ttl> ;
+	qt:query <open-eq-07.xsparql> .
+
+<http://xsparql.deri.org#open-eq-07> mf:action _:node18l628sr5x2281 .
+
+<http://xsparql.deri.org#open-eq-08> <http://xsparql.deri.org#derivedFrom> :open-eq-08 ;
+	mf:name "open-eq-08" ;
+	mf:result <open-eq-08-result.srx> ;
+	rdfs:comment "Test of '!='" .
+
+_:node18l628sr5x2282 qt:data <data-2.ttl> ;
+	qt:query <open-eq-08.xsparql> .
+
+<http://xsparql.deri.org#open-eq-08> mf:action _:node18l628sr5x2282 .
+
+<http://xsparql.deri.org#open-eq-09> <http://xsparql.deri.org#derivedFrom> :open-eq-09 ;
+	mf:name "open-eq-09" ;
+	mf:result <open-eq-09-result.srx> ;
+	rdfs:comment "Test of '='" .
+
+_:node18l628sr5x2283 qt:data <data-2.ttl> ;
+	qt:query <open-eq-09.xsparql> .
+
+<http://xsparql.deri.org#open-eq-09> mf:action _:node18l628sr5x2283 .
+
+<http://xsparql.deri.org#open-eq-10> <http://xsparql.deri.org#derivedFrom> :open-eq-10 ;
+	mf:name "open-eq-10" ;
+	mf:result <open-eq-10-result.srx> ;
+	rdfs:comment "Test of '!='" .
+
+_:node18l628sr5x2284 qt:data <data-2.ttl> ;
+	qt:query <open-eq-10.xsparql> .
+
+<http://xsparql.deri.org#open-eq-10> mf:action _:node18l628sr5x2284 .
+
+<http://xsparql.deri.org#open-eq-11> <http://xsparql.deri.org#derivedFrom> :open-eq-11 ;
+	mf:name "open-eq-11" ;
+	mf:result <open-eq-11-result.srx> ;
+	rdfs:comment "test of '=' || '!='" .
+
+_:node18l628sr5x2285 qt:data <data-2.ttl> ;
+	qt:query <open-eq-11.xsparql> .
+
+<http://xsparql.deri.org#open-eq-11> mf:action _:node18l628sr5x2285 .
+
+<http://xsparql.deri.org#open-eq-12> <http://xsparql.deri.org#derivedFrom> :open-eq-12 ;
+	mf:name "open-eq-12" ;
+	mf:result <open-eq-12-result.srx> ;
+	rdfs:comment "find pairs that don't value-compare" .
+
+_:node18l628sr5x2286 qt:data <data-2.ttl> ;
+	qt:query <open-eq-12.xsparql> .
+
+<http://xsparql.deri.org#open-eq-12> mf:action _:node18l628sr5x2286 .
+
+<http://xsparql.deri.org#date-1> <http://xsparql.deri.org#derivedFrom> :date-1 ;
+	mf:name "date-1" ;
+	mf:result <date-1-result.srx> ;
+	rdfs:comment "Added type : xsd:date '='" .
+
+_:node18l628sr5x2287 qt:data <data-3.ttl> ;
+	qt:query <date-1.xsparql> .
+
+<http://xsparql.deri.org#date-1> mf:action _:node18l628sr5x2287 .
+
+<http://xsparql.deri.org#date-2> <http://xsparql.deri.org#derivedFrom> :date-2 ;
+	mf:name "date-2" ;
+	mf:result <date-2-result.srx> ;
+	rdfs:comment "Added type : xsd:date '!='" .
+
+_:node18l628sr5x2288 qt:data <data-3.ttl> ;
+	qt:query <date-2.xsparql> .
+
+<http://xsparql.deri.org#date-2> mf:action _:node18l628sr5x2288 .
+
+<http://xsparql.deri.org#date-3> <http://xsparql.deri.org#derivedFrom> :date-3 ;
+	mf:name "date-3" ;
+	mf:result <date-3-result.srx> ;
+	rdfs:comment "Added type : xsd:date '>'" .
+
+_:node18l628sr5x2289 qt:data <data-3.ttl> ;
+	qt:query <date-3.xsparql> .
+
+<http://xsparql.deri.org#date-3> mf:action _:node18l628sr5x2289 .
+
+<http://xsparql.deri.org#date-4> <http://xsparql.deri.org#derivedFrom> :date-4 ;
+	mf:name "date-4" ;
+	mf:result <date-4-result.srx> ;
+	rdfs:comment "xsd:date ORDER BY" .
+
+_:node18l628sr5x2290 qt:data <data-3.ttl> ;
+	qt:query <date-4.xsparql> .
+
+<http://xsparql.deri.org#date-4> mf:action _:node18l628sr5x2290 .
+
+<http://xsparql.deri.org#open-cmp-01> <http://xsparql.deri.org#derivedFrom> :open-cmp-01 ;
+	mf:name "open-cmp-01" ;
+	mf:result <open-cmp-01-result.srx> ;
+	rdfs:comment "Find things that compare with < or >" .
+
+_:node18l628sr5x2291 qt:data <data-4.ttl> ;
+	qt:query <open-cmp-01.xsparql> .
+
+<http://xsparql.deri.org#open-cmp-01> mf:action _:node18l628sr5x2291 .
+
+<http://xsparql.deri.org#open-cmp-02> <http://xsparql.deri.org#derivedFrom> :open-cmp-02 ;
+	mf:name "open-cmp-02" ;
+	mf:result <open-cmp-02-result.srx> ;
+	rdfs:comment "Find things that compare with <= and >" .
+
+_:node18l628sr5x2292 qt:data <data-4.ttl> ;
+	qt:query <open-cmp-02.xsparql> .
+
+<http://xsparql.deri.org#open-cmp-02> mf:action _:node18l628sr5x2292 .
+
+_:node18l628sr5x2294 rdf:first <http://xsparql.deri.org#open-eq-01> ;
+	rdf:rest _:node18l628sr5x2296 .
+
+_:node18l628sr5x2296 rdf:first <http://xsparql.deri.org#open-eq-02> ;
+	rdf:rest _:node18l628sr5x2297 .
+
+_:node18l628sr5x2297 rdf:first <http://xsparql.deri.org#open-eq-03> ;
+	rdf:rest _:node18l628sr5x2298 .
+
+_:node18l628sr5x2298 rdf:first <http://xsparql.deri.org#open-eq-04> ;
+	rdf:rest _:node18l628sr5x2299 .
+
+_:node18l628sr5x2299 rdf:first <http://xsparql.deri.org#open-eq-05> ;
+	rdf:rest _:node18l628sr5x2300 .
+
+_:node18l628sr5x2300 rdf:first <http://xsparql.deri.org#open-eq-06> ;
+	rdf:rest _:node18l628sr5x2301 .
+
+_:node18l628sr5x2301 rdf:first <http://xsparql.deri.org#open-eq-07> ;
+	rdf:rest _:node18l628sr5x2302 .
+
+_:node18l628sr5x2302 rdf:first <http://xsparql.deri.org#open-eq-08> ;
+	rdf:rest _:node18l628sr5x2293 .
+
+_:node18l628sr5x2293 rdf:first <http://xsparql.deri.org#open-eq-09> ;
+	rdf:rest _:node18l628sr5x2295 .
+
+_:node18l628sr5x2295 rdf:first <http://xsparql.deri.org#open-eq-10> ;
+	rdf:rest _:node18l628sr5x2303 .
+
+_:node18l628sr5x2303 rdf:first <http://xsparql.deri.org#open-eq-11> ;
+	rdf:rest _:node18l628sr5x2309 .
+
+_:node18l628sr5x2309 rdf:first <http://xsparql.deri.org#open-eq-12> ;
+	rdf:rest _:node18l628sr5x2310 .
+
+_:node18l628sr5x2310 rdf:first <http://xsparql.deri.org#date-1> ;
+	rdf:rest _:node18l628sr5x2307 .
+
+_:node18l628sr5x2307 rdf:first <http://xsparql.deri.org#date-2> ;
+	rdf:rest _:node18l628sr5x2308 .
+
+_:node18l628sr5x2308 rdf:first <http://xsparql.deri.org#date-3> ;
+	rdf:rest _:node18l628sr5x2305 .
+
+_:node18l628sr5x2305 rdf:first <http://xsparql.deri.org#date-4> ;
+	rdf:rest _:node18l628sr5x2306 .
+
+_:node18l628sr5x2306 rdf:first <http://xsparql.deri.org#open-cmp-01> ;
+	rdf:rest _:node18l628sr5x2304 .
+
+_:node18l628sr5x2304 rdf:first <http://xsparql.deri.org#open-cmp-02> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/open-world/> mf:entries _:node18l628sr5x2294 .

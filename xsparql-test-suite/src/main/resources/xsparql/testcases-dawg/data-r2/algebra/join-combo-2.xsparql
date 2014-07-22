@@ -1,0 +1,15 @@
+prefix :    <http://example/>
+
+<results>
+{for $x $y $z
+from <src/main/resources/xsparql/testcases-dawg/data-r2/algebra/join-combo-graph-2.ttl> where{ 
+    graph $g { $x $p 1 } { $x :p $y } union { $p a $z }
+}
+
+return 
+ <result>
+	<binding name="z">{$z}</binding>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

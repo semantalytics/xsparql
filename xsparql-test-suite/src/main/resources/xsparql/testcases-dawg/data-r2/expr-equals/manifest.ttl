@@ -1,0 +1,164 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/expr-equals/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#eq-3> <http://xsparql.deri.org#derivedFrom> :eq-3 ;
+	mf:name "Equality 1-3" ;
+	mf:result <result-eq-3.ttl> ;
+	rdfs:comment "Numerics are not value-equivalent to plain literals" .
+
+_:node18l628sr5x2413 qt:data <data-eq.ttl> ;
+	qt:query <eq-3.xsparql> .
+
+<http://xsparql.deri.org#eq-3> mf:action _:node18l628sr5x2413 .
+
+<http://xsparql.deri.org#eq-4> <http://xsparql.deri.org#derivedFrom> :eq-4 ;
+	mf:name "Equality 1-4" ;
+	mf:result <result-eq-4.ttl> ;
+	rdfs:comment "= compares plain literals and unknown types with the same lexical form as false" .
+
+_:node18l628sr5x2414 qt:data <data-eq.ttl> ;
+	qt:query <eq-4.xsparql> .
+
+<http://xsparql.deri.org#eq-4> mf:action _:node18l628sr5x2414 .
+
+<http://xsparql.deri.org#eq-5> <http://xsparql.deri.org#derivedFrom> :eq-5 ;
+	mf:name "Equality 1-5" ;
+	mf:result <result-eq-5.ttl> ;
+	rdfs:comment "= on IRI terms" .
+
+_:node18l628sr5x2415 qt:data <data-eq.ttl> ;
+	qt:query <eq-5.xsparql> .
+
+<http://xsparql.deri.org#eq-5> mf:action _:node18l628sr5x2415 .
+
+<http://xsparql.deri.org#eq-2-1> <http://xsparql.deri.org#derivedFrom> :eq-2-1 ;
+	mf:name "Equality - 2 var - test equals" ;
+	mf:result <result-eq2-1.ttl> ;
+	rdfs:comment "= in FILTER is value equality" .
+
+_:node18l628sr5x2416 qt:data <data-eq.ttl> ;
+	qt:query <eq-2-1.xsparql> .
+
+<http://xsparql.deri.org#eq-2-1> mf:action _:node18l628sr5x2416 .
+
+<http://xsparql.deri.org#eq-2-2> <http://xsparql.deri.org#derivedFrom> :eq-2-2 ;
+	mf:name "Equality - 2 var - test not equals " ;
+	mf:result <result-eq2-1.ttl> ;
+	rdfs:comment "!= in FILTER is value inequality" .
+
+_:node18l628sr5x2417 qt:data <data-eq.ttl> ;
+	qt:query <eq-2-2.xsparql> .
+
+<http://xsparql.deri.org#eq-2-2> mf:action _:node18l628sr5x2417 .
+
+<http://xsparql.deri.org#eq-graph-1> <http://xsparql.deri.org#derivedFrom> :eq-graph-1 ;
+	mf:name "Equality 1-1 -- graph" ;
+	mf:result <result-eq-graph-1.ttl> ;
+	rdfs:comment "Graph pattern matching matches exact terms, not values" .
+
+_:node18l628sr5x2418 qt:data <data-eq.ttl> ;
+	qt:query <eq-graph-1.xsparql> .
+
+<http://xsparql.deri.org#eq-graph-1> mf:action _:node18l628sr5x2418 .
+
+<http://xsparql.deri.org#eq-graph-2> <http://xsparql.deri.org#derivedFrom> :eq-graph-2 ;
+	mf:name "Equality 1-2 -- graph" ;
+	mf:result <result-eq-graph-2.ttl> ;
+	rdfs:comment "Graph pattern matching matches exact terms, not values" .
+
+_:node18l628sr5x2419 qt:data <data-eq.ttl> ;
+	qt:query <eq-graph-2.xsparql> .
+
+<http://xsparql.deri.org#eq-graph-2> mf:action _:node18l628sr5x2419 .
+
+<http://xsparql.deri.org#eq-graph-3> <http://xsparql.deri.org#derivedFrom> :eq-graph-3 ;
+	mf:name "Equality 1-3 -- graph" ;
+	mf:result <result-eq-graph-3.ttl> ;
+	rdfs:comment "Graph pattern matching matches exact terms, not values" .
+
+_:node18l628sr5x2420 qt:data <data-eq.ttl> ;
+	qt:query <eq-graph-3.xsparql> .
+
+<http://xsparql.deri.org#eq-graph-3> mf:action _:node18l628sr5x2420 .
+
+<http://xsparql.deri.org#eq-graph-4> <http://xsparql.deri.org#derivedFrom> :eq-graph-4 ;
+	mf:name "Equality 1-4 -- graph" ;
+	mf:result <result-eq-graph-4.ttl> ;
+	rdfs:comment "Graph pattern matching matches exact terms, not values" .
+
+_:node18l628sr5x2421 qt:data <data-eq.ttl> ;
+	qt:query <eq-graph-4.xsparql> .
+
+<http://xsparql.deri.org#eq-graph-4> mf:action _:node18l628sr5x2421 .
+
+<http://xsparql.deri.org#eq-graph-5> <http://xsparql.deri.org#derivedFrom> :eq-graph-5 ;
+	mf:name "Equality 1-5 -- graph" ;
+	mf:result <result-eq-graph-5.ttl> ;
+	rdfs:comment "Graph pattern matching matches exact terms, not values" .
+
+_:node18l628sr5x2422 qt:data <data-eq.ttl> ;
+	qt:query <eq-graph-5.xsparql> .
+
+<http://xsparql.deri.org#eq-graph-5> mf:action _:node18l628sr5x2422 .
+
+<http://xsparql.deri.org#eq-1> <http://xsparql.deri.org#derivedFrom> :eq-1 ;
+	mf:name "Equality 1-1" ;
+	mf:result <result-eq-1.ttl> ;
+	rdfs:comment "= in FILTER expressions is value equality" .
+
+_:node18l628sr5x2423 qt:data <data-eq.ttl> ;
+	qt:query <eq-1.xsparql> .
+
+<http://xsparql.deri.org#eq-1> mf:action _:node18l628sr5x2423 .
+
+<http://xsparql.deri.org#eq-2> <http://xsparql.deri.org#derivedFrom> :eq-2 ;
+	mf:name "Equality 1-2" ;
+	mf:result <result-eq-2.ttl> ;
+	rdfs:comment "= in FILTER expressions is value equality" .
+
+_:node18l628sr5x2424 qt:data <data-eq.ttl> ;
+	qt:query <eq-2.xsparql> .
+
+<http://xsparql.deri.org#eq-2> mf:action _:node18l628sr5x2424 .
+
+_:node18l628sr5x2426 rdf:first <http://xsparql.deri.org#eq-3> ;
+	rdf:rest _:node18l628sr5x2428 .
+
+_:node18l628sr5x2428 rdf:first <http://xsparql.deri.org#eq-4> ;
+	rdf:rest _:node18l628sr5x2429 .
+
+_:node18l628sr5x2429 rdf:first <http://xsparql.deri.org#eq-5> ;
+	rdf:rest _:node18l628sr5x2430 .
+
+_:node18l628sr5x2430 rdf:first <http://xsparql.deri.org#eq-2-1> ;
+	rdf:rest _:node18l628sr5x2431 .
+
+_:node18l628sr5x2431 rdf:first <http://xsparql.deri.org#eq-2-2> ;
+	rdf:rest _:node18l628sr5x2432 .
+
+_:node18l628sr5x2432 rdf:first <http://xsparql.deri.org#eq-graph-1> ;
+	rdf:rest _:node18l628sr5x2433 .
+
+_:node18l628sr5x2433 rdf:first <http://xsparql.deri.org#eq-graph-2> ;
+	rdf:rest _:node18l628sr5x2434 .
+
+_:node18l628sr5x2434 rdf:first <http://xsparql.deri.org#eq-graph-3> ;
+	rdf:rest _:node18l628sr5x2425 .
+
+_:node18l628sr5x2425 rdf:first <http://xsparql.deri.org#eq-graph-4> ;
+	rdf:rest _:node18l628sr5x2427 .
+
+_:node18l628sr5x2427 rdf:first <http://xsparql.deri.org#eq-graph-5> ;
+	rdf:rest _:node18l628sr5x2435 .
+
+_:node18l628sr5x2435 rdf:first <http://xsparql.deri.org#eq-1> ;
+	rdf:rest _:node18l628sr5x2436 .
+
+_:node18l628sr5x2436 rdf:first <http://xsparql.deri.org#eq-2> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/expr-equals/> mf:entries _:node18l628sr5x2426 .

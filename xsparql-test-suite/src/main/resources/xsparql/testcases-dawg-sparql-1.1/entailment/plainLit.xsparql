@@ -1,0 +1,12 @@
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix foaf:  <http://xmlns.com/foaf/0.1/>
+
+<results>
+{for $x
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/entailment/lang.ttl> where { $x foaf:name "name"@en .
+      } 
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

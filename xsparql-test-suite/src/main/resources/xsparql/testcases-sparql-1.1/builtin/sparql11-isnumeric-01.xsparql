@@ -1,0 +1,14 @@
+prefix  dc:  <http://purl.org/dc/elements/1.1/>
+prefix  :  <http://example.org/>
+<results>
+{for  $discount
+   from <src/main/resources/xsparql/testcases-sparql-1.1/builtin/data-01.ttl> where{ 
+     $x :discount $discount .
+     filter (isnumeric($discount)) 
+   }
+
+return 
+ <result>
+	<binding name="discount">{$discount}</binding>
+</result>}
+</results>

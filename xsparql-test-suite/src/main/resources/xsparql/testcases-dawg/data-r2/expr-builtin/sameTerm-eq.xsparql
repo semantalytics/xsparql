@@ -1,0 +1,21 @@
+# test: sameterm and eq
+# $id: sameterm-eq.rq,v 1.1 2007/08/31 14:01:57 eric exp $
+
+prefix     :    <http://example.org/things#>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/expr-builtin/data-builtin-1.ttl> where{
+    $x1 :p $v1 .
+    $x2 :p $v2 .
+    filter ( sameterm($v1, $v2) && $v1 = $v2 )
+}
+
+return 
+ <result>
+	<binding name="v1">{$v1}</binding>
+	<binding name="v2">{$v2}</binding>
+	<binding name="x2">{$x2}</binding>
+	<binding name="x1">{$x1}</binding>
+</result>}
+</results>

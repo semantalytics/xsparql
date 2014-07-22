@@ -1,0 +1,6 @@
+declare namespace saxon="http://saxon.sf.net/";
+declare option saxon:default """value""";
+declare variable $x external;
+
+
+<value>{$x}</value>

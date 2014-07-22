@@ -1,0 +1,8 @@
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+
+construct{ $p foaf:name $fullname }
+where {
+ select $p ( concat($f, " ", $l) as $fullname ) 
+ where { $p foaf:firstname $f ; foaf:lastname $l. }
+}
+

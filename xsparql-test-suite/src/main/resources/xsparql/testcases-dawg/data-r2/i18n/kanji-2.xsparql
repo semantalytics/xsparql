@@ -1,0 +1,14 @@
+# $id: kanji-02.rq,v 1.4 2005/11/06 08:27:50 eric exp $
+# test wide spaces
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix 食: <http://www.w3.org/2001/sw/dataaccess/tests/data/i18n/kanji.ttl#>
+<results>
+{for $name from <src/main/resources/xsparql/testcases-dawg/data-r2/i18n/kanji.ttl> where {
+  [ foaf:name $name ;
+    食:食べる 食:海老 ] . }
+
+return 
+ <result>
+	<binding name="name">{$name}</binding>
+</result>}
+</results>

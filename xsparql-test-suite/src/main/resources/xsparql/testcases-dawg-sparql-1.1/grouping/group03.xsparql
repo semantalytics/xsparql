@@ -1,0 +1,16 @@
+prefix : <http://example/>
+
+<results>
+{for $w (sample($v) as $S)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/grouping/group-data-1.ttl> where{
+  $s :p $v .
+  optional { $s :q $w }
+}
+group by $w
+
+return 
+ <result>
+	<binding name="w">{$w}</binding>
+	<binding name="S">{$S}</binding>
+</result>}
+</results>

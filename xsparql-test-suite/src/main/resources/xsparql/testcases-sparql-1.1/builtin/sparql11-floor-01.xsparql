@@ -1,0 +1,14 @@
+prefix xsd: <http://www.w3.org/2001/xmlschema#> 
+prefix  :  <http://example/>
+<results>
+{for  $lit (floor($lit) as $floor)
+ from <src/main/resources/xsparql/testcases-sparql-1.1/builtin/data-02.ttl> where {
+   	$x :decimallitroundsup $lit . 
+}
+
+return 
+ <result>
+	<binding name="lit">{$lit}</binding>
+	<binding name="floor">{$floor}</binding>
+</result>}
+</results>

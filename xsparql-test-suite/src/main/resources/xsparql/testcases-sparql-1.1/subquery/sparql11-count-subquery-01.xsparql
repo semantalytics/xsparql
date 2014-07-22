@@ -1,0 +1,14 @@
+<results>
+{for (count(*) as $count)
+from <src/main/resources/xsparql/testcases-sparql-1.1/subquery/data-02.ttl> where { 
+	{ select $s $p $o where { $s $p $o } }
+}
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="count">{$count}</binding>
+	<binding name="p">{$p}</binding>
+	<binding name="o">{$o}</binding>
+</result>}
+</results>

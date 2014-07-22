@@ -1,0 +1,15 @@
+prefix ex: <http://example.org/ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+<results>
+{for $x
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/entailment/rdfs12.ttl> where {
+  $x rdf:type rdfs:containermembershipproperty .
+}
+
+
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

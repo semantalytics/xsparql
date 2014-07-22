@@ -1,0 +1,15 @@
+# this query uses unix line end conventions.
+# it is in cvs in binary.
+prefix : <http://example.org/ns#>
+
+<results>
+{for $x
+from <src/main/resources/xsparql/testcases-dawg/data-r2/basic/data-3.ttl> where{ $x $p '''x
+y'''
+}
+
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

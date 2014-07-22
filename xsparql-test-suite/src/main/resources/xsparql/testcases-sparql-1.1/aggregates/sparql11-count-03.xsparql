@@ -1,0 +1,10 @@
+prefix : <http://example/>
+<results>
+{for (count($res) as $c)
+from <src/main/resources/xsparql/testcases-sparql-1.1/aggregates/data-04.ttl> where { $res a [] . }
+
+return 
+ <result>
+	<binding name="c">{$c}</binding>
+</result>}
+</results>

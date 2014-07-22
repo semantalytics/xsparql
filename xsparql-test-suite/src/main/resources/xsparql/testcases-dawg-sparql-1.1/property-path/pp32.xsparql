@@ -1,0 +1,11 @@
+prefix :  <http://www.example.org/>
+<results>
+{for $t
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/property-path/path-p3.ttl> where {
+  :a :p0|^:p1/:p2|:p3 $t
+}
+return 
+ <result>
+	<binding name="t">{$t}</binding>
+</result>}
+</results>

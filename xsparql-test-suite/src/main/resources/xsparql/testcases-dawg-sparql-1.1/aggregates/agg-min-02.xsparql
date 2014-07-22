@@ -1,0 +1,14 @@
+prefix : <http://www.example.org/>
+<results>
+{for $s (min($o) as $min)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/aggregates/agg-numeric.ttl> where {
+	$s $p $o
+}
+group by $s
+
+return 
+ <result>
+	<binding name="min">{$min}</binding>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

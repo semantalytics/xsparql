@@ -1,0 +1,174 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>parent</artifactId>
+		<groupId>org.sourceforge.xsparql</groupId>
+		<version>20140722</version>
+	</parent>
+
+	<artifactId>xsparql-evaluator</artifactId>
+	<name>XSPARQL evaluator</name>
+	<description>XSPARQL evaluator</description>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<type>jar</type>
+			<classifier>jdk15</classifier>
+		</dependency>
+
+		<!-- not statically imported but needed dynamically -->
+		<dependency>
+			<groupId>xom</groupId>
+			<artifactId>xom</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<!-- not statically imported but needed dynamically -->
+		<dependency>
+			<groupId>net.sourceforge.jtds</groupId>
+			<artifactId>jtds</artifactId>
+			<version>1.2.4</version>
+		</dependency>
+
+		<!-- not statically imported but needed dynamically -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.18</version>
+		</dependency>
+
+		<!-- not statically imported but needed dynamically -->
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.1-901.jdbc4</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>com.hp.hpl.jena</groupId> <artifactId>jena</artifactId> 
+			<version>2.6.4</version> </dependency> <dependency> <groupId>com.hp.hpl.jena</groupId> 
+			<artifactId>arq</artifactId> <version>2.8.7</version> </dependency> <dependency> 
+			<groupId>com.hp.hpl.jena</groupId> <artifactId>tdb</artifactId> <version>0.8.9</version> 
+			</dependency> -->
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>Saxon-HE</artifactId>
+			<version>9.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>xsparql-rewriter</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+
+		<!-- this is needed for the org.antlr.runtime.RecognitionException used 
+			in the XSPARQLEvaluator -->
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr-runtime</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xmlParserAPIs</artifactId>
+			<version>2.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.1</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.6.1</version>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>com.google.code.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+			</plugin>
+
+			<!--plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-failsafe-plugin</artifactId> 
+				<version>2.7.2</version> <executions> <execution> <id>integration-test</id> 
+				<goals> <goal>integration-test</goal> </goals> </execution> <execution> <id>verify</id> 
+				<goals> <goal>verify</goal> </goals> </execution> </executions> </plugin -->
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Export-Package>org.deri.xsparql.evaluator*</Export-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<!-- don't fail the tests 'just' because one of the tests failed -->
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+					<testErrorIgnore>true</testErrorIgnore>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.4</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<tasks>
+						<delete dir="target/classes/org/sourceforge/xsparql/sparql/binder" />
+					</tasks>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

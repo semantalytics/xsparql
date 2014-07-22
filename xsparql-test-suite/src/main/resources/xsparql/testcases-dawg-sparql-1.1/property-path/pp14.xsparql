@@ -1,0 +1,16 @@
+prefix : <http://example.org/>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/property-path/pp14.ttl> where { $x foaf:knows* $y } 
+order by $x $y
+
+
+
+return 
+ <result>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

@@ -1,0 +1,13 @@
+prefix : <http://example/>
+<results>
+{for $book (min($r) * 2 as $doublemin)
+from <src/main/resources/xsparql/testcases-sparql-1.1/aggregates/data-02.ttl> where { 
+        $book :rating $r . 
+}
+group by $book
+return 
+ <result>
+	<binding name="book">{$book}</binding>
+	<binding name="doublemin">{$doublemin}</binding>
+</result>}
+</results>

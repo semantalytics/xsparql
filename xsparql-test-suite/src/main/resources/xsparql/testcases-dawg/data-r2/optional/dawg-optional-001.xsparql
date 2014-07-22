@@ -1,0 +1,15 @@
+prefix  foaf:   <http://xmlns.com/foaf/0.1/>
+
+<results>
+{for $mbox $name
+   from <src/main/resources/xsparql/testcases-dawg/data-r2/optional/data.ttl> where{
+     $x foaf:mbox $mbox .
+     optional { $x foaf:name  $name } .
+   }
+
+return 
+ <result>
+	<binding name="name">{$name}</binding>
+	<binding name="mbox">{$mbox}</binding>
+</result>}
+</results>

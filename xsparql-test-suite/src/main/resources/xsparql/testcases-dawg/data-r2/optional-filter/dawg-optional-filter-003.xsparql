@@ -1,0 +1,17 @@
+prefix  dc: <http://purl.org/dc/elements/1.1/>
+prefix  x: <http://example.org/ns#>
+<results>
+{for  $title $price
+from <src/main/resources/xsparql/testcases-dawg/data-r2/optional-filter/data-1.ttl> where
+    { $book dc:title $title . 
+      optional
+        { $book x:price $price } . 
+      filter ( ( ! bound($price) ) || ( $price < 15 ) ) .
+    }
+
+return 
+ <result>
+	<binding name="title">{$title}</binding>
+	<binding name="price">{$price}</binding>
+</result>}
+</results>

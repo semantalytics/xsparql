@@ -1,0 +1,60 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/triple-match/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#dawg-triple-pattern-003> <http://xsparql.deri.org#derivedFrom> :dawg-triple-pattern-003 ;
+	mf:name "dawg-triple-pattern-003" ;
+	mf:result <result-tp-03.ttl> ;
+	rdfs:comment "Simple triple match - repeated variable" .
+
+_:node18l628sr5x2377 qt:data <data-02.ttl> ;
+	qt:query <dawg-triple-pattern-003.xsparql> .
+
+<http://xsparql.deri.org#dawg-triple-pattern-003> mf:action _:node18l628sr5x2377 .
+
+<http://xsparql.deri.org#dawg-triple-pattern-004> <http://xsparql.deri.org#derivedFrom> :dawg-triple-pattern-004 ;
+	mf:name "dawg-triple-pattern-004" ;
+	mf:result <result-tp-04.ttl> ;
+	rdfs:comment "Simple triple match - two triples, common variable" .
+
+_:node18l628sr5x2378 qt:data <dawg-data-01.ttl> ;
+	qt:query <dawg-triple-pattern-004.xsparql> .
+
+<http://xsparql.deri.org#dawg-triple-pattern-004> mf:action _:node18l628sr5x2378 .
+
+<http://xsparql.deri.org#dawg-triple-pattern-001> <http://xsparql.deri.org#derivedFrom> :dawg-triple-pattern-001 ;
+	mf:name "dawg-triple-pattern-001" ;
+	mf:result <result-tp-01.ttl> ;
+	rdfs:comment "Simple triple match" .
+
+_:node18l628sr5x2379 qt:data <data-01.ttl> ;
+	qt:query <dawg-triple-pattern-001.xsparql> .
+
+<http://xsparql.deri.org#dawg-triple-pattern-001> mf:action _:node18l628sr5x2379 .
+
+<http://xsparql.deri.org#dawg-triple-pattern-002> <http://xsparql.deri.org#derivedFrom> :dawg-triple-pattern-002 ;
+	mf:name "dawg-triple-pattern-002" ;
+	mf:result <result-tp-02.ttl> ;
+	rdfs:comment "Simple triple match" .
+
+_:node18l628sr5x2380 qt:data <data-01.ttl> ;
+	qt:query <dawg-triple-pattern-002.xsparql> .
+
+<http://xsparql.deri.org#dawg-triple-pattern-002> mf:action _:node18l628sr5x2380 .
+
+_:node18l628sr5x2381 rdf:first <http://xsparql.deri.org#dawg-triple-pattern-003> ;
+	rdf:rest _:node18l628sr5x2382 .
+
+_:node18l628sr5x2382 rdf:first <http://xsparql.deri.org#dawg-triple-pattern-004> ;
+	rdf:rest _:node18l628sr5x2383 .
+
+_:node18l628sr5x2383 rdf:first <http://xsparql.deri.org#dawg-triple-pattern-001> ;
+	rdf:rest _:node18l628sr5x2384 .
+
+_:node18l628sr5x2384 rdf:first <http://xsparql.deri.org#dawg-triple-pattern-002> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/triple-match/> mf:entries _:node18l628sr5x2381 .

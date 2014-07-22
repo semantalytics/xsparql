@@ -1,0 +1,99 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/optional/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#dawg-optional-complex-1> <http://xsparql.deri.org#derivedFrom> :dawg-optional-complex-1 ;
+	mf:name "Complex optional semantics: 1" ;
+	mf:result <result-opt-complex-1.ttl> ;
+	rdfs:comment "Complex optional: LeftJoin(LeftJoin(BGP(..),{..}),Join(BGP(..),Union(..,..)))" .
+
+_:node18l628sr5x1966 qt:data <complex-data-1.ttl> ;
+	qt:query <dawg-optional-complex-1.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-complex-1> mf:action _:node18l628sr5x1966 .
+
+<http://xsparql.deri.org#dawg-optional-complex-2> <http://xsparql.deri.org#derivedFrom> :dawg-optional-complex-2 ;
+	mf:name "Complex optional semantics: 2" ;
+	mf:result <result-opt-complex-2.ttl> ;
+	rdfs:comment "Complex optional: LeftJoin(Join(BGP(..),Graph(var,{..})),Union(..,..))" .
+
+_:node18l628sr5x1967 qt:data <complex-data-2.ttl> ;
+	qt:query <dawg-optional-complex-2.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-complex-2> mf:action _:node18l628sr5x1967 .
+
+<http://xsparql.deri.org#dawg-optional-complex-3> <http://xsparql.deri.org#derivedFrom> :dawg-optional-complex-3 ;
+	mf:name "Complex optional semantics: 3" ;
+	mf:result <result-opt-complex-3.ttl> ;
+	rdfs:comment "Complex optional: LeftJoin(Join(BGP(..),Graph(var,{..})),LeftJoin(BGP(..),{..}))" .
+
+_:node18l628sr5x1968 qt:data <complex-data-2.ttl> ;
+	qt:query <dawg-optional-complex-3.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-complex-3> mf:action _:node18l628sr5x1968 .
+
+<http://xsparql.deri.org#dawg-optional-complex-4> <http://xsparql.deri.org#derivedFrom> :dawg-optional-complex-4 ;
+	mf:name "Complex optional semantics: 4" ;
+	mf:result <result-opt-complex-4.ttl> ;
+	rdfs:comment "Complex optional: LeftJoin(Join(BGP(..),Union(..,..)),Join(BGP(..),Graph(varOrIRI,{..})))" .
+
+_:node18l628sr5x1969 qt:data <complex-data-2.ttl> ;
+	qt:query <dawg-optional-complex-4.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-complex-4> mf:action _:node18l628sr5x1969 .
+
+<http://xsparql.deri.org#dawg-optional-001> <http://xsparql.deri.org#derivedFrom> :dawg-optional-001 ;
+	mf:name "One optional clause" ;
+	mf:result <result-opt-1.ttl> ;
+	rdfs:comment "One optional clause" .
+
+_:node18l628sr5x1970 qt:data <data.ttl> ;
+	qt:query <dawg-optional-001.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-001> mf:action _:node18l628sr5x1970 .
+
+<http://xsparql.deri.org#dawg-optional-002> <http://xsparql.deri.org#derivedFrom> :dawg-optional-002 ;
+	mf:name "Two optional clauses" ;
+	mf:result <result-opt-2.ttl> ;
+	rdfs:comment "One optional clause" .
+
+_:node18l628sr5x1971 qt:data <data.ttl> ;
+	qt:query <dawg-optional-002.xsparql> .
+
+<http://xsparql.deri.org#dawg-optional-002> mf:action _:node18l628sr5x1971 .
+
+<http://xsparql.deri.org#dawg-union-001> <http://xsparql.deri.org#derivedFrom> :dawg-union-001 ;
+	mf:name "Union is not optional" ;
+	mf:result <result-opt-3.ttl> ;
+	rdfs:comment "Union is not optional" .
+
+_:node18l628sr5x1972 qt:data <data.ttl> ;
+	qt:query <dawg-union-001.xsparql> .
+
+<http://xsparql.deri.org#dawg-union-001> mf:action _:node18l628sr5x1972 .
+
+_:node18l628sr5x1973 rdf:first <http://xsparql.deri.org#dawg-optional-complex-1> ;
+	rdf:rest _:node18l628sr5x1974 .
+
+_:node18l628sr5x1974 rdf:first <http://xsparql.deri.org#dawg-optional-complex-2> ;
+	rdf:rest _:node18l628sr5x1975 .
+
+_:node18l628sr5x1975 rdf:first <http://xsparql.deri.org#dawg-optional-complex-3> ;
+	rdf:rest _:node18l628sr5x1976 .
+
+_:node18l628sr5x1976 rdf:first <http://xsparql.deri.org#dawg-optional-complex-4> ;
+	rdf:rest _:node18l628sr5x1977 .
+
+_:node18l628sr5x1977 rdf:first <http://xsparql.deri.org#dawg-optional-001> ;
+	rdf:rest _:node18l628sr5x1978 .
+
+_:node18l628sr5x1978 rdf:first <http://xsparql.deri.org#dawg-optional-002> ;
+	rdf:rest _:node18l628sr5x1979 .
+
+_:node18l628sr5x1979 rdf:first <http://xsparql.deri.org#dawg-union-001> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/optional/> mf:entries _:node18l628sr5x1973 .

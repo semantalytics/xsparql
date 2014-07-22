@@ -1,0 +1,2 @@
+for id from student
+return <id>{$id}</id>

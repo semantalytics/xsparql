@@ -1,0 +1,13 @@
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+<results>
+{for $l
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/entailment/rdfs13.ttl> where {
+  $l a rdfs:literal
+}
+
+
+return 
+ <result>
+	<binding name="l">{$l}</binding>
+</result>}
+</results>

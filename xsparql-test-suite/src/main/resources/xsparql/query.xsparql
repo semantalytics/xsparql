@@ -1,0 +1,11 @@
+prefix : <http://www.example.org>
+
+<results>
+{for (count(*) as $C)
+where { $s $p $o }
+
+return 
+ <result>
+	<binding name="C">{$C}</binding>
+</result>}
+</results>

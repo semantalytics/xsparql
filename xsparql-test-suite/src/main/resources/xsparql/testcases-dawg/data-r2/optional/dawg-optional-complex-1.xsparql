@@ -1,0 +1,22 @@
+prefix  foaf:   <http://xmlns.com/foaf/0.1/>
+<results>
+{for $person $nick $page $img $name $firstn
+from <src/main/resources/xsparql/testcases-dawg/data-r2/optional/complex-data-1.ttl> where{ 
+    $person foaf:nick $nick
+    optional { $person foaf:isprimarytopicof $page } 
+    optional { 
+        $person foaf:name $name 
+        { $person foaf:depiction $img } union 
+        { $person foaf:firstname $firstn } 
+    } filter ( bound($page) || bound($img) || bound($firstn) ) 
+} 
+return 
+ <result>
+	<binding name="firstn">{$firstn}</binding>
+	<binding name="person">{$person}</binding>
+	<binding name="nick">{$nick}</binding>
+	<binding name="page">{$page}</binding>
+	<binding name="name">{$name}</binding>
+	<binding name="img">{$img}</binding>
+</result>}
+</results>

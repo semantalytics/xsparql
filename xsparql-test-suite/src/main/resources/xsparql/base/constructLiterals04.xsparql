@@ -1,0 +1,5 @@
+let $y := "http://www.example.org/knownPerson"
+let $x := "12"
+let $int := "http://www.w3.org/2001/XMLSchema#integer"
+construct {<{$y}> a {$x}^^<{$int}>}
+

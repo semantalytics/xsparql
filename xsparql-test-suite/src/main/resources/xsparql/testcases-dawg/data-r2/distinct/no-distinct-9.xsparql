@@ -1,0 +1,11 @@
+<results>
+{for $v
+from <src/main/resources/xsparql/testcases-dawg/data-r2/distinct/data-all.ttl> where{
+    $x $p $v .
+}
+
+return 
+ <result>
+	<binding name="v">{$v}</binding>
+</result>}
+</results>

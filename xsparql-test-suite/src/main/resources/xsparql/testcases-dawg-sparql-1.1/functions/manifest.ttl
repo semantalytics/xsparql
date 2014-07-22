@@ -1,0 +1,623 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+@prefix sparql: <http://www.w3.org/ns/sparql#> .
+
+<http://xsparql.deri.org#replace03> <http://xsparql.deri.org#derivedFrom> :replace03 ;
+	mf:name "REPLACE() with captured substring" ;
+	mf:result <replace03.srx> .
+
+_:node18l628sr5x168 qt:data <data3.ttl> ;
+	qt:query <replace03.xsparql> .
+
+<http://xsparql.deri.org#replace03> mf:action _:node18l628sr5x168 .
+
+<http://xsparql.deri.org#strdt01> <http://xsparql.deri.org#derivedFrom> :strdt01 ;
+	mf:name "STRDT()" ;
+	mf:result <strdt01.srx> .
+
+_:node18l628sr5x169 qt:data <data.ttl> ;
+	qt:query <strdt01.xsparql> .
+
+<http://xsparql.deri.org#strdt01> mf:action _:node18l628sr5x169 .
+
+<http://xsparql.deri.org#strdt02> <http://xsparql.deri.org#derivedFrom> :strdt02 ;
+	mf:name "STRDT(STR())" ;
+	mf:result <strdt02.srx> .
+
+_:node18l628sr5x170 qt:data <data.ttl> ;
+	qt:query <strdt02.xsparql> .
+
+<http://xsparql.deri.org#strdt02> mf:action _:node18l628sr5x170 .
+
+<http://xsparql.deri.org#strdt03> <http://xsparql.deri.org#derivedFrom> :strdt03 ;
+	mf:name "STRDT() TypeErrors" ;
+	mf:result <strdt03.srx> .
+
+_:node18l628sr5x171 qt:data <data.ttl> ;
+	qt:query <strdt03.xsparql> .
+
+<http://xsparql.deri.org#strdt03> mf:action _:node18l628sr5x171 .
+
+<http://xsparql.deri.org#strlang01> <http://xsparql.deri.org#derivedFrom> :strlang01 ;
+	mf:name "STRLANG()" ;
+	mf:result <strlang01.srx> .
+
+_:node18l628sr5x172 qt:data <data.ttl> ;
+	qt:query <strlang01.xsparql> .
+
+<http://xsparql.deri.org#strlang01> mf:action _:node18l628sr5x172 .
+
+<http://xsparql.deri.org#strlang02> <http://xsparql.deri.org#derivedFrom> :strlang02 ;
+	mf:name "STRLANG(STR())" ;
+	mf:result <strlang02.srx> .
+
+_:node18l628sr5x173 qt:data <data.ttl> ;
+	qt:query <strlang02.xsparql> .
+
+<http://xsparql.deri.org#strlang02> mf:action _:node18l628sr5x173 .
+
+<http://xsparql.deri.org#strlang03> <http://xsparql.deri.org#derivedFrom> :strlang03 ;
+	mf:name "STRLANG() TypeErrors" ;
+	mf:result <strlang03.srx> .
+
+_:node18l628sr5x174 qt:data <data.ttl> ;
+	qt:query <strlang03.xsparql> .
+
+<http://xsparql.deri.org#strlang03> mf:action _:node18l628sr5x174 .
+
+<http://xsparql.deri.org#isnumeric01> <http://xsparql.deri.org#derivedFrom> :isnumeric01 ;
+	mf:name "isNumeric()" ;
+	mf:result <isnumeric01.srx> .
+
+_:node18l628sr5x175 qt:data <data.ttl> ;
+	qt:query <isnumeric01.xsparql> .
+
+<http://xsparql.deri.org#isnumeric01> mf:action _:node18l628sr5x175 .
+
+<http://xsparql.deri.org#abs01> <http://xsparql.deri.org#derivedFrom> :abs01 ;
+	mf:name "ABS()" ;
+	mf:result <abs01.srx> .
+
+_:node18l628sr5x176 qt:data <data.ttl> ;
+	qt:query <abs01.xsparql> .
+
+<http://xsparql.deri.org#abs01> mf:action _:node18l628sr5x176 .
+
+<http://xsparql.deri.org#ceil01> <http://xsparql.deri.org#derivedFrom> :ceil01 ;
+	mf:name "CEIL()" ;
+	mf:result <ceil01.srx> .
+
+_:node18l628sr5x177 qt:data <data.ttl> ;
+	qt:query <ceil01.xsparql> .
+
+<http://xsparql.deri.org#ceil01> mf:action _:node18l628sr5x177 .
+
+<http://xsparql.deri.org#floor01> <http://xsparql.deri.org#derivedFrom> :floor01 ;
+	mf:name "FLOOR()" ;
+	mf:result <floor01.srx> .
+
+_:node18l628sr5x178 qt:data <data.ttl> ;
+	qt:query <floor01.xsparql> .
+
+<http://xsparql.deri.org#floor01> mf:action _:node18l628sr5x178 .
+
+<http://xsparql.deri.org#round01> <http://xsparql.deri.org#derivedFrom> :round01 ;
+	mf:name "ROUND()" ;
+	mf:result <round01.srx> .
+
+_:node18l628sr5x179 qt:data <data.ttl> ;
+	qt:query <round01.xsparql> .
+
+<http://xsparql.deri.org#round01> mf:action _:node18l628sr5x179 .
+
+<http://xsparql.deri.org#concat01> <http://xsparql.deri.org#derivedFrom> :concat01 ;
+	mf:name "CONCAT()" ;
+	mf:result <concat01.srx> .
+
+_:node18l628sr5x180 qt:data <data.ttl> ;
+	qt:query <concat01.xsparql> .
+
+<http://xsparql.deri.org#concat01> mf:action _:node18l628sr5x180 .
+
+<http://xsparql.deri.org#concat02> <http://xsparql.deri.org#derivedFrom> :concat02 ;
+	mf:name "CONCAT() 2" ;
+	mf:result <concat02.srx> .
+
+_:node18l628sr5x181 qt:data <data2.ttl> ;
+	qt:query <concat02.xsparql> .
+
+<http://xsparql.deri.org#concat02> mf:action _:node18l628sr5x181 .
+
+<http://xsparql.deri.org#substring01> <http://xsparql.deri.org#derivedFrom> :substring01 ;
+	mf:name "SUBSTR() (3-argument)" ;
+	mf:result <substring01.srx> .
+
+_:node18l628sr5x182 qt:data <data.ttl> ;
+	qt:query <substring01.xsparql> .
+
+<http://xsparql.deri.org#substring01> mf:action _:node18l628sr5x182 .
+
+<http://xsparql.deri.org#substring02> <http://xsparql.deri.org#derivedFrom> :substring02 ;
+	mf:name "SUBSTR() (2-argument)" ;
+	mf:result <substring02.srx> .
+
+_:node18l628sr5x183 qt:data <data.ttl> ;
+	qt:query <substring02.xsparql> .
+
+<http://xsparql.deri.org#substring02> mf:action _:node18l628sr5x183 .
+
+<http://xsparql.deri.org#length01> <http://xsparql.deri.org#derivedFrom> :length01 ;
+	mf:name "STRLEN()" ;
+	mf:result <length01.srx> .
+
+_:node18l628sr5x184 qt:data <data.ttl> ;
+	qt:query <length01.xsparql> .
+
+<http://xsparql.deri.org#length01> mf:action _:node18l628sr5x184 .
+
+<http://xsparql.deri.org#ucase01> <http://xsparql.deri.org#derivedFrom> :ucase01 ;
+	mf:name "UCASE()" ;
+	mf:result <ucase01.srx> .
+
+_:node18l628sr5x185 qt:data <data.ttl> ;
+	qt:query <ucase01.xsparql> .
+
+<http://xsparql.deri.org#ucase01> mf:action _:node18l628sr5x185 .
+
+<http://xsparql.deri.org#lcase01> <http://xsparql.deri.org#derivedFrom> :lcase01 ;
+	mf:name "LCASE()" ;
+	mf:result <lcase01.srx> .
+
+_:node18l628sr5x186 qt:data <data.ttl> ;
+	qt:query <lcase01.xsparql> .
+
+<http://xsparql.deri.org#lcase01> mf:action _:node18l628sr5x186 .
+
+<http://xsparql.deri.org#encode01> <http://xsparql.deri.org#derivedFrom> :encode01 ;
+	mf:name "ENCODE_FOR_URI()" ;
+	mf:result <encode01.srx> .
+
+_:node18l628sr5x187 qt:data <data.ttl> ;
+	qt:query <encode01.xsparql> .
+
+<http://xsparql.deri.org#encode01> mf:action _:node18l628sr5x187 .
+
+<http://xsparql.deri.org#contains01> <http://xsparql.deri.org#derivedFrom> :contains01 ;
+	mf:name "CONTAINS()" ;
+	mf:result <contains01.srx> .
+
+_:node18l628sr5x188 qt:data <data.ttl> ;
+	qt:query <contains01.xsparql> .
+
+<http://xsparql.deri.org#contains01> mf:action _:node18l628sr5x188 .
+
+<http://xsparql.deri.org#starts01> <http://xsparql.deri.org#derivedFrom> :starts01 ;
+	mf:name "STRSTARTS()" ;
+	mf:result <starts01.srx> .
+
+_:node18l628sr5x189 qt:data <data.ttl> ;
+	qt:query <starts01.xsparql> .
+
+<http://xsparql.deri.org#starts01> mf:action _:node18l628sr5x189 .
+
+<http://xsparql.deri.org#ends01> <http://xsparql.deri.org#derivedFrom> :ends01 ;
+	mf:name "STRENDS()" ;
+	mf:result <ends01.srx> .
+
+_:node18l628sr5x190 qt:data <data.ttl> ;
+	qt:query <ends01.xsparql> .
+
+<http://xsparql.deri.org#ends01> mf:action _:node18l628sr5x190 .
+
+<http://xsparql.deri.org#plus-1> <http://xsparql.deri.org#derivedFrom> :plus-1 ;
+	mf:name "plus-1" ;
+	mf:result <plus-1.srx> ;
+	rdfs:comment "plus operator on ?x + ?y on string and numeric values" .
+
+_:node18l628sr5x191 qt:data <data-builtin-3.ttl> ;
+	qt:query <plus-1.xsparql> .
+
+<http://xsparql.deri.org#plus-1> mf:action _:node18l628sr5x191 .
+
+<http://xsparql.deri.org#plus-2> <http://xsparql.deri.org#derivedFrom> :plus-2 ;
+	mf:name "plus-2" ;
+	mf:result <plus-2.srx> ;
+	rdfs:comment "plus operator in combination with str(), i.e.  str(?x) + str(?y), on string and numeric values" .
+
+_:node18l628sr5x192 qt:data <data-builtin-3.ttl> ;
+	qt:query <plus-2.xsparql> .
+
+<http://xsparql.deri.org#plus-2> mf:action _:node18l628sr5x192 .
+
+<http://xsparql.deri.org#md5-01> <http://xsparql.deri.org#derivedFrom> :md5-01 ;
+	mf:name "MD5()" ;
+	mf:result <md5-01.srx> .
+
+_:node18l628sr5x193 qt:data <data.ttl> ;
+	qt:query <md5-01.xsparql> .
+
+<http://xsparql.deri.org#md5-01> mf:action _:node18l628sr5x193 .
+
+<http://xsparql.deri.org#md5-02> <http://xsparql.deri.org#derivedFrom> :md5-02 ;
+	mf:name "MD5() over Unicode data" ;
+	mf:result <md5-02.srx> .
+
+_:node18l628sr5x194 qt:data <data.ttl> ;
+	qt:query <md5-02.xsparql> .
+
+<http://xsparql.deri.org#md5-02> mf:action _:node18l628sr5x194 .
+
+<http://xsparql.deri.org#sha1-01> <http://xsparql.deri.org#derivedFrom> :sha1-01 ;
+	mf:name "SHA1()" ;
+	mf:result <sha1-01.srx> .
+
+_:node18l628sr5x195 qt:data <data.ttl> ;
+	qt:query <sha1-01.xsparql> .
+
+<http://xsparql.deri.org#sha1-01> mf:action _:node18l628sr5x195 .
+
+<http://xsparql.deri.org#sha1-02> <http://xsparql.deri.org#derivedFrom> :sha1-02 ;
+	mf:name "SHA1() on Unicode data" ;
+	mf:result <sha1-02.srx> .
+
+_:node18l628sr5x196 qt:data <hash-unicode.ttl> ;
+	qt:query <sha1-02.xsparql> .
+
+<http://xsparql.deri.org#sha1-02> mf:action _:node18l628sr5x196 .
+
+<http://xsparql.deri.org#sha256-01> <http://xsparql.deri.org#derivedFrom> :sha256-01 ;
+	mf:name "SHA256()" ;
+	mf:result <sha256-01.srx> .
+
+_:node18l628sr5x197 qt:data <data.ttl> ;
+	qt:query <sha256-01.xsparql> .
+
+<http://xsparql.deri.org#sha256-01> mf:action _:node18l628sr5x197 .
+
+<http://xsparql.deri.org#sha256-02> <http://xsparql.deri.org#derivedFrom> :sha256-02 ;
+	mf:name "SHA256() on Unicode data" ;
+	mf:result <sha256-02.srx> .
+
+_:node18l628sr5x198 qt:data <hash-unicode.ttl> ;
+	qt:query <sha256-02.xsparql> .
+
+<http://xsparql.deri.org#sha256-02> mf:action _:node18l628sr5x198 .
+
+<http://xsparql.deri.org#sha512-01> <http://xsparql.deri.org#derivedFrom> :sha512-01 ;
+	mf:name "SHA512()" ;
+	mf:result <sha512-01.srx> .
+
+_:node18l628sr5x199 qt:data <data.ttl> ;
+	qt:query <sha512-01.xsparql> .
+
+<http://xsparql.deri.org#sha512-01> mf:action _:node18l628sr5x199 .
+
+<http://xsparql.deri.org#sha512-02> <http://xsparql.deri.org#derivedFrom> :sha512-02 ;
+	mf:name "SHA512() on Unicode data" ;
+	mf:result <sha512-02.srx> .
+
+_:node18l628sr5x200 qt:data <hash-unicode.ttl> ;
+	qt:query <sha512-02.xsparql> .
+
+<http://xsparql.deri.org#sha512-02> mf:action _:node18l628sr5x200 .
+
+<http://xsparql.deri.org#hours> <http://xsparql.deri.org#derivedFrom> :hours ;
+	mf:name "HOURS()" ;
+	mf:result <hours-01.srx> .
+
+_:node18l628sr5x201 qt:data <data.ttl> ;
+	qt:query <hours.xsparql> .
+
+<http://xsparql.deri.org#hours> mf:action _:node18l628sr5x201 .
+
+<http://xsparql.deri.org#minutes> <http://xsparql.deri.org#derivedFrom> :minutes ;
+	mf:name "MINUTES()" ;
+	mf:result <minutes-01.srx> .
+
+_:node18l628sr5x202 qt:data <data.ttl> ;
+	qt:query <minutes.xsparql> .
+
+<http://xsparql.deri.org#minutes> mf:action _:node18l628sr5x202 .
+
+<http://xsparql.deri.org#seconds> <http://xsparql.deri.org#derivedFrom> :seconds ;
+	mf:name "SECONDS()" ;
+	mf:result <seconds-01.srx> .
+
+_:node18l628sr5x203 qt:data <data.ttl> ;
+	qt:query <seconds.xsparql> .
+
+<http://xsparql.deri.org#seconds> mf:action _:node18l628sr5x203 .
+
+<http://xsparql.deri.org#year> <http://xsparql.deri.org#derivedFrom> :year ;
+	mf:name "YEAR()" ;
+	mf:result <year-01.srx> .
+
+_:node18l628sr5x204 qt:data <data.ttl> ;
+	qt:query <year.xsparql> .
+
+<http://xsparql.deri.org#year> mf:action _:node18l628sr5x204 .
+
+<http://xsparql.deri.org#month> <http://xsparql.deri.org#derivedFrom> :month ;
+	mf:name "MONTH()" ;
+	mf:result <month-01.srx> .
+
+_:node18l628sr5x205 qt:data <data.ttl> ;
+	qt:query <month.xsparql> .
+
+<http://xsparql.deri.org#month> mf:action _:node18l628sr5x205 .
+
+<http://xsparql.deri.org#day> <http://xsparql.deri.org#derivedFrom> :day ;
+	mf:name "DAY()" ;
+	mf:result <day-01.srx> .
+
+_:node18l628sr5x206 qt:data <data.ttl> ;
+	qt:query <day.xsparql> .
+
+<http://xsparql.deri.org#day> mf:action _:node18l628sr5x206 .
+
+<http://xsparql.deri.org#timezone> <http://xsparql.deri.org#derivedFrom> :timezone ;
+	mf:name "TIMEZONE()" ;
+	mf:result <timezone-01.srx> .
+
+_:node18l628sr5x207 qt:data <data.ttl> ;
+	qt:query <timezone.xsparql> .
+
+<http://xsparql.deri.org#timezone> mf:action _:node18l628sr5x207 .
+
+<http://xsparql.deri.org#tz> <http://xsparql.deri.org#derivedFrom> :tz ;
+	mf:name "TZ()" ;
+	mf:result <tz-01.srx> .
+
+_:node18l628sr5x208 qt:data <data.ttl> ;
+	qt:query <tz.xsparql> .
+
+<http://xsparql.deri.org#tz> mf:action _:node18l628sr5x208 .
+
+<http://xsparql.deri.org#bnode01> <http://xsparql.deri.org#derivedFrom> :bnode01 ;
+	mf:name "BNODE(str)" ;
+	mf:result <bnode01.srx> .
+
+_:node18l628sr5x209 qt:data <data.ttl> ;
+	qt:query <bnode01.xsparql> .
+
+<http://xsparql.deri.org#bnode01> mf:action _:node18l628sr5x209 .
+
+<http://xsparql.deri.org#bnode02> <http://xsparql.deri.org#derivedFrom> :bnode02 ;
+	mf:name "BNODE()" ;
+	mf:result <bnode02.srx> .
+
+_:node18l628sr5x210 qt:data <data.ttl> ;
+	qt:query <bnode02.xsparql> .
+
+<http://xsparql.deri.org#bnode02> mf:action _:node18l628sr5x210 .
+
+<http://xsparql.deri.org#iri01> <http://xsparql.deri.org#derivedFrom> :iri01 ;
+	mf:name "IRI()/URI()" ;
+	mf:result <iri01.srx> .
+
+_:node18l628sr5x211 qt:data <data.ttl> ;
+	qt:query <iri01.xsparql> .
+
+<http://xsparql.deri.org#iri01> mf:action _:node18l628sr5x211 .
+
+<http://xsparql.deri.org#if01> <http://xsparql.deri.org#derivedFrom> :if01 ;
+	mf:name "IF()" ;
+	mf:result <if01.srx> .
+
+_:node18l628sr5x212 qt:data <data2.ttl> ;
+	qt:query <if01.xsparql> .
+
+<http://xsparql.deri.org#if01> mf:action _:node18l628sr5x212 .
+
+<http://xsparql.deri.org#if02> <http://xsparql.deri.org#derivedFrom> :if02 ;
+	mf:name "IF() error propogation" ;
+	mf:result <if02.srx> .
+
+_:node18l628sr5x213 qt:data <data2.ttl> ;
+	qt:query <if02.xsparql> .
+
+<http://xsparql.deri.org#if02> mf:action _:node18l628sr5x213 .
+
+<http://xsparql.deri.org#coalesce01> <http://xsparql.deri.org#derivedFrom> :coalesce01 ;
+	mf:name "COALESCE()" ;
+	mf:result <coalesce01.srx> .
+
+_:node18l628sr5x214 qt:data <data-coalesce.ttl> ;
+	qt:query <coalesce01.xsparql> .
+
+<http://xsparql.deri.org#coalesce01> mf:action _:node18l628sr5x214 .
+
+<http://xsparql.deri.org#strbefore01> <http://xsparql.deri.org#derivedFrom> :strbefore01 ;
+	mf:name "STRBEFORE()" ;
+	mf:result <strbefore01.srx> .
+
+_:node18l628sr5x215 qt:data <data2.ttl> ;
+	qt:query <strbefore01.xsparql> .
+
+<http://xsparql.deri.org#strbefore01> mf:action _:node18l628sr5x215 .
+
+<http://xsparql.deri.org#strafter01> <http://xsparql.deri.org#derivedFrom> :strafter01 ;
+	mf:name "STRAFTER()" ;
+	mf:result <strafter01.srx> .
+
+_:node18l628sr5x216 qt:data <data2.ttl> ;
+	qt:query <strafter01.xsparql> .
+
+<http://xsparql.deri.org#strafter01> mf:action _:node18l628sr5x216 .
+
+<http://xsparql.deri.org#replace01> <http://xsparql.deri.org#derivedFrom> :replace01 ;
+	mf:name "REPLACE()" ;
+	mf:result <replace01.srx> .
+
+_:node18l628sr5x217 qt:data <data3.ttl> ;
+	qt:query <replace01.xsparql> .
+
+<http://xsparql.deri.org#replace01> mf:action _:node18l628sr5x217 .
+
+<http://xsparql.deri.org#replace02> <http://xsparql.deri.org#derivedFrom> :replace02 ;
+	mf:name "REPLACE() with overlapping pattern" ;
+	mf:result <replace02.srx> .
+
+_:node18l628sr5x218 qt:data <data3.ttl> ;
+	qt:query <replace02.xsparql> .
+
+<http://xsparql.deri.org#replace02> mf:action _:node18l628sr5x218 .
+
+_:node18l628sr5x220 rdf:first <http://xsparql.deri.org#replace03> ;
+	rdf:rest _:node18l628sr5x225 .
+
+_:node18l628sr5x225 rdf:first <http://xsparql.deri.org#strdt01> ;
+	rdf:rest _:node18l628sr5x226 .
+
+_:node18l628sr5x226 rdf:first <http://xsparql.deri.org#strdt02> ;
+	rdf:rest _:node18l628sr5x227 .
+
+_:node18l628sr5x227 rdf:first <http://xsparql.deri.org#strdt03> ;
+	rdf:rest _:node18l628sr5x228 .
+
+_:node18l628sr5x228 rdf:first <http://xsparql.deri.org#strlang01> ;
+	rdf:rest _:node18l628sr5x229 .
+
+_:node18l628sr5x229 rdf:first <http://xsparql.deri.org#strlang02> ;
+	rdf:rest _:node18l628sr5x230 .
+
+_:node18l628sr5x230 rdf:first <http://xsparql.deri.org#strlang03> ;
+	rdf:rest _:node18l628sr5x231 .
+
+_:node18l628sr5x231 rdf:first <http://xsparql.deri.org#isnumeric01> ;
+	rdf:rest _:node18l628sr5x221 .
+
+_:node18l628sr5x221 rdf:first <http://xsparql.deri.org#abs01> ;
+	rdf:rest _:node18l628sr5x222 .
+
+_:node18l628sr5x222 rdf:first <http://xsparql.deri.org#ceil01> ;
+	rdf:rest _:node18l628sr5x240 .
+
+_:node18l628sr5x240 rdf:first <http://xsparql.deri.org#floor01> ;
+	rdf:rest _:node18l628sr5x248 .
+
+_:node18l628sr5x248 rdf:first <http://xsparql.deri.org#round01> ;
+	rdf:rest _:node18l628sr5x249 .
+
+_:node18l628sr5x249 rdf:first <http://xsparql.deri.org#concat01> ;
+	rdf:rest _:node18l628sr5x246 .
+
+_:node18l628sr5x246 rdf:first <http://xsparql.deri.org#concat02> ;
+	rdf:rest _:node18l628sr5x247 .
+
+_:node18l628sr5x247 rdf:first <http://xsparql.deri.org#substring01> ;
+	rdf:rest _:node18l628sr5x244 .
+
+_:node18l628sr5x244 rdf:first <http://xsparql.deri.org#substring02> ;
+	rdf:rest _:node18l628sr5x245 .
+
+_:node18l628sr5x245 rdf:first <http://xsparql.deri.org#length01> ;
+	rdf:rest _:node18l628sr5x242 .
+
+_:node18l628sr5x242 rdf:first <http://xsparql.deri.org#ucase01> ;
+	rdf:rest _:node18l628sr5x243 .
+
+_:node18l628sr5x243 rdf:first <http://xsparql.deri.org#lcase01> ;
+	rdf:rest _:node18l628sr5x241 .
+
+_:node18l628sr5x241 rdf:first <http://xsparql.deri.org#encode01> ;
+	rdf:rest _:node18l628sr5x224 .
+
+_:node18l628sr5x224 rdf:first <http://xsparql.deri.org#contains01> ;
+	rdf:rest _:node18l628sr5x223 .
+
+_:node18l628sr5x223 rdf:first <http://xsparql.deri.org#starts01> ;
+	rdf:rest _:node18l628sr5x236 .
+
+_:node18l628sr5x236 rdf:first <http://xsparql.deri.org#ends01> ;
+	rdf:rest _:node18l628sr5x237 .
+
+_:node18l628sr5x237 rdf:first <http://xsparql.deri.org#plus-1> ;
+	rdf:rest _:node18l628sr5x238 .
+
+_:node18l628sr5x238 rdf:first <http://xsparql.deri.org#plus-2> ;
+	rdf:rest _:node18l628sr5x239 .
+
+_:node18l628sr5x239 rdf:first <http://xsparql.deri.org#md5-01> ;
+	rdf:rest _:node18l628sr5x232 .
+
+_:node18l628sr5x232 rdf:first <http://xsparql.deri.org#md5-02> ;
+	rdf:rest _:node18l628sr5x233 .
+
+_:node18l628sr5x233 rdf:first <http://xsparql.deri.org#sha1-01> ;
+	rdf:rest _:node18l628sr5x234 .
+
+_:node18l628sr5x234 rdf:first <http://xsparql.deri.org#sha1-02> ;
+	rdf:rest _:node18l628sr5x235 .
+
+_:node18l628sr5x235 rdf:first <http://xsparql.deri.org#sha256-01> ;
+	rdf:rest _:node18l628sr5x262 .
+
+_:node18l628sr5x262 rdf:first <http://xsparql.deri.org#sha256-02> ;
+	rdf:rest _:node18l628sr5x261 .
+
+_:node18l628sr5x261 rdf:first <http://xsparql.deri.org#sha512-01> ;
+	rdf:rest _:node18l628sr5x260 .
+
+_:node18l628sr5x260 rdf:first <http://xsparql.deri.org#sha512-02> ;
+	rdf:rest _:node18l628sr5x265 .
+
+_:node18l628sr5x265 rdf:first <http://xsparql.deri.org#hours> ;
+	rdf:rest _:node18l628sr5x266 .
+
+_:node18l628sr5x266 rdf:first <http://xsparql.deri.org#minutes> ;
+	rdf:rest _:node18l628sr5x263 .
+
+_:node18l628sr5x263 rdf:first <http://xsparql.deri.org#seconds> ;
+	rdf:rest _:node18l628sr5x264 .
+
+_:node18l628sr5x264 rdf:first <http://xsparql.deri.org#year> ;
+	rdf:rest _:node18l628sr5x268 .
+
+_:node18l628sr5x268 rdf:first <http://xsparql.deri.org#month> ;
+	rdf:rest _:node18l628sr5x269 .
+
+_:node18l628sr5x269 rdf:first <http://xsparql.deri.org#day> ;
+	rdf:rest _:node18l628sr5x267 .
+
+_:node18l628sr5x267 rdf:first <http://xsparql.deri.org#timezone> ;
+	rdf:rest _:node18l628sr5x251 .
+
+_:node18l628sr5x251 rdf:first <http://xsparql.deri.org#tz> ;
+	rdf:rest _:node18l628sr5x250 .
+
+_:node18l628sr5x250 rdf:first <http://xsparql.deri.org#bnode01> ;
+	rdf:rest _:node18l628sr5x253 .
+
+_:node18l628sr5x253 rdf:first <http://xsparql.deri.org#bnode02> ;
+	rdf:rest _:node18l628sr5x252 .
+
+_:node18l628sr5x252 rdf:first <http://xsparql.deri.org#iri01> ;
+	rdf:rest _:node18l628sr5x254 .
+
+_:node18l628sr5x254 rdf:first <http://xsparql.deri.org#if01> ;
+	rdf:rest _:node18l628sr5x255 .
+
+_:node18l628sr5x255 rdf:first <http://xsparql.deri.org#if02> ;
+	rdf:rest _:node18l628sr5x256 .
+
+_:node18l628sr5x256 rdf:first <http://xsparql.deri.org#coalesce01> ;
+	rdf:rest _:node18l628sr5x257 .
+
+_:node18l628sr5x257 rdf:first <http://xsparql.deri.org#strbefore01> ;
+	rdf:rest _:node18l628sr5x258 .
+
+_:node18l628sr5x258 rdf:first <http://xsparql.deri.org#strafter01> ;
+	rdf:rest _:node18l628sr5x259 .
+
+_:node18l628sr5x259 rdf:first <http://xsparql.deri.org#replace01> ;
+	rdf:rest _:node18l628sr5x219 .
+
+_:node18l628sr5x219 rdf:first <http://xsparql.deri.org#replace02> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg-sparql-1.1/functions/> mf:entries _:node18l628sr5x220 .

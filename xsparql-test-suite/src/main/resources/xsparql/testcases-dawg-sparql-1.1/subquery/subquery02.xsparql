@@ -1,0 +1,16 @@
+prefix ex:	<http://www.example.org/schema#>
+prefix in:	<http://www.example.org/instance#>
+
+<results>
+{for  $x $p where {
+graph $g {
+{select * where {$x $p $g}}
+}
+}
+return 
+ <result>
+	<binding name="g">{$g}</binding>
+	<binding name="p">{$p}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

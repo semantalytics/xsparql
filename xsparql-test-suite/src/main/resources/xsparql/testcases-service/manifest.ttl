@@ -1,0 +1,65 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#service7> <http://xsparql.deri.org#derivedFrom> :service7 ;
+	mf:name "SERVICE test 7" ;
+	mf:result <service07.srx> .
+
+_:node18l628sr5x3015 qt:data <data07.ttl> ;
+	qt:query <service7.xsparql> .
+
+<http://xsparql.deri.org#service7> mf:action _:node18l628sr5x3015 .
+
+<http://xsparql.deri.org#service1> <http://xsparql.deri.org#derivedFrom> :service1 ;
+	mf:name "SERVICE test 1" ;
+	mf:result <service01.srx> .
+
+_:node18l628sr5x3016 qt:data <data01.ttl> ;
+	qt:query <service1.xsparql> .
+
+<http://xsparql.deri.org#service1> mf:action _:node18l628sr5x3016 .
+
+<http://xsparql.deri.org#service4> <http://xsparql.deri.org#derivedFrom> :service4 ;
+	mf:name "SERVICE test 4" ;
+	mf:result <service04.srx> .
+
+_:node18l628sr5x3017 qt:data <data04.ttl> ;
+	qt:query <service4.xsparql> .
+
+<http://xsparql.deri.org#service4> mf:action _:node18l628sr5x3017 .
+
+<http://xsparql.deri.org#service5> <http://xsparql.deri.org#derivedFrom> :service5 ;
+	mf:name "SERVICE test 5" ;
+	mf:result <service05.srx> .
+
+_:node18l628sr5x3018 qt:data <data05.ttl> ;
+	qt:query <service5.xsparql> .
+
+<http://xsparql.deri.org#service5> mf:action _:node18l628sr5x3018 .
+
+_:node18l628sr5x3019 rdf:first <http://xsparql.deri.org#service7> ;
+	rdf:rest _:node18l628sr5x3020 .
+
+_:node18l628sr5x3020 rdf:first <http://xsparql.deri.org#service1> ;
+	rdf:rest _:node18l628sr5x3021 .
+
+_:node18l628sr5x3021 rdf:first <http://xsparql.deri.org#service2> ;
+	rdf:rest _:node18l628sr5x3022 .
+
+_:node18l628sr5x3022 rdf:first <http://xsparql.deri.org#service3> ;
+	rdf:rest _:node18l628sr5x3023 .
+
+_:node18l628sr5x3023 rdf:first <http://xsparql.deri.org#service4> ;
+	rdf:rest _:node18l628sr5x3024 .
+
+_:node18l628sr5x3024 rdf:first <http://xsparql.deri.org#service5> ;
+	rdf:rest _:node18l628sr5x3025 .
+
+_:node18l628sr5x3025 rdf:first <http://xsparql.deri.org#service6> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-service/> mf:entries _:node18l628sr5x3019 .

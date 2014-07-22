@@ -1,0 +1,22 @@
+# service with one optional and a nested service. this query depends in the capabilities of the example1.org endpoint
+
+prefix : <http://example.org/> 
+
+<results>
+{for $s $o1 $o2
+where{
+  service <http://localhost:18080/openrdf/repositories/endpoint1> {
+  $s $p $o1 .
+  optional {
+	service silent <http://invalid.endpoint.org/sparql> {
+    $s $p2 $o2 }
+  }
+}
+}
+return 
+ <result>
+	<binding name="o2">{$o2}</binding>
+	<binding name="o1">{$o1}</binding>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

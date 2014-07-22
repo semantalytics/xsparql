@@ -1,0 +1,12 @@
+prefix : <http://example.org/>
+<results>
+{for $str (strlen($str) as $len) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {
+	$s :str $str
+}
+
+return 
+ <result>
+	<binding name="str">{$str}</binding>
+	<binding name="len">{$len}</binding>
+</result>}
+</results>

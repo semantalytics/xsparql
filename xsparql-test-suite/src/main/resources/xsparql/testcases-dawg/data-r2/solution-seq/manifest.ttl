@@ -1,0 +1,164 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/solution-seq/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#offset-1> <http://xsparql.deri.org#derivedFrom> :offset-1 ;
+	mf:name "Offset 1" ;
+	mf:result <slice-results-10.ttl> .
+
+_:node18l628sr5x2665 qt:data <data.ttl> ;
+	qt:query <offset-1.xsparql> .
+
+<http://xsparql.deri.org#offset-1> mf:action _:node18l628sr5x2665 .
+
+<http://xsparql.deri.org#offset-2> <http://xsparql.deri.org#derivedFrom> :offset-2 ;
+	mf:name "Offset 2" ;
+	mf:result <slice-results-11.ttl> .
+
+_:node18l628sr5x2666 qt:data <data.ttl> ;
+	qt:query <offset-2.xsparql> .
+
+<http://xsparql.deri.org#offset-2> mf:action _:node18l628sr5x2666 .
+
+<http://xsparql.deri.org#offset-3> <http://xsparql.deri.org#derivedFrom> :offset-3 ;
+	mf:name "Offset 3" ;
+	mf:result <slice-results-12.ttl> .
+
+_:node18l628sr5x2667 qt:data <data.ttl> ;
+	qt:query <offset-3.xsparql> .
+
+<http://xsparql.deri.org#offset-3> mf:action _:node18l628sr5x2667 .
+
+<http://xsparql.deri.org#offset-4> <http://xsparql.deri.org#derivedFrom> :offset-4 ;
+	mf:name "Offset 4" ;
+	mf:result <slice-results-13.ttl> .
+
+_:node18l628sr5x2668 qt:data <data.ttl> ;
+	qt:query <offset-4.xsparql> .
+
+<http://xsparql.deri.org#offset-4> mf:action _:node18l628sr5x2668 .
+
+<http://xsparql.deri.org#slice-1> <http://xsparql.deri.org#derivedFrom> :slice-1 ;
+	mf:name "Slice 1" ;
+	mf:result <slice-results-20.ttl> .
+
+_:node18l628sr5x2669 qt:data <data.ttl> ;
+	qt:query <slice-1.xsparql> .
+
+<http://xsparql.deri.org#slice-1> mf:action _:node18l628sr5x2669 .
+
+<http://xsparql.deri.org#slice-2> <http://xsparql.deri.org#derivedFrom> :slice-2 ;
+	mf:name "Slice 2" ;
+	mf:result <slice-results-21.ttl> .
+
+_:node18l628sr5x2670 qt:data <data.ttl> ;
+	qt:query <slice-2.xsparql> .
+
+<http://xsparql.deri.org#slice-2> mf:action _:node18l628sr5x2670 .
+
+<http://xsparql.deri.org#slice-3> <http://xsparql.deri.org#derivedFrom> :slice-3 ;
+	mf:name "Slice 3" ;
+	mf:result <slice-results-22.ttl> .
+
+_:node18l628sr5x2671 qt:data <data.ttl> ;
+	qt:query <slice-3.xsparql> .
+
+<http://xsparql.deri.org#slice-3> mf:action _:node18l628sr5x2671 .
+
+<http://xsparql.deri.org#slice-4> <http://xsparql.deri.org#derivedFrom> :slice-4 ;
+	mf:name "Slice 4" ;
+	mf:result <slice-results-23.ttl> .
+
+_:node18l628sr5x2672 qt:data <data.ttl> ;
+	qt:query <slice-4.xsparql> .
+
+<http://xsparql.deri.org#slice-4> mf:action _:node18l628sr5x2672 .
+
+<http://xsparql.deri.org#slice-5> <http://xsparql.deri.org#derivedFrom> :slice-5 ;
+	mf:name "Slice 5" ;
+	mf:result <slice-results-24.ttl> .
+
+_:node18l628sr5x2673 qt:data <data.ttl> ;
+	qt:query <slice-5.xsparql> .
+
+<http://xsparql.deri.org#slice-5> mf:action _:node18l628sr5x2673 .
+
+<http://xsparql.deri.org#limit-1> <http://xsparql.deri.org#derivedFrom> :limit-1 ;
+	mf:name "Limit 1" ;
+	mf:result <slice-results-01.ttl> .
+
+_:node18l628sr5x2674 qt:data <data.ttl> ;
+	qt:query <limit-1.xsparql> .
+
+<http://xsparql.deri.org#limit-1> mf:action _:node18l628sr5x2674 .
+
+<http://xsparql.deri.org#limit-2> <http://xsparql.deri.org#derivedFrom> :limit-2 ;
+	mf:name "Limit 2" ;
+	mf:result <slice-results-02.ttl> .
+
+_:node18l628sr5x2675 qt:data <data.ttl> ;
+	qt:query <limit-2.xsparql> .
+
+<http://xsparql.deri.org#limit-2> mf:action _:node18l628sr5x2675 .
+
+<http://xsparql.deri.org#limit-3> <http://xsparql.deri.org#derivedFrom> :limit-3 ;
+	mf:name "Limit 3" ;
+	mf:result <slice-results-03.ttl> .
+
+_:node18l628sr5x2676 qt:data <data.ttl> ;
+	qt:query <limit-3.xsparql> .
+
+<http://xsparql.deri.org#limit-3> mf:action _:node18l628sr5x2676 .
+
+<http://xsparql.deri.org#limit-4> <http://xsparql.deri.org#derivedFrom> :limit-4 ;
+	mf:name "Limit 4" ;
+	mf:result <slice-results-04.ttl> .
+
+_:node18l628sr5x2677 qt:data <data.ttl> ;
+	qt:query <limit-4.xsparql> .
+
+<http://xsparql.deri.org#limit-4> mf:action _:node18l628sr5x2677 .
+
+_:node18l628sr5x2679 rdf:first <http://xsparql.deri.org#offset-1> ;
+	rdf:rest _:node18l628sr5x2681 .
+
+_:node18l628sr5x2681 rdf:first <http://xsparql.deri.org#offset-2> ;
+	rdf:rest _:node18l628sr5x2682 .
+
+_:node18l628sr5x2682 rdf:first <http://xsparql.deri.org#offset-3> ;
+	rdf:rest _:node18l628sr5x2683 .
+
+_:node18l628sr5x2683 rdf:first <http://xsparql.deri.org#offset-4> ;
+	rdf:rest _:node18l628sr5x2684 .
+
+_:node18l628sr5x2684 rdf:first <http://xsparql.deri.org#slice-1> ;
+	rdf:rest _:node18l628sr5x2685 .
+
+_:node18l628sr5x2685 rdf:first <http://xsparql.deri.org#slice-2> ;
+	rdf:rest _:node18l628sr5x2686 .
+
+_:node18l628sr5x2686 rdf:first <http://xsparql.deri.org#slice-3> ;
+	rdf:rest _:node18l628sr5x2687 .
+
+_:node18l628sr5x2687 rdf:first <http://xsparql.deri.org#slice-4> ;
+	rdf:rest _:node18l628sr5x2678 .
+
+_:node18l628sr5x2678 rdf:first <http://xsparql.deri.org#slice-5> ;
+	rdf:rest _:node18l628sr5x2680 .
+
+_:node18l628sr5x2680 rdf:first <http://xsparql.deri.org#limit-1> ;
+	rdf:rest _:node18l628sr5x2688 .
+
+_:node18l628sr5x2688 rdf:first <http://xsparql.deri.org#limit-2> ;
+	rdf:rest _:node18l628sr5x2689 .
+
+_:node18l628sr5x2689 rdf:first <http://xsparql.deri.org#limit-3> ;
+	rdf:rest _:node18l628sr5x2690 .
+
+_:node18l628sr5x2690 rdf:first <http://xsparql.deri.org#limit-4> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/solution-seq/> mf:entries _:node18l628sr5x2679 .

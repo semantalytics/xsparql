@@ -1,0 +1,15 @@
+prefix :      <http://example/> 
+prefix xsd:   <http://www.w3.org/2001/xmlschema#>
+
+<results>
+{for distinct $v
+from <src/main/resources/xsparql/testcases-dawg/data-r2/distinct/data-opt.ttl> where{
+    :x1 $p $o
+    optional { $o :q $v }
+}
+
+return 
+ <result>
+	<binding name="v">{$v}</binding>
+</result>}
+</results>

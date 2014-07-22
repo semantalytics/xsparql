@@ -1,0 +1,14 @@
+prefix xsd: <http://www.w3.org/2001/xmlschema#> 
+prefix  :  <http://example/>
+<results>
+{for  $lit (lcase($lit) as $lcase)
+ from <src/main/resources/xsparql/testcases-sparql-1.1/builtin/data-02.ttl> where {
+   	$x :plainliteraluppercase $lit . 
+}
+
+return 
+ <result>
+	<binding name="lit">{$lit}</binding>
+	<binding name="lcase">{$lcase}</binding>
+</result>}
+</results>

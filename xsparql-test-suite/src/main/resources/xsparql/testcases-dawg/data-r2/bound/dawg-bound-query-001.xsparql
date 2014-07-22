@@ -1,0 +1,16 @@
+prefix  : <http://example.org/ns#>
+<results>
+{for  $a $c
+from <src/main/resources/xsparql/testcases-dawg/data-r2/bound/data.ttl> where
+    { $a :b $c . 
+      optional
+        { $c :d $e } . 
+      filter (! bound($e)) 
+    }
+
+return 
+ <result>
+	<binding name="c">{$c}</binding>
+	<binding name="a">{$a}</binding>
+</result>}
+</results>

@@ -1,0 +1,16 @@
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+prefix : <http://example.com/data/#>
+<results>
+{for $g 
+(avg(if(isnumeric($p), $p, coalesce(xsd:double($p),0))) as $avg) 
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/aggregates/agg-err-02.ttl> where {
+  $g :p $p .
+}
+group by $g
+
+return 
+ <result>
+	<binding name="g">{$g}</binding>
+	<binding name="avg">{$avg}</binding>
+</result>}
+</results>

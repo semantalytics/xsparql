@@ -1,0 +1,17 @@
+prefix ex:	<http://www.example.org/schema#>
+prefix in:	<http://www.example.org/instance#>
+
+<results>
+{for $x $y 
+  (($y + $y) as $sum) 
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/project-expression/projexp04.ttl> where {
+  $x ex:p $y
+}
+order by $sum
+return 
+ <result>
+	<binding name="sum">{$sum}</binding>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

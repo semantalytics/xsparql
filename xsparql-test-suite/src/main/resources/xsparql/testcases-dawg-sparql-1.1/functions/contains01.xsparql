@@ -1,0 +1,14 @@
+prefix : <http://example.org/>
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+<results>
+{for $s $str from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {
+	$s :str $str
+	filter contains($str, "a")
+}
+
+return 
+ <result>
+	<binding name="str">{$str}</binding>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

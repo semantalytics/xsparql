@@ -1,0 +1,20 @@
+# bindings with one element undef
+
+prefix : <http://example.org/> 
+
+<results>
+{for $s $o1 $o2
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/bindings/data04.ttl> where{
+  $s $p1 $o1 .
+  $s $p2 $o2 .
+} values ($o1 $o2) {
+ ("alan" undef)
+}
+
+return 
+ <result>
+	<binding name="o2">{$o2}</binding>
+	<binding name="o1">{$o1}</binding>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

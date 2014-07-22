@@ -1,0 +1,14 @@
+base <http://example.org/>
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+<results>
+{for $o (if(lang($o) = "ja", true, false) as $integer)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data2.ttl> where {
+	$s $p $o
+}
+
+return 
+ <result>
+	<binding name="integer">{$integer}</binding>
+	<binding name="o">{$o}</binding>
+</result>}
+</results>

@@ -1,0 +1,27 @@
+prefix  void: <http://rdfs.org/ns/void#>
+prefix  dc:   <http://purl.org/dc/elements/1.1/>
+prefix  doap: <http://usefulinc.com/ns/doap#> 
+
+<results>
+{for $service $title
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/service/data05.ttl> where {
+  {
+    # find the service with subject "remote".
+    # inner block to fix the filter not be over
+    # just this local pattern.
+    $p dc:subject $projectsubject ;
+       void:sparqlendpoint $service  
+       filter regex($projectsubject, "remote")
+  }
+
+  # query that service projects.
+ 
+  service $service {
+     $project  doap:name $title . } 
+}
+return 
+ <result>
+	<binding name="title">{$title}</binding>
+	<binding name="service">{$service}</binding>
+</result>}
+</results>

@@ -1,0 +1,13 @@
+prefix : <http://example.org/>
+<results>
+{for (count(distinct $o) as $c)
+from <src/main/resources/xsparql/testcases-sparql-1.1/aggregates/data-07.ttl> where { 
+          $s :p $o .
+          filter not exists { $o a :t . }
+} 
+
+return 
+ <result>
+	<binding name="c">{$c}</binding>
+</result>}
+</results>

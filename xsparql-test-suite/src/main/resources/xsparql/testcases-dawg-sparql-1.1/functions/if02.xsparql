@@ -1,0 +1,8 @@
+<results>
+{for (if(1/0, false, true) as $error) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data2.ttl> where {}
+
+return 
+ <result>
+	<binding name="error">{$error}</binding>
+</result>}
+</results>

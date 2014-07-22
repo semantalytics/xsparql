@@ -1,0 +1,13 @@
+prefix ex: <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation#>
+<results>
+{for $animal from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/negation/subsetbyexcl.ttl> where{ 
+  $animal a ex:animal minus { 
+    $animal a $type 
+    filter($type = ex:reptile || $type = ex:insect) 
+  } 
+}
+return 
+ <result>
+	<binding name="animal">{$animal}</binding>
+</result>}
+</results>

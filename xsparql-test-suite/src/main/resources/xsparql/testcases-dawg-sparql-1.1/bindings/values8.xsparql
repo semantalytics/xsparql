@@ -1,0 +1,22 @@
+prefix dc:   <http://purl.org/dc/elements/1.1/> 
+prefix :     <http://example.org/book/> 
+prefix ns:   <http://example.org/ns#> 
+
+<results>
+{for $book $title $price
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/bindings/data08.ttl> where{
+   $book dc:title $title ;
+         ns:price $price .
+}
+values ($book $title) {
+ (undef "sparql tutorial")
+ (:book2 undef)
+}
+
+return 
+ <result>
+	<binding name="title">{$title}</binding>
+	<binding name="price">{$price}</binding>
+	<binding name="book">{$book}</binding>
+</result>}
+</results>

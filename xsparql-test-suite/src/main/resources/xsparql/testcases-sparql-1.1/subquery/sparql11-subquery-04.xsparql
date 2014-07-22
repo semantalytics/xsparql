@@ -1,0 +1,22 @@
+prefix ex: <http://example.org/>
+<results>
+{for $friend
+from <src/main/resources/xsparql/testcases-sparql-1.1/subquery/data-03.ttl> where {
+  $popular ex:knows $friend .
+  {
+    select $popular
+    where {
+      $someone ex:knows $popular
+    } 
+    group by $popular
+    order by desc(count($someone))
+    limit 2
+  }
+}
+
+return 
+ <result>
+	<binding name="popular">{$popular}</binding>
+	<binding name="friend">{$friend}</binding>
+</result>}
+</results>

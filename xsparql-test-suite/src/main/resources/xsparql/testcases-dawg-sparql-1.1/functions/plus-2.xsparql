@@ -1,0 +1,16 @@
+prefix  : <http://example/>
+
+<results>
+{for  $x $y ( str($x) + str($y) as $sum)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data-builtin-3.ttl> where
+    { $s :p $x ; :q $y . 
+    }
+order by $x $y $sum
+
+return 
+ <result>
+	<binding name="sum">{$sum}</binding>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

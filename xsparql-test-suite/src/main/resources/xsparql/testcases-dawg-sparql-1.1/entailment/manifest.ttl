@@ -1,0 +1,358 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/entailment/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix ent: <http://www.w3.org/ns/entailment/> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#rdf01> <http://xsparql.deri.org#derivedFrom> :rdf01 ;
+	mf:name "RDF inference test" ;
+	mf:result <rdf01.srx> .
+
+_:node18l628sr5x1247 qt:data <rdf01.ttl> ;
+	qt:query <rdf01.xsparql> .
+
+<http://xsparql.deri.org#rdf01> mf:action _:node18l628sr5x1247 .
+
+<http://xsparql.deri.org#rdf02> <http://xsparql.deri.org#derivedFrom> :rdf02 ;
+	mf:name "RDF inference test for rdf:_n occuring in the data" ;
+	mf:result <rdf02.srx> .
+
+_:node18l628sr5x1248 qt:data <rdf02.ttl> ;
+	qt:query <rdf02.xsparql> .
+
+<http://xsparql.deri.org#rdf02> mf:action _:node18l628sr5x1248 .
+
+<http://xsparql.deri.org#rdf03> <http://xsparql.deri.org#derivedFrom> :rdf03 ;
+	mf:name "RDF test for blank node cardinalities" ;
+	mf:result <rdf03.srx> .
+
+_:node18l628sr5x1249 qt:data <rdf03.ttl> ;
+	qt:query <rdf03.xsparql> .
+
+<http://xsparql.deri.org#rdf03> mf:action _:node18l628sr5x1249 .
+
+<http://xsparql.deri.org#rdf04> <http://xsparql.deri.org#derivedFrom> :rdf04 ;
+	mf:name "simple triple pattern match" ;
+	mf:result <rdf04.srx> .
+
+_:node18l628sr5x1250 qt:data <rdf04.ttl> ;
+	qt:query <rdf04.xsparql> .
+
+<http://xsparql.deri.org#rdf04> mf:action _:node18l628sr5x1250 .
+
+<http://xsparql.deri.org#rdfs01> <http://xsparql.deri.org#derivedFrom> :rdfs01 ;
+	mf:name "RDFS inference test rdfs:subPropertyOf" ;
+	mf:result <rdfs01.srx> .
+
+_:node18l628sr5x1251 qt:data <rdfs01.ttl> ;
+	qt:query <rdfs01.xsparql> .
+
+<http://xsparql.deri.org#rdfs01> mf:action _:node18l628sr5x1251 .
+
+<http://xsparql.deri.org#rdfs02> <http://xsparql.deri.org#derivedFrom> :rdfs02 ;
+	mf:name "RDFS inference test rdfs:subPropertyOf" ;
+	mf:result <rdfs02.srx> .
+
+_:node18l628sr5x1252 qt:data <rdfs02.ttl> ;
+	qt:query <rdfs02.xsparql> .
+
+<http://xsparql.deri.org#rdfs02> mf:action _:node18l628sr5x1252 .
+
+<http://xsparql.deri.org#rdfs03> <http://xsparql.deri.org#derivedFrom> :rdfs03 ;
+	mf:name "RDFS inference test RDFS rules incompleteness" ;
+	mf:result <rdfs03.srx> .
+
+_:node18l628sr5x1253 qt:data <rdfs03.ttl> ;
+	qt:query <rdfs03.xsparql> .
+
+<http://xsparql.deri.org#rdfs03> mf:action _:node18l628sr5x1253 .
+
+<http://xsparql.deri.org#rdfs04> <http://xsparql.deri.org#derivedFrom> :rdfs04 ;
+	mf:name "RDFS inference test subClassOf" ;
+	mf:result <rdfs04.srx> .
+
+_:node18l628sr5x1254 qt:data <rdfs04.ttl> ;
+	qt:query <rdfs04.xsparql> .
+
+<http://xsparql.deri.org#rdfs04> mf:action _:node18l628sr5x1254 .
+
+<http://xsparql.deri.org#rdfs05> <http://xsparql.deri.org#derivedFrom> :rdfs05 ;
+	mf:name "RDFS inference test subClassOf" ;
+	mf:result <rdfs05.srx> .
+
+_:node18l628sr5x1255 qt:data <rdfs05.ttl> ;
+	qt:query <rdfs05.xsparql> .
+
+<http://xsparql.deri.org#rdfs05> mf:action _:node18l628sr5x1255 .
+
+<http://xsparql.deri.org#rdfs06> <http://xsparql.deri.org#derivedFrom> :rdfs06 ;
+	mf:name "RDFS inference test domain" ;
+	mf:result <rdfs06.srx> .
+
+_:node18l628sr5x1256 qt:data <rdfs06.ttl> ;
+	qt:query <rdfs06.xsparql> .
+
+<http://xsparql.deri.org#rdfs06> mf:action _:node18l628sr5x1256 .
+
+<http://xsparql.deri.org#rdfs07> <http://xsparql.deri.org#derivedFrom> :rdfs07 ;
+	mf:name "RDFS inference test range" ;
+	mf:result <rdfs07.srx> .
+
+_:node18l628sr5x1257 qt:data <rdfs07.ttl> ;
+	qt:query <rdfs07.xsparql> .
+
+<http://xsparql.deri.org#rdfs07> mf:action _:node18l628sr5x1257 .
+
+<http://xsparql.deri.org#rdfs08> <http://xsparql.deri.org#derivedFrom> :rdfs08 ;
+	mf:name "RDFS inference test rdf:XMLLiteral subclass of rdfs:Literal" ;
+	mf:result <rdfs08.srx> .
+
+_:node18l628sr5x1258 qt:data <rdfs08.ttl> ;
+	qt:query <rdfs08.xsparql> .
+
+<http://xsparql.deri.org#rdfs08> mf:action _:node18l628sr5x1258 .
+
+<http://xsparql.deri.org#rdfs09> <http://xsparql.deri.org#derivedFrom> :rdfs09 ;
+	mf:name "RDFS inference test transitivity of subClassOf" ;
+	mf:result <rdfs09.srx> .
+
+_:node18l628sr5x1259 qt:data <rdfs09.ttl> ;
+	qt:query <rdfs09.xsparql> .
+
+<http://xsparql.deri.org#rdfs09> mf:action _:node18l628sr5x1259 .
+
+<http://xsparql.deri.org#rdfs10> <http://xsparql.deri.org#derivedFrom> :rdfs10 ;
+	mf:name "RDFS inference test transitivity of subPropertyOf" ;
+	mf:result <rdfs10.srx> .
+
+_:node18l628sr5x1260 qt:data <rdfs10.ttl> ;
+	qt:query <rdfs10.xsparql> .
+
+<http://xsparql.deri.org#rdfs10> mf:action _:node18l628sr5x1260 .
+
+<http://xsparql.deri.org#rdfs11> <http://xsparql.deri.org#derivedFrom> :rdfs11 ;
+	mf:name "RDFS inference test subclasses of rdf:Container" ;
+	mf:result <rdfs11.srx> .
+
+_:node18l628sr5x1261 qt:data <rdfs11.ttl> ;
+	qt:query <rdfs11.xsparql> .
+
+<http://xsparql.deri.org#rdfs11> mf:action _:node18l628sr5x1261 .
+
+<http://xsparql.deri.org#rdfs12> <http://xsparql.deri.org#derivedFrom> :rdfs12 ;
+	mf:name "RDFS inference test members of rdfs:ContaierMembershipProperty" ;
+	mf:result <rdfs12.srx> .
+
+_:node18l628sr5x1262 qt:data <rdfs12.ttl> ;
+	qt:query <rdfs12.xsparql> .
+
+<http://xsparql.deri.org#rdfs12> mf:action _:node18l628sr5x1262 .
+
+<http://xsparql.deri.org#rdfs13> <http://xsparql.deri.org#derivedFrom> :rdfs13 ;
+	mf:name "RDFS inference test to show that newly introduced surrogate blank nodes are not to be returned in query answers" ;
+	mf:result <rdfs13.srx> .
+
+_:node18l628sr5x1263 qt:data <rdfs13.ttl> ;
+	qt:query <rdfs13.xsparql> .
+
+<http://xsparql.deri.org#rdfs13> mf:action _:node18l628sr5x1263 .
+
+<http://xsparql.deri.org#d-ent-01> <http://xsparql.deri.org#derivedFrom> :d-ent-01 ;
+	mf:name "D-Entailment test to show that newly introduced surrogate blank nodes are not to be returned in query answers" ;
+	mf:result <d-ent-01.srx> .
+
+_:node18l628sr5x1264 qt:data <d-ent-01.ttl> ;
+	qt:query <d-ent-01.xsparql> .
+
+<http://xsparql.deri.org#d-ent-01> mf:action _:node18l628sr5x1264 .
+
+<http://xsparql.deri.org#owlds01> <http://xsparql.deri.org#derivedFrom> :owlds01 ;
+	mf:name "OWL DS bnodes are not existentials" ;
+	mf:result <owlds01.srx> .
+
+_:node18l628sr5x1265 qt:data <owlds01.ttl> ;
+	qt:query <owlds01.xsparql> .
+
+<http://xsparql.deri.org#owlds01> mf:action _:node18l628sr5x1265 .
+
+<http://xsparql.deri.org#owlds02> <http://xsparql.deri.org#derivedFrom> :owlds02 ;
+	mf:name "OWL DS bnodes are not existentials with answer" ;
+	mf:result <owlds02.srx> .
+
+_:node18l628sr5x1266 qt:data <owlds02.ttl> ;
+	qt:query <owlds02.xsparql> .
+
+<http://xsparql.deri.org#owlds02> mf:action _:node18l628sr5x1266 .
+
+<http://xsparql.deri.org#plainLit> <http://xsparql.deri.org#derivedFrom> :plainLit ;
+	mf:name "Plain literals with language tag are not the same as the same literal without" ;
+	mf:result <lang.srx> .
+
+_:node18l628sr5x1267 qt:data <lang.ttl> ;
+	qt:query <plainLit.xsparql> .
+
+<http://xsparql.deri.org#plainLit> mf:action _:node18l628sr5x1267 .
+
+<http://xsparql.deri.org#bind01> <http://xsparql.deri.org#derivedFrom> :bind01 ;
+	mf:name "bind01 - BIND fixed data for OWL DL" ;
+	mf:result <bind01.srx> .
+
+_:node18l628sr5x1268 qt:data <bind-data.ttl> ;
+	qt:query <bind01.xsparql> .
+
+<http://xsparql.deri.org#bind01> mf:action _:node18l628sr5x1268 .
+
+<http://xsparql.deri.org#bind02> <http://xsparql.deri.org#derivedFrom> :bind02 ;
+	mf:name "bind02 - BIND fixed data for OWL DL" ;
+	mf:result <bind02.srx> .
+
+_:node18l628sr5x1269 qt:data <bind-data.ttl> ;
+	qt:query <bind02.xsparql> .
+
+<http://xsparql.deri.org#bind02> mf:action _:node18l628sr5x1269 .
+
+<http://xsparql.deri.org#bind03> <http://xsparql.deri.org#derivedFrom> :bind03 ;
+	mf:name "bind03 - BIND fixed data for OWL DL" ;
+	mf:result <bind03.srx> .
+
+_:node18l628sr5x1270 qt:data <bind-data.ttl> ;
+	qt:query <bind03.xsparql> .
+
+<http://xsparql.deri.org#bind03> mf:action _:node18l628sr5x1270 .
+
+<http://xsparql.deri.org#bind04> <http://xsparql.deri.org#derivedFrom> :bind04 ;
+	mf:name "bind04 - BIND fixed data for OWL DL" ;
+	mf:result <bind04.srx> .
+
+_:node18l628sr5x1271 qt:data <bind-data.ttl> ;
+	qt:query <bind04.xsparql> .
+
+<http://xsparql.deri.org#bind04> mf:action _:node18l628sr5x1271 .
+
+<http://xsparql.deri.org#bind05> <http://xsparql.deri.org#derivedFrom> :bind05 ;
+	mf:name "bind05 - BIND fixed data for OWL DL" ;
+	mf:result <bind05.srx> .
+
+_:node18l628sr5x1272 qt:data <bind-data.ttl> ;
+	qt:query <bind05.xsparql> .
+
+<http://xsparql.deri.org#bind05> mf:action _:node18l628sr5x1272 .
+
+<http://xsparql.deri.org#bind06> <http://xsparql.deri.org#derivedFrom> :bind06 ;
+	mf:name "bind06 - BIND fixed data for OWL DL" ;
+	mf:result <bind06.srx> .
+
+_:node18l628sr5x1273 qt:data <bind-data.ttl> ;
+	qt:query <bind06.xsparql> .
+
+<http://xsparql.deri.org#bind06> mf:action _:node18l628sr5x1273 .
+
+<http://xsparql.deri.org#bind07> <http://xsparql.deri.org#derivedFrom> :bind07 ;
+	mf:name "bind07 - BIND fixed data for OWL DL" ;
+	mf:result <bind07.srx> .
+
+_:node18l628sr5x1274 qt:data <bind-data.ttl> ;
+	qt:query <bind07.xsparql> .
+
+<http://xsparql.deri.org#bind07> mf:action _:node18l628sr5x1274 .
+
+<http://xsparql.deri.org#bind08> <http://xsparql.deri.org#derivedFrom> :bind08 ;
+	mf:name "bind08 - BIND fixed data for OWL DL" ;
+	mf:result <bind08.srx> .
+
+_:node18l628sr5x1275 qt:data <bind-data.ttl> ;
+	qt:query <bind08.xsparql> .
+
+<http://xsparql.deri.org#bind08> mf:action _:node18l628sr5x1275 .
+
+_:node18l628sr5x1304 rdf:first <http://xsparql.deri.org#rdf01> ;
+	rdf:rest _:node18l628sr5x1280 .
+
+_:node18l628sr5x1280 rdf:first <http://xsparql.deri.org#rdf02> ;
+	rdf:rest _:node18l628sr5x1281 .
+
+_:node18l628sr5x1281 rdf:first <http://xsparql.deri.org#rdf03> ;
+	rdf:rest _:node18l628sr5x1282 .
+
+_:node18l628sr5x1282 rdf:first <http://xsparql.deri.org#rdf04> ;
+	rdf:rest _:node18l628sr5x1283 .
+
+_:node18l628sr5x1283 rdf:first <http://xsparql.deri.org#rdfs01> ;
+	rdf:rest _:node18l628sr5x1284 .
+
+_:node18l628sr5x1284 rdf:first <http://xsparql.deri.org#rdfs02> ;
+	rdf:rest _:node18l628sr5x1285 .
+
+_:node18l628sr5x1285 rdf:first <http://xsparql.deri.org#rdfs03> ;
+	rdf:rest _:node18l628sr5x1286 .
+
+_:node18l628sr5x1286 rdf:first <http://xsparql.deri.org#rdfs04> ;
+	rdf:rest _:node18l628sr5x1276 .
+
+_:node18l628sr5x1276 rdf:first <http://xsparql.deri.org#rdfs05> ;
+	rdf:rest _:node18l628sr5x1277 .
+
+_:node18l628sr5x1277 rdf:first <http://xsparql.deri.org#rdfs06> ;
+	rdf:rest _:node18l628sr5x1294 .
+
+_:node18l628sr5x1294 rdf:first <http://xsparql.deri.org#rdfs07> ;
+	rdf:rest _:node18l628sr5x1302 .
+
+_:node18l628sr5x1302 rdf:first <http://xsparql.deri.org#rdfs08> ;
+	rdf:rest _:node18l628sr5x1303 .
+
+_:node18l628sr5x1303 rdf:first <http://xsparql.deri.org#rdfs09> ;
+	rdf:rest _:node18l628sr5x1300 .
+
+_:node18l628sr5x1300 rdf:first <http://xsparql.deri.org#rdfs10> ;
+	rdf:rest _:node18l628sr5x1301 .
+
+_:node18l628sr5x1301 rdf:first <http://xsparql.deri.org#rdfs11> ;
+	rdf:rest _:node18l628sr5x1298 .
+
+_:node18l628sr5x1298 rdf:first <http://xsparql.deri.org#rdfs12> ;
+	rdf:rest _:node18l628sr5x1299 .
+
+_:node18l628sr5x1299 rdf:first <http://xsparql.deri.org#rdfs13> ;
+	rdf:rest _:node18l628sr5x1296 .
+
+_:node18l628sr5x1296 rdf:first <http://xsparql.deri.org#d-ent-01> ;
+	rdf:rest _:node18l628sr5x1297 .
+
+_:node18l628sr5x1297 rdf:first <http://xsparql.deri.org#owlds01> ;
+	rdf:rest _:node18l628sr5x1295 .
+
+_:node18l628sr5x1295 rdf:first <http://xsparql.deri.org#owlds02> ;
+	rdf:rest _:node18l628sr5x1279 .
+
+_:node18l628sr5x1279 rdf:first <http://xsparql.deri.org#plainLit> ;
+	rdf:rest _:node18l628sr5x1278 .
+
+_:node18l628sr5x1278 rdf:first <http://xsparql.deri.org#bind01> ;
+	rdf:rest _:node18l628sr5x1290 .
+
+_:node18l628sr5x1290 rdf:first <http://xsparql.deri.org#bind02> ;
+	rdf:rest _:node18l628sr5x1291 .
+
+_:node18l628sr5x1291 rdf:first <http://xsparql.deri.org#bind03> ;
+	rdf:rest _:node18l628sr5x1292 .
+
+_:node18l628sr5x1292 rdf:first <http://xsparql.deri.org#bind04> ;
+	rdf:rest _:node18l628sr5x1293 .
+
+_:node18l628sr5x1293 rdf:first <http://xsparql.deri.org#bind05> ;
+	rdf:rest _:node18l628sr5x1287 .
+
+_:node18l628sr5x1287 rdf:first <http://xsparql.deri.org#bind06> ;
+	rdf:rest _:node18l628sr5x1288 .
+
+_:node18l628sr5x1288 rdf:first <http://xsparql.deri.org#bind07> ;
+	rdf:rest _:node18l628sr5x1289 .
+
+_:node18l628sr5x1289 rdf:first <http://xsparql.deri.org#bind08> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg-sparql-1.1/entailment/> mf:entries _:node18l628sr5x1304 .

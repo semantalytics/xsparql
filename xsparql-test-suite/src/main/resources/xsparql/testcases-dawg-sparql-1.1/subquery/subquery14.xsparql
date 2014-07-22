@@ -1,0 +1,17 @@
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+construct {
+   $person a foaf:person ;
+           foaf:name $name ;
+           foaf:homepage $homepage ;
+           foaf:mbox $mbox .
+} where {
+  {
+    select $person $name where {
+       $person a foaf:person ;
+               foaf:name $name .
+      } order by $name limit 3
+  }
+  $person foaf:homepage $homepage .
+  optional { $person foaf:mbox $mbox . }        
+}
+

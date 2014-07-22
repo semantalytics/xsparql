@@ -1,0 +1,16 @@
+prefix     :    <http://example/>
+prefix  xsd:    <http://www.w3.org/2001/xmlschema#>
+
+<results>
+{for $x $date
+from <src/main/resources/xsparql/testcases-dawg/data-r2/open-world/data-3.ttl> where{
+    $x :s $date .
+    filter ( datatype($date) = xsd:date )
+}
+
+return 
+ <result>
+	<binding name="date">{$date}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

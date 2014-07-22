@@ -1,0 +1,15 @@
+prefix  rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix :   <http://example/> 
+<results>
+{for $x $y
+from <src/main/resources/xsparql/testcases-sparql-1.1/property-paths/data-04.ttl> where 
+{
+    $x (:p1/:p2/:p3)+ $y
+}
+
+return 
+ <result>
+	<binding name="y">{$y}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

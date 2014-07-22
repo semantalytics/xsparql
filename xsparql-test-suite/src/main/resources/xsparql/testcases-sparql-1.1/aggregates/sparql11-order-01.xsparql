@@ -1,0 +1,11 @@
+<results>
+{for (count($subj) as $count) $type
+from <src/main/resources/xsparql/testcases-sparql-1.1/aggregates/data-03.ttl> where { $subj a $type } 
+group by $type 
+order by $count
+return 
+ <result>
+	<binding name="count">{$count}</binding>
+	<binding name="type">{$type}</binding>
+</result>}
+</results>

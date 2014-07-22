@@ -1,0 +1,12 @@
+prefix ex:      <http://example.org/things#> 
+
+<results>
+{for $address
+from <src/main/resources/xsparql/testcases-dawg/data-r2/sort/data-sort-6.ttl> where { $x ex:address $address }
+order by asc($address)
+
+return 
+ <result>
+	<binding name="address">{$address}</binding>
+</result>}
+</results>

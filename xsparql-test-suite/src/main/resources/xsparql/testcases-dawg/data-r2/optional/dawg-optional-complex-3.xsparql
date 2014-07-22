@@ -1,0 +1,26 @@
+prefix  foaf:   <http://xmlns.com/foaf/0.1/>
+prefix    ex:   <http://example.org/things#>
+<results>
+{for $name $nick $plan $dept
+from <src/main/resources/xsparql/testcases-dawg/data-r2/optional/complex-data-2.ttl> where 
+{ 
+    $person 
+        a foaf:person;
+        foaf:name $name . 
+    graph $x { 
+        [] foaf:name $name;
+           foaf:nick $nick
+    } 
+    optional { 
+        $person ex:healthplan $plan 
+        optional { $person ex:department $dept } 
+    } 
+}
+return 
+ <result>
+	<binding name="plan">{$plan}</binding>
+	<binding name="nick">{$nick}</binding>
+	<binding name="name">{$name}</binding>
+	<binding name="dept">{$dept}</binding>
+</result>}
+</results>

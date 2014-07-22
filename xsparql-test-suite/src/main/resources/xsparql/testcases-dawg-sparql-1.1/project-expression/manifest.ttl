@@ -1,0 +1,92 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/project-expression/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#projexp01> <http://xsparql.deri.org#derivedFrom> :projexp01 ;
+	mf:name "Expression is equality" ;
+	mf:result <projexp01.srx> .
+
+_:node18l628sr5x1393 qt:data <projexp01.ttl> ;
+	qt:query <projexp01.xsparql> .
+
+<http://xsparql.deri.org#projexp01> mf:action _:node18l628sr5x1393 .
+
+<http://xsparql.deri.org#projexp02> <http://xsparql.deri.org#derivedFrom> :projexp02 ;
+	mf:name "Expression raise an error" ;
+	mf:result <projexp02.srx> .
+
+_:node18l628sr5x1394 qt:data <projexp02.ttl> ;
+	qt:query <projexp02.xsparql> .
+
+<http://xsparql.deri.org#projexp02> mf:action _:node18l628sr5x1394 .
+
+<http://xsparql.deri.org#projexp03> <http://xsparql.deri.org#derivedFrom> :projexp03 ;
+	mf:name "Reuse a project expression variable in select" ;
+	mf:result <projexp03.srx> .
+
+_:node18l628sr5x1395 qt:data <projexp03.ttl> ;
+	qt:query <projexp03.xsparql> .
+
+<http://xsparql.deri.org#projexp03> mf:action _:node18l628sr5x1395 .
+
+<http://xsparql.deri.org#projexp04> <http://xsparql.deri.org#derivedFrom> :projexp04 ;
+	mf:name "Reuse a project expression variable in order by" ;
+	mf:result <projexp04.srx> .
+
+_:node18l628sr5x1396 qt:data <projexp04.ttl> ;
+	qt:query <projexp04.xsparql> .
+
+<http://xsparql.deri.org#projexp04> mf:action _:node18l628sr5x1396 .
+
+<http://xsparql.deri.org#projexp05> <http://xsparql.deri.org#derivedFrom> :projexp05 ;
+	mf:name "Expression may return no value" ;
+	mf:result <projexp05.srx> .
+
+_:node18l628sr5x1397 qt:data <projexp05.ttl> ;
+	qt:query <projexp05.xsparql> .
+
+<http://xsparql.deri.org#projexp05> mf:action _:node18l628sr5x1397 .
+
+<http://xsparql.deri.org#projexp06> <http://xsparql.deri.org#derivedFrom> :projexp06 ;
+	mf:name "Expression has undefined variable" ;
+	mf:result <projexp06.srx> .
+
+_:node18l628sr5x1398 qt:data <projexp06.ttl> ;
+	qt:query <projexp06.xsparql> .
+
+<http://xsparql.deri.org#projexp06> mf:action _:node18l628sr5x1398 .
+
+<http://xsparql.deri.org#projexp07> <http://xsparql.deri.org#derivedFrom> :projexp07 ;
+	mf:name "Expression has variable that may be unbound" ;
+	mf:result <projexp07.srx> .
+
+_:node18l628sr5x1399 qt:data <projexp07.ttl> ;
+	qt:query <projexp07.xsparql> .
+
+<http://xsparql.deri.org#projexp07> mf:action _:node18l628sr5x1399 .
+
+_:node18l628sr5x1400 rdf:first <http://xsparql.deri.org#projexp01> ;
+	rdf:rest _:node18l628sr5x1401 .
+
+_:node18l628sr5x1401 rdf:first <http://xsparql.deri.org#projexp02> ;
+	rdf:rest _:node18l628sr5x1402 .
+
+_:node18l628sr5x1402 rdf:first <http://xsparql.deri.org#projexp03> ;
+	rdf:rest _:node18l628sr5x1403 .
+
+_:node18l628sr5x1403 rdf:first <http://xsparql.deri.org#projexp04> ;
+	rdf:rest _:node18l628sr5x1404 .
+
+_:node18l628sr5x1404 rdf:first <http://xsparql.deri.org#projexp05> ;
+	rdf:rest _:node18l628sr5x1405 .
+
+_:node18l628sr5x1405 rdf:first <http://xsparql.deri.org#projexp06> ;
+	rdf:rest _:node18l628sr5x1406 .
+
+_:node18l628sr5x1406 rdf:first <http://xsparql.deri.org#projexp07> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg-sparql-1.1/project-expression/> mf:entries _:node18l628sr5x1400 .

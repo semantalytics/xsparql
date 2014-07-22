@@ -1,0 +1,14 @@
+prefix     :  <http://example.org/x/>
+prefix  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+
+<results>
+{for $x $c
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/entailment/rdfs05.ttl> where { $x rdf:type $c . $c rdfs:subclassof :d }
+
+return 
+ <result>
+	<binding name="c">{$c}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

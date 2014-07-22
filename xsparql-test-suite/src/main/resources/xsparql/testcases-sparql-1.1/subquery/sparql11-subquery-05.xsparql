@@ -1,0 +1,19 @@
+<results>
+{for * 
+from <src/main/resources/xsparql/testcases-sparql-1.1/subquery/data-04.ttl> where { 
+    {
+	  select $s 
+	  where {$s $p $o}
+	  limit 1 
+    }
+    {$s $p $o} 
+    union 
+    {} 
+}
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="p">{$p}</binding>
+	<binding name="o">{$o}</binding>
+</result>}
+</results>

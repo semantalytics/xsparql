@@ -1,0 +1,6 @@
+prefix lastfm: <http://xsparql.deri.org/lastfm#>
+
+for artist as $artist, rank as $rank
+from topArtists
+where topArtists.rank < 6
+construct { [] lastfm:topArtist $artist; lastfm:artistRank $rank . }

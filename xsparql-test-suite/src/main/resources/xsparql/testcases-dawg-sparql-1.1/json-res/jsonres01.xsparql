@@ -1,0 +1,11 @@
+prefix : <http://example.org/>
+
+<results>
+{for * from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/json-res/data.ttl> where { $s $p $o} order by $s $p $o
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="p">{$p}</binding>
+	<binding name="o">{$o}</binding>
+</result>}
+</results>

@@ -1,0 +1,335 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/basic/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#bgp-no-match> <http://xsparql.deri.org#derivedFrom> :bgp-no-match ;
+	mf:name "Non-matching triple pattern" ;
+	mf:result <bgp-no-match.srx> ;
+	rdfs:comment "Patterns not in data don't match" .
+
+_:node18l628sr5x2167 qt:data <data-7.ttl> ;
+	qt:query <bgp-no-match.xsparql> .
+
+<http://xsparql.deri.org#bgp-no-match> mf:action _:node18l628sr5x2167 .
+
+<http://xsparql.deri.org#prefix-name-1> <http://xsparql.deri.org#derivedFrom> :prefix-name-1 ;
+	mf:name "Prefix name 1" ;
+	mf:result <prefix-name-1.srx> ;
+	rdfs:comment "No local name - foo:" .
+
+_:node18l628sr5x2168 qt:data <data-6.ttl> ;
+	qt:query <prefix-name-1.xsparql> .
+
+<http://xsparql.deri.org#prefix-name-1> mf:action _:node18l628sr5x2168 .
+
+<http://xsparql.deri.org#spoo-1> <http://xsparql.deri.org#derivedFrom> :spoo-1 ;
+	mf:name "Basic graph pattern - spoo" ;
+	mf:result <spoo-1.srx> ;
+	rdfs:comment "Test the :x :y :o1, :o2 construct" .
+
+_:node18l628sr5x2169 qt:data <data-6.ttl> ;
+	qt:query <spoo-1.xsparql> .
+
+<http://xsparql.deri.org#spoo-1> mf:action _:node18l628sr5x2169 .
+
+<http://xsparql.deri.org#base-prefix-1> <http://xsparql.deri.org#derivedFrom> :base-prefix-1 ;
+	mf:name "Basic - Prefix/Base 1" ;
+	mf:result <base-prefix-1.srx> .
+
+_:node18l628sr5x2170 qt:data <data-1.ttl> ;
+	qt:query <base-prefix-1.xsparql> .
+
+<http://xsparql.deri.org#base-prefix-1> mf:action _:node18l628sr5x2170 .
+
+<http://xsparql.deri.org#base-prefix-2> <http://xsparql.deri.org#derivedFrom> :base-prefix-2 ;
+	mf:name "Basic - Prefix/Base 2" ;
+	mf:result <base-prefix-2.srx> .
+
+_:node18l628sr5x2171 qt:data <data-1.ttl> ;
+	qt:query <base-prefix-2.xsparql> .
+
+<http://xsparql.deri.org#base-prefix-2> mf:action _:node18l628sr5x2171 .
+
+<http://xsparql.deri.org#base-prefix-3> <http://xsparql.deri.org#derivedFrom> :base-prefix-3 ;
+	mf:name "Basic - Prefix/Base 3" ;
+	mf:result <base-prefix-3.srx> .
+
+_:node18l628sr5x2172 qt:data <data-1.ttl> ;
+	qt:query <base-prefix-3.xsparql> .
+
+<http://xsparql.deri.org#base-prefix-3> mf:action _:node18l628sr5x2172 .
+
+<http://xsparql.deri.org#base-prefix-4> <http://xsparql.deri.org#derivedFrom> :base-prefix-4 ;
+	mf:name "Basic - Prefix/Base 4" ;
+	mf:result <base-prefix-4.srx> .
+
+_:node18l628sr5x2173 qt:data <data-1.ttl> ;
+	qt:query <base-prefix-4.xsparql> .
+
+<http://xsparql.deri.org#base-prefix-4> mf:action _:node18l628sr5x2173 .
+
+<http://xsparql.deri.org#base-prefix-5> <http://xsparql.deri.org#derivedFrom> :base-prefix-5 ;
+	mf:name "Basic - Prefix/Base 5" ;
+	mf:result <base-prefix-5.srx> .
+
+_:node18l628sr5x2174 qt:data <data-1.ttl> ;
+	qt:query <base-prefix-5.xsparql> .
+
+<http://xsparql.deri.org#base-prefix-5> mf:action _:node18l628sr5x2174 .
+
+<http://xsparql.deri.org#list-1> <http://xsparql.deri.org#derivedFrom> :list-1 ;
+	mf:name "Basic - List 1" ;
+	mf:result <list-1.srx> .
+
+_:node18l628sr5x2175 qt:data <data-2.ttl> ;
+	qt:query <list-1.xsparql> .
+
+<http://xsparql.deri.org#list-1> mf:action _:node18l628sr5x2175 .
+
+<http://xsparql.deri.org#list-2> <http://xsparql.deri.org#derivedFrom> :list-2 ;
+	mf:name "Basic - List 2" ;
+	mf:result <list-2.srx> .
+
+_:node18l628sr5x2176 qt:data <data-2.ttl> ;
+	qt:query <list-2.xsparql> .
+
+<http://xsparql.deri.org#list-2> mf:action _:node18l628sr5x2176 .
+
+<http://xsparql.deri.org#list-3> <http://xsparql.deri.org#derivedFrom> :list-3 ;
+	mf:name "Basic - List 3" ;
+	mf:result <list-3.srx> .
+
+_:node18l628sr5x2177 qt:data <data-2.ttl> ;
+	qt:query <list-3.xsparql> .
+
+<http://xsparql.deri.org#list-3> mf:action _:node18l628sr5x2177 .
+
+<http://xsparql.deri.org#list-4> <http://xsparql.deri.org#derivedFrom> :list-4 ;
+	mf:name "Basic - List 4" ;
+	mf:result <list-4.srx> .
+
+_:node18l628sr5x2178 qt:data <data-2.ttl> ;
+	qt:query <list-4.xsparql> .
+
+<http://xsparql.deri.org#list-4> mf:action _:node18l628sr5x2178 .
+
+<http://xsparql.deri.org#quotes-1> <http://xsparql.deri.org#derivedFrom> :quotes-1 ;
+	mf:name "Basic - Quotes 1" ;
+	mf:result <quotes-1.srx> .
+
+_:node18l628sr5x2179 qt:data <data-3.ttl> ;
+	qt:query <quotes-1.xsparql> .
+
+<http://xsparql.deri.org#quotes-1> mf:action _:node18l628sr5x2179 .
+
+<http://xsparql.deri.org#quotes-2> <http://xsparql.deri.org#derivedFrom> :quotes-2 ;
+	mf:name "Basic - Quotes 2" ;
+	mf:result <quotes-2.srx> .
+
+_:node18l628sr5x2180 qt:data <data-3.ttl> ;
+	qt:query <quotes-2.xsparql> .
+
+<http://xsparql.deri.org#quotes-2> mf:action _:node18l628sr5x2180 .
+
+<http://xsparql.deri.org#quotes-3> <http://xsparql.deri.org#derivedFrom> :quotes-3 ;
+	mf:name "Basic - Quotes 3" ;
+	mf:result <quotes-3.srx> .
+
+_:node18l628sr5x2181 qt:data <data-3.ttl> ;
+	qt:query <quotes-3.xsparql> .
+
+<http://xsparql.deri.org#quotes-3> mf:action _:node18l628sr5x2181 .
+
+<http://xsparql.deri.org#quotes-4> <http://xsparql.deri.org#derivedFrom> :quotes-4 ;
+	mf:name "Basic - Quotes 4" ;
+	mf:result <quotes-4.srx> .
+
+_:node18l628sr5x2182 qt:data <data-3.ttl> ;
+	qt:query <quotes-4.xsparql> .
+
+<http://xsparql.deri.org#quotes-4> mf:action _:node18l628sr5x2182 .
+
+<http://xsparql.deri.org#term-1> <http://xsparql.deri.org#derivedFrom> :term-1 ;
+	mf:name "Basic - Term 1" ;
+	mf:result <term-1.srx> .
+
+_:node18l628sr5x2183 qt:data <data-4.ttl> ;
+	qt:query <term-1.xsparql> .
+
+<http://xsparql.deri.org#term-1> mf:action _:node18l628sr5x2183 .
+
+<http://xsparql.deri.org#term-2> <http://xsparql.deri.org#derivedFrom> :term-2 ;
+	mf:name "Basic - Term 2" ;
+	mf:result <term-2.srx> .
+
+_:node18l628sr5x2184 qt:data <data-4.ttl> ;
+	qt:query <term-2.xsparql> .
+
+<http://xsparql.deri.org#term-2> mf:action _:node18l628sr5x2184 .
+
+<http://xsparql.deri.org#term-3> <http://xsparql.deri.org#derivedFrom> :term-3 ;
+	mf:name "Basic - Term 3" ;
+	mf:result <term-3.srx> .
+
+_:node18l628sr5x2185 qt:data <data-4.ttl> ;
+	qt:query <term-3.xsparql> .
+
+<http://xsparql.deri.org#term-3> mf:action _:node18l628sr5x2185 .
+
+<http://xsparql.deri.org#term-4> <http://xsparql.deri.org#derivedFrom> :term-4 ;
+	mf:name "Basic - Term 4" ;
+	mf:result <term-4.srx> .
+
+_:node18l628sr5x2186 qt:data <data-4.ttl> ;
+	qt:query <term-4.xsparql> .
+
+<http://xsparql.deri.org#term-4> mf:action _:node18l628sr5x2186 .
+
+<http://xsparql.deri.org#term-5> <http://xsparql.deri.org#derivedFrom> :term-5 ;
+	mf:name "Basic - Term 5" ;
+	mf:result <term-5.srx> .
+
+_:node18l628sr5x2187 qt:data <data-4.ttl> ;
+	qt:query <term-5.xsparql> .
+
+<http://xsparql.deri.org#term-5> mf:action _:node18l628sr5x2187 .
+
+<http://xsparql.deri.org#term-6> <http://xsparql.deri.org#derivedFrom> :term-6 ;
+	mf:name "Basic - Term 6" ;
+	mf:result <term-6.srx> .
+
+_:node18l628sr5x2188 qt:data <data-4.ttl> ;
+	qt:query <term-6.xsparql> .
+
+<http://xsparql.deri.org#term-6> mf:action _:node18l628sr5x2188 .
+
+<http://xsparql.deri.org#term-7> <http://xsparql.deri.org#derivedFrom> :term-7 ;
+	mf:name "Basic - Term 7" ;
+	mf:result <term-7.srx> .
+
+_:node18l628sr5x2189 qt:data <data-4.ttl> ;
+	qt:query <term-7.xsparql> .
+
+<http://xsparql.deri.org#term-7> mf:action _:node18l628sr5x2189 .
+
+<http://xsparql.deri.org#term-8> <http://xsparql.deri.org#derivedFrom> :term-8 ;
+	mf:name "Basic - Term 8" ;
+	mf:result <term-8.srx> .
+
+_:node18l628sr5x2190 qt:data <data-4.ttl> ;
+	qt:query <term-8.xsparql> .
+
+<http://xsparql.deri.org#term-8> mf:action _:node18l628sr5x2190 .
+
+<http://xsparql.deri.org#term-9> <http://xsparql.deri.org#derivedFrom> :term-9 ;
+	mf:name "Basic - Term 9" ;
+	mf:result <term-9.srx> .
+
+_:node18l628sr5x2191 qt:data <data-4.ttl> ;
+	qt:query <term-9.xsparql> .
+
+<http://xsparql.deri.org#term-9> mf:action _:node18l628sr5x2191 .
+
+<http://xsparql.deri.org#var-1> <http://xsparql.deri.org#derivedFrom> :var-1 ;
+	mf:name "Basic - Var 1" ;
+	mf:result <var-1.srx> .
+
+_:node18l628sr5x2192 qt:data <data-5.ttl> ;
+	qt:query <var-1.xsparql> .
+
+<http://xsparql.deri.org#var-1> mf:action _:node18l628sr5x2192 .
+
+<http://xsparql.deri.org#var-2> <http://xsparql.deri.org#derivedFrom> :var-2 ;
+	mf:name "Basic - Var 2" ;
+	mf:result <var-2.srx> .
+
+_:node18l628sr5x2193 qt:data <data-5.ttl> ;
+	qt:query <var-2.xsparql> .
+
+<http://xsparql.deri.org#var-2> mf:action _:node18l628sr5x2193 .
+
+_:node18l628sr5x2220 rdf:first <http://xsparql.deri.org#bgp-no-match> ;
+	rdf:rest _:node18l628sr5x2198 .
+
+_:node18l628sr5x2198 rdf:first <http://xsparql.deri.org#prefix-name-1> ;
+	rdf:rest _:node18l628sr5x2199 .
+
+_:node18l628sr5x2199 rdf:first <http://xsparql.deri.org#spoo-1> ;
+	rdf:rest _:node18l628sr5x2200 .
+
+_:node18l628sr5x2200 rdf:first <http://xsparql.deri.org#base-prefix-1> ;
+	rdf:rest _:node18l628sr5x2201 .
+
+_:node18l628sr5x2201 rdf:first <http://xsparql.deri.org#base-prefix-2> ;
+	rdf:rest _:node18l628sr5x2202 .
+
+_:node18l628sr5x2202 rdf:first <http://xsparql.deri.org#base-prefix-3> ;
+	rdf:rest _:node18l628sr5x2203 .
+
+_:node18l628sr5x2203 rdf:first <http://xsparql.deri.org#base-prefix-4> ;
+	rdf:rest _:node18l628sr5x2204 .
+
+_:node18l628sr5x2204 rdf:first <http://xsparql.deri.org#base-prefix-5> ;
+	rdf:rest _:node18l628sr5x2194 .
+
+_:node18l628sr5x2194 rdf:first <http://xsparql.deri.org#list-1> ;
+	rdf:rest _:node18l628sr5x2195 .
+
+_:node18l628sr5x2195 rdf:first <http://xsparql.deri.org#list-2> ;
+	rdf:rest _:node18l628sr5x2210 .
+
+_:node18l628sr5x2210 rdf:first <http://xsparql.deri.org#list-3> ;
+	rdf:rest _:node18l628sr5x2218 .
+
+_:node18l628sr5x2218 rdf:first <http://xsparql.deri.org#list-4> ;
+	rdf:rest _:node18l628sr5x2219 .
+
+_:node18l628sr5x2219 rdf:first <http://xsparql.deri.org#quotes-1> ;
+	rdf:rest _:node18l628sr5x2216 .
+
+_:node18l628sr5x2216 rdf:first <http://xsparql.deri.org#quotes-2> ;
+	rdf:rest _:node18l628sr5x2217 .
+
+_:node18l628sr5x2217 rdf:first <http://xsparql.deri.org#quotes-3> ;
+	rdf:rest _:node18l628sr5x2214 .
+
+_:node18l628sr5x2214 rdf:first <http://xsparql.deri.org#quotes-4> ;
+	rdf:rest _:node18l628sr5x2215 .
+
+_:node18l628sr5x2215 rdf:first <http://xsparql.deri.org#term-1> ;
+	rdf:rest _:node18l628sr5x2212 .
+
+_:node18l628sr5x2212 rdf:first <http://xsparql.deri.org#term-2> ;
+	rdf:rest _:node18l628sr5x2213 .
+
+_:node18l628sr5x2213 rdf:first <http://xsparql.deri.org#term-3> ;
+	rdf:rest _:node18l628sr5x2211 .
+
+_:node18l628sr5x2211 rdf:first <http://xsparql.deri.org#term-4> ;
+	rdf:rest _:node18l628sr5x2197 .
+
+_:node18l628sr5x2197 rdf:first <http://xsparql.deri.org#term-5> ;
+	rdf:rest _:node18l628sr5x2196 .
+
+_:node18l628sr5x2196 rdf:first <http://xsparql.deri.org#term-6> ;
+	rdf:rest _:node18l628sr5x2206 .
+
+_:node18l628sr5x2206 rdf:first <http://xsparql.deri.org#term-7> ;
+	rdf:rest _:node18l628sr5x2207 .
+
+_:node18l628sr5x2207 rdf:first <http://xsparql.deri.org#term-8> ;
+	rdf:rest _:node18l628sr5x2208 .
+
+_:node18l628sr5x2208 rdf:first <http://xsparql.deri.org#term-9> ;
+	rdf:rest _:node18l628sr5x2209 .
+
+_:node18l628sr5x2209 rdf:first <http://xsparql.deri.org#var-1> ;
+	rdf:rest _:node18l628sr5x2205 .
+
+_:node18l628sr5x2205 rdf:first <http://xsparql.deri.org#var-2> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/basic/> mf:entries _:node18l628sr5x2220 .

@@ -1,0 +1,17 @@
+prefix :        <http://example/>
+prefix xsd:     <http://www.w3.org/2001/xmlschema#>
+
+<results>
+{for $X (sample($v) as $S)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/grouping/group-data-1.ttl> where{
+  $s :p $v .
+  optional { $s :q $w }
+}
+group by (coalesce($w, "1605-11-05"^^xsd:date) as $X) 
+
+return 
+ <result>
+	<binding name="S">{$S}</binding>
+	<binding name="X">{$X}</binding>
+</result>}
+</results>

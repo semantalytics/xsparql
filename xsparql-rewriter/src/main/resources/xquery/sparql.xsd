@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) 2011, NUI Galway.
+  Copyright (C) 2014, NUI Galway, WU Wien, Politecnico di Milano, 
+  Vienna University of Technology
+  All rights reserved.
+ 
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * The names of the COPYRIGHT HOLDERS AND CONTRIBUTORS may not be used
+      to endorse or promote products derived from this software without
+      specific prior written permission.
+ 
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
+  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  OF SUCH DAMAGE.
+ 
+  Created on 09 February 2011 by Reasoning and Querying Unit (URQ), 
+  Digital Enterprise Research Institute (DERI) on behalf of NUI Galway.
+  20 May 2014 by Axel Polleres on behalf of WU Wien, Daniele Dell'Aglio 
+  on behalf of Politecnico di Milano, Stefan Bischof on behalf of Vienna 
+  University of Technology,  Nuno Lopes on behalf of NUI Galway.
+ 
+-->
+<!--
+  
+  RELAX NG Schema for SPARQL Query Results XML Format
+  
+  This XML schema is normative.
+  $Id: result.xsd,v 1.1 2007/10/17 14:48:47 eric Exp $
+  
+  
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/2005/sparql-results#" xmlns:res="http://www.w3.org/2005/sparql-results#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+  <xs:attributeGroup name="xmlLang">
+    <xs:attribute ref="xml:lang" use="required"/>
+  </xs:attributeGroup>
+  <!--
+    Using xsi namespaced terms such as xsi:schemaLocation
+    is tricky. as Relax requires them to be given when used.  However,
+    WXS has this knowledge built in and validators complain when they
+    are explicitly listed without a schemaLocation (which is forbidden by
+    the WXS spec)..
+  -->
+  <xs:element name="sparql">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="res:head"/>
+        <xs:choice>
+          <xs:element ref="res:results"/>
+          <xs:element ref="res:boolean"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="head">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="res:variable"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="res:link"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="variable">
+    <xs:complexType>
+      <xs:attributeGroup ref="res:nameAttr"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="nameAttr">
+    <xs:attribute name="name" use="required" type="xs:NMTOKEN"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="hrefAttr">
+    <xs:attribute name="href" use="required" type="res:URI-reference"/>
+  </xs:attributeGroup>
+  <xs:element name="link">
+    <xs:complexType>
+      <xs:attributeGroup ref="res:hrefAttr"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="results">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="res:result"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- ASK -->
+  <xs:element name="boolean" type="xs:boolean"/>
+  <!-- SELECT solution, single match or row -->
+  <xs:element name="result">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="res:binding"/>
+      </xs:sequence>
+      <xs:attribute name="index" type="xs:positiveInteger"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- SELECT binding in a solution -->
+  <xs:element name="binding">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="res:uri"/>
+        <xs:element ref="res:bnode"/>
+        <xs:element ref="res:literal"/>
+      </xs:choice>
+      <xs:attributeGroup ref="res:nameAttr"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="uri" type="xs:string"/>
+  <xs:element name="bnode" type="xs:string"/>
+  <xs:element name="literal">
+    <xs:complexType mixed="true">
+      <xs:attribute name="datatype" type="res:URI-reference"/>
+      <xs:attribute ref="xml:lang"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="indexAttr">
+    <xs:attribute name="index" use="required" type="xs:positiveInteger"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="datatypeAttr">
+    <xs:attribute name="datatype" use="required" type="res:URI-reference"/>
+  </xs:attributeGroup>
+  <xs:simpleType name="URI-reference">
+    <xs:restriction base="xs:anyURI"/>
+  </xs:simpleType>
+</xs:schema>

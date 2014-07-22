@@ -1,0 +1,12 @@
+prefix : <http://example.org/>
+<results>
+{for (concat($str1,$str2) as $str) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {
+	:s6 :str $str1 .
+	:s7 :str $str2 .
+}
+
+return 
+ <result>
+	<binding name="str">{$str}</binding>
+</result>}
+</results>

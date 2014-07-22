@@ -1,0 +1,11 @@
+prefix : <http://example/> 
+
+<results>
+{for $v
+from <src/main/resources/xsparql/testcases-dawg/data-r2/algebra/data-1.ttl> where{ :x :p $v . { filter($v = 1) } }
+
+return 
+ <result>
+	<binding name="v">{$v}</binding>
+</result>}
+</results>

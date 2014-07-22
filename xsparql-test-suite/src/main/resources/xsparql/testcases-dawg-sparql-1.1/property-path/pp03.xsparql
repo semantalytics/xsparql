@@ -1,0 +1,12 @@
+prefix ex:	<http://www.example.org/schema#>
+prefix in:	<http://www.example.org/instance#>
+
+<results>
+{for * from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/property-path/pp03.ttl> where {
+in:a ex:p1/ex:p2/ex:p3/ex:p4 $x
+}
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

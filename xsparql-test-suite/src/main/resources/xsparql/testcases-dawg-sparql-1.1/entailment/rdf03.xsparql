@@ -1,0 +1,13 @@
+prefix ex: <http://example.org/ns#>
+<results>
+{for $x
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/entailment/rdf03.ttl> where {
+  $x ex:b1 _:c .
+}
+
+
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

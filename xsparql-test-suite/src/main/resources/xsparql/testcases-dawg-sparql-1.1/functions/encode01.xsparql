@@ -1,0 +1,14 @@
+prefix : <http://example.org/>
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+<results>
+{for $s $str (encode_for_uri($str) as $encoded) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {
+	$s :str $str
+}
+
+return 
+ <result>
+	<binding name="str">{$str}</binding>
+	<binding name="s">{$s}</binding>
+	<binding name="encoded">{$encoded}</binding>
+</result>}
+</results>

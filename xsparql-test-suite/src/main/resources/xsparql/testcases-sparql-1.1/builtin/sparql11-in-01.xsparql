@@ -1,0 +1,17 @@
+prefix  dc:  <http://purl.org/dc/elements/1.1/>
+prefix xsd: <http://www.w3.org/2001/xmlschema#> 
+prefix  :  <http://example.org/>
+<results>
+{for  $book $discount
+ from <src/main/resources/xsparql/testcases-sparql-1.1/builtin/data-01.ttl> where {
+   	$book a :book ;
+   		  :discount $discount .
+   	filter(str($discount) in ("no discount", "50", "42"))
+}
+
+return 
+ <result>
+	<binding name="book">{$book}</binding>
+	<binding name="discount">{$discount}</binding>
+</result>}
+</results>

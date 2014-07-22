@@ -1,0 +1,23 @@
+prefix : <http://example.org/>
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+<results>
+{for
+	(coalesce($x, -1) as $cx)     # error when $x is unbound -> -1
+	(coalesce($o/$x, -2) as $div) # error when $x is unbound or zero -> -2
+	(coalesce($z, -3) as $def)    # always unbound -> -3
+	(coalesce($z) as $err)        # always an error -> unbound
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data-coalesce.ttl> where {
+	$s :p $o .
+	optional {
+		$s :q $x
+	}
+}
+
+return 
+ <result>
+	<binding name="def">{$def}</binding>
+	<binding name="err">{$err}</binding>
+	<binding name="div">{$div}</binding>
+	<binding name="cx">{$cx}</binding>
+</result>}
+</results>

@@ -1,0 +1,19 @@
+# sparql filter test by value.
+# only one valus is known to be "a"^^t:type1
+# (others maybe but the processor does not positively know this)
+
+prefix  :       <http://example/ns#>
+prefix  t:      <http://example/t#>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/open-world/data-1.ttl> where{ $x :p $v 
+  filter ( $v = "a"^^t:type1 )
+}
+
+return 
+ <result>
+	<binding name="v">{$v}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

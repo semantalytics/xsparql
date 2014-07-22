@@ -1,0 +1,33 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/syntax-sparql1/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#sparql11-bindings-01> <http://xsparql.deri.org#derivedFrom> :sparql11-bindings-01 ;
+	mf:name "SPARQL 1.1 BINDINGS 01" ;
+	mf:result <sparql11-bindings-01.srx> .
+
+_:node18l628sr5x1511 qt:data <data-01.ttl> ;
+	qt:query <sparql11-bindings-01.xsparql> .
+
+<http://xsparql.deri.org#sparql11-bindings-01> mf:action _:node18l628sr5x1511 .
+
+<http://xsparql.deri.org#sparql11-bindings-02> <http://xsparql.deri.org#derivedFrom> :sparql11-bindings-02 ;
+	mf:name "SPARQL 1.1 BINDINGS 02" ;
+	mf:result <sparql11-bindings-02.srx> .
+
+_:node18l628sr5x1512 qt:data <data-01.ttl> ;
+	qt:query <sparql11-bindings-02.xsparql> .
+
+<http://xsparql.deri.org#sparql11-bindings-02> mf:action _:node18l628sr5x1512 .
+
+_:node18l628sr5x1513 rdf:first <http://xsparql.deri.org#sparql11-bindings-01> ;
+	rdf:rest _:node18l628sr5x1514 .
+
+_:node18l628sr5x1514 rdf:first <http://xsparql.deri.org#sparql11-bindings-02> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-sparql-1.1/bindings/> mf:entries _:node18l628sr5x1513 .

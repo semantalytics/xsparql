@@ -1,0 +1,15 @@
+prefix :         <http://example/> 
+prefix xsd:      <http://www.w3.org/2001/xmlschema#> 
+<results>
+{for reduced * 
+from <src/main/resources/xsparql/testcases-dawg/data-r2/reduced/reduced-star.ttl> where { 
+  { $s :p $o } union { $s :q $o }
+}
+
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="o">{$o}</binding>
+</result>}
+</results>

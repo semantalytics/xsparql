@@ -1,0 +1,144 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/graph/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#dawg-graph-04> <http://xsparql.deri.org#derivedFrom> :dawg-graph-04 ;
+	mf:name "graph-04" ;
+	mf:result <graph-04.ttl> ;
+	rdfs:comment "Data: named graph / Query: default graph" .
+
+_:node18l628sr5x2824 qt:data <data-g1.ttl> ;
+	qt:query <dawg-graph-04.xsparql> .
+
+<http://xsparql.deri.org#dawg-graph-04> mf:action _:node18l628sr5x2824 .
+
+<http://xsparql.deri.org#dawg-graph-05> <http://xsparql.deri.org#derivedFrom> :dawg-graph-05 ;
+	mf:name "graph-05" ;
+	mf:result <graph-05.ttl> ;
+	rdfs:comment "Data: default and named / Query: default graph" .
+
+_:node18l628sr5x2825 qt:data <data-g1.ttl> ;
+	qt:query <dawg-graph-05.xsparql> .
+
+<http://xsparql.deri.org#dawg-graph-05> mf:action _:node18l628sr5x2825 .
+
+<http://xsparql.deri.org#dawg-graph-06> <http://xsparql.deri.org#derivedFrom> :dawg-graph-06 ;
+	mf:name "graph-06" ;
+	mf:result <graph-06.ttl> ;
+	rdfs:comment "Data: default and named / Query: named graph" .
+
+_:node18l628sr5x2826 qt:data <data-g1.ttl> ;
+	qt:query <dawg-graph-06.xsparql> .
+
+<http://xsparql.deri.org#dawg-graph-06> mf:action _:node18l628sr5x2826 .
+
+<http://xsparql.deri.org#dawg-graph-07> <http://xsparql.deri.org#derivedFrom> :dawg-graph-07 ;
+	mf:name "graph-07" ;
+	mf:result <graph-07.ttl> ;
+	rdfs:comment "Data: default and named / Query: all data by UNION" .
+
+_:node18l628sr5x2827 qt:data <data-g1.ttl> ;
+	qt:query <dawg-graph-07.xsparql> .
+
+<http://xsparql.deri.org#dawg-graph-07> mf:action _:node18l628sr5x2827 .
+
+<http://xsparql.deri.org#dawg-graph-08> <http://xsparql.deri.org#derivedFrom> :dawg-graph-08 ;
+	mf:name "graph-08" ;
+	mf:result <graph-08.ttl> ;
+	rdfs:comment "Data: default and named / Query: common subjects" .
+
+_:node18l628sr5x2828 qt:data <data-g1.ttl> ;
+	qt:query <dawg-graph-08.xsparql> .
+
+<http://xsparql.deri.org#dawg-graph-08> mf:action _:node18l628sr5x2828 .
+
+<http://xsparql.deri.org#dawg-graph-09> <http://xsparql.deri.org#derivedFrom> :dawg-graph-09 ;
+	mf:name "graph-09" ;
+	mf:result <graph-09.ttl> ;
+	rdfs:comment "Data: default and named (bnodes) / Query: common subjects" .
+
+_:node18l628sr5x2829 qt:data <data-g3.ttl> ;
+	qt:query <dawg-graph-09.xsparql> .
+
+<http://xsparql.deri.org#dawg-graph-09> mf:action _:node18l628sr5x2829 .
+
+<http://xsparql.deri.org#dawg-graph-10> <http://xsparql.deri.org#derivedFrom> :dawg-graph-10 ;
+	mf:name "graph-10" ;
+	mf:result <graph-10.ttl> ;
+	rdfs:comment "Data: default and named (same data, with bnodes) / Query: common subjects" .
+
+_:node18l628sr5x2830 qt:data <data-g3.ttl> ;
+	qt:query <dawg-graph-10.xsparql> .
+
+<http://xsparql.deri.org#dawg-graph-10> mf:action _:node18l628sr5x2830 .
+
+<http://xsparql.deri.org#dawg-graph-10b> <http://xsparql.deri.org#derivedFrom> :dawg-graph-10b ;
+	mf:name "graph-10b" ;
+	mf:result <graph-10.ttl> ;
+	rdfs:comment "Data: default and named (same data, with bnodes) / Query: common subjects" .
+
+_:node18l628sr5x2831 qt:data <data-g3.ttl> ;
+	qt:query <dawg-graph-10b.xsparql> .
+
+<http://xsparql.deri.org#dawg-graph-10b> mf:action _:node18l628sr5x2831 .
+
+<http://xsparql.deri.org#dawg-graph-11> <http://xsparql.deri.org#derivedFrom> :dawg-graph-11 ;
+	mf:name "graph-11" ;
+	mf:result <graph-11.ttl> ;
+	rdfs:comment "Data: default and named (several) / Query: get everything" .
+
+_:node18l628sr5x2832 qt:data <data-g1.ttl> ;
+	qt:query <dawg-graph-11.xsparql> .
+
+<http://xsparql.deri.org#dawg-graph-11> mf:action _:node18l628sr5x2832 .
+
+<http://xsparql.deri.org#dawg-graph-01> <http://xsparql.deri.org#derivedFrom> :dawg-graph-01 ;
+	mf:name "graph-01" ;
+	mf:result <graph-01.ttl> ;
+	rdfs:comment "Data: default graph / Query: default graph" .
+
+_:node18l628sr5x2833 qt:data <data-g1.ttl> ;
+	qt:query <dawg-graph-01.xsparql> .
+
+<http://xsparql.deri.org#dawg-graph-01> mf:action _:node18l628sr5x2833 .
+
+_:node18l628sr5x2835 rdf:first <http://xsparql.deri.org#dawg-graph-04> ;
+	rdf:rest _:node18l628sr5x2837 .
+
+_:node18l628sr5x2837 rdf:first <http://xsparql.deri.org#dawg-graph-05> ;
+	rdf:rest _:node18l628sr5x2838 .
+
+_:node18l628sr5x2838 rdf:first <http://xsparql.deri.org#dawg-graph-06> ;
+	rdf:rest _:node18l628sr5x2839 .
+
+_:node18l628sr5x2839 rdf:first <http://xsparql.deri.org#dawg-graph-07> ;
+	rdf:rest _:node18l628sr5x2840 .
+
+_:node18l628sr5x2840 rdf:first <http://xsparql.deri.org#dawg-graph-08> ;
+	rdf:rest _:node18l628sr5x2841 .
+
+_:node18l628sr5x2841 rdf:first <http://xsparql.deri.org#dawg-graph-09> ;
+	rdf:rest _:node18l628sr5x2842 .
+
+_:node18l628sr5x2842 rdf:first <http://xsparql.deri.org#dawg-graph-10> ;
+	rdf:rest _:node18l628sr5x2843 .
+
+_:node18l628sr5x2843 rdf:first <http://xsparql.deri.org#dawg-graph-10b> ;
+	rdf:rest _:node18l628sr5x2834 .
+
+_:node18l628sr5x2834 rdf:first <http://xsparql.deri.org#dawg-graph-11> ;
+	rdf:rest _:node18l628sr5x2836 .
+
+_:node18l628sr5x2836 rdf:first <http://xsparql.deri.org#dawg-graph-01> ;
+	rdf:rest _:node18l628sr5x2844 .
+
+_:node18l628sr5x2844 rdf:first <http://xsparql.deri.org#dawg-graph-02> ;
+	rdf:rest _:node18l628sr5x2845 .
+
+_:node18l628sr5x2845 rdf:first <http://xsparql.deri.org#dawg-graph-03> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/graph/> mf:entries _:node18l628sr5x2835 .

@@ -1,0 +1,14 @@
+prefix  foaf:   <http://xmlns.com/foaf/0.1/> 
+prefix :  <http://example/>
+<results>
+{for $p $name
+from <src/main/resources/xsparql/testcases-sparql-1.1/property-paths/data-02.ttl> where {
+    $p a foaf:person. 
+    $p !(foaf:knows|^foaf:knows)/foaf:name $name .
+}
+return 
+ <result>
+	<binding name="name">{$name}</binding>
+	<binding name="p">{$p}</binding>
+</result>}
+</results>

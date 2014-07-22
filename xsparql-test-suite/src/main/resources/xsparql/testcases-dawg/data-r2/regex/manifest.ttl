@@ -1,0 +1,60 @@
+@prefix : <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/regex/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#dawg-regex-001> <http://xsparql.deri.org#derivedFrom> :dawg-regex-001 ;
+	mf:name "regex-query-001" ;
+	mf:result <regex-result-001.ttl> ;
+	rdfs:comment "Simple unanchored match test" .
+
+_:node18l628sr5x2505 qt:data <regex-data-01.ttl> ;
+	qt:query <dawg-regex-001.xsparql> .
+
+<http://xsparql.deri.org#dawg-regex-001> mf:action _:node18l628sr5x2505 .
+
+<http://xsparql.deri.org#dawg-regex-002> <http://xsparql.deri.org#derivedFrom> :dawg-regex-002 ;
+	mf:name "regex-query-002" ;
+	mf:result <regex-result-002.ttl> ;
+	rdfs:comment "Case insensitive unanchored match test" .
+
+_:node18l628sr5x2506 qt:data <regex-data-01.ttl> ;
+	qt:query <dawg-regex-002.xsparql> .
+
+<http://xsparql.deri.org#dawg-regex-002> mf:action _:node18l628sr5x2506 .
+
+<http://xsparql.deri.org#dawg-regex-003> <http://xsparql.deri.org#derivedFrom> :dawg-regex-003 ;
+	mf:name "regex-query-003" ;
+	mf:result <regex-result-003.ttl> ;
+	rdfs:comment "Use/mention test" .
+
+_:node18l628sr5x2507 qt:data <regex-data-01.ttl> ;
+	qt:query <dawg-regex-003.xsparql> .
+
+<http://xsparql.deri.org#dawg-regex-003> mf:action _:node18l628sr5x2507 .
+
+<http://xsparql.deri.org#dawg-regex-004> <http://xsparql.deri.org#derivedFrom> :dawg-regex-004 ;
+	mf:name "regex-query-004" ;
+	mf:result <regex-result-004.ttl> ;
+	rdfs:comment "str()+URI test" .
+
+_:node18l628sr5x2508 qt:data <regex-data-01.ttl> ;
+	qt:query <dawg-regex-004.xsparql> .
+
+<http://xsparql.deri.org#dawg-regex-004> mf:action _:node18l628sr5x2508 .
+
+_:node18l628sr5x2509 rdf:first <http://xsparql.deri.org#dawg-regex-001> ;
+	rdf:rest _:node18l628sr5x2510 .
+
+_:node18l628sr5x2510 rdf:first <http://xsparql.deri.org#dawg-regex-002> ;
+	rdf:rest _:node18l628sr5x2511 .
+
+_:node18l628sr5x2511 rdf:first <http://xsparql.deri.org#dawg-regex-003> ;
+	rdf:rest _:node18l628sr5x2512 .
+
+_:node18l628sr5x2512 rdf:first <http://xsparql.deri.org#dawg-regex-004> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg/data-r2/regex/> mf:entries _:node18l628sr5x2509 .

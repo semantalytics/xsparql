@@ -1,0 +1,57 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+@prefix sparql: <http://www.w3.org/ns/sparql#> .
+
+<http://xsparql.deri.org#exists01> <http://xsparql.deri.org#derivedFrom> :exists01 ;
+	mf:name "Exists with one constant" ;
+	mf:result <exists01.srx> .
+
+_:node18l628sr5x1355 qt:data <exists01.ttl> ;
+	qt:query <exists01.xsparql> .
+
+<http://xsparql.deri.org#exists01> mf:action _:node18l628sr5x1355 .
+
+<http://xsparql.deri.org#exists02> <http://xsparql.deri.org#derivedFrom> :exists02 ;
+	mf:name "Exists with ground triple" ;
+	mf:result <exists02.srx> .
+
+_:node18l628sr5x1356 qt:data <exists01.ttl> ;
+	qt:query <exists02.xsparql> .
+
+<http://xsparql.deri.org#exists02> mf:action _:node18l628sr5x1356 .
+
+<http://xsparql.deri.org#exists04> <http://xsparql.deri.org#derivedFrom> :exists04 ;
+	mf:name "Nested positive exists" ;
+	mf:result <exists04.srx> .
+
+_:node18l628sr5x1357 qt:data <exists01.ttl> ;
+	qt:query <exists04.xsparql> .
+
+<http://xsparql.deri.org#exists04> mf:action _:node18l628sr5x1357 .
+
+<http://xsparql.deri.org#exists05> <http://xsparql.deri.org#derivedFrom> :exists05 ;
+	mf:name "Nested negative exists in positive exists" ;
+	mf:result <exists05.srx> .
+
+_:node18l628sr5x1358 qt:data <exists01.ttl> ;
+	qt:query <exists05.xsparql> .
+
+<http://xsparql.deri.org#exists05> mf:action _:node18l628sr5x1358 .
+
+_:node18l628sr5x1359 rdf:first <http://xsparql.deri.org#exists01> ;
+	rdf:rest _:node18l628sr5x1360 .
+
+_:node18l628sr5x1360 rdf:first <http://xsparql.deri.org#exists02> ;
+	rdf:rest _:node18l628sr5x1361 .
+
+_:node18l628sr5x1361 rdf:first <http://xsparql.deri.org#exists04> ;
+	rdf:rest _:node18l628sr5x1362 .
+
+_:node18l628sr5x1362 rdf:first <http://xsparql.deri.org#exists05> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg-sparql-1.1/exists/> mf:entries _:node18l628sr5x1359 .

@@ -1,0 +1,18 @@
+prefix :    <http://example/>
+
+## the nested optional example, rewritten to a form that is the same
+## for the sparql algebra and the declarative semantics.
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/algebra/two-nested-opt.ttl> where{ 
+    :x1 :p $v .
+    optional { :x3 :q $w }
+    optional { :x3 :q $w  . :x2 :p $v }
+}
+
+return 
+ <result>
+	<binding name="w">{$w}</binding>
+	<binding name="v">{$v}</binding>
+</result>}
+</results>

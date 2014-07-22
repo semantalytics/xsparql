@@ -9,12 +9,12 @@
     <version>7</version>
   </parent>
 
-  <groupId>org.deri.xsparql</groupId>
+  <groupId>org.sourceforge.xsparql</groupId>
   <artifactId>parent</artifactId>
   <name>XSPARQL parent</name>
 
   <packaging>pom</packaging>
-  <version>20121105-SNAPSHOT</version>
+  <version>20140722</version>
   <url>http://xsparql.deri.org/</url>
   <licenses>
     <license>
@@ -26,10 +26,13 @@
   <inceptionYear>2011</inceptionYear>
 
   <modules>
-    <module>rewriter</module>
-    <module>evaluator</module>
-    <module>webapp</module>
-    <module>cli</module>
+    <module>xsparql-rewriter</module>
+    <module>xsparql-webapp</module>
+    <module>xsparql-cli</module>
+    <module>xsparql-evaluator</module>
+    <module>xsparql-evaluator-sparql-arq</module>
+    <module>xsparql-evaluator-legacy</module>
+    <module>xsparql-test-suite</module>
   </modules>
 
   <organisation>
@@ -46,6 +49,9 @@
     </developer>
     <developer>
       <name>Stefan Bischof</name>
+    </developer>
+    <developer>
+      <name>Daniele Dell'Aglio</name>
     </developer>
   </developers>
   
@@ -261,17 +267,17 @@
     <dependencies>
       <dependency>
         <groupId>org.deri.xsparql</groupId>
-        <artifactId>rewriter</artifactId>
+        <artifactId>xsparql-rewriter</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.deri.xsparql</groupId>
-        <artifactId>evaluator</artifactId>
+        <artifactId>xsparql-evaluator</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.deri.xsparql</groupId>
-        <artifactId>cli</artifactId>
+        <artifactId>xsparql-cli</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -281,7 +287,7 @@
       </dependency>
       <dependency>
         <groupId>org.deri.xsparql</groupId>
-        <artifactId>osgi-consumer</artifactId>
+        <artifactId>xsparql-osgi-consumer</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -312,7 +318,7 @@
       <dependency> 
         <groupId>junit</groupId> 
         <artifactId>junit</artifactId> 
-        <version>4.8.1</version> 
+	  <version>4.11</version>
         <scope>test</scope> 
       </dependency>
     </dependencies>

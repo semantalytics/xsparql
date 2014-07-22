@@ -1,0 +1,23 @@
+# return labels of items for the first 2 orders
+
+prefix : <http://www.example.org>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+<results>
+{for $l
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/subquery/sq11.ttl> where {
+ $o :hasitem [ rdfs:label $l ] .
+ {
+ select distinct $o  
+ where { $o a :order }
+ order by $o
+ limit 2
+ }
+} order by $l
+
+
+return 
+ <result>
+	<binding name="l">{$l}</binding>
+</result>}
+</results>

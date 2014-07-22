@@ -1,0 +1,128 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bind/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#bind01> <http://xsparql.deri.org#derivedFrom> :bind01 ;
+	mf:name "bind01 - BIND" ;
+	mf:result <bind01.srx> .
+
+_:node18l628sr5x1325 qt:data <data.ttl> ;
+	qt:query <bind01.xsparql> .
+
+<http://xsparql.deri.org#bind01> mf:action _:node18l628sr5x1325 .
+
+<http://xsparql.deri.org#bind02> <http://xsparql.deri.org#derivedFrom> :bind02 ;
+	mf:name "bind02 - BIND" ;
+	mf:result <bind02.srx> .
+
+_:node18l628sr5x1326 qt:data <data.ttl> ;
+	qt:query <bind02.xsparql> .
+
+<http://xsparql.deri.org#bind02> mf:action _:node18l628sr5x1326 .
+
+<http://xsparql.deri.org#bind03> <http://xsparql.deri.org#derivedFrom> :bind03 ;
+	mf:name "bind03 - BIND" ;
+	mf:result <bind03.srx> .
+
+_:node18l628sr5x1327 qt:data <data.ttl> ;
+	qt:query <bind03.xsparql> .
+
+<http://xsparql.deri.org#bind03> mf:action _:node18l628sr5x1327 .
+
+<http://xsparql.deri.org#bind04> <http://xsparql.deri.org#derivedFrom> :bind04 ;
+	mf:name "bind04 - BIND" ;
+	mf:result <bind04.srx> .
+
+_:node18l628sr5x1328 qt:data <data.ttl> ;
+	qt:query <bind04.xsparql> .
+
+<http://xsparql.deri.org#bind04> mf:action _:node18l628sr5x1328 .
+
+<http://xsparql.deri.org#bind05> <http://xsparql.deri.org#derivedFrom> :bind05 ;
+	mf:name "bind05 - BIND" ;
+	mf:result <bind05.srx> .
+
+_:node18l628sr5x1329 qt:data <data.ttl> ;
+	qt:query <bind05.xsparql> .
+
+<http://xsparql.deri.org#bind05> mf:action _:node18l628sr5x1329 .
+
+<http://xsparql.deri.org#bind06> <http://xsparql.deri.org#derivedFrom> :bind06 ;
+	mf:name "bind06 - BIND" ;
+	mf:result <bind06.srx> .
+
+_:node18l628sr5x1330 qt:data <data.ttl> ;
+	qt:query <bind06.xsparql> .
+
+<http://xsparql.deri.org#bind06> mf:action _:node18l628sr5x1330 .
+
+<http://xsparql.deri.org#bind07> <http://xsparql.deri.org#derivedFrom> :bind07 ;
+	mf:name "bind07 - BIND" ;
+	mf:result <bind07.srx> .
+
+_:node18l628sr5x1331 qt:data <data.ttl> ;
+	qt:query <bind07.xsparql> .
+
+<http://xsparql.deri.org#bind07> mf:action _:node18l628sr5x1331 .
+
+<http://xsparql.deri.org#bind08> <http://xsparql.deri.org#derivedFrom> :bind08 ;
+	mf:name "bind08 - BIND" ;
+	mf:result <bind08.srx> .
+
+_:node18l628sr5x1332 qt:data <data.ttl> ;
+	qt:query <bind08.xsparql> .
+
+<http://xsparql.deri.org#bind08> mf:action _:node18l628sr5x1332 .
+
+<http://xsparql.deri.org#bind10> <http://xsparql.deri.org#derivedFrom> :bind10 ;
+	mf:name "bind10 - BIND scoping - Variable in filter not in scope" ;
+	mf:result <bind10.srx> .
+
+_:node18l628sr5x1333 qt:data <data.ttl> ;
+	qt:query <bind10.xsparql> .
+
+<http://xsparql.deri.org#bind10> mf:action _:node18l628sr5x1333 .
+
+<http://xsparql.deri.org#bind11> <http://xsparql.deri.org#derivedFrom> :bind11 ;
+	mf:name "bind11 - BIND scoping - Variable in filter in scope" ;
+	mf:result <bind11.srx> .
+
+_:node18l628sr5x1334 qt:data <data.ttl> ;
+	qt:query <bind11.xsparql> .
+
+<http://xsparql.deri.org#bind11> mf:action _:node18l628sr5x1334 .
+
+_:node18l628sr5x1336 rdf:first <http://xsparql.deri.org#bind01> ;
+	rdf:rest _:node18l628sr5x1338 .
+
+_:node18l628sr5x1338 rdf:first <http://xsparql.deri.org#bind02> ;
+	rdf:rest _:node18l628sr5x1339 .
+
+_:node18l628sr5x1339 rdf:first <http://xsparql.deri.org#bind03> ;
+	rdf:rest _:node18l628sr5x1340 .
+
+_:node18l628sr5x1340 rdf:first <http://xsparql.deri.org#bind04> ;
+	rdf:rest _:node18l628sr5x1341 .
+
+_:node18l628sr5x1341 rdf:first <http://xsparql.deri.org#bind05> ;
+	rdf:rest _:node18l628sr5x1342 .
+
+_:node18l628sr5x1342 rdf:first <http://xsparql.deri.org#bind06> ;
+	rdf:rest _:node18l628sr5x1343 .
+
+_:node18l628sr5x1343 rdf:first <http://xsparql.deri.org#bind07> ;
+	rdf:rest _:node18l628sr5x1344 .
+
+_:node18l628sr5x1344 rdf:first <http://xsparql.deri.org#bind08> ;
+	rdf:rest _:node18l628sr5x1335 .
+
+_:node18l628sr5x1335 rdf:first <http://xsparql.deri.org#bind10> ;
+	rdf:rest _:node18l628sr5x1337 .
+
+_:node18l628sr5x1337 rdf:first <http://xsparql.deri.org#bind11> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg-sparql-1.1/bind/> mf:entries _:node18l628sr5x1336 .

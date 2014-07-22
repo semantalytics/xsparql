@@ -1,0 +1,15 @@
+# q-langmatches-de-de.rq
+# $id: q-langmatches-de-de.rq,v 1.1 2007/08/11 18:32:04 eric exp $
+
+prefix : <http://example.org/#>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/expr-builtin/data-langmatches-de.ttl> where{ :x $p $v . filter langmatches(lang($v), "de-de") . }
+
+return 
+ <result>
+	<binding name="v">{$v}</binding>
+	<binding name="p">{$p}</binding>
+</result>}
+</results>

@@ -1,0 +1,12 @@
+prefix : <http://example/> 
+
+<results>
+{for * where{ $s $p $o }
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="p">{$p}</binding>
+	<binding name="o">{$o}</binding>
+</result>}
+</results>

@@ -1,0 +1,19 @@
+prefix : <http://example/>
+<results>
+{for $y $agenextyear
+from <src/main/resources/xsparql/testcases-sparql-1.1/subquery/data-01.ttl> where {
+  :alice :knows $y .
+  {
+    select $y ($age+1 as $agenextyear)
+    where {
+      $y :age $age .
+    } 
+  }
+}
+
+return 
+ <result>
+	<binding name="agenextyear">{$agenextyear}</binding>
+	<binding name="y">{$y}</binding>
+</result>}
+</results>

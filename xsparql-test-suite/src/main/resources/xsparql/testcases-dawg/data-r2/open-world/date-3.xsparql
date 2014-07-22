@@ -1,0 +1,16 @@
+prefix     :    <http://example/>
+prefix  xsd:    <http://www.w3.org/2001/xmlschema#>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/open-world/data-3.ttl> where{
+    $x :r $v .
+    filter ( $v > "2006-08-22"^^xsd:date )
+}
+
+return 
+ <result>
+	<binding name="v">{$v}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

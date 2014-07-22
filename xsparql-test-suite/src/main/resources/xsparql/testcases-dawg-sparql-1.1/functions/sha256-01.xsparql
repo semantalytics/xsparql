@@ -1,0 +1,11 @@
+prefix : <http://example.org/>
+<results>
+{for (sha256($l) as $hash) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {
+	:s1 :str $l
+}
+
+return 
+ <result>
+	<binding name="hash">{$hash}</binding>
+</result>}
+</results>

@@ -1,0 +1,14 @@
+prefix : <http://example/> 
+prefix  xsd:    <http://www.w3.org/2001/xmlschema#>
+
+<results>
+{for $x
+from <src/main/resources/xsparql/testcases-dawg/data-r2/expr-builtin/data-builtin-2.ttl> where{ $x :p $v . 
+  filter ( lang($v) = '' )
+}
+
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

@@ -1,0 +1,12 @@
+prefix : <http://example.org/>
+<results>
+{for (sum($x) as $total)
+from <src/main/resources/xsparql/testcases-sparql-1.1/aggregates/data-06.ttl> where {
+  $a :p $x.
+}
+group by $a
+return 
+ <result>
+	<binding name="total">{$total}</binding>
+</result>}
+</results>

@@ -1,0 +1,23 @@
+declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+<products>
+{ 
+	let $discount := 0.15
+	let $shippingCost := 10
+	let $discountedPrice := 150
+	return
+		for $product $productPrice $finalPrice $discountedPrice
+		from <http://xsparql.deri.org/data/relations.ttl>
+	  	where { 
+	  		$product :hasPrice $productPrice 
+	  		bind($productPrice + $shippingCost AS $finalPrice))
+	  	}
+	  	order by ($finalPrice-$finalPrice*$discount AS $discountedPrice)
+	  	return 
+	  		<product id="{$product}">{
+	  			<shippingCost>{$shippingCost}</shippingCost>
+	  			<productPrice>{$productPrice}</productPrice>
+	  			<finalPrice>{$finalPrice}</finalPrice>
+	  			<finalPrice>{$discountedPrice}</finalPrice>
+	        </product>
+}
+</products>

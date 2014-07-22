@@ -1,0 +1,16 @@
+       declare namespace foaf = "http://xmlns.com/foaf/0.1/";
+
+      <sharedfriends>
+{ 
+for $Name from <http://stefanbischof.at/foaf.rdf>
+where { [] foaf:knows $Person .
+$Person a foaf:Person ;
+foaf:name $Name . }
+return
+for $FriendName from <http://nunolopes.org/foaf.rdf>
+where { [] foaf:knows $P .
+$P a foaf:Person ;
+foaf:name $Name . }
+return <sharedfriend name="{$Name}" />
+}
+</sharedfriends>

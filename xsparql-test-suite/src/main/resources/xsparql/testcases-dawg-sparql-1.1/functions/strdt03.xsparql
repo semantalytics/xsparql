@@ -1,0 +1,13 @@
+prefix : <http://example.org/>
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+<results>
+{for $s (strdt($o,xsd:string) as $str1) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {
+	$s $p $o
+}
+
+return 
+ <result>
+	<binding name="str1">{$str1}</binding>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

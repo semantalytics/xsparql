@@ -1,0 +1,14 @@
+prefix : <http://example.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix xsd: <http://www.w3.org/2001/xmlschema#>
+<results>
+{for $s from <src/main/resources/xsparql/testcases-dawg/data-r2/cast/data.ttl> where {
+    $s :p $v .
+    filter(datatype(xsd:boolean($v)) = xsd:boolean) .
+}
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+</result>}
+</results>

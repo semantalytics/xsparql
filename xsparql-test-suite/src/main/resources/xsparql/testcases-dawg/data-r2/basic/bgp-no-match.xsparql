@@ -1,0 +1,15 @@
+prefix : <http://example.org/>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+<results>
+{for $x
+from <src/main/resources/xsparql/testcases-dawg/data-r2/basic/data-7.ttl> where {
+  $x foaf:name "john smith" ;
+       a foaf:womble .
+}
+
+
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

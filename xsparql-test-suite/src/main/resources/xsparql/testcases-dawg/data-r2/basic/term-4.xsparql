@@ -1,0 +1,11 @@
+prefix :     <http://example.org/ns#>
+prefix xsd:  <http://www.w3.org/2001/xmlschema#>
+
+<results>
+{for * from <src/main/resources/xsparql/testcases-dawg/data-r2/basic/data-4.ttl> where{ :x $p 123.0 }
+
+return 
+ <result>
+	<binding name="p">{$p}</binding>
+</result>}
+</results>

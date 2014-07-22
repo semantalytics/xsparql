@@ -1,0 +1,13 @@
+prefix : <http://example.org/>
+<results>
+{for $s $str (substr($str,1,1) as $substr) from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {
+	$s :str $str
+}
+
+return 
+ <result>
+	<binding name="str">{$str}</binding>
+	<binding name="s">{$s}</binding>
+	<binding name="substr">{$substr}</binding>
+</result>}
+</results>

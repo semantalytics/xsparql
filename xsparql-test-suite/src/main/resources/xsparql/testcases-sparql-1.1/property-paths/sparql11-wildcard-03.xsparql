@@ -1,0 +1,14 @@
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+prefix : <http://example.org/> 
+<results>
+{for * 
+from <src/main/resources/xsparql/testcases-sparql-1.1/property-paths/data-07.ttl> where 
+{
+    :prop rdfs:subpropertyof* $p .
+}
+
+return 
+ <result>
+	<binding name="p">{$p}</binding>
+</result>}
+</results>

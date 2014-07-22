@@ -1,0 +1,15 @@
+prefix : <http://www.example.org/>
+<results>
+{for $s (avg($o) as $avg)
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/aggregates/agg-numeric2.ttl> where {
+	$s $p $o
+}
+group by $s
+having (avg($o) <= 2.0)
+
+return 
+ <result>
+	<binding name="s">{$s}</binding>
+	<binding name="avg">{$avg}</binding>
+</result>}
+</results>

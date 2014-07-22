@@ -1,0 +1,20 @@
+# sparql filter test by value for known types.
+# nothing is known to be not the same value as  "a"^^t:type1
+#  "b"^^t:type1 might be a different lexical form for the same value
+#  "a"^^t:type2 might have overlapping value spaces for this lexicial form.
+
+prefix  :       <http://example/ns#>
+prefix  t:      <http://example/t#>
+
+<results>
+{for *
+from <src/main/resources/xsparql/testcases-dawg/data-r2/open-world/data-1.ttl> where{ $x :p $v 
+  filter ( $v != "a"^^t:type1 )
+}
+
+return 
+ <result>
+	<binding name="v">{$v}</binding>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

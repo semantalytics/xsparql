@@ -1,0 +1,13 @@
+<results>
+{for $x 
+from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/subquery/sq04.rdf> where {
+graph $g {
+{select * where {$x $p $y}}
+}
+}
+
+return 
+ <result>
+	<binding name="x">{$x}</binding>
+</result>}
+</results>

@@ -1,0 +1,34 @@
+@prefix : <http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dawgt: <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt: <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+
+<http://xsparql.deri.org#jsonres01> <http://xsparql.deri.org#derivedFrom> :jsonres01 ;
+	mf:name "jsonres01 - JSON Result Format" ;
+	mf:result <jsonres01.srj> ;
+	rdfs:comment "SELECT * WHERE { ?S ?P ?O }" .
+
+_:node18l628sr5x650 qt:data <data.ttl> ;
+	qt:query <jsonres01.xsparql> .
+
+<http://xsparql.deri.org#jsonres01> mf:action _:node18l628sr5x650 .
+
+<http://xsparql.deri.org#jsonres02> <http://xsparql.deri.org#derivedFrom> :jsonres02 ;
+	mf:name "jsonres02 - JSON Result Format" ;
+	mf:result <jsonres02.srj> ;
+	rdfs:comment "SELECT with OPTIONAL (i.e. not all vars bound in all results)" .
+
+_:node18l628sr5x651 qt:data <data.ttl> ;
+	qt:query <jsonres02.xsparql> .
+
+<http://xsparql.deri.org#jsonres02> mf:action _:node18l628sr5x651 .
+
+_:node18l628sr5x652 rdf:first <http://xsparql.deri.org#jsonres01> ;
+	rdf:rest _:node18l628sr5x653 .
+
+_:node18l628sr5x653 rdf:first <http://xsparql.deri.org#jsonres02> ;
+	rdf:rest rdf:nil .
+
+<http://xsparql.deri.org/docs/tests/testcases-dawg-sparql-1.1/json-res/> mf:entries _:node18l628sr5x652 .

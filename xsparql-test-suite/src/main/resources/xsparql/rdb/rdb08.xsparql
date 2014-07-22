@@ -1,0 +1,2 @@
+for student.id, name  from student,address
+return <name>{$name}</name>
