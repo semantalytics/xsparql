@@ -43,7 +43,7 @@ import org.antlr.runtime.tree.*;
 /**
  * class of scopedDatasets for the parser.
  * 
- * @author Nuno Lopes <nuno.lopes@deri.org>
+ * @author Nuno Lopes
  * 
  */
 public class ScopedDataset {

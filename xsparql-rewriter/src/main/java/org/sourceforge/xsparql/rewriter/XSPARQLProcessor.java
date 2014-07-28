@@ -58,8 +58,8 @@ import org.sourceforge.xsparql.sql.SQLQuery;
 /**
  * Main XSPARQL rewriter translator class
  * 
- * @author Stefan Bischof <stefan.bischof@deri.org>
- * @author Nuno Lopes <nuno.lopes@deri.org>
+ * @author Stefan Bischof 
+ * @author Nuno Lopes 
  * 
  */
 public class XSPARQLProcessor {

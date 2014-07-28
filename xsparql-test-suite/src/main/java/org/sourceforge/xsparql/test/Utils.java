@@ -81,8 +81,6 @@ public class Utils {
 	
 	/**
 	 * List files contained in a directory in the classpath
-	 * 
-	 * @throws IOException
 	 */
 	public static List<String> listFiles(Class c, String dirname) {
 		List<String> filenames = new LinkedList<String>();

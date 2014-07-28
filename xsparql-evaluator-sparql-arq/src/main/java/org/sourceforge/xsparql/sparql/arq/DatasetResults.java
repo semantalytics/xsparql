@@ -44,7 +44,7 @@ import com.hp.hpl.jena.query.*;
 /**
  * class for datasets and results of datasets for the parser.
  * 
- * @author Nuno Lopes <nuno.lopes@deri.org>
+ * @author Nuno Lopes
  * 
  */
 public class DatasetResults {

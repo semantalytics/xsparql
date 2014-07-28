@@ -66,10 +66,7 @@ import org.sourceforge.xsparql.xquery.XQueryEvaluator;
  * <code>evaluateRewritten</code> method.
  * 
  * 
- * Created: Tue Oct 12 12:42:04 2010
- * 
- * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
- * @version 1.0
+ * @author Nuno Lopes
  */
 public final class XSPARQLEvaluator {
 
@@ -157,7 +154,6 @@ public final class XSPARQLEvaluator {
 	}
 
 	/**
-	 * @param xqueryExternalVars
 	 */
 	public void addXQueryExternalVar(String key, String value) {
 		this.externalVars.put(key, value);
@@ -182,8 +178,6 @@ public final class XSPARQLEvaluator {
 	 *          XSPARQL query
 	 * @param out
 	 *          a <code>PrintStream</code> value
-	 * @exception IOException
-	 *              if an error occurs
 	 * @exception Exception
 	 *              if an error occurs
 	 */
@@ -224,7 +218,7 @@ public final class XSPARQLEvaluator {
 	}
 
 	/**
-	 * @param xquery
+	 * @param query
 	 *          Rewritten XSPARQL query
 	 * @param out
 	 *          Evaluation result

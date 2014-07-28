@@ -62,7 +62,7 @@ import org.sourceforge.xsparql.xquery.saxon.sqlQueryExtFunction;
 import org.sourceforge.xsparql.xquery.saxon.turtleGraphToURIExtFunction;
 
 /**
- * @author nl
+ * @author Nuno Lopes
  *
  */
 public class XSQuery extends Query {

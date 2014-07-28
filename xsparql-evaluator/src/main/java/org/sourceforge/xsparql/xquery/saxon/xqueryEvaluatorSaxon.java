@@ -76,11 +76,7 @@ import org.sourceforge.xsparql.xquery.XQueryEvaluator;
 /**
  * Evaluate an XQuery using the Saxon API
  * 
- * 
- * Created: Tue Sep 28 14:54:49 2010
- * 
- * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
- * @version 1.0
+ * @author Nuno Lopes
  */
 public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 	private static final Logger logger = LoggerFactory.getLogger(xqueryEvaluatorSaxon.class);
@@ -204,8 +200,6 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 	 * Evaluate the XQuery query using the s9api of Saxon
 	 * 
 	 * @param query
-	 * @param out
-	 *          output
 	 */
 	public String evaluate(final String query) throws Exception {
 		Writer writer = new StringWriter();

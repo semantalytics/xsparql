@@ -58,8 +58,7 @@ import org.sourceforge.xsparql.sql.SQLQuery;
 
 /**
  * 
- * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
- * @version 1.0
+ * @author Nuno Lopes
  */
 public class getRDBTableAttributesExtFunction extends ExtensionFunctionDefinition {
 

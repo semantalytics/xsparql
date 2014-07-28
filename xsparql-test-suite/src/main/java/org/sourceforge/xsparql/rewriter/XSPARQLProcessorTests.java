@@ -41,14 +41,11 @@ import static org.junit.Assert.fail;
 import static org.junit.Assume.*;
 
 import java.io.BufferedReader;
-import java.util.logging.Level;
 import java.util.logging.LogManager;
 
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

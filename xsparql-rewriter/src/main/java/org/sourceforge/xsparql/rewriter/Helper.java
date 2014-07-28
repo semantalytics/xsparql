@@ -62,8 +62,8 @@ import org.apache.xerces.dom.DocumentImpl;
 /**
  * Class contains only some helper "functions" (static methods)
  * 
- * @author Stefan Bischof <stefan.bischof@deri.org>
- * @author Nuno Lopes <nuno.lopes@deri.org>
+ * @author Stefan Bischof
+ * @author Nuno Lopes
  * 
  */
 public class Helper {
@@ -97,8 +97,8 @@ public class Helper {
   /**
    * Write a String to an OutputStream
    * 
-   * @param str
-   * @param out
+   * @param str the string to be written
+   * @param out the output stream
    * @throws IOException
    */
   public static void outputString(final String str, final OutputStream out)

@@ -59,8 +59,7 @@ import com.hp.hpl.jena.query.ResultSetFormatter;
 
 /**
  * 
- * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
- * @version 1.0
+ * @author Nuno Lopes
  */
 public class sparqlQueryExtArqFunction extends sparqlQueryExtFunction {
 	/**
