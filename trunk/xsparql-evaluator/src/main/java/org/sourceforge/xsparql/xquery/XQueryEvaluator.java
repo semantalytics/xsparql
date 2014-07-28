@@ -58,11 +58,7 @@ import org.sourceforge.xsparql.sql.SQLQuery;
  * Usage: 1) use the setter methods to influence the evaluation 2) call one of
  * the evaluate methods
  * 
- * 
- * Created: Tue Sep 28 15:10:26 2010
- * 
- * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
- * @version 1.0
+ * @author Nuno Lopes
  */
 public interface XQueryEvaluator {
 
@@ -90,8 +86,6 @@ public interface XQueryEvaluator {
 	 * 
 	 * @param query
 	 *          XQuery query
-	 * @param out
-	 *          OutputStream for the query result
 	 * @throws Exception
 	 */
 	public String evaluate(final String query) throws Exception;

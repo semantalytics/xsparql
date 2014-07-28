@@ -59,8 +59,7 @@ import org.sourceforge.xsparql.sql.SQLQuery;
 /**
  * Saxon External call for implementing SQL queries. 
  * 
- * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
- * @version 1.0
+ * @author Nuno Lopes
  */
 public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
 

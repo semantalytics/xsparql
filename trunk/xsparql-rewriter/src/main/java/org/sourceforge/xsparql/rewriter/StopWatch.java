@@ -41,7 +41,7 @@ package org.sourceforge.xsparql.rewriter;
 /**
  * Simple class to measure execution time
  * 
- * @author Stefan Bischof <stefan.bischof@deri.org>
+ * @author Stefan Bischof
  * 
  */
 class StopWatch {

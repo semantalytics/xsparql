@@ -91,7 +91,6 @@ public class SQLQuery {
 
     /**
      * Creates a new <code>SQLQuery</code> instance.
-     * @param dbPasswd 
      * 
      */
     public SQLQuery(String driver, String dbServer, String dbPort, String database, String instance, String username, String password) {
@@ -180,7 +179,6 @@ public class SQLQuery {
      * Evaluates an SQL query.
      * 
      * @return XML ResultSet with the results of the query
-     * @throws SQLException
      * @throws ClassNotFoundException
      */
     public ResultSet getResults(String query) throws ClassNotFoundException {

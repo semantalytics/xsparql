@@ -50,8 +50,7 @@ import net.sf.saxon.value.SequenceType;
 
 /**
  * 
- * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
- * @version 1.0
+ * @author Nuno Lopes
  */
 public class sparqlQueryExtFunction extends ExtensionFunctionDefinition {
 

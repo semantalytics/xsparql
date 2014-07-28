@@ -65,8 +65,8 @@ import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 /**
  * Main entry point for the commandline interface
  * 
- * @author Stefan Bischof <stefan.bischof@deri.org>
- * @author Nuno Lopes <nuno.lopes@deri.org>
+ * @author Stefan Bischof
+ * @author Nuno Lopes
  */
 public class Main {
 

@@ -57,8 +57,7 @@ import net.sf.saxon.trans.XPathException;
 
 /**
  * 
- * @author <a href="mailto:nuno [dot] lopes [at] deri [dot] org">Nuno Lopes</a>
- * @version 1.0
+ * @author Nuno Lopes
  */
 public class deleteScopedDatasetExtArqFunction extends deleteScopedDatasetExtFunction {
 	private static final long serialVersionUID = -7577497271941404411L;
