@@ -71,16 +71,16 @@ CREATE TABLE child2 (
 INSERT INTO child2 VALUES (1,1,1),(1,2,1);
 
 
-DROP SCHEMA IF EXISTS bands;
-CREATE SCHEMA bands;
+-- DROP SCHEMA IF EXISTS bands;
+-- CREATE SCHEMA bands;
 
-DROP TABLE IF EXISTS bands.person;
-CREATE TABLE bands.person (
-  ssn integer,
-  name text,
-  memberOf integer
-) ;
-INSERT INTO bands.person VALUES (1,'Bono',1),(123,'hansi',2);
+-- DROP TABLE IF EXISTS bands.person;
+-- CREATE TABLE bands.person (
+--   ssn integer,
+--   name text,
+--   memberOf integer
+-- ) ;
+-- INSERT INTO bands.person VALUES (1,'Bono',1),(123,'hansi',2);
 
 
 
