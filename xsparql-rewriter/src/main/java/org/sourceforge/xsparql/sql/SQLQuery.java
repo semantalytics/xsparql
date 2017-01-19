@@ -195,7 +195,7 @@ public class SQLQuery {
 	    // execute the query
 	    res = sql.executeQuery(query);
 	} catch (SQLException e) {
-	    System.err.println("SQL ERROR: " + e.getMessage());
+	    System.err.println("SQL ERROR - 1: " + e.getMessage());
 	    logger.info("SQL ERROR (getResults): " + e.getMessage());
 	    System.exit(1);
 	}
@@ -220,21 +220,21 @@ public class SQLQuery {
 	    XMLOutputFactory xof = XMLOutputFactory.newInstance();
 	    XMLStreamWriter xtw;
 	    xtw = xof.createXMLStreamWriter(sb, "UTF-8");
-
+	
 	    xtw.writeStartDocument("utf-8", "1.0");
-	    xtw.writeStartElement("", "sql");
-	    xtw.writeStartElement("", "results");
+	    xtw.writeStartElement("sql");
+	    xtw.writeStartElement("results");
 
 	    if (results != null) {
 		while (results.next()) {
-		    xtw.writeStartElement("", "result");
+		    xtw.writeStartElement("result");
 		    for (int i = 1; i <= columns; i++) {
 			String label = rsmd.getColumnLabel(i);
 
                         label = "\""+label+"\"";
 
 			int type = rsmd.getColumnType(i);
-			xtw.writeStartElement("", "SQLbinding");
+			xtw.writeStartElement("SQLbinding");
 
 			xtw.writeAttribute("type", rsmd.getColumnTypeName(i));
 
@@ -339,7 +339,7 @@ public class SQLQuery {
 	    xtw.close();
 
 	} catch (Exception e) {
-	    System.err.println("SQL ERROR: " + e.getMessage());
+	    System.err.println("SQL ERROR 2: " + e.getMessage());
 	    logger.info("SQL ERROR (getResultsAsXMLString): " + e.getMessage());
 	    System.exit(1);
 	}
@@ -407,7 +407,7 @@ public class SQLQuery {
 
 
 	} catch (Exception e) {
-	    System.err.println("SQL ERROR: " + e.getMessage());
+	    System.err.println("SQL ERROR 3: " + e.getMessage());
 	    logger.info("SQL ERROR (getResultsAsDocument): " + e.getMessage());
 	    System.exit(1);
 	}
