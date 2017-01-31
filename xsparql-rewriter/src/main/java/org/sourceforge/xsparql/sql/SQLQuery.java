@@ -222,19 +222,19 @@ public class SQLQuery {
 	    xtw = xof.createXMLStreamWriter(sb, "UTF-8");
 
 	    xtw.writeStartDocument("utf-8", "1.0");
-	    xtw.writeStartElement("", "sql");
-	    xtw.writeStartElement("", "results");
+	    xtw.writeStartElement("sql");
+	    xtw.writeStartElement("results");
 
 	    if (results != null) {
 		while (results.next()) {
-		    xtw.writeStartElement("", "result");
+		    xtw.writeStartElement("result");
 		    for (int i = 1; i <= columns; i++) {
 			String label = rsmd.getColumnLabel(i);
 
                         label = "\""+label+"\"";
 
 			int type = rsmd.getColumnType(i);
-			xtw.writeStartElement("", "SQLbinding");
+			xtw.writeStartElement("SQLbinding");
 
 			xtw.writeAttribute("type", rsmd.getColumnTypeName(i));
 
@@ -477,7 +477,7 @@ public class SQLQuery {
 	    DatabaseMetaData dbmd = db.getMetaData();
 
 	    xtw.writeStartDocument("utf-8", "1.0");
-	    xtw.writeStartElement("", "metadata");
+	    xtw.writeStartElement("metadata");
 
 	    // for each relation
 	    for (String relationName : relations) {
@@ -497,7 +497,9 @@ public class SQLQuery {
 		while (primaryKeys.next()) {
 		    String pk = primaryKeys.getString("COLUMN_NAME");
 		    // if relation name is capitalised, add ""
-                    pk = "\""+pk+"\"";
+		    
+		    if (!dbDriver.equals("mysql"))
+                    	pk = "\""+pk+"\"";
 		    pks.add(pk);
 		}
 
@@ -505,7 +507,7 @@ public class SQLQuery {
 		ResultSet foreignKeys = dbmd.getImportedKeys(null, null,
 			relationName);
 		Map<String, Pair<String,String>> fks = new HashMap<String, Pair<String,String>>();
-		xtw.writeStartElement("", "foreignKeys");
+		xtw.writeStartElement("foreignKeys");
 
 //		group the all the elements of the foreignKeys
 		boolean firstElem = true;
@@ -516,7 +518,7 @@ public class SQLQuery {
 			if (!firstElem) {
 			    xtw.writeEndElement();
 			}
-			xtw.writeStartElement("", "foreignKey");
+			xtw.writeStartElement("foreignKey");
 			firstElem = false;
 		    }
 
@@ -524,7 +526,7 @@ public class SQLQuery {
 		    // if relation name is capitalised, add ""
                     attributeFK = "\""+attributeFK+"\"";
 
-                    xtw.writeStartElement("", "foreignKeyElem");
+                    xtw.writeStartElement("foreignKeyElem");
 		    xtw.writeAttribute("name", attributeFK);
 
 		    String fkTableName = foreignKeys.getString("PKTABLE_NAME");
@@ -546,14 +548,14 @@ public class SQLQuery {
 		}
 		xtw.writeEndElement();  // </foreignKeys>
 
-		xtw.writeStartElement("", "columns");
+		xtw.writeStartElement("columns");
 		// iterate over the attributes
 		while (results.next()) {
 		    // determine the column alias
 		    String columnName = results.getString("COLUMN_NAME");
 		    // if relation name is capitalised, add ""
                     columnName = "\""+columnName+"\"";
-		    xtw.writeStartElement("", "column");
+		    xtw.writeStartElement("column");
 
 		    // write the column type as an attribute
 		    xtw.writeAttribute("name", columnName);
@@ -614,7 +616,9 @@ public class SQLQuery {
 	    while (results.next()) {
 		String relationName = results.getString("TABLE_NAME");
 		// if relation name is capitalised, add ""
-                relationName = "\""+relationName+"\"";
+		
+		if (!dbDriver.equals("mysql"))
+                	relationName = "\""+relationName+"\"";
 
 		res.add(relationName);
 	    }
@@ -660,11 +664,11 @@ public class SQLQuery {
 	    xtw = xof.createXMLStreamWriter(sb);
 
 	    xtw.writeStartDocument("utf-8", "1.0");
-	    xtw.writeStartElement("", parent);
+	    xtw.writeStartElement(parent);
 
 	    if (results != null) {
 		for (String c : results) {
-		    xtw.writeStartElement("", child);
+		    xtw.writeStartElement(child);
 		    xtw.writeCharacters(c);
 		    xtw.writeEndElement(); // </child>
 		}
