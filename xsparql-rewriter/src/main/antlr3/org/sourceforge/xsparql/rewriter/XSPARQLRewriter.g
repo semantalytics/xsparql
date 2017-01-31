@@ -910,6 +910,7 @@ prolog
 prolog1
   : defaultNamespaceDecl
   | namespaceDecl
+  | baseUriDecl
   | setter
   | importa
   | prefixDecl
@@ -933,6 +934,11 @@ setter
 
 importa
   : schemaImport | moduleImport
+  ;
+
+baseUriDecl
+  : ^(T_BASEURI_DECL irix=IRIREF) {basePrefix = $irix.text;}
+  ->
   ;
 
 namespaceDecl
@@ -2141,7 +2147,7 @@ stringliteral
 // $<SPARQL
 
 baseDecl
-  : ^(T_BASEURI_DECL irix=IRIREF) {basePrefix = $irix.text;}
+  : ^(T_NAMESPACE BASE irix=IRIREF) {basePrefix = $irix.text;}
   ->
   ;
 
