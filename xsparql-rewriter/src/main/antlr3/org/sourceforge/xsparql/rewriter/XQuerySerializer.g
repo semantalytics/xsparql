@@ -181,6 +181,8 @@ main
     -> queryBody(main={$mains1})
   | ^(T_BODY_PART mains2+=main+)
     -> generic(content={$mains2})
+  |  ^(T_BASEURI_DECL basev=main)
+     -> baseURI(value={$basev.st})
   |  ^(T_NAMESPACE d=main e=main)
     -> namespace(name={$d.st}, value={$e.st})
   |  ^(T_NAMESPACE DEFAULT e=main)

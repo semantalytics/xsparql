@@ -20,6 +20,8 @@ namespace(name, value) ::= "declare namespace $name$ = $value$;"
 
 defaultnamespace(value) ::= "declare default element namespace \"$value$\";"
 
+baseURI(value) ::= "declare base-uri $value$;"
+
 xmlElement(name, attributes, contents) ::= <<
 <$name$$if(attributes)$ $attributes; separator=" "$$endif$>$contents$</$name$>
 >>

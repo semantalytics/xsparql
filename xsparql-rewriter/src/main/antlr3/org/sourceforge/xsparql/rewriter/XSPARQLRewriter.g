@@ -325,6 +325,14 @@ scope SubQueryScope{
 
   private String getRDFNamespaceDecls() {
      final StringBuffer sb = new StringBuffer();
+     
+     if (basePrefix != null) {
+        sb.append("@base <");
+        sb.append(basePrefix);
+        sb.append("> .");
+        sb.append(System.getProperties().getProperty("line.separator"));
+     }
+     
      for(String key : namespaces.keySet()) {
         sb.append("@prefix ");
         sb.append(key);
@@ -970,7 +978,7 @@ defaultCollationDecl
   ;
 
 baseURIDecl
-  : ^(T_BASEURI_DECL QSTRING)
+  : ^(T_BASEURI_DECL basev=QSTRING) { basePrefix = $basev.text; }
   ;
 
 schemaImport
@@ -2133,9 +2141,10 @@ stringliteral
 // $<SPARQL
 
 baseDecl
-  : ^(T_NAMESPACE BASE irix=IRIREF) {basePrefix = $irix.text;}
+  : ^(T_BASEURI_DECL irix=IRIREF) {basePrefix = $irix.text;}
   ->
   ;
+
 
 prefixDecl
   : ^(T_NAMESPACE DEFAULT irix=QSTRING) {addNamespace(":", $irix.text);} 
