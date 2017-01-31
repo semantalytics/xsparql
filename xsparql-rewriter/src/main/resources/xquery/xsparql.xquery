@@ -40,6 +40,7 @@
 
 module namespace _xsparql =  "http://xsparql.deri.org/demo/xquery/xsparql.xquery" ;
 
+import module namespace functx =  "http://www.functx.com" at "functx-1.0-nodoc-2007-01.xq";
 
 (: import schema namespace _sparql_result =  "http://www.w3.org/2005/sparql-results#" at "http://www.w3.org/2005/sparql-results#result.xsd"; :)
 (:import schema namespace _sparql_result =  "http://www.w3.org/2005/sparql-results#" at "sparql.xsd";:)
@@ -143,9 +144,10 @@ declare function _xsparql:_rdf_term($Node as item()) as xs:string
     if (_xsparql:_validBNode($Node)) then
             fn:concat("_:", data($Node), "")
     else if (_xsparql:_validUri($Node)) 
-         then if (fn:starts-with($Node, "tel:") or fn:starts-with($Node, "https://") or fn:starts-with($Node, "http://") or fn:starts-with($Node, "mailto:") or fn:starts-with($Node, "file:") or fn:not(fn:contains($Node, ":"))) then
+        (: then if (fn:starts-with($Node, "tel:") or fn:starts-with($Node, "https://") or fn:starts-with($Node, "http://") or fn:starts-with($Node, "mailto:") or fn:starts-with($Node, "file:") or fn:not(fn:contains($Node, ":"))) then
                fn:concat("<", data($Node), ">")
-               else data($Node)
+               else data($Node) :)
+            then fn:concat("<", data($Node), ">")
          else if (_xsparql:_validLiteral($Node)) 
             then
                 let $DT := data($Node/@datatype)
@@ -212,7 +214,9 @@ declare function _xsparql:_binding($node as xs:string,
                                    $type as xs:string?) as item() {
 
     let $langAtt := if ($lang and string-length($lang) > 0) then attribute xml:lang { $lang } else ()
-    let $typeAtt := if ($type and string-length($type) > 0) then attribute datatype { $type } else ()
+    let $typeAtt := if ($type and string-length($type) > 0) then attribute datatype { $type } 
+                        else if (fn:matches(functx:atomic-type($value), 'xs:string')) then ()
+                        else ( attribute datatype { functx:atomic-type($value) } )
     return
         element {$node} { 
         $langAtt,
