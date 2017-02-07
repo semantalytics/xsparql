@@ -276,8 +276,10 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 				.load();
 
 		//TODO: reset at every evaluation (it should be optimizable) 
-		datasetManager.clean();
-		datasetManager.setDataset(defaultGraph, namedGraphs);
+		if (datasetManager != null) {
+			datasetManager.clean();
+			datasetManager.setDataset(defaultGraph, namedGraphs);
+		}
 		
 		if (source != null)
 			evaluator.setSource(source);
