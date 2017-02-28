@@ -112,7 +112,7 @@
           <artifactId>maven-license-plugin</artifactId>
           <version>1.4.0</version>
           <configuration>
-            <header>http://xsparql.deri.org/license/header.txt</header>
+            
             <failIfMissing>false</failIfMissing>
             <properties>
               <year>${project.inceptionYear}</year>
@@ -164,6 +164,9 @@
           <groupId>org.antlr</groupId>
           <artifactId>antlr3-maven-plugin</artifactId>
           <version>${antlr.version}</version>
+          <configuration>
+             <failOnError>false</failOnError>
+          </configuration>
         </plugin>
 
         <plugin>

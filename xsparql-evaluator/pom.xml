@@ -164,7 +164,6 @@
 				</executions>
 				<configuration>
 					<tasks>
-						<delete dir="target/classes/org/sourceforge/xsparql/sparql/binder" />
 					</tasks>
 				</configuration>
 			</plugin>
