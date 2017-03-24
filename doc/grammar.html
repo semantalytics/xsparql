@@ -40,6 +40,8 @@ font-weight: bold;
 <li><a href="#xterm">XQuery Terminals</a></li>
 <li><a href="#snon">SPARQL Non Terminals</a></li>
 <li><a href="#sterm">SPARQL Terminals</a></li>
+<li><a href="#sqlnon">SQL Non Terminals</a></li>
+<li><a href="#sqlterm">SQL Terminals</a></li>
 </ul>
 
 <h2 id="xnon">XQuery Non terminals</h2>
@@ -2819,11 +2821,362 @@ terminal symbols; they are not terminal symbols in the grammar of
   <td><code class="gRuleLabel">[100]&nbsp;&nbsp;</code></td>
   <td><code class="gRuleHead"><a id="rPN_LOCAL" name="rPN_LOCAL">PN_LOCAL</a></code></td>
   <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-	    <td><code class="gRuleBody">( <a href="#rPN_CHARS_U">PN_CHARS_U</a> | [0-9] ) ((<a href="#rPN_CHARS">PN_CHARS</a>|'.')* <a href="#rPN_CHARS">PN_CHARS</a>)?</code><br />Note that <a href="#rPN_LOCAL">SPARQL local names</a> allow leading digits while <a href="http://www.w3.org/TR/2006/REC-xml-names11-20060816/#NT-LocalPart">XML local names</a> do not.</td>
+  <td><code class="gRuleBody">( <a href="#rPN_CHARS_U">PN_CHARS_U</a> | [0-9] ) ((<a href="#rPN_CHARS">PN_CHARS</a>|'.')* <a href="#rPN_CHARS">PN_CHARS</a>)?</code><br />Note that <a href="#rPN_LOCAL">SPARQL local names</a> allow leading digits while <a href="http://www.w3.org/TR/2006/REC-xml-names11-20060816/#NT-LocalPart">XML local names</a> do not.</td>
 
 </tr>
   </tbody></table>
 
+<h2 id="snon">SQL Non terminals</h2>
 
+<table><tbody>
+
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[1]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rsqlForClause" name="rsqlForClause">sqlForClause</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rDISTINCT">DISTINCT</a>?<a href="#r"></a> <a href="#r"></a>(<a href="#rSTAR">STAR</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rsqlVarOrFunctionList">sqlVarOrFunctionList</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rROW">ROW</a> <a href="#rVAR">VAR</a>)<a href="#r"></a> <a href="#rrelationClause">relationClause</a> <a href="#rsqlWhereClause">sqlWhereClause</a>?<a href="#r"></a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[2]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rsqlVarOrFunctionList" name="rsqlVarOrFunctionList">sqlVarOrFunctionList</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rsqlVarOrFunction">sqlVarOrFunction</a>[<a href="#rfalse">false</a>]<a href="#r"></a> <a href="#r"></a>(<a href="#rCOMMA">COMMA</a>!<a href="#r"></a> <a href="#rsqlVarOrFunction">sqlVarOrFunction</a>[<a href="#rtrue">true</a>]<a href="#r"></a>)<a href="#r"></a>*<a href="#r"></a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[3]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rsqlVarOrFunction[boolean addComma]" name="rsqlVarOrFunction[boolean addComma]">sqlVarOrFunction[boolean addComma]</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rqname">qname</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rLPAR">LPAR</a> <a href="#rfunctionCall">functionCall</a> <a href="#rAS">AS</a> <a href="#rVAR">VAR</a> <a href="#rRPAR">RPAR</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rVAR">VAR</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[4]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rrelationClause" name="rrelationClause">relationClause</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rFROM">FROM</a> <a href="#rrdbSourceSelector">rdbSourceSelector</a> <a href="#r"></a>(<a href="#rCOMMA">COMMA</a> <a href="#rrdbSourceSelector">rdbSourceSelector</a>)<a href="#r"></a>*<a href="#r"></a> <a href="#r"></a>|<a href="#r"></a> <a href="#rFROM">FROM</a> <a href="#rqname">qname</a> <a href="#rLPAR">LPAR</a> <a href="#rrdbSourceSelectorFunctionParams">rdbSourceSelectorFunctionParams</a>?<a href="#r"></a> <a href="#rRPAR">RPAR</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[5]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rrdbSourceSelectorFunctionParams" name="rrdbSourceSelectorFunctionParams">rdbSourceSelectorFunctionParams</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rrdbSourceSelector">rdbSourceSelector</a> <a href="#r"></a>(<a href="#rCOMMA">COMMA</a> <a href="#rrdbSourceSelector">rdbSourceSelector</a>)<a href="#r"></a>*<a href="#r"></a> <a href="#r"></a>|<a href="#r"></a> <a href="#rQSTRING">QSTRING</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[6]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rrdbSourceSelector" name="rrdbSourceSelector">rdbSourceSelector</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rrelationSchemaName">relationSchemaName</a> <a href="#rrelationAlias">relationAlias</a>?<a href="#r"></a> <a href="#r"></a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[7]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rrelationSchemaName" name="rrelationSchemaName">relationSchemaName</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#r"></a>(<a href="#rrelationAlias">relationAlias</a> <a href="#rDOT">DOT</a>)<a href="#r"></a>?<a href="#r"></a> <a href="#rrelationAlias">relationAlias</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[8]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rrelationAlias" name="rrelationAlias">relationAlias</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rqname">qname</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rVAR">VAR</a> <a href="#r"></a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[9]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rsqlWhereClause" name="rsqlWhereClause">sqlWhereClause</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rWHERE">WHERE</a>^<a href="#r"></a> <a href="#rsqlWhereSpecList">sqlWhereSpecList</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[10]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rsqlWhereSpecList" name="rsqlWhereSpecList">sqlWhereSpecList</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rsqlAttrSpecList">sqlAttrSpecList</a> <a href="#r"></a>(<a href="#rsqlBooleanOp">sqlBooleanOp</a> <a href="#rsqlAttrSpecList">sqlAttrSpecList</a>)<a href="#r"></a>*<a href="#r"></a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[11]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rsqlAttrSpecList" name="rsqlAttrSpecList">sqlAttrSpecList</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rsqlAttrSpec">sqlAttrSpec</a> <a href="#rgeneralComp">generalComp</a> <a href="#rsqlAttrSpec">sqlAttrSpec</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rLPAR">LPAR</a> <a href="#rsqlWhereSpecList">sqlWhereSpecList</a> <a href="#rRPAR">RPAR</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[12]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rsqlBooleanOp" name="rsqlBooleanOp">sqlBooleanOp</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rAND">AND</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rOR">OR</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[13]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rsqlAttrSpec" name="rsqlAttrSpec">sqlAttrSpec</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rqname">qname</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rVAR">VAR</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rliteral">literal</a> <a href="#r"></a>|<a href="#r"></a> <a href="#renclosedExpr">enclosedExpr</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[14]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rqname" name="rqname">qname</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rprefixedName">prefixedName</a> <a href="#r"></a>|<a href="#r"></a> <a href="#runprefixedName">unprefixedName</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rCOUNT">COUNT</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rMAX">MAX</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rMIN">MIN</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rAVG">AVG</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rSUM">SUM</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rSAMPLE">SAMPLE</a> <a href="#r"></a> <a href="#r"></a>|<a href="#r"></a> <a href="#rNOTKW">NOTKW</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rEXISTS">EXISTS</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[15]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rgeneralComp" name="rgeneralComp">generalComp</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rEQUALS">EQUALS</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rLESSTHAN">LESSTHAN</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rGREATERTHAN">GREATERTHAN</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rLESSTHANEQUALS">LESSTHANEQUALS</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rGREATERTHANEQUALS">GREATERTHANEQUALS</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rHAFENEQUALS">HAFENEQUALS</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[16]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rliteral" name="rliteral">literal</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rnumericliteral">numericliteral</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rstringliteral">stringliteral</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[17]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="renclosedExpr" name="renclosedExpr">enclosedExpr</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rLCURLY">LCURLY</a>!<a href="#r"></a> <a href="#rexpr">expr</a> <a href="#rRCURLY">RCURLY</a>!<a href="#r"></a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[18]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rsFunctionCall" name="rsFunctionCall">sFunctionCall</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#riRIref">iRIref</a> <a href="#rarglist">arglist</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[19]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rexpr" name="rexpr">expr</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rexprSingle">exprSingle</a> <a href="#r"></a>(<a href="#rCOMMA">COMMA</a>!<a href="#r"></a> <a href="#rexprSingle">exprSingle</a>)<a href="#r"></a>*<a href="#r"></a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[20]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rexprSingle" name="rexprSingle">exprSingle</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rflworExpr">flworExpr</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rquantifiedExpr">quantifiedExpr</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rtypeSwitchExpr">typeSwitchExpr</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rconstructQuery">constructQuery</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rorExpr">orExpr</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rifExpr">ifExpr</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[21]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rprefixedName" name="rprefixedName">prefixedName</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rPNAME">PNAME</a>_<a href="#rLN">LN</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rPNAME">PNAME</a>_<a href="#rNS">NS</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[22]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="runprefixedName" name="runprefixedName">unprefixedName</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rlocalPart">localPart</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[23]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rnumericliteral" name="rnumericliteral">numericliteral</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rintegerLiteral">integerLiteral</a> <a href="#r"></a>|<a href="#r"></a> <a href="#rdecimalLiteral">decimalLiteral</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[24]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rarglist" name="rarglist">arglist</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rLPAR">LPAR</a>!<a href="#r"></a> <a href="#r"></a>(<a href="#rexpression">expression</a> <a href="#r"></a>(<a href="#rCOMMA">COMMA</a>!<a href="#r"></a> <a href="#rexpression">expression</a>)<a href="#r"></a>*<a href="#r"></a>)<a href="#r"></a>?<a href="#r"></a> <a href="#rRPAR">RPAR</a>!<a href="#r"></a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[25]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rstringliteral" name="rstringliteral">stringliteral</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#rQSTRING">QSTRING</a>
+<a href="#r"></a>   </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[26]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rIRIREF" name="rIRIREF">IRIREF</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"><a href="#r"></a> <a href="#riri">iri</a>
+<a href="#r"></a>   </td>
+</tr>
+  </tbody></table>
+<h2 id="snon">SQL Terminals</h2>
+
+<table><tbody>
+
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[27]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="riri" name="riri">iri</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> < ([^<>\"\{\}\|\^`\\])* >
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[28]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rDISTINCT" name="rDISTINCT">DISTINCT</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "distinct"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[29]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rSTAR" name="rSTAR">STAR</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "*"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[30]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rROW" name="rROW">ROW</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "row"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[31]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rVAR" name="rVAR">VAR</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> [\$][a-zA-Z]([a-zA-Z0-9\_\-\.]*[a-zA-Z0-9\_\-]+)?
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[32]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rCOMMA" name="rCOMMA">COMMA</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> ","
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[33]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rLPAR" name="rLPAR">LPAR</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "("
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[34]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rAS" name="rAS">AS</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "as"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[35]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rRPAR" name="rRPAR">RPAR</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> ")"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[36]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rFROM" name="rFROM">FROM</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "from"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[37]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rQSTRING" name="rQSTRING">QSTRING</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> \"(\"\"|[^\"])*\"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[38]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rDOT" name="rDOT">DOT</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "."
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[39]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rWHERE" name="rWHERE">WHERE</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "where"{WhiteSpace}* | "where"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[40]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rAND" name="rAND">AND</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "and"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[41]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rOR" name="rOR">OR</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "or"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[42]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rLCURLY" name="rLCURLY">LCURLY</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "{"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[43]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rRCURLY" name="rRCURLY">RCURLY</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "}"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[44]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rCOUNT" name="rCOUNT">COUNT</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "count"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[45]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rMAX" name="rMAX">MAX</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "max"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[46]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rMIN" name="rMIN">MIN</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "min"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[47]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rAVG" name="rAVG">AVG</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "avg"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[48]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rSUM" name="rSUM">SUM</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "sum"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[49]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rSAMPLE" name="rSAMPLE">SAMPLE</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "sample"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[50]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rNOTKW" name="rNOTKW">NOTKW</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "not"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[51]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rEXISTS" name="rEXISTS">EXISTS</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "exists"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[52]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rEQUALS" name="rEQUALS">EQUALS</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "="
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[53]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rLESSTHAN" name="rLESSTHAN">LESSTHAN</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "<"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[54]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rGREATERTHAN" name="rGREATERTHAN">GREATERTHAN</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> ">"
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[55]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rLESSTHANEQUALS" name="rLESSTHANEQUALS">LESSTHANEQUALS</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "<="
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[56]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rGREATERTHANEQUALS" name="rGREATERTHANEQUALS">GREATERTHANEQUALS</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> ">="
+  </td>
+</tr>
+<tr valign="baseline">
+  <td><code class="gRuleLabel">[57]&nbsp;&nbsp;</code></td>
+  <td><code class=gRuleHead"><a id="rHAFENEQUALS" name="rHAFENEQUALS">HAFENEQUALS</a></code></td>  <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+  <td><code class="gRuleBody"> "!="
+  </td>
+</tr>
+  </tbody></table>
 </body>
 </html>
