@@ -54,3 +54,13 @@ To get an overview of the possible parameters of xsparql execute
 You can also assign values to variables declared as external using an equals sign ($graph in this example):
 
    java -jar lang/target/lang-0.2-jar-with-dependencies.jar query.xs graph="file:///home/user/graph.rdf"
+
+5) Further documentation
+
+* [Wiki](wiki)
+* [Full grammar as html](doc/grammar.html)
+* [Full grammar railroad diagrams](doc/grammar.xhtml)
+* [Full grammar ebnf](doc/grammar.ebnf)
+* [Non terminals grammar as html](doc/grammar-nonterminals.html)
+* [Non terminals grammar railroad diagrams](doc/grammar-nonterminals.xhtml)
+* [Non terminals grammar ebnf](doc/grammar-nonterminals.ebnf)
