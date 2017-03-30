@@ -1,7 +1,7 @@
 README XSPARQL
 
 
-1) Prerequisites
+## Prerequisites
 
 You will need at least:
 
@@ -19,7 +19,7 @@ The central Apache Maven repository contains almost all dependencies of XSPARQL.
     `mvn install:install-file -DgroupId=net.sf.saxon -DartifactId=saxon -Dversion=9.3 -Dpackaging=jar -Dfile=<path-to-jar-file>`
 
 
-2) Building XSPARQL
+## Building XSPARQL
 
 In the main xsparql directory (where you probably found this README) run maven with the install goal:
 
@@ -28,7 +28,7 @@ In the main xsparql directory (where you probably found this README) run maven w
 When running the first time this will take some time since maven will download all the dependencies from the central repository.
 
 
-3) OPTIONAL
+## OPTIONAL
 
 If you want to use Graphviz to visualize a syntax tree download it from
 
@@ -40,7 +40,7 @@ Don't forget to set the path accordingly if not already done by the installation
 You will also need a directory called ./tfd for the dot files and the generated files.
 
 
-4) Running XSPARQL
+## Running XSPARQL
 
 You can run xsparql from the the created jar file:
 
@@ -54,7 +54,7 @@ You can also assign values to variables declared as external using an equals sig
 
    `java -jar lang/target/lang-0.2-jar-with-dependencies.jar query.xs graph="file:///home/user/graph.rdf"`
 
-5) Further documentation
+## Further documentation
 
 * [Wiki](../../wiki/Home)
 * [Full grammar as html](doc/grammar.html)
