@@ -1,13 +1,12 @@
 README XSPARQL
 
 
-1) Prerequisites
+## Prerequisites
 
 You will need at least:
 
-  * Java JDK (at least Java 5): http://java.sun.com/javase/downloads/
-
-  * Apache Maven 2: http://maven.apache.org/
+  * [Java JDK (at least Java 5)](http://java.sun.com/javase/downloads/)
+  * [Apache Maven 2](http://maven.apache.org/)
 
 The central Apache Maven repository contains almost all dependencies of XSPARQL. Because of licensing issues the following dependencies have to be downloaded manually and installed to your local maven repository:
 
@@ -17,19 +16,19 @@ The central Apache Maven repository contains almost all dependencies of XSPARQL.
 
     Install the jar file in your local maven repository:
     
-    mvn install:install-file -DgroupId=net.sf.saxon -DartifactId=saxon -Dversion=9.3 -Dpackaging=jar -Dfile=<path-to-jar-file>
+    `mvn install:install-file -DgroupId=net.sf.saxon -DartifactId=saxon -Dversion=9.3 -Dpackaging=jar -Dfile=<path-to-jar-file>`
 
 
-2) Building XSPARQL
+## Building XSPARQL
 
 In the main xsparql directory (where you probably found this README) run maven with the install goal:
 
-   mvn install
+   `mvn install`
 
 When running the first time this will take some time since maven will download all the dependencies from the central repository.
 
 
-3) OPTIONAL
+## OPTIONAL
 
 If you want to use Graphviz to visualize a syntax tree download it from
 
@@ -41,16 +40,26 @@ Don't forget to set the path accordingly if not already done by the installation
 You will also need a directory called ./tfd for the dot files and the generated files.
 
 
-4) Running XSPARQL
+## Running XSPARQL
 
 You can run xsparql from the the created jar file:
 
-   java -jar lang/target/lang-0.2-jar-with-dependencies.jar query.xs
+   `java -jar lang/target/lang-0.2-jar-with-dependencies.jar query.xs`
 
 To get an overview of the possible parameters of xsparql execute
 
-   java -jar lang/target/lang-0.2-jar-with-dependencies.jar -h
+   `java -jar lang/target/lang-0.2-jar-with-dependencies.jar -h`
 
 You can also assign values to variables declared as external using an equals sign ($graph in this example):
 
-   java -jar lang/target/lang-0.2-jar-with-dependencies.jar query.xs graph="file:///home/user/graph.rdf"
+   `java -jar lang/target/lang-0.2-jar-with-dependencies.jar query.xs graph="file:///home/user/graph.rdf"`
+
+## Further documentation
+
+* [Wiki](../../wiki/Home)
+* [Full grammar as html](doc/grammar.html)
+* [Full grammar railroad diagrams](doc/grammar.xhtml)
+* [Full grammar ebnf](doc/grammar.ebnf)
+* [Non terminals grammar as html](doc/grammar-nonterminals.html)
+* [Non terminals grammar railroad diagrams](doc/grammar-nonterminals.xhtml)
+* [Non terminals grammar ebnf](doc/grammar-nonterminals.ebnf)

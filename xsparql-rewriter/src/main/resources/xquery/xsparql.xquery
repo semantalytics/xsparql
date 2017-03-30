@@ -219,7 +219,7 @@ declare function _xsparql:_rdf_term($Node as item()) as xs:string
                     else if (fn:contains($d, """")) then fn:concat("""", fn:replace($d, """","\\"""), """")
                       else fn:concat("""", $d, """")
 
-                return fn:concat($value, if($L) then fn:concat("@", $L) else "", 
+                return fn:concat($value, if($L and fn:not($DT)) then fn:concat("@", $L) else "", 
                                      if($DT) then 
                                        if (fn:starts-with($DT, "http://")) then fn:concat("^^<", $DT,">") else fn:concat("^^", $DT,"")
                                      else () 
