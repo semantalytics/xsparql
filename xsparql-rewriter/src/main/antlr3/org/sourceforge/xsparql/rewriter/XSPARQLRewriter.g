@@ -1037,7 +1037,7 @@ queryBody
           ^(T_PARAMS ^(T_PAR 
             ^(T_BODY_PART
               COMMENT["N3 namespace declaration"]
-              QSTRING[getRDFNamespaceDecls()]
+              QSTRING["@prefix xs: <http://www.w3.org/2001/XMLSchema#> .\n"+getRDFNamespaceDecls()]
             )
          (^(T_BODY_PART exprSingle))+
          )
