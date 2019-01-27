@@ -14,7 +14,7 @@
   <name>XSPARQL parent</name>
 
   <packaging>pom</packaging>
-  <version>20140722</version>
+  <version>0.6.0-SNAPSHOT</version>
   <url>http://xsparql.deri.org/</url>
   <licenses>
     <license>
