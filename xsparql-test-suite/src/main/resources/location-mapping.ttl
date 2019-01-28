@@ -18,6 +18,13 @@
 # Use N3's , (multiple objects => multiple statements of same subject and predicate)
 
 [] lm:mapping
-   [ lm:name "http://xsparql.deri.org/data/relations.rdf" ; lm:altName "file:src/main/resources/xsparql/data/relations.rdf" ]
+   [ lm:name "http://xsparql.deri.org/data/relations.rdf" ; lm:altName "file:src/main/resources/xsparql/data/relations.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/relations.xml" ; lm:altName "file:src/main/resources/xsparql/data/relations.xml" ],
+   [ lm:name "http://xsparql.deri.org/data/relations.ttl" ; lm:altName "file:src/main/resources/xsparql/data/relations.ttl" ],
+   [ lm:name "http://xsparql.deri.org/data/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/foaf.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/manifest-syntax.ttl" ; lm:altName "file:src/main/resources/xsparql/data/manifest-syntax.ttl" ],
+   [ lm:name "http://xsparql.deri.org/data/sample_distribution_data.n3" ; lm:altName "file:src/main/resources/xsparql/data/sample_distribution_data.n3" ],
+   [ lm:name "http://xsparql.deri.org/data/sample_distribution_data.nt" ; lm:altName "file:src/main/resources/xsparql/data/sample_distribution_data.nt" ],
+   [ lm:name "http://polleres.net/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/polleres-foaf.rdf" ]
    .
 

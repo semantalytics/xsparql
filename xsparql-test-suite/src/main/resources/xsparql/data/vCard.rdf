@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:nodeID="r1199538229r311r1">
+    <ns0:FN xmlns:ns0="http://www.w3.org/2001/vcard-rdf/3.0#">Axel Polleres</ns0:FN>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="r1199538229r311r1">
+    <ns0:Given xmlns:ns0="http://www.w3.org/2001/vcard-rdf/3.0#">Axel</ns0:Given>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="r1199538229r311r1">
+    <ns0:Family xmlns:ns0="http://www.w3.org/2001/vcard-rdf/3.0#">Polleres</ns0:Family>
+  </rdf:Description>
+</rdf:RDF>
+
