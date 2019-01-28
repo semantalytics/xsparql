@@ -1,95 +1,97 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>xsparql-test-suite</artifactId>
-  <name>XSPARQL compliance test suite</name>
-  <description>XSPARQL compliance test suite</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>xsparql-test-suite</artifactId>
+    <name>XSPARQL compliance test suite</name>
+    <description>XSPARQL compliance test suite</description>
 
-  <parent>
-    <groupId>org.sourceforge.xsparql</groupId>
-    <artifactId>parent</artifactId>
-    <version>20140722</version>
-  </parent>
-  
-  <dependencies>
-  	<dependency>
-			<groupId>org.openrdf.sesame</groupId>
-			<artifactId>sesame-runtime</artifactId>
-			<version>2.7.10</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-dbcp</groupId>
-					<artifactId>commons-dbcp</artifactId>
-				</exclusion>
-			</exclusions>
-  	</dependency>
-  	
-  	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-api</artifactId>
-		<version>1.6.1</version>
-  		<scope>compile</scope>
-  	</dependency>
-  	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-log4j12</artifactId>
-		<version>1.6.1</version>
-  		<scope>runtime</scope>
-  	</dependency>
-  	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>jul-to-slf4j</artifactId>
-		<version>1.6.1</version>
-  		<scope>compile</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>${project.groupId}</groupId>
-  		<artifactId>xsparql-rewriter</artifactId>
-  		<version>${project.version}</version>
-  		<scope>compile</scope>
-  	</dependency><dependency>
-  		<groupId>${project.groupId}</groupId>
-  		<artifactId>xsparql-evaluator</artifactId>
-  		<version>${project.version}</version>
-  		<scope>compile</scope>
-  		<exclusions>
-  			<exclusion>
-  				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-  			</exclusion>
-  		</exclusions>
-  	</dependency>
-  	<dependency>
-  		<groupId>${project.groupId}</groupId>
-  		<artifactId>xsparql-evaluator-sparql-arq</artifactId>
-  		<version>${project.version}</version>
-  		<scope>compile</scope>
-  		<exclusions>
-  			<exclusion>
-  				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-  			</exclusion>
-  		</exclusions>
-  	</dependency>
-  	<dependency>
-  		<groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-  		<version>4.11</version>
-  		<scope>compile</scope>
-  	</dependency>
-  </dependencies>
-  
+    <parent>
+        <groupId>org.sourceforge.xsparql</groupId>
+        <artifactId>parent</artifactId>
+        <version>20140722</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openrdf.sesame</groupId>
+            <artifactId>sesame-runtime</artifactId>
+            <version>2.7.10</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-dbcp</groupId>
+                    <artifactId>commons-dbcp</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.6.1</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>1.6.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>xsparql-rewriter</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>xsparql-evaluator</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>xsparql-evaluator-sparql-arq</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
     <build>
-    <defaultGoal>install</defaultGoal>
+        <defaultGoal>install</defaultGoal>
 
-    <plugins>
+        <plugins>
 
 
-      <plugin>
-        <groupId>com.google.code.maven-license-plugin</groupId>
-        <artifactId>maven-license-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-  
+            <plugin>
+                <groupId>com.google.code.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
 
