@@ -25,6 +25,8 @@
    [ lm:name "http://xsparql.deri.org/data/manifest-syntax.ttl" ; lm:altName "file:src/main/resources/xsparql/data/manifest-syntax.ttl" ],
    [ lm:name "http://xsparql.deri.org/data/sample_distribution_data.n3" ; lm:altName "file:src/main/resources/xsparql/data/sample_distribution_data.n3" ],
    [ lm:name "http://xsparql.deri.org/data/sample_distribution_data.nt" ; lm:altName "file:src/main/resources/xsparql/data/sample_distribution_data.nt" ],
-   [ lm:name "http://polleres.net/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/polleres-foaf.rdf" ]
+   [ lm:name "http://polleres.net/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/polleres-foaf.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/sample_person_geodata.rdf" ; lm:altName "file:src/main/resources/xsparql/data/sample_person_geodata.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/vCard.rdf" ; lm:altName "file:src/main/resources/xsparql/data/vCard.rdf" ]
    .
 
