@@ -102,7 +102,7 @@ class EvaluatorExternalFunctions {
 	/**
 	 * Retrieves data from a url, Converts JSON data to XML
 	 * 
-	 * @param URL   location of the data
+	 * @param String location of the data
 	 * 
 	 */
 	public static String jsonToXML(String loc) {
@@ -132,10 +132,12 @@ class EvaluatorExternalFunctions {
 			xml = serializer.write( json );  
 
 
+			//TODO this should be in a finally block or use a try-with-resources
+
 			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(1);
+			throw new RuntimeException("Unable to dereference url + " + loc);
 		}
 
 		return xml;
