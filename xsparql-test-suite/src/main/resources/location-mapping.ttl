@@ -30,7 +30,9 @@
    [ lm:name "http://xsparql.deri.org/data/vCard.rdf" ; lm:altName "file:src/main/resources/xsparql/data/vCard.rdf" ],
    [ lm:name "http://xsparql.deri.org/data/vCard.ttl" ; lm:altName "file:src/main/resources/xsparql/data/vCard.ttl" ],
    [ lm:name "http://members.deri.at/~jamess/foaf_james.xml" ; lm:altName "file:src/main/resources/xsparql/data/foaf_james.xml" ],
-   [ lm:name "http://www.scharffe.fr/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/scharffe-foaf.rdf" ]
-
+   [ lm:name "http://www.scharffe.fr/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/scharffe-foaf.rdf" ],
+   [ lm:name "http://tinf2.vub.ac.be/~sheymans/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/sheymans-foaf.rdf" ],
+   [ lm:name "http://www.deri.ie/fileadmin/scripts/foaf.php?id=12" ; lm:altName "file:src/main/resources/xsparql/data/foaf12.xml" ],
+   [ lm:name "http://sw.deri.org/~haller/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/haller-foaf.rdf" ]
    .
 
