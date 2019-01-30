@@ -39,6 +39,7 @@
    [ lm:name "http://www.kr.tuwien.ac.at/staff/faber/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/faber-foaf.rdf" ],
    [ lm:name "http://www.kr.tuwien.ac.at/staff/faber/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/faber-foaf.rdf" ],
    [ lm:name "http://xsparql.deri.org/data/alice.ttl" ; lm:altName "file:src/main/resources/xsparql/data/alice.ttl" ],
+   [ lm:name "http://nunolopes.org/blog/index.php?sioc_type=site" ; lm:altName "file:src/main/resources/xsparql/data/nunolopes-sioc-type.ttl" ],
    [ lm:name "http://example.org/x/src/main/resources/xsparql/testcases-dawg/data-r2/basic/data-1.ttl" ; lm:altName "file:src/main/resources/xsparql/testcases-dawg/data-r2/basic/data-1.ttl" ]
    .
 
