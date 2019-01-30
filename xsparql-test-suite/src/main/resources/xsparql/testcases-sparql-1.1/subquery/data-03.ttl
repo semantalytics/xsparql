@@ -3,4 +3,5 @@
 ex:george ex:knows ex:ringo, ex:john .
 ex:ringo ex:knows ex:george, ex:john.
 ex:paul  ex:knows ex:george, ex:john .
+ex:john ex:knows ex:ringo .
 
