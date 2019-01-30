@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group prefer="public">
+        <uri name="http://xsparql.deri.org/data/relations.xml" uri="./xsparql/relations.xml"/>
+    </group>
+</catalog>
