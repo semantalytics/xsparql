@@ -10,7 +10,7 @@ declare namespace foaf = "http://xmlns.com/foaf/0.1/";
 	  	}
 	  	order by ($productPrice + $shippingCost AS $finalPrice)
 	  	return 
-	  		<product id="{$product}">{
+	  		<product id="{$product}">
 	  			<shippingCost>{$shippingCost}</shippingCost>
 	  			<productPrice>{$productPrice}</productPrice>
 	  			<finalPrice>{$finalPrice}</finalPrice>

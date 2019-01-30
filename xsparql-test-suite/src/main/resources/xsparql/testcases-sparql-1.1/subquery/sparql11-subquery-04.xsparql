@@ -10,7 +10,7 @@ from <src/main/resources/xsparql/testcases-sparql-1.1/subquery/data-03.ttl> wher
     } 
     group by $popular
     order by desc(count($someone))
-    limit 2
+    limit 1
   }
 }
 

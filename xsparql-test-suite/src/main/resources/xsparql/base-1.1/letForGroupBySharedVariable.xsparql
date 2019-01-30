@@ -9,7 +9,7 @@ declare namespace foaf = "http://xmlns.com/foaf/0.1/";
 	  	group by $name
 	  	order by $totalFriends
 	  	return 
-	  		<person id="{$person}">{
+	  		<person id="{$person}">
 	  			<totalFriends>{$totalFriends}</totalFriends>
 	        </person>
 }

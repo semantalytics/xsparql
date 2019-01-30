@@ -14,8 +14,8 @@ declare variable $user := 'jacktrades';
 let $lastfm := fn:concat("http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&amp;api_key=16307daa8ce0d0cc1dab015e0fdab8ec&amp;user=", $user) 
   for $artistInfo in doc($lastfm)//artist[@rank < 6] 
   let $artist := data($artistInfo/name) 
-  let $uri := fn:concat("http://lastfm.rdfize.com/artists/", fn:encode-for-uri($artist)) 
-  for * from $uri 
+  let $uri := fn:concat("http://lastfm.rdfize.com/artists/", fn:encode-for-uri($artist))
+  for * from $uri
   where { $event mo:performer $uri ; a mo:Performance. 
           $event event:place $venue; rdfs:label $label . 
           optional { $venue geo:long $long; geo:lat $lat } } 

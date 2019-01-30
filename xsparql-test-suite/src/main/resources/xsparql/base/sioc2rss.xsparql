@@ -6,7 +6,7 @@ declare namespace rdfs="http://www.w3.org/2000/01/rdf-schema#";
 <channel>
 <title>
       {for $name 
-       from <http://nunolopes.org/blog/index.php?sioc_type=site>
+       from <http://www.mkbergman.com/?sioc_type=site>
        where { [a sioc:Forum] sioc:name $name }
        return $name
       }
