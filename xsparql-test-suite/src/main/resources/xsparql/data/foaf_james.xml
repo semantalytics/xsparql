@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:rel="http://purl.org/vocab/relationship/">
+
+  <foaf:Person rdf:about="http://members.deri.at/~jamess/foaf_james.xml#me"
+     foaf:givenname="James"
+     foaf:title="B.Sc. (Hons.)"
+     foaf:family_name="Scicluna">
+    <foaf:name>James Scicluna</foaf:name>
+    <foaf:phone>+43 512 507 6450</foaf:phone>
+    <foaf:fax  >+43 512 507 9872</foaf:fax>
+    <foaf:mbox              rdf:resource="mailto:james.scicluna@deri.org"/>
+    <foaf:depiction         rdf:resource="http://iris.deri.at/images/people/james_scicluna.jpg"/>
+    <foaf:img               rdf:resource="http://iris.deri.at/images/people/james_scicluna.jpg"/>
+    <foaf:homepage          rdf:resource="http://members.deri.at/~jamess/"/>
+    <foaf:workplaceHomepage rdf:resource="http://www.deri.at"/>
+    <foaf:schoolHomepage    rdf:resource="http://www.uibk.ac.at"/>
+    <foaf:interest          rdf:resource="http://en.wikipedia.org/wiki/Semantic_Web_Services"/>
+    <foaf:interest          rdf:resource="http://en.wikipedia.org/wiki/Web_services"/>
+    <foaf:interest          rdf:resource="http://en.wikipedia.org/wiki/Semantic_Web"/>
+    <foaf:interest          rdf:resource="http://en.wikipedia.org/wiki/Workflow_management"/>
+    <foaf:currentProject    rdf:resource="http://www.infrawebs-eu.org/"/>
+    <foaf:currentProject    rdf:resource="http://www.wsmo.org/"/>
+    <foaf:currentProject    rdf:resource="http://www.wsml.org/"/>
+    <foaf:currentProject    rdf:resource="http://www.wsmx.org/"/>
+    <rdfs:seeAlso           rdf:resource="http://members.deri.at/~jamess/foaf_james.xml"/>
+	<rel:collaboratesWith rdf:resource="http://members.deri.at/~jamess/foaf_james.xml#StijnHeymans"/>
+	<rel:collaboratesWith rdf:resource="http://members.deri.at/~jamess/foaf_james.xml#JoergHoffmann"/>
+	<rel:collaboratesWith rdf:resource="http://members.deri.at/~jamess/foaf_james.xml#ThomasHaselwanter"/>
+
+
+    <foaf:knows>
+      <foaf:Person rdf:about="http://members.deri.at/~jamess/foaf_james.xml#StijnHeymans">
+        <foaf:name>Stijn Heymans</foaf:name>
+        <rdfs:seeAlso       rdf:resource="http://members.deri.at/~stijnh/foaf.rdf"/>
+        <foaf:homepage      rdf:resource="http://members.deri.at/~stijnh/"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/stijn_heymans.jpg"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person rdf:about="http://members.deri.at/~jamess/foaf_james.xml#JoergHoffmann">
+        <foaf:name>Joerg Hoffmann</foaf:name>
+        <foaf:homepage      rdf:resource="http://members.deri.at/~joergh/"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/joerg_hoffmann.jpg"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Darko Anicic</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.deri.at/about/team/details/darko-anicic/"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/darko_anicic.jpg"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Jos de Bruijn</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.debruijn.net/"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/jos_debruijn.jpg"/>
+        <rdfs:seeAlso       rdf:resource="http://www.debruijn.net/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Holger Lausen</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.holgerlausen.net/"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/holger_lausen.jpg"/>
+      </foaf:Person>
+    </foaf:knows>
+
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Uwe Keller</foaf:name>
+		<rdfs:seeAlso 		rdf:resource="http://members.deri.at/~uwek/uwe-foaf.rdf"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/uwe_keller.jpg"/>
+		<foaf:homepage 		rdf:resource="http://www.uwekeller.net/"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Cristina Feier</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.deri.at/about/team/details/cristina-feier/"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/cristina_feier.jpg"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Richard Poettler</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.deri.at/about/team/details/richard-poettler/"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/richard_poettler.jpg"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Nathalie Steinmetz</foaf:name>
+        <foaf:homepage      rdf:resource="http://homepage.uibk.ac.at/~csad3180/"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/nathalie_steinmetz.jpg"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person rdf:about="http://members.deri.at/~jamess/foaf_james.xml#ThomasHaselwanter">
+        <foaf:name>Thomas Haselwanter</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.deri.ie/about/team/member/thomas_haselwanter/"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/thomas_haselwanter.jpg"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Ruben Lara</foaf:name>
+        <foaf:homepage      rdf:resource="http://nets.ii.uam.es/~rlara/"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/ruben_lara.jpg"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Axel Polleres</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.polleres.net"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/axel_polleres.jpg"/>
+		<rdfs:seeAlso 		rdf:resource="http://platon.escet.urjc.es/~axel/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Ruzica Piskac</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.deri.at/about/team/details/ruzica-piskac/"/>
+        <foaf:depiction     rdf:resource="http://iris.deri.at/images/people/ruzica_piskac.jpg"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Armin Haller</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.armin-haller.com/"/>
+        <foaf:depiction     rdf:resource="http://sw.deri.org/~haller/images/me.gif"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Sven Schwarz</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.dfki.uni-kl.de/~schwarz/"/>
+        <foaf:depiction     rdf:resource="http://www.dfki.uni-kl.de/~schwarz/images/sven_chicago_small.jpg"/>
+		<rdfs:seeAlso 		rdf:resource="http://www.dfki.uni-kl.de/~schwarz/foaf.xml"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Charlie Abela</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.cs.um.edu.mt/~cabe2/"/>
+        <foaf:depiction     rdf:resource="http://www.cs.um.edu.mt/~cabe2/images/IMG_0013.JPG"/>
+		<rdfs:seeAlso 		rdf:resource="http://staff.um.edu.mt/cabe2/myfoaf_desc.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Juan Miguel Gómez Berbís</foaf:name>
+        <foaf:homepage      rdf:resource="http://www.jmgomez.net/"/>
+        <foaf:depiction     rdf:resource="http://www.jmgomez.net/juanmi.JPG"/>
+		<rdfs:seeAlso 		rdf:resource="http://www.jmgomez.net/juanfoaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+  </foaf:Person>
+</rdf:RDF>
