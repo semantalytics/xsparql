@@ -1,0 +1,15 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.org/alice#> .
+
+ex:me a foaf:Person .
+ex:me foaf:name "Alice" .
+ex:me foaf:mbox <mailto:alice@example.org> .
+ex:me foaf:knows <http://example.org/bob#me> .
+ex:me foaf:knows <http://example.org/alice#me> .
+ex:me foaf:name "Bob" .
+ex:me foaf:knows <http://example.org/charlie#me> .
+ex:me foaf:knows <http://example.org/alice#me> .
+ex:me foaf:name "Charlie" .
+ex:me foaf:knows <http://example.org/snoopy> .
+<http://example.org/snoopy> foaf:name "Snoopy"@en .
