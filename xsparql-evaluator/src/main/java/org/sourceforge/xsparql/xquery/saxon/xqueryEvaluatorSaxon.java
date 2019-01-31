@@ -58,6 +58,8 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.xml.transform.Source;
+import javax.xml.transform.URIResolver;
+import javax.xml.transform.stream.StreamSource;
 
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
@@ -66,6 +68,7 @@ import net.sf.saxon.s9api.Serializer;
 import net.sf.saxon.s9api.XQueryCompiler;
 import net.sf.saxon.s9api.XdmAtomicValue;
 
+import org.apache.jena.util.LocationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sourceforge.xsparql.sparql.DatasetManager;
@@ -290,7 +293,12 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 		}
 
 		try {
+			evaluator.setURIResolver(new URIResolver() {
 
+				public Source resolve(String href, String base) {
+					return new StreamSource(LocationMapper.get().getAltEntry(href));
+				}
+			});
 			evaluator.run(serializer);
 
 		} catch (SaxonApiException e) {
