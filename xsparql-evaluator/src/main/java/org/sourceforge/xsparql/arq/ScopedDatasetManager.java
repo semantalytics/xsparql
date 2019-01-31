@@ -36,7 +36,7 @@
  * University of Technology,  Nuno Lopes on behalf of NUI Galway.
  *
  */ 
-package org.sourceforge.xsparql.xquery.saxon.arq;
+package org.sourceforge.xsparql.arq;
 
 import java.util.Arrays;
 import java.util.HashMap;

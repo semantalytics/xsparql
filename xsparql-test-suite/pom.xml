@@ -62,7 +62,7 @@
         -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>xsparql-evaluator-sparql-arq</artifactId>
+            <artifactId>xsparql-evaluator</artifactId>
             <version>${project.version}</version>
             <exclusions>
                 <exclusion>

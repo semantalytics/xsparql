@@ -36,11 +36,17 @@
  * University of Technology,  Nuno Lopes on behalf of NUI Galway.
  *
  */ 
-package org.sourceforge.xsparql.xquery.saxon.arq;
-
-import org.sourceforge.xsparql.xquery.saxon.deleteScopedDatasetExtFunction;
+package org.sourceforge.xsparql.arq;
 
 import net.sf.saxon.lib.*;
+
+import java.io.*;
+
+import javax.xml.transform.stream.StreamSource;
+
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
+import org.sourceforge.xsparql.xquery.saxon.createScopedDatasetExtFunction;
 
 import net.sf.saxon.tree.iter.*;
 import net.sf.saxon.om.*;
@@ -51,26 +57,37 @@ import net.sf.saxon.trans.XPathException;
  * 
  * @author Nuno Lopes
  */
-public class deleteScopedDatasetExtArqFunction extends deleteScopedDatasetExtFunction {
-	private static final long serialVersionUID = -7577497271941404411L;
+public class createScopedDatasetExtArqFunction extends createScopedDatasetExtFunction {
+	private static final long serialVersionUID = -3645845258989697549L;
 
 	@Override
 	public ExtensionFunctionCall makeCallExpression() {
 
 		return new ExtensionFunctionCall() {
 
-			private static final long serialVersionUID = 8278533150880474564L;
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7030338651481369238L;
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public SequenceIterator call(SequenceIterator[] arguments,
 					XPathContext context) throws XPathException {
 
-				String id = arguments[0].next().getStringValue();
+				String q = arguments[0].next().getStringValue();
+				String id = arguments[1].next().getStringValue();
 
-				ScopedDatasetManager.deleteScopedDataset(id);
+				ResultSet resultSet = ScopedDatasetManager.createScopedDataset(q,
+						id);
 
-				return EmptyIterator.getInstance();
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+				ResultSetFormatter.outputAsXML(outputStream, resultSet);
+				ByteArrayInputStream inputStream = new ByteArrayInputStream(
+						outputStream.toByteArray());
+
+				return SingletonIterator.makeIterator(context.getConfiguration()
+						.buildDocument(new StreamSource(inputStream)));
 			}
 
 		};
