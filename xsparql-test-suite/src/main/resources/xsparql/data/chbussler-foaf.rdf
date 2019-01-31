@@ -24,12 +24,6 @@
   <foaf:depiction rdf:resource="http://hometown.aol.com/chbussler/pictures/Bussler.gif"/>
   <foaf:workplaceHomepage rdf:resource="http://www.mercesystems.com"/>
 
-  <sw:Location>
-    <sw:city>San Jose</sw:city>
-    <sw:state>CA</sw:state>
-    <sw:country> USA </sw:country>
-  </sw:Location>
-
   <foaf:knows>
     <foaf:Person>
       <foaf:name>Tim Berners-Lee</foaf:name>
