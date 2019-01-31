@@ -1,0 +1,33 @@
+<rdf:RDF
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/"
+      xmlns:admin="http://webns.net/mvcb/"
+      xmlns:dp="http://sw.deri.ie/2004/08/pubs/swpubs#"
+      xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<foaf:PersonalProfileDocument rdf:about="">
+  <foaf:maker rdf:nodeID="me"/>
+  <foaf:primaryTopic rdf:nodeID="me"/>
+  <admin:generatorAgent rdf:resource="http://www.ldodds.com/foaf/foaf-a-matic"/>
+  <admin:errorReportsTo rdf:resource="mailto:leigh@ldodds.com"/>
+</foaf:PersonalProfileDocument>
+<foaf:Person rdf:nodeID="me">
+<foaf:name>Ina O' Murchu</foaf:name>
+<foaf:title>Ms</foaf:title>
+<foaf:givenname>Ina</foaf:givenname>
+<foaf:family_name>O' Murchu</foaf:family_name>
+<foaf:nick>Ina</foaf:nick>
+<foaf:mbox_sha1sum>a1e21663c93c448dd22eb4ea9d95d4db8be573d3</foaf:mbox_sha1sum>
+<foaf:workplaceHomepage rdf:resource="http://www.deri.ie"/></foaf:Person>
+ 	
+	
+<dp:Techreport rdf:about="http://www.deri.org/publications/techpapers/documents/DERI-TR-2004-08-11.pdf">
+  <dc:title>Online Social and Business Networking Communities</dc:title> 
+  <dc:author>Ina O' Murchu, John Breslin, Stefan Decker</dc:author>
+  <dc:institution>DERI Galway</dc:institution>
+  <dp:date>August 2004</dp:date>
+</dp:Techreport>
+
+
+</rdf:RDF>
