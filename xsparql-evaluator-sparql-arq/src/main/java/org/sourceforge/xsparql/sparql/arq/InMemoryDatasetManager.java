@@ -3,13 +3,12 @@ package org.sourceforge.xsparql.sparql.arq;
 import java.net.URL;
 import java.util.Set;
 
+import org.apache.jena.query.Dataset;
+import org.apache.jena.query.DatasetFactory;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
 import org.sourceforge.xsparql.sparql.DatasetManager;
-
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.DatasetFactory;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 public class InMemoryDatasetManager implements DatasetManager {
 	public static final InMemoryDatasetManager INSTANCE = new InMemoryDatasetManager();

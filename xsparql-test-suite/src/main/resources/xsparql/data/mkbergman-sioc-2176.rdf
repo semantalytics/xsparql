@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="WP SIOC Plugin - v. 1.25 - http://rdfs.org/sioc/wordpress/" -->
+<rdf:RDF
+	xmlns="http://xmlns.com/foaf/0.1/"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:rss="http://purl.org/rss/1.0/"
+	xmlns:admin="http://webns.net/mvcb/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:sioc="http://rdfs.org/sioc/ns#">
+
+<!-- sioc_type = post -->
+
+<foaf:Document rdf:about="">
+	<dc:title>SIOC Post profile for "AI3:::Adaptive Information"</dc:title>
+	<dc:description>A SIOC profile describes the structure and contents of a weblog in a machine readable form. For more information please refer to http://sioc-project.org/.</dc:description>
+	<foaf:primaryTopic rdf:resource="http://www.mkbergman.com/2176/statistics-on-the-kbpedia-v-160-release/"/>
+	<admin:generatorAgent rdf:resource="http://rdfs.org/sioc/wp-sioc.php?version=1.25"/>
+</foaf:Document>
+
+<sioc:Post rdf:about="http://www.mkbergman.com/2176/statistics-on-the-kbpedia-v-160-release/">
+	<sioc:link rdf:resource="http://www.mkbergman.com/2176/statistics-on-the-kbpedia-v-160-release/"/>
+	<sioc:has_container rdf:resource="http://www.mkbergman.com/index.php?sioc_type=site#weblog"/>
+	<dc:title>Statistics on the KBpedia v 160 Release</dc:title>
+	<sioc:has_creator>
+		<sioc:User rdf:about="http://www.mkbergman.com/author/mkb/" rdfs:label="Mike Bergman">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=user&amp;sioc_id=2"/>
+		</sioc:User>
+	</sioc:has_creator>
+	<foaf:maker>
+		<foaf:Person rdf:about="http://www.mkbergman.com/author/mkb/#foaf" rdfs:label="Mike Bergman">
+			<foaf:mbox_sha1sum>b6876bb3a1ddb7cb934f8a991366fcb8dd64a7e0</foaf:mbox_sha1sum>
+			<foaf:homepage rdf:resource="http://www.mkbergman.com"/>
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=user&amp;sioc_id=2"/>
+		</foaf:Person>
+	</foaf:maker>
+	<dcterms:created>2018-11-13T06:42:54Z</dcterms:created>
+	<sioc:content>Better Mappings, More Properties
+When we released KBpedia v 1.60 as open source a couple of weeks back, I noted that I would follow-up the announcement with more details on the changes made in preparation for the release. This post provides that update.
+KBpedia is a computable knowledge structure that combines seven major public knowledge bases — Wikipedia, Wikidata, schema.org, DBpedia, GeoNames, OpenCyc, and UMBEL. KBpedia supplements these core KBs with mappings to more than a score of additional leading vocabularies. The entire KBpedia structure is computable, meaning it can be reasoned over and logically sliced-and-diced to produce training sets and reference standards for machine learning and data interoperability. KBpedia provides a coherent overlay for retrieving and organizing Wikipedia or Wikidata content. KBpedia greatly reduces the time and effort traditionally required for knowledge-based artificial intelligence (KBAI) tasks.
+KBpedia is a comprehensive knowledge structure for promoting data interoperability and KBAI. KBpedia's upper structure, the KBpedia Knowledge Ontology (KKO), is based on the universal categories and knowledge representation theories of the great 19th century American logician, philosopher, polymath and scientist, Charles Sanders Peirce. This design provides a logical and coherent underpinning to the entire KBpedia structure. The design is also modular and fairly straightforward to adapt to enterprise or domain purposes. KBpedia was first released in October 2016. My initial announcement provides further details on KBpedia and how to download it.
+Besides prepping the KBpedia knowledge artifiact for open-source release, we also made these improvement to the base structure in comparison to the prior v 1.51, the last proprietary version:
+
+	The major effort was to increase the mapping to Wikidata, with most mappings represented as owl:equivalentClass. Coverage of KBpedia to Wikidata is now 50%, with 27,423 of KBpedia's reference concepts now mapped to Wikidata. Version 1.60 has 4.5x more coverage than the previous v. 1.51
+	We also continued to increase coverage to Wikipedia, with coverage now at 77%
+	We now have essentially complete coverage to DBpedia ontology, schema.org and GeoNames
+	We doubled the number of mapped properties to nearly 5 K and added schema.org property mappings
+	We organized the properties into attributes, indexes/indices, and external relations.
+
+Please note we measure coverage as the larger of percent of external concepts mapped or percent of KBpedia mapped to the external source. The % Change figures represent the changes from v 1.51 to the new open source v 1.60.
+Besides the property organization, we made few changes in this latest v 1.60 release to the overall structure or scope of KBpedia. The emphasis was on mapping to existing sources and clean up for public release. Here are the major statistics for v 1.60:
+
+
+
+
+Structure
+Value
+% Change
+Coverage
+
+
+No. of RCs
+54,867
+2.7%
+
+
+
+
+KKO
+173
+-0.6%
+
+
+
+
+Standard RCs
+54,694
+2.7%
+
+
+
+
+
+
+
+
+
+
+No. of mapped vocabularies
+23
+-14.8%
+
+
+
+
+Core KBs
+7
+16.7%
+
+
+
+
+Extended vocabs
+16
+-23.8%
+
+
+
+
+
+
+
+
+
+
+No. of typologies
+68
+7.9%
+
+
+
+
+Core entity types
+33
+0.0%
+
+
+
+
+Other core types
+5
+0.0%
+
+
+
+
+Extended types
+30
+20.0%
+
+
+
+
+
+
+
+
+
+
+No. of properties
+4,847
+92.4%
+
+
+
+
+
+
+
+
+
+
+RC Mappings
+139,311
+21.1%
+
+
+
+
+Wikipedia
+42,108
+4.3%
+77%
+
+
+
+Wikidata
+27,423
+446.2%
+50%
+
+
+
+schema.org
+845
+15.1%
+99%
+
+
+
+DBpedia ontology
+764
+0.0%
+99%
+
+
+
+GeoNames
+918
+0.0%
+99%
+
+
+
+OpenCyc
+33,526
+0.0%
+61%
+
+
+
+UMBEL
+33,478
+0.0%
+99%
+
+
+
+Extended vocabs
+249
+-4.2%
+
+
+
+
+
+
+
+
+
+
+Property Mappings
+4,847
+92.4%
+
+
+
+
+Wikidata
+3,970
+57.6%
+
+
+
+
+schema.org
+877
+N/A
+
+
+
+
+
+Through its mapped sources, KBpedia links to more than 30 million entities, the largest percentage coming from Wikidata. The mappings to these external sources are provided in the linkages to the external resources file in the KBpedia downloads. (A larger inferred version is also available.) The external sources keep their own record files. KBpedia distributions provide the links. However, you can access these entities through the KBpedia explorer on the project's Web site (see these entity examples for cameras, cakes, and canyons; clicking on any of the individual entity links will bring up the full instance record.)
+Please know that KBpedia remains under active development, with new updates anticipated in the near future. We are incorporating feedback gained from the initial open source release, and are also committed to increasing the mapping coverage for the artifact and other baseline improvements. Our plan is to complete this baseline before new external sources are added to the system.
+KBpedia is available under the Creative Commons Attribution 4.0 International (CC BY 4.0) license. KBpedia's development to date has been sponsored by Cognonto Corporation.</sioc:content>
+	<content:encoded><![CDATA[<span class="Z3988" title="ctx_ver=Z39.88-2004&#38;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&#38;rfr_id=info%3Asid%2Focoins.info%3Agenerator&#38;rft.type=&#38;rft.format=text&#38;rft.title=Statistics on the KBpedia v 160 Release&#38;rft.source=AI3:::Adaptive Information&#38;rft.date=2018-11-12&#38;rft.identifier=http://www.mkbergman.com/?p=2176&#38;rft.language=English&#38;rft.subject=KBpedia&#38;rft.subject=Knowledge-based Artificial Intelligence&#38;rft.subject=Ontologies&#38;rft.subject=Open Source&#38;rft.subject=Semantic Web&#38;rft.au=Michael K. Bergman"></span><h2><a href="http://kbpedia.com/"><img title="KBpedia" alt="KBpedia" src="http://www.mkbergman.com/wp-content/themes/ai3v2/images/2018Posts/kbpedia-logo-1200.png" style="border: 0px solid; width: 240px; margin-right: 10px;" align="left" /></a>Better Mappings, More Properties</h2>
+<p>When we released<a href="http://kbpedia.org/"> KBpedia v 1.60</a> as open source a couple of weeks back, I noted that I would follow-up the <a href="http://www.mkbergman.com/2168/woohoo-kbpedia-is-now-open-source/">announcement</a> with more details on the changes made in preparation for the release. This post provides that update.</p>
+<p>KBpedia is a computable knowledge structure that combines seven major public knowledge bases — <a href="https://en.wikipedia.org/wiki/Wikipedia">Wikipedia</a>, <a href="https://en.wikipedia.org/wiki/Wikidata">Wikidata</a>, <a href="https://schema.org/">schema.org</a>, <a href="http://dbpedia.org/">DBpedia</a>, <a href="https://en.wikipedia.org/wiki/GeoNames">GeoNames</a>, <a href="https://en.wikipedia.org/wiki/Cyc">OpenCyc</a>, and <a href="http://umbel.org/">UMBEL</a>. KBpedia supplements these core KBs with mappings to more than a score of additional leading vocabularies. The entire KBpedia structure is computable, meaning it can be reasoned over and logically sliced-and-diced to produce training sets and reference standards for machine learning and data interoperability. KBpedia provides a coherent overlay for retrieving and organizing Wikipedia or Wikidata content. KBpedia greatly reduces the time and effort traditionally required for knowledge-based artificial intelligence (<a href="http://www.mkbergman.com/category/kbai/">KBAI</a>) tasks.</p>
+<p>KBpedia is a comprehensive knowledge structure for promoting data interoperability and KBAI. KBpedia&#8217;s upper structure, the <a href="http://kbpedia.org/docs/kko-upper-structure/">KBpedia Knowledge Ontology</a> (KKO), is based on the universal categories and knowledge representation theories of the great 19th century American logician, philosopher, polymath and scientist, <a href="https://en.wikipedia.org/wiki/Charles_Sanders_Peirce">Charles Sanders Peirce</a>. This design provides a logical and coherent underpinning to the entire KBpedia structure. The design is also modular and fairly straightforward to adapt to enterprise or domain purposes. KBpedia was first released in October 2016. My initial announcement provides further details on KBpedia and how to <a href="http://kbpedia.org/resources/downloads/">download it</a>.</p>
+<p>Besides prepping the KBpedia knowledge artifiact for open-source release, we also made these improvement to the base structure in comparison to the prior v 1.51, the last proprietary version:</p>
+<ul>
+<li>The major effort was to increase the mapping to Wikidata, with most mappings represented as <code><span>owl:equivalentClass</span></code>. Coverage of KBpedia to Wikidata is now 50%, with 27,423 of KBpedia&#8217;s reference concepts now mapped to Wikidata. Version 1.60 has 4.5x more coverage than the previous v. 1.51</li>
+<li>We also continued to increase coverage to Wikipedia, with coverage now at 77%</li>
+<li>We now have essentially complete coverage to DBpedia ontology, schema.org and GeoNames</li>
+<li>We doubled the number of mapped properties to nearly 5 K and added schema.org property mappings</li>
+<li>We organized the properties into attributes, indexes/indices, and external relations.</li>
+</ul>
+<p>Please note we measure coverage as the larger of percent of external concepts mapped or percent of KBpedia mapped to the external source. The % Change figures represent the changes from v 1.51 to the new open source v 1.60.</p>
+<p>Besides the property organization, we made few changes in this latest v 1.60 release to the overall structure or scope of KBpedia. The emphasis was on mapping to existing sources and clean up for public release. Here are the major statistics for v 1.60:</p>
+<p><center></p>
+<table style="width: 720px;" cellspacing="0" border="0">
+<tbody>
+<tr>
+<td style="padding: 4px; text-align: center; background-color: #e2e2e2;" colspan="2" valign="middle"><b>Structure</b></td>
+<td style="padding: 4px; text-align: center; background-color: #e2e2e2; width: 120px;"><b>Value</b></td>
+<td style="padding: 4px; text-align: center; background-color: #e2e2e2; width: 120px;"><b>% Change</b></td>
+<td style="padding: 4px; text-align: center; background-color: #e2e2e2; width: 120px;"><b>Coverage</b></td>
+</tr>
+<tr>
+<td style="padding: 4px;" colspan="2" align="left">No. of RCs</td>
+<td style="padding: 4px; text-align: right; width: 120px;">54,867</td>
+<td style="padding: 4px; text-align: center; width: 120px;" sdval="0.026510757717493">2.7%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left; width: 200px;">KKO</td>
+<td style="padding: 4px; text-align: right; width: 120px;">173</td>
+<td style="padding: 4px; text-align: center; width: 120px;">-0.6%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">Standard RCs</td>
+<td style="padding: 4px; text-align: right; width: 120px;">54,694</td>
+<td style="padding: 4px; text-align: center; width: 120px;">2.7%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;"></td>
+<td style="padding: 4px; text-align: right; width: 120px;"></td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td colspan="2" align="left">No. of mapped vocabularies</td>
+<td style="padding: 4px; text-align: right; width: 120px;">23</td>
+<td style="padding: 4px; text-align: center; width: 120px;">-14.8%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">Core KBs</td>
+<td style="padding: 4px; text-align: right; width: 120px;">7</td>
+<td style="padding: 4px; text-align: center; width: 120px;">16.7%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">Extended vocabs</td>
+<td style="padding: 4px; text-align: right; width: 120px;">16</td>
+<td style="padding: 4px; text-align: center; width: 120px;">-23.8%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;"></td>
+<td style="padding: 4px; text-align: right; width: 120px;"></td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px;" colspan="2" align="left">No. of typologies</td>
+<td style="padding: 4px; text-align: right; width: 120px;">68</td>
+<td style="padding: 4px; text-align: center; width: 120px;">7.9%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">Core entity types</td>
+<td style="padding: 4px; text-align: right; width: 120px;">33</td>
+<td style="padding: 4px; text-align: center; width: 120px;">0.0%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">Other core types</td>
+<td style="padding: 4px; text-align: right; width: 120px;">5</td>
+<td style="padding: 4px; text-align: center; width: 120px;">0.0%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">Extended types</td>
+<td style="padding: 4px; text-align: right; width: 120px;">30</td>
+<td style="padding: 4px; text-align: center; width: 120px;">20.0%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;"></td>
+<td style="padding: 4px; text-align: right; width: 120px;"></td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px;" colspan="2" align="left">No. of properties</td>
+<td style="padding: 4px; text-align: right; width: 120px;">4,847</td>
+<td style="padding: 4px; text-align: center; width: 120px;">92.4%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;"></td>
+<td style="padding: 4px; text-align: right; width: 120px;"></td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; text-align: center;" colspan="2" valign="middle"><b>RC Mappings</b></td>
+<td style="padding: 4px; text-align: right; width: 120px;">139,311</td>
+<td style="padding: 4px; text-align: center; width: 120px;">21.1%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">Wikipedia</td>
+<td style="padding: 4px; text-align: right; width: 120px;">42,108</td>
+<td style="padding: 4px; text-align: center; width: 120px;">4.3%</td>
+<td style="padding: 4px; text-align: center; width: 120px;">77%</td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">Wikidata</td>
+<td style="padding: 4px; text-align: right; width: 120px;">27,423</td>
+<td style="padding: 4px; text-align: center; width: 120px;">446.2%</td>
+<td style="padding: 4px; text-align: center; width: 120px;">50%</td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">schema.org</td>
+<td style="padding: 4px; text-align: right; width: 120px;">845</td>
+<td style="padding: 4px; text-align: center; width: 120px;">15.1%</td>
+<td style="padding: 4px; text-align: center; width: 120px;">99%</td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">DBpedia ontology</td>
+<td style="padding: 4px; text-align: right; width: 120px;">764</td>
+<td style="padding: 4px; text-align: center; width: 120px;">0.0%</td>
+<td style="padding: 4px; text-align: center; width: 120px;">99%</td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">GeoNames</td>
+<td style="padding: 4px; text-align: right; width: 120px;">918</td>
+<td style="padding: 4px; text-align: center; width: 120px;">0.0%</td>
+<td style="padding: 4px; text-align: center; width: 120px;">99%</td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">OpenCyc</td>
+<td style="padding: 4px; text-align: right; width: 120px;">33,526</td>
+<td style="padding: 4px; text-align: center; width: 120px;">0.0%</td>
+<td style="padding: 4px; text-align: center; width: 120px;">61%</td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">UMBEL</td>
+<td style="padding: 4px; text-align: right; width: 120px;">33,478</td>
+<td style="padding: 4px; text-align: center; width: 120px;">0.0%</td>
+<td style="padding: 4px; text-align: center; width: 120px;">99%</td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">Extended vocabs</td>
+<td style="padding: 4px; text-align: right; width: 120px;">249</td>
+<td style="padding: 4px; text-align: center; width: 120px;">-4.2%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;"></td>
+<td style="padding: 4px; text-align: right; width: 120px;"></td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; text-align: center;" colspan="2" valign="middle"><b>Property Mappings</b></td>
+<td style="padding: 4px; text-align: right; width: 120px;">4,847</td>
+<td style="padding: 4px; text-align: center; width: 120px;">92.4%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">Wikidata</td>
+<td style="padding: 4px; text-align: right; width: 120px;">3,970</td>
+<td style="padding: 4px; text-align: center; width: 120px;">57.6%</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+<tr>
+<td style="padding: 4px; width: 33px;" align="left"></td>
+<td style="padding: 4px; text-align: left;">schema.org</td>
+<td style="padding: 4px; text-align: right; width: 120px;">877</td>
+<td style="padding: 4px; text-align: center; width: 120px;">N/A</td>
+<td style="padding: 4px; text-align: center; width: 120px;"></td>
+</tr>
+</tbody>
+</table>
+<p></center></p>
+<p>Through its mapped sources, KBpedia links to more than 30 million entities, the largest percentage coming from Wikidata. The mappings to these external sources are provided in the <a href="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kbpedia_reference_concepts_linkage.zip">linkages to the external resources</a> file in the KBpedia <a href="http://kbpedia.org/resources/downloads/">downloads</a>. (A larger <a href="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kbpedia_reference_concepts_linkage_inferrence_extended.zip">inferred version</a> is also available.) The external sources keep their own record files. KBpedia distributions provide the links. However, you can access these entities through the <a href="http://kbpedia.org/knowledge-graph/">KBpedia explorer</a> on the project&#8217;s Web site (see these entity examples for <a href="http://kbpedia.org/entity/browse/?class=http%3A%2F%2Fkbpedia.org%2Fkko%2Frc%2FCamera&#38;offset=0">cameras</a>, <a href="http://kbpedia.org/entity/browse/?class=http%3A%2F%2Fkbpedia.org%2Fkko%2Frc%2FCake&#38;offset=0">cakes</a>, and <a href="http://kbpedia.org/entity/browse/?class=http%3A%2F%2Fkbpedia.org%2Fkko%2Frc%2FCanyon&#38;offset=0">canyons</a>; clicking on any of the individual entity links will bring up the full instance record.)</p>
+<p>Please know that KBpedia remains under active development, with new updates anticipated in the near future. We are incorporating feedback gained from the initial open source release, and are also committed to increasing the mapping coverage for the artifact and other baseline improvements. Our plan is to complete this baseline before new external sources are added to the system.</p>
+<p>KBpedia is available under the Creative Commons <a href="https://creativecommons.org/licenses/by/4.0/">Attribution 4.0 International (CC BY 4.0)</a> license. KBpedia&#8217;s development to date has been sponsored by <a href="http://cognonto.com/">Cognonto Corporation</a>.</p>
+]]></content:encoded>
+	<sioc:topic rdfs:label="KBpedia" rdf:resource="http://www.mkbergman.com/category/kbpedia/"/>
+	<sioc:topic rdfs:label="Knowledge-based Artificial Intelligence" rdf:resource="http://www.mkbergman.com/category/kbai/"/>
+	<sioc:topic rdfs:label="Ontologies" rdf:resource="http://www.mkbergman.com/category/ontologies/"/>
+	<sioc:topic rdfs:label="Open Source" rdf:resource="http://www.mkbergman.com/category/open-source/"/>
+	<sioc:topic rdfs:label="Semantic Web" rdf:resource="http://www.mkbergman.com/category/semantic-web/"/>
+	<sioc:links_to rdf:resource="http://kbpedia.com/" rdfs:label="&#060;img title=&#034;KBpedia&#034; alt=&#034;KBpedia&#034; src=&#034;http://www.mkbergman.com/wp-content/themes/ai3v2/images/2018Posts/kbpedia-logo-1200.png&#034; style=&#034;border: 0px solid; width: 240px; margin-right: 10px;&#034; align=&#034;left&#034; /&#062;"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/" rdfs:label="KBpedia v 1.60"/>
+	<sioc:links_to rdf:resource="http://www.mkbergman.com/2168/woohoo-kbpedia-is-now-open-source/" rdfs:label="announcement"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Wikipedia" rdfs:label="Wikipedia"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Wikidata" rdfs:label="Wikidata"/>
+	<sioc:links_to rdf:resource="https://schema.org/" rdfs:label="schema.org"/>
+	<sioc:links_to rdf:resource="http://dbpedia.org/" rdfs:label="DBpedia"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/GeoNames" rdfs:label="GeoNames"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Cyc" rdfs:label="OpenCyc"/>
+	<sioc:links_to rdf:resource="http://umbel.org/" rdfs:label="UMBEL"/>
+	<sioc:links_to rdf:resource="http://www.mkbergman.com/category/kbai/" rdfs:label="KBAI"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/docs/kko-upper-structure/" rdfs:label="KBpedia Knowledge Ontology"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Charles_Sanders_Peirce" rdfs:label="Charles Sanders Peirce"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/resources/downloads/" rdfs:label="download it"/>
+	<sioc:links_to rdf:resource="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kbpedia_reference_concepts_linkage.zip" rdfs:label="linkages to the external resources"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/resources/downloads/" rdfs:label="downloads"/>
+	<sioc:links_to rdf:resource="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kbpedia_reference_concepts_linkage_inferrence_extended.zip" rdfs:label="inferred version"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/knowledge-graph/" rdfs:label="KBpedia explorer"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/entity/browse/?class=http%3A%2F%2Fkbpedia.org%2Fkko%2Frc%2FCamera&amp;offset=0" rdfs:label="cameras"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/entity/browse/?class=http%3A%2F%2Fkbpedia.org%2Fkko%2Frc%2FCake&amp;offset=0" rdfs:label="cakes"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/entity/browse/?class=http%3A%2F%2Fkbpedia.org%2Fkko%2Frc%2FCanyon&amp;offset=0" rdfs:label="canyons"/>
+	<sioc:links_to rdf:resource="https://creativecommons.org/licenses/by/4.0/" rdfs:label="Attribution 4.0 International (CC BY 4.0)"/>
+	<sioc:links_to rdf:resource="http://cognonto.com/" rdfs:label="Cognonto Corporation"/>
+</sioc:Post>
+
+</rdf:RDF>

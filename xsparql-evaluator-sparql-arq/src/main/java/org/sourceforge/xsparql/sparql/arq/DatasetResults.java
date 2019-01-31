@@ -38,8 +38,12 @@
  */ 
 package org.sourceforge.xsparql.sparql.arq;
 
-import java.util.*;
-import com.hp.hpl.jena.query.*;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFactory;
+import org.apache.jena.query.ResultSetRewindable;
+
+import java.util.Stack;
 
 /**
  * class for datasets and results of datasets for the parser.
