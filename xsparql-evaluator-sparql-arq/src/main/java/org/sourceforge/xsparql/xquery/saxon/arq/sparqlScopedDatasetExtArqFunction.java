@@ -38,22 +38,20 @@
  */ 
 package org.sourceforge.xsparql.xquery.saxon.arq;
 
-//import net.sf.saxon.functions.*;
 import net.sf.saxon.lib.*;
 
-import com.hp.hpl.jena.query.*;
 import java.io.*;
 
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.sourceforge.xsparql.xquery.saxon.scopedDatasetPopResultsExtFunction;
 
 import net.sf.saxon.tree.iter.*;
 import net.sf.saxon.om.*;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.trans.XPathException;
-
-//import net.sf.saxon.value.StringValue;
 
 /**
  * 

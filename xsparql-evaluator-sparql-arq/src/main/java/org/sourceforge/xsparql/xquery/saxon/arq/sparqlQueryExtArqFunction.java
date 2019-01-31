@@ -50,12 +50,11 @@ import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.SingletonIterator;
 
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.sourceforge.xsparql.sparql.arq.InMemoryDatasetManager;
 import org.sourceforge.xsparql.sparql.arq.SPARQLQuery;
 import org.sourceforge.xsparql.xquery.saxon.sparqlQueryExtFunction;
-
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.query.ResultSetFormatter;
 
 /**
  * 

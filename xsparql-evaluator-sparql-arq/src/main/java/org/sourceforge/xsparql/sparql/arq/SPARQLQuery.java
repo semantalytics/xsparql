@@ -38,21 +38,13 @@
  */ 
 package org.sourceforge.xsparql.sparql.arq;
 
+import org.apache.jena.query.*;
 import org.sourceforge.xsparql.rewriter.Helper;
 import org.w3c.dom.Document;
 
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.DatasetFactory;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.query.ResultSetFormatter;
-
 /**
  * Use the ARQ API to pose SPARQL queries
- * 
+ *
  * @author Nuno Lopes
  * 
  */
