@@ -41,15 +41,11 @@
  */
 package org.sourceforge.xsparql.xquery.saxon;
 
-//import java.io.*;
-//import java.net.*;
-//import java.util.*;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.sourceforge.xsparql.rewriter.Helper;
 import org.sourceforge.xsparql.sparql.arq.SPARQLQuery;
 import org.w3c.dom.Document;
-
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.query.ResultSetFormatter;
 
 /**
  * Library of Java methods for usage from within XQuery queries when using Saxon

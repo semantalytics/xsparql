@@ -55,23 +55,13 @@ import net.sf.json.JSON;
 import net.sf.json.JSONSerializer;
 import net.sf.json.xml.XMLSerializer;
 
+import org.apache.jena.query.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.tdb.TDBFactory;
 import org.sourceforge.xsparql.sparql.arq.DatasetResults;
-//import org.sourceforge.xsparql.xquery.DatasetResults;
 
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.DatasetFactory;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.QuerySolutionMap;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.query.ResultSetRewindable;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.tdb.TDBFactory;
 
 /**
  * Library of Java methods for usage from within XQuery queries when using Saxon
@@ -334,7 +324,7 @@ class EvaluatorExternalFunctions {
 	/**
 	 * Retrieves data from a url, Converts JSON data to XML
 	 * 
-	 * @param URL   location of the data
+	 * @param loc   location of the data
 	 * 
 	 */
 	public static String jsonToXML(String loc) {
