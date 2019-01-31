@@ -1,6 +1,6 @@
 prefix ex: <http://example.org/>
 <results>
-{for $friend
+{for $friend $popular
 from <src/main/resources/xsparql/testcases-sparql-1.1/subquery/data-03.ttl> where {
   $popular ex:knows $friend .
   {
