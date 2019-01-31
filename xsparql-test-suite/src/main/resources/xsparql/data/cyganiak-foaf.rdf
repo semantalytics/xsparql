@@ -1,0 +1,398 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#"
+    xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#"
+    xmlns="http://richard.cyganiak.de/foaf.rdf#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:air="http://www.daml.org/2001/10/html/airport-ont#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:pos="http://www.w3.org/2003/01/geo/wgs84_pos#">
+  <foaf:PersonalProfileDocument rdf:about="">
+    <foaf:primaryTopic>
+      <foaf:Person rdf:about="http://richard.cyganiak.de/foaf.rdf#cygri">
+        <foaf:nick>cygri</foaf:nick>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Roman Szmidt</foaf:name>
+          <foaf:mbox_sha1sum>95c7b1298871aa109ddf908e012403a8d792962b</foaf:mbox_sha1sum>
+          <foaf:pastProject>
+            <foaf:Project rdf:nodeID="A0">
+              <foaf:homepage rdf:resource="http://www.inf.fu-berlin.de/inst/ag-nbi/lehre/03/P_SW/"/>
+              <foaf:name>Projekt Semantic Web SoSe 2003</foaf:name>
+            </foaf:Project>
+          </foaf:pastProject>
+        </foaf:knows>
+        <foaf:img rdf:resource="http://www.gravatar.com/avatar/bafadf78b9b23ef09eae978123276b6f?s=80"/>
+        <foaf:weblog rdf:resource="http://dowhatimean.net/"/>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Jan Kretzschmar</foaf:name>
+          <foaf:mbox_sha1sum>459bf569348cdb65830297da0c84e3fbbbe37067</foaf:mbox_sha1sum>
+          <foaf:pastProject>
+            <foaf:Project rdf:nodeID="A1">
+              <foaf:page rdf:resource="http://sourceforge.net/projects/angie"/>
+              <foaf:name>ANGIE</foaf:name>
+            </foaf:Project>
+          </foaf:pastProject>
+        </foaf:knows>
+        <contact:phone rdf:resource="tel:+49-175-5630408"/>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>e362de7dd9cb02e75540077a34348bafef1beed5</foaf:mbox_sha1sum>
+          <foaf:name>Jörg Meltzer</foaf:name>
+        </foaf:knows>
+        <foaf:schoolHomepage rdf:resource="http://fu-berlin.de/"/>
+        <foaf:knows rdf:parseType="Resource">
+          <rdfs:seeAlso rdf:resource="http://www.wiwiss.fu-berlin.de/suhl/bizer/foaf.rdf"/>
+          <foaf:currentProject>
+            <foaf:Project rdf:nodeID="A2">
+              <foaf:homepage rdf:resource="http://www.wiwiss.fu-berlin.de/suhl/bizer/ng4j/"/>
+              <foaf:name>NG4J - Named Graphs API for Jena</foaf:name>
+            </foaf:Project>
+          </foaf:currentProject>
+          <foaf:currentProject>
+            <foaf:Project rdf:nodeID="A3">
+              <foaf:homepage rdf:resource="http://www.wiwiss.fu-berlin.de/suhl/bizer/d2rq/"/>
+              <foaf:name>D2RQ</foaf:name>
+            </foaf:Project>
+          </foaf:currentProject>
+          <foaf:mbox_sha1sum>6481bf02f4cd4f5161ff80c04fc0b0c02d149030</foaf:mbox_sha1sum>
+          <foaf:name>Chris Bizer</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>49bf55ffbcfe55f62d085f300095d6dc2f2bd1f8</foaf:mbox_sha1sum>
+          <foaf:depiction>
+            <foaf:Image rdf:about="http://statcvs.sourceforge.net/statcvs-developers.jpg">
+              <foaf:depicts rdf:resource="http://richard.cyganiak.de/foaf.rdf#cygri"/>
+              <foaf:depicts>
+                <foaf:Person>
+                  <foaf:mbox_sha1sum>49bf55ffbcfe55f62d085f300095d6dc2f2bd1f8</foaf:mbox_sha1sum>
+                  <foaf:name>Manuel Schulze</foaf:name>
+                </foaf:Person>
+              </foaf:depicts>
+              <foaf:depicts>
+                <foaf:Person>
+                  <foaf:mbox_sha1sum>3a05cc497d6a3b21f9a9d0c2fb85a13539ad8fcd</foaf:mbox_sha1sum>
+                  <foaf:name>Lukasz Pekacki</foaf:name>
+                </foaf:Person>
+              </foaf:depicts>
+              <foaf:depicts>
+                <foaf:Person>
+                  <foaf:mbox_sha1sum>cc5a9befda7b2fde603a51ff419a5512a922d3f7</foaf:mbox_sha1sum>
+                  <foaf:name>Anja Jentzsch</foaf:name>
+                </foaf:Person>
+              </foaf:depicts>
+            </foaf:Image>
+          </foaf:depiction>
+          <foaf:pastProject>
+            <foaf:Project rdf:nodeID="A4">
+              <foaf:name>StatCVS</foaf:name>
+              <foaf:logo rdf:resource="http://statcvs.sf.net/statcvslogo.gif"/>
+              <foaf:homepage rdf:resource="http://statcvs.sf.net/"/>
+            </foaf:Project>
+          </foaf:pastProject>
+          <foaf:name>Manuel Schulze</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Mark Butler</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Damian Steer</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:currentProject rdf:nodeID="A4"/>
+          <foaf:mbox_sha1sum>4f958d0a2b383b1b4194278365bc16c79936517e</foaf:mbox_sha1sum>
+          <foaf:name>Tammo van Lessen</foaf:name>
+        </foaf:knows>
+        <foaf:mbox_sha1sum>20e08403232aa02d12a45edb2bda9ccd0f857a24</foaf:mbox_sha1sum>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:pastProject>
+            <foaf:Project rdf:nodeID="A5">
+              <foaf:homepage rdf:resource="http://www.inf.fu-berlin.de/inst/ag-nbi/lehre/0405/P_XML-Projekt/"/>
+              <foaf:name>PXML - XML-Projekt WiSe 2004/2005</foaf:name>
+            </foaf:Project>
+          </foaf:pastProject>
+          <foaf:mbox_sha1sum>d33d37f07224d6cd6bcc0681f076fbda21a3e60f</foaf:mbox_sha1sum>
+          <foaf:name>Felix Güttler</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Danny Tschirner</foaf:name>
+          <foaf:mbox_sha1sum>c8bf49be45e725f08298be06cf18c78e7f34596d</foaf:mbox_sha1sum>
+          <foaf:pastProject rdf:nodeID="A1"/>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:pastProject rdf:nodeID="A5"/>
+          <foaf:mbox_sha1sum>09fa77c850606a3804b20758b2d3e6504409fa41</foaf:mbox_sha1sum>
+          <foaf:name>Thorsten Wenzlaff</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>78e06a555a3e5f629edac9e8237edd578fb5bac3</foaf:mbox_sha1sum>
+          <foaf:name>Chris Preist</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Chris Dollin</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <rdfs:seeAlso rdf:resource="http://thomas.roth-berghofer.de/foaf.xml"/>
+          <foaf:homepage rdf:resource="http://thomas.roth-berghofer.de/"/>
+          <foaf:mbox_sha1sum>37098f476f04449d645eebd65c2c766e9c85bc91</foaf:mbox_sha1sum>
+          <foaf:name>Thomas Roth-Berghofer</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>a78c38ba4dab50754b6d27a4feeb5502d0d7d182</foaf:mbox_sha1sum>
+          <foaf:name>Frank Wagner</foaf:name>
+        </foaf:knows>
+        <foaf:depiction>
+          <foaf:Image rdf:about="http://richard.cyganiak.de/richard-2002.jpg">
+            <foaf:depicts rdf:resource="http://richard.cyganiak.de/foaf.rdf#cygri"/>
+            <dc:title xml:lang="de">Richard Cyganiak mit blond gefÃ¤rbten Haaren</dc:title>
+            <dc:date xml:lang="de">Anfang 2002</dc:date>
+          </foaf:Image>
+        </foaf:depiction>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:pastProject rdf:nodeID="A5"/>
+          <foaf:mbox_sha1sum>32c32c1612d5f1b380c4a8388cefc2743d0cdfda</foaf:mbox_sha1sum>
+          <foaf:name>Martin Dittmar</foaf:name>
+        </foaf:knows>
+        <foaf:pastProject rdf:nodeID="A0"/>
+        <foaf:mbox_sha1sum>39f3c9b7479a83c76596a7c92b61f76dee3f5343</foaf:mbox_sha1sum>
+        <foaf:schoolHomepage rdf:resource="http://www.inf.fu-berlin.de/"/>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Wolfgang Mulzer</foaf:name>
+          <foaf:mbox_sha1sum>870cce33640477d5b7262ae8696939fbc2c74bf7</foaf:mbox_sha1sum>
+          <foaf:pastProject rdf:nodeID="A1"/>
+        </foaf:knows>
+        <foaf:mbox rdf:resource="mailto:richard@cyganiak.de"/>
+        <foaf:based_near>
+          <pos:Point>
+            <pos:long>13.411415</pos:long>
+            <pos:lat>52.546302</pos:lat>
+          </pos:Point>
+        </foaf:based_near>
+        <foaf:firstName>Richard</foaf:firstName>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:currentProject rdf:nodeID="A2"/>
+          <foaf:mbox_sha1sum>0c792a3d968322e58f4d9a1f0ada70335b7bef11</foaf:mbox_sha1sum>
+          <foaf:name>Rowland Watkins</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>3140069171e54ce76fb5a71d8ef6c615b5236b17</foaf:mbox_sha1sum>
+          <foaf:mbox_sha1sum>4468dd595b49d6c02056c45ec6ac73fd3242c107</foaf:mbox_sha1sum>
+          <foaf:name>Simon Rieche</foaf:name>
+        </foaf:knows>
+        <foaf:icqChatID>52244424</foaf:icqChatID>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Dennis Heckert</foaf:name>
+          <foaf:mbox_sha1sum>3752e4739a3195f83863e21c52b85b1c2fbfb049</foaf:mbox_sha1sum>
+          <foaf:pastProject rdf:nodeID="A0"/>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>970987f991961f2553a1bf2574166fa29befbccb</foaf:mbox_sha1sum>
+          <foaf:name>Dave Beckett</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>c295b55b18ec99ea804896e92148047d128bac64</foaf:mbox_sha1sum>
+          <foaf:name>Jan Meineke</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <rdfs:seeAlso rdf:resource="http://www.dfki.uni-kl.de/~schwarz/foaf.xml"/>
+          <foaf:homepage rdf:resource="http://www.dfki.uni-kl.de/~schwarz/"/>
+          <foaf:mbox_sha1sum>ec2daa2424c7672b44140114b2e817e75ea4d3af</foaf:mbox_sha1sum>
+          <foaf:name>Sven Schwarz</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>6bdc3a6be4cc72c578d4ab01a618bbd9563bcd5b</foaf:mbox_sha1sum>
+          <foaf:name>Graham Klyne</foaf:name>
+        </foaf:knows>
+        <foaf:holdsAccount>
+          <foaf:OnlineAccount rdf:about="http://flickr.com/people/cygri/">
+            <foaf:accountName>cygri</foaf:accountName>
+            <foaf:accountServiceHomepage rdf:resource="http://flickr.com/"/>
+          </foaf:OnlineAccount>
+        </foaf:holdsAccount>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:pastProject rdf:nodeID="A5"/>
+          <foaf:mbox_sha1sum>220573facbc27f9da71b15277126f847bc9abf74</foaf:mbox_sha1sum>
+          <foaf:name>Klaus Schild</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>2ba5ceafa0aa5800ffe522c817945ceaef13adb8</foaf:mbox_sha1sum>
+          <foaf:name>Steve Cayzer</foaf:name>
+        </foaf:knows>
+        <foaf:currentProject rdf:nodeID="A4"/>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Dave Reynolds</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:currentProject rdf:nodeID="A4"/>
+          <foaf:mbox_sha1sum>66f3097287279f3448b1796752c9994802625d77</foaf:mbox_sha1sum>
+          <foaf:name>Steffen Pingel</foaf:name>
+        </foaf:knows>
+        <foaf:pastProject>
+          <foaf:Project rdf:nodeID="A6">
+            <foaf:homepage rdf:resource="http://www.inf.fu-berlin.de/inst/ag-nbi/lehre/04/P_SW/"/>
+            <foaf:name>Projekt Semantic Web SoSe 2004</foaf:name>
+          </foaf:Project>
+        </foaf:pastProject>
+        <foaf:gender>male</foaf:gender>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>5ce6c30cfbcda536598ff2d13570ec8b6cc9d7ca</foaf:mbox_sha1sum>
+          <foaf:name>Christian Morbidoni</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Robert Tolksdorf</foaf:name>
+          <foaf:mbox_sha1sum>8ada995b49b643cc0417135f10c760f8ac11d238</foaf:mbox_sha1sum>
+          <foaf:pastProject rdf:nodeID="A6"/>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <rdfs:seeAlso rdf:resource="http://www.handtwerk.de/foaf.rdf"/>
+          <foaf:mbox_sha1sum>2774b440bf66406ba26bcc7de31796be7473bad2</foaf:mbox_sha1sum>
+          <foaf:homepage rdf:resource="http://handtwerk.de/"/>
+          <foaf:name>Arne Handt</foaf:name>
+        </foaf:knows>
+        <vcard:BDAY>1979-07-15</vcard:BDAY>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>cc5a9befda7b2fde603a51ff419a5512a922d3f7</foaf:mbox_sha1sum>
+          <foaf:depiction rdf:resource="http://statcvs.sourceforge.net/statcvs-developers.jpg"/>
+          <rdfs:seeAlso rdf:resource="http://www.livejournal.com/users/littleve/data/foaf"/>
+          <rdfs:seeAlso rdf:resource="http://www.anjeve.de/foaf.rdf"/>
+          <foaf:pastProject rdf:nodeID="A5"/>
+          <foaf:pastProject rdf:nodeID="A6"/>
+          <foaf:currentProject rdf:nodeID="A4"/>
+          <foaf:name>Anja Jentzsch</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>2f71ac3dd9f2cb3fe44fdb8d16272fcaf653f9d3</foaf:mbox_sha1sum>
+          <foaf:name>Jeremy Carroll</foaf:name>
+        </foaf:knows>
+        <foaf:depiction>
+          <foaf:Image rdf:about="http://richard.cyganiak.de/richard-2003.jpg">
+            <foaf:depicts rdf:resource="http://richard.cyganiak.de/foaf.rdf#cygri"/>
+            <dc:title xml:lang="de">Eine Fotografie von Richard Cyganiak</dc:title>
+            <dc:date xml:lang="de">Herbst 2003</dc:date>
+          </foaf:Image>
+        </foaf:depiction>
+        <foaf:knows rdf:parseType="Resource">
+          <rdfs:seeAlso rdf:resource="http://www.leobard.net/rdf/foaf.xml"/>
+          <foaf:mbox_sha1sum>6bf0ea371e5d60f7346e8304f1b936402c59e988</foaf:mbox_sha1sum>
+          <foaf:name>Leo Sauermann</foaf:name>
+        </foaf:knows>
+        <foaf:holdsAccount>
+          <foaf:OnlineAccount rdf:about="http://del.icio.us/cygri">
+            <foaf:accountName>cygri</foaf:accountName>
+            <foaf:accountServiceHomepage rdf:resource="http://del.icio.us/"/>
+          </foaf:OnlineAccount>
+        </foaf:holdsAccount>
+        <foaf:currentProject rdf:nodeID="A3"/>
+        <foaf:mbox_sha1sum>e833ff1657fd8d56065a11d8ec707eec889ba6b7</foaf:mbox_sha1sum>
+        <contact:nearestAirport rdf:parseType="Resource">
+          <air:icaoCode>EDDI</air:icaoCode>
+          <air:iataCode>THF</air:iataCode>
+          <air:name xml:lang="en">Tempelhof Central Airport</air:name>
+          <air:name xml:lang="de">Flughafen Tempelhof</air:name>
+        </contact:nearestAirport>
+        <foaf:currentProject rdf:nodeID="A2"/>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>fd27ab08938f1fd36fa27cbf204d762be49b9848</foaf:mbox_sha1sum>
+          <foaf:mbox_sha1sum>7825ee9259a0e140c655702be303f1d2632e4759</foaf:mbox_sha1sum>
+          <foaf:name>Karl Pauls</foaf:name>
+        </foaf:knows>
+        <foaf:depiction>
+          <foaf:Image rdf:about="http://richard.cyganiak.de/richard.jpg">
+            <foaf:depicts rdf:resource="http://richard.cyganiak.de/foaf.rdf#cygri"/>
+            <dc:title xml:lang="de">Eine Fotografie von Richard Cyganiak</dc:title>
+            <dc:date xml:lang="de">Ende 2005</dc:date>
+          </foaf:Image>
+        </foaf:depiction>
+        <foaf:myersBriggs>INTJ</foaf:myersBriggs>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Dirk Draheim</foaf:name>
+          <foaf:mbox_sha1sum>6c7616521627c717768173ca776f7ca893649513</foaf:mbox_sha1sum>
+          <foaf:pastProject rdf:nodeID="A1"/>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>c6644f4c0c8df465a740f13c4ebba73a010487b7</foaf:mbox_sha1sum>
+          <foaf:name>Steve Harris</foaf:name>
+        </foaf:knows>
+        <foaf:mbox_sha1sum>f2531545894d37dbb92b9f87569458955a74950e</foaf:mbox_sha1sum>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>896dfb5980f37c47ada8c2a2538888d0c39e582d</foaf:mbox_sha1sum>
+          <foaf:name>Ian Dickinson</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <rdfs:seeAlso rdf:resource="http://g1o.net/g1ofoaf.xml"/>
+          <foaf:homepage rdf:resource="http://g1o.net/"/>
+          <foaf:mbox_sha1sum>90731dc3a8b2dfda68b0eeedfb1176c6bd494bfe</foaf:mbox_sha1sum>
+          <foaf:name>Giovanni Tummarello</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>7fc16f091a389ff5c8cb699e7d977e8672ebcea3</foaf:mbox_sha1sum>
+          <foaf:name>Andy Seaborne</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:weblog rdf:resource="http://www.grindblog.de/"/>
+          <foaf:mbox_sha1sum>e466d6ba2f0d374c3ece871e63b380fb9bfda51f</foaf:mbox_sha1sum>
+          <foaf:name>Magnus Niemann</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>b1bcc5fa5dde52b30a7ec6767fa9b2f3f010df12</foaf:mbox_sha1sum>
+          <foaf:name>Chris Catton</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:pastProject rdf:nodeID="A5"/>
+          <foaf:mbox_sha1sum>b7a8c3455b6ea8f4d0fe080c5edc03eb59622808</foaf:mbox_sha1sum>
+          <foaf:name>Martin Spickermann</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:pastProject rdf:nodeID="A5"/>
+          <foaf:mbox_sha1sum>ebf8439be81e4063deedd155404c49571fad53dc</foaf:mbox_sha1sum>
+          <foaf:name>Slawa Belousow</foaf:name>
+        </foaf:knows>
+        <foaf:depiction rdf:resource="http://statcvs.sourceforge.net/statcvs-developers.jpg"/>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:mbox_sha1sum>3a05cc497d6a3b21f9a9d0c2fb85a13539ad8fcd</foaf:mbox_sha1sum>
+          <foaf:depiction rdf:resource="http://statcvs.sourceforge.net/statcvs-developers.jpg"/>
+          <foaf:pastProject rdf:nodeID="A4"/>
+          <foaf:name>Lukasz Pekacki</foaf:name>
+        </foaf:knows>
+        <foaf:surname>Cyganiak</foaf:surname>
+        <foaf:homepage>
+          <foaf:Document rdf:about="http://richard.cyganiak.de/">
+            <dc:title>Richard Cyganiak's Homepage</dc:title>
+            <dc:description xml:lang="en">Richard Cyganiak's homepage. The site is in German.</dc:description>
+          </foaf:Document>
+        </foaf:homepage>
+        <foaf:name>Richard Cyganiak</foaf:name>
+        <foaf:knows rdf:parseType="Resource">
+          <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/WBS/mvo/foaf.rdf.xml"/>
+          <foaf:homepage rdf:resource="http://www.xam.de/"/>
+          <foaf:mbox_sha1sum>9dec5f368c386776b648332359a4b9ec0156471d</foaf:mbox_sha1sum>
+          <foaf:name>Max Völkel</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:name>Paolo Castagna</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <rdfs:seeAlso rdf:resource="http://page.mi.fu-berlin.de/~best/foaf.rdf"/>
+          <foaf:pastProject rdf:nodeID="A5"/>
+          <foaf:mbox_sha1sum>970165f7fc26af898cc2cd3b4e57bb4795fdfa45</foaf:mbox_sha1sum>
+          <foaf:name>David Best</foaf:name>
+        </foaf:knows>
+        <foaf:pastProject rdf:nodeID="A1"/>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:pastProject rdf:nodeID="A5"/>
+          <foaf:mbox_sha1sum>208d0c5acc801b70d45224e591c71af8f9f653c3</foaf:mbox_sha1sum>
+          <foaf:name>Andreas Kalender</foaf:name>
+        </foaf:knows>
+        <foaf:knows rdf:parseType="Resource">
+          <foaf:currentProject rdf:nodeID="A3"/>
+          <foaf:mbox_sha1sum>a4be06019591d183633de828065e1da86aff252c</foaf:mbox_sha1sum>
+          <foaf:name>Jörg Garbers</foaf:name>
+        </foaf:knows>
+      </foaf:Person>
+    </foaf:primaryTopic>
+    <foaf:maker rdf:resource="http://richard.cyganiak.de/foaf.rdf#cygri"/>
+  </foaf:PersonalProfileDocument>
+  <foaf:Project>
+    <foaf:homepage rdf:resource="http://www.wiwiss.fu-berlin.de/suhl/bizer/TriQLP/"/>
+    <foaf:name>TriQL.P Trust Layer</foaf:name>
+  </foaf:Project>
+</rdf:RDF>

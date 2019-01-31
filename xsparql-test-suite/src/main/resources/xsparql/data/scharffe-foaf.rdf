@@ -30,9 +30,8 @@ rdf:resource="http://www.scharffe.fr"/>
     <foaf:knows>
       <foaf:Person>
         <foaf:name>Jos</foaf:name>
-        
-<foaf:mbox_sha1sum>2bcf2392f229563c1c1c5b8bfb4ec3ee27510167</foaf:mbox_sha1sum>
-        <rdfs:seeAlso rdf:resource="ajouter le champ "/>
+        <foaf:mbox_sha1sum>2bcf2392f229563c1c1c5b8bfb4ec3ee27510167</foaf:mbox_sha1sum>
+        <rdfs:seeAlso rdf:resource="ajouter%20le%20champ%20"/>
       </foaf:Person>
     </foaf:knows>
     <foaf:knows xmlns:dcterms="http://purl.org/dc/terms/" 
