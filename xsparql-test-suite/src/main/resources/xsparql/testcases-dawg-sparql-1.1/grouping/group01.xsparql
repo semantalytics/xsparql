@@ -1,9 +1,9 @@
-base <file:///home/dani/git/xsparql/xsparql-test-suite/>
+base <./src/>
 prefix : <http://example/>
 
 <results>
 {for $s
-from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/grouping/group-data-1.ttl> where{
+from <main/resources/xsparql/testcases-dawg-sparql-1.1/grouping/group-data-1.ttl> where{
   $s :p $v .
 }
 group by $s
