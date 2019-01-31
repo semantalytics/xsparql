@@ -36,64 +36,41 @@
  * University of Technology,  Nuno Lopes on behalf of NUI Galway.
  *
  */ 
+package org.sourceforge.xsparql.arq;
 
-package org.sourceforge.xsparql.xquery.saxon.arq;
+import org.sourceforge.xsparql.xquery.saxon.deleteScopedDatasetExtFunction;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import net.sf.saxon.lib.*;
 
-import javax.xml.transform.stream.StreamSource;
-
+import net.sf.saxon.tree.iter.*;
+import net.sf.saxon.om.*;
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.lib.ExtensionFunctionCall;
-import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.tree.iter.SingletonIterator;
-
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
-import org.sourceforge.xsparql.sparql.arq.InMemoryDatasetManager;
-import org.sourceforge.xsparql.sparql.arq.SPARQLQuery;
-import org.sourceforge.xsparql.xquery.saxon.sparqlQueryExtFunction;
 
 /**
  * 
  * @author Nuno Lopes
  */
-public class sparqlQueryExtArqFunction extends sparqlQueryExtFunction {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3473182871822843811L;
+public class deleteScopedDatasetExtArqFunction extends deleteScopedDatasetExtFunction {
+	private static final long serialVersionUID = -7577497271941404411L;
 
 	@Override
 	public ExtensionFunctionCall makeCallExpression() {
 
 		return new ExtensionFunctionCall() {
-			private static final long serialVersionUID = -7804360181553074638L;
+
+			private static final long serialVersionUID = 8278533150880474564L;
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public SequenceIterator call(SequenceIterator[] arguments,
 					XPathContext context) throws XPathException {
 
-				String queryString = arguments[0].next().getStringValue();
+				String id = arguments[0].next().getStringValue();
 
-				SPARQLQuery query;
-				if(InMemoryDatasetManager.INSTANCE.isEmpty())
-					query = new SPARQLQuery(queryString);
-				else 
-					query = new SPARQLQuery(queryString, InMemoryDatasetManager.INSTANCE.getDataset());
-				ResultSet resultSet = query.getResults();
+				ScopedDatasetManager.deleteScopedDataset(id);
 
-				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-				ResultSetFormatter.outputAsXML(outputStream, resultSet);
-				ByteArrayInputStream inputStream = new ByteArrayInputStream(
-						outputStream.toByteArray());
-
-				return SingletonIterator.makeIterator(context.getConfiguration()
-						.buildDocument(new StreamSource(inputStream)));
-
+				return EmptyIterator.getInstance();
 			}
 
 		};

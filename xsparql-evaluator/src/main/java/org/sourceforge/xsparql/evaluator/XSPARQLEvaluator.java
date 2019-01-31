@@ -39,8 +39,6 @@
 package org.sourceforge.xsparql.evaluator;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -55,7 +53,6 @@ import java.util.Set;
 import javax.xml.transform.Source;
 
 import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
-import org.sourceforge.xsparql.sparql.DatasetManager;
 import org.sourceforge.xsparql.sparql.binder.StaticSparqlFunctionBinder;
 import org.sourceforge.xsparql.sql.SQLQuery;
 import org.sourceforge.xsparql.xquery.XQueryEvaluator;

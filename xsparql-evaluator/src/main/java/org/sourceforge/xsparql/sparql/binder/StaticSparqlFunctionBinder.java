@@ -8,14 +8,15 @@ import net.sf.saxon.lib.ExtensionFunctionDefinition;
 import org.sourceforge.xsparql.sparql.DatasetManager;
 import org.sourceforge.xsparql.sparql.SparqlFunctionBinder;
 import org.sourceforge.xsparql.sparql.UnexpectedParameterException;
-import org.sourceforge.xsparql.xquery.saxon.createScopedDatasetExtFunction;
-import org.sourceforge.xsparql.xquery.saxon.deleteScopedDatasetExtFunction;
-import org.sourceforge.xsparql.xquery.saxon.scopedDatasetPopResultsExtFunction;
-import org.sourceforge.xsparql.xquery.saxon.sparqlQueryExtFunction;
-import org.sourceforge.xsparql.xquery.saxon.sparqlScopedDatasetExtFunction;
+import org.sourceforge.xsparql.sparql.arq.InMemoryDatasetManager;
+import org.sourceforge.xsparql.arq.createScopedDatasetExtArqFunction;
+import org.sourceforge.xsparql.arq.deleteScopedDatasetExtArqFunction;
+import org.sourceforge.xsparql.arq.scopedDatasetPopResultsExtArqFunction;
+import org.sourceforge.xsparql.arq.sparqlQueryExtArqFunction;
+import org.sourceforge.xsparql.arq.sparqlScopedDatasetExtArqFunction;
 
 public class StaticSparqlFunctionBinder implements SparqlFunctionBinder{
-	public static final StaticSparqlFunctionBinder INSTANCE = new StaticSparqlFunctionBinder();
+	private static final StaticSparqlFunctionBinder INSTANCE = new StaticSparqlFunctionBinder();
 	
 	public static StaticSparqlFunctionBinder getInstance(){
 		return INSTANCE;
@@ -24,33 +25,35 @@ public class StaticSparqlFunctionBinder implements SparqlFunctionBinder{
 	private StaticSparqlFunctionBinder(){}
 	
 	public ExtensionFunctionDefinition getSparqlQueryExtFunctionDefinition(){
-		return new sparqlQueryExtFunction();
+		return new sparqlQueryExtArqFunction();
 	}
 	
 	public ExtensionFunctionDefinition getCreateScopedDatasetExtFunctionDefinition(){
-		return new createScopedDatasetExtFunction();
+		return new createScopedDatasetExtArqFunction();
 	}
 	
 	public ExtensionFunctionDefinition getDeleteScopedDatasetExtFunctionDefinition(){
-		return new deleteScopedDatasetExtFunction();
+		return new deleteScopedDatasetExtArqFunction();
 	}
 	
 	public ExtensionFunctionDefinition getSparqlScopedDatasetExtFunctionDefinition(){
-		return new sparqlScopedDatasetExtFunction();
+		return new sparqlScopedDatasetExtArqFunction();
 	}
 	
 	public ExtensionFunctionDefinition getScopedDatasetPopResultsExtFunctionDefinition(){
-		return new scopedDatasetPopResultsExtFunction();
+		return new scopedDatasetPopResultsExtArqFunction();
 	}
 	
 	public Set<ExtensionFunctionDefinition> getSparqlFunctionDefinitions(){
 		Set<ExtensionFunctionDefinition> defs = new HashSet<ExtensionFunctionDefinition>();
-		defs.add(new sparqlQueryExtFunction());
-		defs.add(new createScopedDatasetExtFunction());
-		defs.add(new deleteScopedDatasetExtFunction());
-		defs.add(new sparqlScopedDatasetExtFunction());
-		defs.add(new scopedDatasetPopResultsExtFunction());
+		defs.add(new sparqlQueryExtArqFunction());
+		defs.add(new createScopedDatasetExtArqFunction());
+		defs.add(new deleteScopedDatasetExtArqFunction());
+		defs.add(new sparqlScopedDatasetExtArqFunction());
+		defs.add(new scopedDatasetPopResultsExtArqFunction());
 
+//		defs.add(new turtleGraphToURIExtFunction());
+//		defs.add(new jsonDocExtFunction());
 		return defs;
 	}
 	
@@ -58,10 +61,12 @@ public class StaticSparqlFunctionBinder implements SparqlFunctionBinder{
 	public void setParameter(String key, String value)
 			throws UnexpectedParameterException {
 		throw new UnexpectedParameterException(key, value);
+		
 	}
 
 	@Override
 	public DatasetManager getDatasetManager() {
-		return null;
+		return InMemoryDatasetManager.INSTANCE;
 	}
+
 }

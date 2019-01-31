@@ -36,98 +36,67 @@
  * University of Technology,  Nuno Lopes on behalf of NUI Galway.
  *
  */ 
-package org.sourceforge.xsparql.xquery.saxon.arq;
 
-//import net.sf.saxon.functions.*;
-import net.sf.saxon.lib.*;
+package org.sourceforge.xsparql.arq;
 
-//import com.hp.hpl.jena.query.*;
-//import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
-//import javax.xml.transform.stream.StreamSource;
+import javax.xml.transform.stream.StreamSource;
 
-import net.sf.saxon.tree.iter.*;
-import net.sf.saxon.om.*;
-import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.expr.XPathContext;
+import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.iter.SingletonIterator;
 
-//import net.sf.saxon.value.StringValue;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
+import org.sourceforge.xsparql.sparql.arq.InMemoryDatasetManager;
+import org.sourceforge.xsparql.sparql.arq.SPARQLQuery;
+import org.sourceforge.xsparql.xquery.saxon.sparqlQueryExtFunction;
 
 /**
  * 
  * @author Nuno Lopes
  */
-public class scopedDatasetPopResultsExtArqFunction extends ExtensionFunctionDefinition {
-
-  /**
+public class sparqlQueryExtArqFunction extends sparqlQueryExtFunction {
+	/**
 	 * 
 	 */
-  private static final long serialVersionUID = -3618421782402392314L;
-  /**
-   * Name of the function
-   * 
-   */
-  private static StructuredQName funcname = new StructuredQName("_xsparql",
-      "http://xsparql.deri.org/demo/xquery/xsparql.xquery",
-      "scopedDatasetPopResults");
+	private static final long serialVersionUID = 3473182871822843811L;
 
-  // new StructuredQName("_java", "java:org.deri.sparql.Sparql",
-  // "scopedDatasetPopResults");
+	@Override
+	public ExtensionFunctionCall makeCallExpression() {
 
-  public scopedDatasetPopResultsExtArqFunction() {
-  }
+		return new ExtensionFunctionCall() {
+			private static final long serialVersionUID = -7804360181553074638L;
 
-  @Override
-  public StructuredQName getFunctionQName() {
-    return funcname;
-  }
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			@Override
+			public SequenceIterator call(SequenceIterator[] arguments,
+					XPathContext context) throws XPathException {
 
-  @Override
-  public int getMinimumNumberOfArguments() {
-    return 1;
-  }
+				String queryString = arguments[0].next().getStringValue();
 
-  @Override
-  public int getMaximumNumberOfArguments() {
-    return 1;
-  }
+				SPARQLQuery query;
+				if(InMemoryDatasetManager.INSTANCE.isEmpty())
+					query = new SPARQLQuery(queryString);
+				else 
+					query = new SPARQLQuery(queryString, InMemoryDatasetManager.INSTANCE.getDataset());
+				ResultSet resultSet = query.getResults();
 
-  @Override
-  public SequenceType[] getArgumentTypes() {
-    return new SequenceType[] { SequenceType.SINGLE_STRING };
-  }
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+				ResultSetFormatter.outputAsXML(outputStream, resultSet);
+				ByteArrayInputStream inputStream = new ByteArrayInputStream(
+						outputStream.toByteArray());
 
-  @Override
-  public SequenceType getResultType(SequenceType[] suppliedArgumentTypes) {
-    return SequenceType.ANY_SEQUENCE;
-  }
+				return SingletonIterator.makeIterator(context.getConfiguration()
+						.buildDocument(new StreamSource(inputStream)));
 
-  @Override
-  public boolean hasSideEffects() {
-    return true;
-  }
+			}
 
-  @Override
-  public ExtensionFunctionCall makeCallExpression() {
-
-    return new ExtensionFunctionCall() {
-
-      private static final long serialVersionUID = -1452266931467431145L;
-
-      @SuppressWarnings({ "unchecked", "rawtypes" })
-      @Override
-      public SequenceIterator call(SequenceIterator[] arguments,
-          XPathContext context) throws XPathException {
-
-        String id = arguments[0].next().getStringValue();
-
-        ScopedDatasetManager.scopedDatasetPopResults(id);
-
-        return EmptyIterator.getInstance();
-      }
-
-    };
-  }
+		};
+	}
 
 }
