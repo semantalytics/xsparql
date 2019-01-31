@@ -46,9 +46,8 @@ import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.EmptyIterator;
 import net.sf.saxon.value.SequenceType;
-
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.update.UpdateAction;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.update.UpdateAction;
 
 /**
  * 
