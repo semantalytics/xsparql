@@ -17,7 +17,7 @@
 <foaf:homepage rdf:resource="http://www.ee.surrey.ac.uk/Personal/A.Zhdanova/ "/>
 <foaf:phone rdf:resource="tel:+44(0)1483-689481"/>
 <foaf:workplaceHomepage rdf:resource="http://www.ee.surrey.ac.uk/CCSR/"/>
-<foaf:workInfoHomepage rdf:resource="http://www.ee.surrey.ac.uk/Personal/A.Zhdanova/ "/>
+<foaf:workInfoHomepage rdf:resource="http://www.ee.surrey.ac.uk/Personal/A.Zhdanova/"/>
 <foaf:knows>
 <foaf:Person>
 <foaf:name>Stefan Decker</foaf:name>

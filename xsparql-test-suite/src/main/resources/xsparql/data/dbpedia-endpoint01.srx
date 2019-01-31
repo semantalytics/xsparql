@@ -1,0 +1,544 @@
+<sparql xmlns="http://www.w3.org/2005/sparql-results#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/sw/DataAccess/rf1/result2.xsd">
+ <head>
+  <variable name="b"/>
+  <variable name="c"/>
+ </head>
+ <results distinct="false" ordered="true">
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://www.w3.org/2002/07/owl#Thing</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/ontology/Automobile</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/ontology/MeanOfTransportation</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://schema.org/Product</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://umbel.org/umbel/rc/Automobile</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://umbel.org/umbel/rc/TransportationDevice_Vehicle</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatFront-wheel-driveVehicles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatHardtopConvertibles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatHatchbacks</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatSaturnVehicles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatSedans</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatStationWagons</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Artifact100021939</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/BeachWagon102814533</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Car102958343</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Compact103079136</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Container103094503</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Convertible103100240</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Conveyance103100490</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Coupe103119396</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Hatchback103498781</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Instrumentality103575240</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/MotorVehicle103791235</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Object100002684</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/PhysicalEntity100001930</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Sedan104166281</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Self-propelledVehicle104170037</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Vehicle104524313</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WheeledVehicle104576211</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Whole100003553</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatCarsOfGermany</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatCarsOfRussia</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatChevroletVehicles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatCompactCars</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatConvertibles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatCoupes</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatEuroNCAPSmallFamilyCars</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Wikicat1990sAutomobiles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Wikicat2000sAutomobiles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/Wikicat2010sAutomobiles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatBertoneVehicles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatVehiclesIntroducedIn1991</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatOpelConceptVehicles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/class/yago/WikicatOpelVehicles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#label</uri></binding>
+   <binding name="c"><literal xml:lang="en">Opel Astra</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#label</uri></binding>
+   <binding name="c"><literal xml:lang="ar">أوبل آسترا</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#label</uri></binding>
+   <binding name="c"><literal xml:lang="es">Opel Astra</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#label</uri></binding>
+   <binding name="c"><literal xml:lang="it">Opel Astra</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#label</uri></binding>
+   <binding name="c"><literal xml:lang="fr">Opel Astra</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#label</uri></binding>
+   <binding name="c"><literal xml:lang="ja">オペル・アストラ</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#label</uri></binding>
+   <binding name="c"><literal xml:lang="nl">Opel Astra</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#label</uri></binding>
+   <binding name="c"><literal xml:lang="pl">Opel Astra</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#label</uri></binding>
+   <binding name="c"><literal xml:lang="pt">Opel Astra</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#label</uri></binding>
+   <binding name="c"><literal xml:lang="ru">Opel Astra</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#comment</uri></binding>
+   <binding name="c"><literal xml:lang="en">The Opel Astra (Lat: Stars) is a small family car (C-segment in Europe) engineered and manufactured by the German automaker Opel since 1991. It is branded as the Vauxhall Astra in the United Kingdom and the Buick Excelle XT in China. The Holden Astra was discontinued in Australia and New Zealand in 2009, because exchange rates made the car uncompetitive, and was replaced by the Holden Cruze. It briefly returned to the Australian market in 2012, for the first time badged as an Opel, but was discontinued after Opel withdrew from the country a year later. On 1 May 2014, Opel announced that the Astra GTC and Astra VXR (Astra OPC) would return to Australia and New Zealand in 2015, again bearing the Holden badge.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#comment</uri></binding>
+   <binding name="c"><literal xml:lang="ar">25بك المحتوى هنا ينقصه الاستشهاد بمصادر. يرجى إيراد مصادر موثوق بها. أي معلومات غير موثقة يمكن التشكيك بها وإزالتها. (فبراير 2016) أوبل آسترا (بالإنجليزية: Opel Astra) هي سيارة مدمجة من صناعة أوبل أنتجت في 1991.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#comment</uri></binding>
+   <binding name="c"><literal xml:lang="fr">L’Opel Astra est une voiture compacte, coupé et break de la marque allemande Opel qui est produite depuis 1991. L&#39;Astra remplace l&#39;Opel Kadett.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#comment</uri></binding>
+   <binding name="c"><literal xml:lang="it">La Opel Astra è un&#39;automobile del segmento C prodotta in più serie a partire dal 1991 dalla casa automobilistica tedesca Opel, la principale filiale europea della General Motors.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#comment</uri></binding>
+   <binding name="c"><literal xml:lang="ja">アストラ（Astra ）は、ゼネラルモーターズ（GM）傘下のオペルが生産・販売するコンパクトカーである。</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#comment</uri></binding>
+   <binding name="c"><literal xml:lang="pl">Opel Astra − model samochodu osobowego klasy kompaktowej produkowany od 1991 roku przez markę Adam Opel AG należącą do największego na świecie amerykańskiego koncernu samochodowego General Motors (GM). Model zastąpił przestarzałą konstrukcję Opla Kadetta. Obecnie produkowana jest IV generacja oraz V generacja modelu.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#comment</uri></binding>
+   <binding name="c"><literal xml:lang="es">El Opel Astra es un automóvil del segmento C diseñado por el fabricante alemán de automóviles Opel y vendido en numerosos países bajo las marcas Vauxhall, Chevrolet y todas del grupo industrial estadounidense General Motors. Todos los Astra existen o existieron con carrocerías hatchback de tres y cinco puertas, sedán de cuatro puertas, familiar de cinco puertas (&quot;Astra Caravan&quot;) y descapotable (inicialmente &quot;Astra Cabrio&quot;, luego &quot;Astra TwinTop&quot;), y también cupé (&quot;Astra Coupé&quot;) en la segunda generación. Todos tienen motor delantero transversal y tracción delantera.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#comment</uri></binding>
+   <binding name="c"><literal xml:lang="nl">De Opel Astra is een auto van Opel/GM uit de compacte middenklasse. De wagen biedt plaats aan vier volwassenen of twee volwassenen en drie kinderen en, afhankelijk van de uitvoering, een bepaalde hoeveelheid bagage. Het model kent drie basis carrosserieën, namelijk hatchback, sedan en stationwagen. Elke carrosserievorm is met verschillende uitrustingsniveaus verkrijgbaar. Naast deze basiscarrosserieën zijn er bij de verschillende generaties coupé-, cabrio- of cabrio-coupévarianten te vinden. Tevens is er van elke generatie een sportieve, snelle versie verkrijgbaar.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2000/01/rdf-schema#comment</uri></binding>
+   <binding name="c"><literal xml:lang="ru">Opel Astra (ˈoːpəl ˈɑːstra) — компактный автомобиль, разработанный и производимый немецкой компанией Adam Opel AG с 1991 года. Astra (с лат. — «звезда») является продолжением линейки моделей Opel Kadett, начатой ещё в 1962 году.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://www.wikidata.org/entity/Q1350</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://cs.dbpedia.org/resource/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://el.dbpedia.org/resource/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://es.dbpedia.org/resource/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://eu.dbpedia.org/resource/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://fr.dbpedia.org/resource/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://id.dbpedia.org/resource/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://it.dbpedia.org/resource/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://ja.dbpedia.org/resource/オペル・アストラ</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://ko.dbpedia.org/resource/오펠_아스트라</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://nl.dbpedia.org/resource/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://pl.dbpedia.org/resource/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://pt.dbpedia.org/resource/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://wikidata.dbpedia.org/resource/Q1350</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://rdf.freebase.com/ns/m.0gg7_8t</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://rdf.freebase.com/ns/m.020sqh</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://yago-knowledge.org/resource/Chevrolet_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://yago-knowledge.org/resource/Chevrolet_Viva</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://yago-knowledge.org/resource/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://yago-knowledge.org/resource/Opel_Astra_200t_S</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://yago-knowledge.org/resource/Opel_GTC_Paris</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/2002/07/owl#sameAs</uri></binding>
+   <binding name="c"><uri>http://yago-knowledge.org/resource/Saturn_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Front-wheel-drive_vehicles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Hatchbacks</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Sedans</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Compact_cars</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Opel_vehicles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Station_wagons</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Euro_NCAP_small_family_cars</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:1990s_automobiles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:2000s_automobiles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:2010s_automobiles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Articles_containing_video_clips</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Cars_of_Germany</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Coupes</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Hardtop_convertibles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Touring_cars</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Cars_introduced_in_2009</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Cars_introduced_in_2015</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Cars_introduced_in_1991</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Bertone_vehicles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/dc/terms/subject</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Category:Convertibles</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/wikiPageID</uri></binding>
+   <binding name="c"><literal datatype="http://www.w3.org/2001/XMLSchema#integer">373870</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/wikiPageRevisionID</uri></binding>
+   <binding name="c"><literal datatype="http://www.w3.org/2001/XMLSchema#integer">745267872</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/wikiPageExternalLink</uri></binding>
+   <binding name="c"><uri>http://www.opel.ie/vehicles/opel_range/cars/astra-family/index.html</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/wikiPageExternalLink</uri></binding>
+   <binding name="c"><uri>http://www.worldcarfans.com/news.cfm/newsID/2060321.004/page/9/lang/eng/country/gcf/opel/</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://xmlns.com/foaf/0.1/name</uri></binding>
+   <binding name="c"><literal xml:lang="en">Opel Astra</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://xmlns.com/foaf/0.1/homepage</uri></binding>
+   <binding name="c"><uri>http://www.opel.ie/vehicles/opel_range/cars/astra-family/index.html</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://xmlns.com/foaf/0.1/depiction</uri></binding>
+   <binding name="c"><uri>http://commons.wikimedia.org/wiki/Special:FilePath/2012_Opel_Astra_(AS)_1.4_Turbo_5-door_hatchback_(2015-07-10)_01.jpg</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://xmlns.com/foaf/0.1/isPrimaryTopicOf</uri></binding>
+   <binding name="c"><uri>http://en.wikipedia.org/wiki/Opel_Astra</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/thumbnail</uri></binding>
+   <binding name="c"><uri>http://commons.wikimedia.org/wiki/Special:FilePath/2012_Opel_Astra_(AS)_1.4_Turbo_5-door_hatchback_(2015-07-10)_01.jpg?width=300</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://www.w3.org/ns/prov#wasDerivedFrom</uri></binding>
+   <binding name="c"><uri>http://en.wikipedia.org/wiki/Opel_Astra?oldid=745267872</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/abstract</uri></binding>
+   <binding name="c"><literal xml:lang="en">The Opel Astra (Lat: Stars) is a small family car (C-segment in Europe) engineered and manufactured by the German automaker Opel since 1991. It is branded as the Vauxhall Astra in the United Kingdom and the Buick Excelle XT in China. The Holden Astra was discontinued in Australia and New Zealand in 2009, because exchange rates made the car uncompetitive, and was replaced by the Holden Cruze. It briefly returned to the Australian market in 2012, for the first time badged as an Opel, but was discontinued after Opel withdrew from the country a year later. On 1 May 2014, Opel announced that the Astra GTC and Astra VXR (Astra OPC) would return to Australia and New Zealand in 2015, again bearing the Holden badge.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/abstract</uri></binding>
+   <binding name="c"><literal xml:lang="ar">25بك المحتوى هنا ينقصه الاستشهاد بمصادر. يرجى إيراد مصادر موثوق بها. أي معلومات غير موثقة يمكن التشكيك بها وإزالتها. (فبراير 2016) أوبل آسترا (بالإنجليزية: Opel Astra) هي سيارة مدمجة من صناعة أوبل أنتجت في 1991.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/abstract</uri></binding>
+   <binding name="c"><literal xml:lang="es">El Opel Astra es un automóvil del segmento C diseñado por el fabricante alemán de automóviles Opel y vendido en numerosos países bajo las marcas Vauxhall, Chevrolet y todas del grupo industrial estadounidense General Motors. Existen cinco generaciones del Astra, lanzadas en los años 1991, 1998, 2004, 2010 y 2016 respectivamente. Hay dos formas de nombrar las generaciones mediante letras. El método que usa oficialmente Opel parte de la letra F, debido a que la última generación del predecesor del Astra, el Kadett, se denominaba E. El segundo sistema es comenzar por la letra A, al igual que se estila en el resto de los modelos de la marca. Todos los Astra existen o existieron con carrocerías hatchback de tres y cinco puertas, sedán de cuatro puertas, familiar de cinco puertas (&quot;Astra Caravan&quot;) y descapotable (inicialmente &quot;Astra Cabrio&quot;, luego &quot;Astra TwinTop&quot;), y también cupé (&quot;Astra Coupé&quot;) en la segunda generación. Todos tienen motor delantero transversal y tracción delantera. El Astra se posiciona en la gama de Opel por encima del Opel Corsa y por debajo del Opel Vectra, luego renombrado a Opel Insignia. El Astra es uno de los cuatro modelos más vendidos de la marca, junto con el Corsa, el Kadett y el Vectra. La unidad número 10 millones se fabricó en Bochum, Alemania en mayo del año 2007.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/abstract</uri></binding>
+   <binding name="c"><literal xml:lang="fr">L’Opel Astra est une voiture compacte, coupé et break de la marque allemande Opel qui est produite depuis 1991. L&#39;Astra remplace l&#39;Opel Kadett.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/abstract</uri></binding>
+   <binding name="c"><literal xml:lang="it">La Opel Astra è un&#39;automobile del segmento C prodotta in più serie a partire dal 1991 dalla casa automobilistica tedesca Opel, la principale filiale europea della General Motors.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/abstract</uri></binding>
+   <binding name="c"><literal xml:lang="ja">アストラ（Astra ）は、ゼネラルモーターズ（GM）傘下のオペルが生産・販売するコンパクトカーである。</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/abstract</uri></binding>
+   <binding name="c"><literal xml:lang="nl">De Opel Astra is een auto van Opel/GM uit de compacte middenklasse. De wagen biedt plaats aan vier volwassenen of twee volwassenen en drie kinderen en, afhankelijk van de uitvoering, een bepaalde hoeveelheid bagage. Het model kent drie basis carrosserieën, namelijk hatchback, sedan en stationwagen. Elke carrosserievorm is met verschillende uitrustingsniveaus verkrijgbaar. Naast deze basiscarrosserieën zijn er bij de verschillende generaties coupé-, cabrio- of cabrio-coupévarianten te vinden. Tevens is er van elke generatie een sportieve, snelle versie verkrijgbaar. De Astra wordt onder andere gebouwd in fabrieken in Duitsland, het Verenigd Koninkrijk, Brazilië, Zuid-Afrika, India, Polen en Rusland. De grootste concurrenten van de Opel Astra zijn de Ford Focus en de Volkswagen Golf. Er zijn sinds de introductie van de Astra in 1991 meer dan 10.000.000 exemplaren van de band gerold waarmee het de meest succesvolle Opel aller tijden is.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/abstract</uri></binding>
+   <binding name="c"><literal xml:lang="pl">Opel Astra − model samochodu osobowego klasy kompaktowej produkowany od 1991 roku przez markę Adam Opel AG należącą do największego na świecie amerykańskiego koncernu samochodowego General Motors (GM). Model zastąpił przestarzałą konstrukcję Opla Kadetta. Obecnie produkowana jest IV generacja oraz V generacja modelu.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/abstract</uri></binding>
+   <binding name="c"><literal xml:lang="ru">Opel Astra (ˈoːpəl ˈɑːstra) — компактный автомобиль, разработанный и производимый немецкой компанией Adam Opel AG с 1991 года. Astra (с лат. — «звезда») является продолжением линейки моделей Opel Kadett, начатой ещё в 1962 году. Opel Astra также выпускается под марками Vauxhall Astra в Великобритании фирмой Vauxhall, продающей на местном рынке модернизированные автомобили Opel с правым рулём, Buick Excelle XT — в Китае, Chevrolet Astra/Vectra — в Латинской Америке. Для американского и канадского рынков автомобиль выпускался под маркой Saturn Astra до тех пор, пока в 2009 году General Motors не отменила марку &quot;Saturn&quot;. Holden Astra, выпускаемый для австралийского рынка, также был снят с производства в 2009 по причине своей неконкурентоспособности вследствие высокой цены, вызванной разностью обменных курсов валют. В 2012 году автомобиль вернулся на австралийский рынок под маркой Opel Astra, но уже через год продажи были прекращены. В 2015 году начались продажи трёхдверных версий автомобиля под маркой Holden Astra. Chevrolet Vectra (Astra H), выпускаемый для Латинской Америки, был снят с производства и заменен на Chevrolet Cruze.</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/class</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Compact_car</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/layout</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Front-engine,_front-wheel-drive_layout</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/manufacturer</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Opel</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/predecessor</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Opel_Kadett</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/ontology/productionStartYear</uri></binding>
+   <binding name="c"><literal datatype="http://www.w3.org/2001/XMLSchema#gYear">1991</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/property/designer</uri></binding>
+   <binding name="c"><literal datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Friedhelm Engler</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/property/designer</uri></binding>
+   <binding name="c"><literal datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString">Uwe Müller</literal></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://dbpedia.org/property/wordnet_type</uri></binding>
+   <binding name="c"><uri>http://www.w3.org/2006/03/wn/wn20/instances/synset-car-noun-1</uri></binding>
+  </result>
+  <result>
+   <binding name="b"><uri>http://purl.org/linguistics/gold/hypernym</uri></binding>
+   <binding name="c"><uri>http://dbpedia.org/resource/Car</uri></binding>
+  </result>
+ </results>
+</sparql>

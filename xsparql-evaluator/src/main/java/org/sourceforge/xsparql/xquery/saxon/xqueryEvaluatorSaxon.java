@@ -49,6 +49,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -67,6 +68,8 @@ import net.sf.saxon.s9api.Serializer;
 import net.sf.saxon.s9api.XQueryCompiler;
 import net.sf.saxon.s9api.XdmAtomicValue;
 
+import org.apache.jena.riot.system.stream.StreamManager;
+import org.apache.jena.util.FileManager;
 import org.apache.jena.util.LocationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -295,7 +298,7 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 			evaluator.setURIResolver(new URIResolver() {
 
 				public Source resolve(String href, String base) {
-					return new StreamSource(LocationMapper.get().getAltEntry(href));
+					return new StreamSource(FileManager.get().getLocationMapper().altMapping(href, href));
 				}
 			});
 			evaluator.run(serializer);

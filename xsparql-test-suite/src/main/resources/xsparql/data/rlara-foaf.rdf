@@ -1,0 +1,63 @@
+<rdf:RDF
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/"
+      xmlns:admin="http://webns.net/mvcb/">
+<foaf:PersonalProfileDocument rdf:about="">
+  <foaf:maker rdf:resource="#me"/>
+  <foaf:primaryTopic rdf:resource="#me"/>
+  <admin:generatorAgent rdf:resource="http://www.ldodds.com/foaf/foaf-a-matic"/>
+  <admin:errorReportsTo rdf:resource="mailto:leigh@ldodds.com"/>
+</foaf:PersonalProfileDocument>
+<foaf:Person rdf:ID="me">
+<foaf:name>Ruben Lara Hernandez</foaf:name>
+<foaf:title>Mr</foaf:title>
+<foaf:givenname>Ruben</foaf:givenname>
+<foaf:family_name>Lara Hernandez</foaf:family_name>
+<foaf:nick>Ruben</foaf:nick>
+<foaf:mbox_sha1sum>76fc9366dfd9ece58cabbf6ef7d48583a85d788e</foaf:mbox_sha1sum>
+<foaf:homepage rdf:resource="http://nets.ii.uam.es/~rlara"/>
+<foaf:phone rdf:resource="tel:+345200405"/>
+<foaf:workplaceHomepage rdf:resource="www.grupoanalistas.com"/>
+<foaf:workInfoHomepage rdf:resource="www.tifbrewery.com"/>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Axel Polleres</foaf:name>
+<foaf:mbox_sha1sum>35a8d4858ba240996a6f71836d93fbfdcd2b4843</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="http://www.polleres.net/foaf.rdf"/></foaf:Person></foaf:knows>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Christoph Bussler</foaf:name>
+<foaf:mbox_sha1sum>c3851852e12dae64e1e8a8780319333544355f26</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="http://hometown.aol.com/chbussler/foaf/chbussler.foaf"/></foaf:Person></foaf:knows>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Ina O' Murchu</foaf:name>
+<foaf:mbox_sha1sum>712b83520bf846cdeb5b8158d541108b12a01447</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="http://sw.deri.org/~ina/foaf.rdf"/></foaf:Person></foaf:knows>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Francois Scharffe</foaf:name>
+<foaf:mbox_sha1sum>829b03079329988f851f2218ba4537cc8927cc92</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="http://sw.deri.org/~francois/foaf.rdf"/></foaf:Person></foaf:knows>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>James Scicluna</foaf:name>
+<foaf:mbox_sha1sum>b51b6923939f4947586a350225b631f1aa1f5d22</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="http://members.deri.at/~jamess/foaf.rdf"/></foaf:Person></foaf:knows>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Jos De Bruijn</foaf:name>
+<foaf:mbox_sha1sum>4c538b6af35608dbd986fe02efe1a24b26527f46</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="http://www.debruijn.net/foaf.rdf"/></foaf:Person></foaf:knows>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Holger Lausen</foaf:name>
+<foaf:mbox_sha1sum>83733ca2a5dc3189a9046d5cbc82940dfdfffc0b</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="http://members.deri.at/~holgerl/foaf.rdf"/></foaf:Person></foaf:knows>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Stefan Decker</foaf:name>
+<foaf:mbox_sha1sum>1bc1f862b688a45b7e0c8d4a8467c23177c53fad</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="http://c703-deri03.uibk.ac.at:8080/people/rdf/stefan.decker.rdf"/></foaf:Person></foaf:knows></foaf:Person>
+</rdf:RDF>

@@ -7,15 +7,12 @@ prefix owl: <http://www.w3.org/2002/07/owl#>
 from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/entailment/bind-data.ttl> where{
   $s $p $o .
   $p a owl:datatypeproperty . 
-  bind($nova as $z)
 }
 
 return 
  <result>
-	<binding name="nova">{$nova}</binding>
 	<binding name="s">{$s}</binding>
 	<binding name="p">{$p}</binding>
 	<binding name="o">{$o}</binding>
-	<binding name="z">{$z}</binding>
 </result>}
 </results>

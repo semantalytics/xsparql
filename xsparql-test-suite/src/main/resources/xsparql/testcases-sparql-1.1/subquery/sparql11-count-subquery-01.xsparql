@@ -1,5 +1,5 @@
 <results>
-{for (count(*) as $count)
+{for (count(*) as $count $s $p $o)
 from <src/main/resources/xsparql/testcases-sparql-1.1/subquery/data-02.ttl> where { 
 	{ select $s $p $o where { $s $p $o } }
 }

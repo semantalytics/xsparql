@@ -54,6 +54,7 @@ import java.util.Set;
 import net.sf.json.JSON;
 import net.sf.json.JSONSerializer;
 import net.sf.json.xml.XMLSerializer;
+import org.apache.jena.util.FileManager;
 
 /**
  * Library of Java methods for usage from within XQuery queries when using Saxon
@@ -102,7 +103,7 @@ class EvaluatorExternalFunctions {
 	/**
 	 * Retrieves data from a url, Converts JSON data to XML
 	 * 
-	 * @param String location of the data
+	 * @param loc location of the data
 	 * 
 	 */
 	public static String jsonToXML(String loc) {
@@ -112,7 +113,7 @@ class EvaluatorExternalFunctions {
 		try {
 
 			// Send data
-			URL url = new URL(loc);
+			URL url = new URL(FileManager.get().getLocationMapper().altMapping(loc, loc));
 			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
 			String inputLine;
