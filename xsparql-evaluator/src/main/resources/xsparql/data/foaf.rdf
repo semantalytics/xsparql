@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf:RDF [
+     <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
+     <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
+     <!ENTITY foaf  "http://xmlns.com/foaf/0.1/" >
+     <!ENTITY ical  "http://www.w3.org/2002/12/cal/ical#" >
+   ]>
+
+<rdf:RDF 
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+    xmlns:foaf="http://xmlns.com/foaf/0.1/" 
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xyz="http://www.example.org/"
+    xml:base="foaf.rdf">
+
+  <foaf:PersonalProfileDocument rdf:about="">
+    <foaf:maker rdf:resource="#me"/>
+    <foaf:primaryTopic rdf:resource="#me"/>
+  </foaf:PersonalProfileDocument>
+
+
+  <foaf:Person rdf:ID="me">
+    <foaf:name>Alice</foaf:name>
+    <foaf:title>Dr</foaf:title>
+    <foaf:givenname>Alice</foaf:givenname>
+    <foaf:surname>Surname</foaf:surname>
+    <foaf:firstName>Fakename</foaf:firstName>
+    <foaf:family_name>Fakename</foaf:family_name>
+    <foaf:birthday>03-03</foaf:birthday>
+    <foaf:mbox_sha1sum>35a8d4858ba240996a6f7135a8d4858ba240996a6f71</foaf:mbox_sha1sum>
+   
+    <foaf:knows>		
+      <foaf:Person rdf:about="http://harth.org/andreas/foaf#ah">
+        <rdfs:seeAlso rdf:resource="http://www.harth.org/andreas/foaf.rdf"/>
+        <foaf:name>Andreas Harth</foaf:name>
+      </foaf:Person>
+    </foaf:knows>
+    
+    <foaf:knows>		
+      <foaf:Person rdf:about="http://sw.deri.org/~haller/foaf.rdf#ah">
+        <rdfs:seeAlso rdf:resource="http://sw.deri.org/~haller/foaf.rdf"/>
+        <foaf:name>Armin Haller</foaf:name>
+      </foaf:Person>
+    </foaf:knows>
+    
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>John Breslin</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://www.johnbreslin.com/foaf/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Christoph Bussler</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://hometown.aol.com/chbussler/foaf/chbussler.foaf"/>
+      </foaf:Person>
+    </foaf:knows>
+				    
+
+    <foaf:knows>
+      <foaf:Person>
+        <!-- Ina O'Murchu -->
+        <!-- Ina O&apos;Murchu -->
+        <foaf:name>Ina O Murchu</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://sw.deri.org/~ina/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Francois Scharffe</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://www.scharffe.fr/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+    
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>James Scicluna</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://members.deri.at/~jamess/foaf_james.xml"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Giovambattista Ianni</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://www.gibbi.com/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+    
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Wolfgang Faber</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://www.kr.tuwien.ac.at/staff/faber/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+        
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Jos De Bruijn</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://www.debruijn.net/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+    
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Anna V. Zhdanova</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://www.ee.surrey.ac.uk/Personal/A.Zhdanova/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+    
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Holger Lausen</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://members.deri.at/~holgerl/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+    
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Stefan Decker</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://www.deri.ie/fileadmin/scripts/foaf.php?id=12"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person rdf:about="http://www.kr.tuwien.ac.at/staff/roman/foaf.rdf#me">
+        <foaf:name>Roman Schindlauer</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://www.kr.tuwien.ac.at/staff/roman/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person rdf:about="http://nets.ii.uam.es/~rlara/foaf.rdf#me">
+        <!-- Rubén Lara Hernandez -->
+        <!-- Rub&eacute;n Lara Hernandez -->
+        <foaf:name>Ruben Lara Hernandez</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://nets.ii.uam.es/~rlara/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+    
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Charles Petrie</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://www-cdr.stanford.edu/~petrie/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person rdf:about="http://danbri.org/foaf.rdf#danbri">
+        <foaf:name>Dan Brickley</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://danbri.org/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Stijn Heymans</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://tinf2.vub.ac.be/~sheymans/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+   
+    <foaf:knows>
+      <foaf:Person rdf:about="http://page.mi.fu-berlin.de/~nixon/foaf.rdf#nixon">
+        <foaf:name>Lyndon J B Nixon</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://page.mi.fu-berlin.de/~nixon/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+ 
+    <foaf:knows>
+      <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2084instance">
+        <foaf:name>Pascal Hitzler</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2084.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+    
+    <foaf:knows>
+      <foaf:Person rdf:about="http://eyaloren.org/foaf.rdf#me">
+        <foaf:name>Eyal Oren</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://eyaloren.org/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person rdf:about="http://g1o.net#me">
+        <foaf:name>Giovanni Tummarello</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://g1o.net/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+        <foaf:name>Manfred Pfeiffenberger</foaf:name>
+        <foaf:homepage>
+           <foaf:Document rdf:about="http://www.sbg.at/divingdocmani/"/>
+        </foaf:homepage>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person rdf:about="http://page.mi.fu-berlin.de/mochol/foaf.rdf#me">
+        <foaf:name>Malgorzata Mochol</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://page.mi.fu-berlin.de/mochol/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person rdf:about="http://www.postsubmeta.net/foaf.rdf#TK">
+        <foaf:name>Thomas Krennwallner</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://www.postsubmeta.net/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person rdf:about="http://richard.cyganiak.de/foaf.rdf#cygri">
+        <foaf:name>Richard Cyganiak</foaf:name>
+        <rdfs:seeAlso rdf:resource="http://richard.cyganiak.de/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+  
+  </foaf:Person>
+  
+</rdf:RDF>
+

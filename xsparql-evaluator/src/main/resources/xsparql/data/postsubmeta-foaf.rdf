@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE rdf:RDF [
+  <!ENTITY foafbase "http://www.postsubmeta.net/foaf" >
+]>
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	 xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	 xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	 xmlns:owl="http://www.w3.org/2002/07/owl#"
+	 xml:base="&foafbase;">
+
+  <foaf:PersonalProfileDocument rdf:about="">
+    <foaf:maker rdf:resource="#TK"/>
+    <foaf:primaryTopic rdf:resource="#TK"/>
+    <foaf:title>Thomas Krennwallner's FOAF document</foaf:title>
+    <owl:sameAs rdf:resource="http://www.postsubmeta.net/foaf.rdf"/>
+  </foaf:PersonalProfileDocument>
+
+  <foaf:Person rdf:ID="TK">
+
+    <foaf:name>Thomas Krennwallner</foaf:name>
+    <foaf:givenname>Thomas</foaf:givenname>
+    <foaf:family_name>Krennwallner</foaf:family_name>
+    <foaf:depiction rdf:resource="http://www.postsubmeta.net/pics/ThomasKrennwallner.png"/>
+    <foaf:mbox_sha1sum>f6b70e5044bffbefe6703e8523be6c96ad8354dc</foaf:mbox_sha1sum>
+    <foaf:pubkeyAddress rdf:resource="http://www.postsubmeta.net/krennwallner.gpg.asc"/>
+    <foaf:homepage rdf:resource="http://www.postsubmeta.net/"/>
+    <foaf:phone rdf:resource="skype:thkren"/>
+    <foaf:phone rdf:resource="sip:tkren@at43.tuwien.ac.at"/>
+    <foaf:phone rdf:resource="tel:+43-1-58801-18469"/>
+    <foaf:phone rdf:resource="tel:+43-59966-560428"/>
+
+    <foaf:workplaceHomepage rdf:resource="http://www.kr.tuwien.ac.at/"/>
+
+    <foaf:currentProject>
+      <foaf:Project>
+        <foaf:homepage rdf:resource="http://www.kr.tuwien.ac.at/research/projects/"/>
+      </foaf:Project>
+    </foaf:currentProject>
+
+    <foaf:pastProject>
+      <foaf:Project>
+        <foaf:homepage rdf:resource="http://www.in-context.eu/"/>
+      </foaf:Project>
+    </foaf:pastProject>
+
+    <foaf:publications rdf:resource="http://dblp.l3s.de/Authors/Thomas_Krennwallner"/>
+    <foaf:publications rdf:resource="http://dblp.l3s.de/d2r/page/authors/Thomas_Krennwallner"/>
+    <foaf:publications rdf:resource="http://www.postsubmeta.net/pub/"/>
+
+    <rdfs:seeAlso rdf:resource="&foafbase;"/>
+    <owl:sameAs rdf:resource="http://www.postsubmeta.net/foaf.rdf#TK"/>
+    
+    <foaf:knows>
+      <foaf:Person>
+	<foaf:name>Roman Schindlauer</foaf:name>
+	<rdfs:seeAlso rdf:resource="http://www.kr.tuwien.ac.at/staff/roman/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+    
+    <foaf:knows>
+      <foaf:Person>
+	<foaf:name>Giovambattista Ianni</foaf:name>
+	<rdfs:seeAlso rdf:resource="http://www.gibbi.com/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+	<foaf:name>Axel Polleres</foaf:name>
+	<rdfs:seeAlso rdf:resource="http://www.polleres.net/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+	<foaf:name>Francesco Calimeri</foaf:name>
+	<rdfs:seeAlso rdf:resource="http://www.mat.unical.it/kali/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+     <foaf:knows>
+      <foaf:Person>
+	<foaf:name>Wolfgang Faber</foaf:name>
+	<rdfs:seeAlso rdf:resource="http://www.mat.unical.it/~faber/foaf.rdf"/>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+	<foaf:name>Alessandra Martello</foaf:name>
+      </foaf:Person>
+    </foaf:knows>
+
+    <foaf:knows>
+      <foaf:Person>
+	<foaf:name>Thomas Eiter</foaf:name>
+      </foaf:Person>
+    </foaf:knows>
+
+</foaf:Person>
+
+</rdf:RDF>

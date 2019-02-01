@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="WP SIOC Plugin - v. 1.25 - http://rdfs.org/sioc/wordpress/" -->
+<rdf:RDF
+	xmlns="http://xmlns.com/foaf/0.1/"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:rss="http://purl.org/rss/1.0/"
+	xmlns:admin="http://webns.net/mvcb/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:sioc="http://rdfs.org/sioc/ns#">
+
+<!-- sioc_type = post -->
+
+<foaf:Document rdf:about="">
+	<dc:title>SIOC Post profile for "AI3:::Adaptive Information"</dc:title>
+	<dc:description>A SIOC profile describes the structure and contents of a weblog in a machine readable form. For more information please refer to http://sioc-project.org/.</dc:description>
+	<foaf:primaryTopic rdf:resource="http://www.mkbergman.com/2135/desiderata-for-knowledge-graphs/"/>
+	<admin:generatorAgent rdf:resource="http://rdfs.org/sioc/wp-sioc.php?version=1.25"/>
+</foaf:Document>
+
+<sioc:Post rdf:about="http://www.mkbergman.com/2135/desiderata-for-knowledge-graphs/">
+	<sioc:link rdf:resource="http://www.mkbergman.com/2135/desiderata-for-knowledge-graphs/"/>
+	<sioc:has_container rdf:resource="http://www.mkbergman.com/index.php?sioc_type=site#weblog"/>
+	<dc:title>Desiderata for Knowledge Graphs</dc:title>
+	<sioc:has_creator>
+		<sioc:User rdf:about="http://www.mkbergman.com/author/mkb/" rdfs:label="Mike Bergman">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=user&amp;sioc_id=2"/>
+		</sioc:User>
+	</sioc:has_creator>
+	<foaf:maker>
+		<foaf:Person rdf:about="http://www.mkbergman.com/author/mkb/#foaf" rdfs:label="Mike Bergman">
+			<foaf:mbox_sha1sum>b6876bb3a1ddb7cb934f8a991366fcb8dd64a7e0</foaf:mbox_sha1sum>
+			<foaf:homepage rdf:resource="http://www.mkbergman.com"/>
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=user&amp;sioc_id=2"/>
+		</foaf:Person>
+	</foaf:maker>
+	<dcterms:created>2018-02-21T22:54:25Z</dcterms:created>
+	<sioc:content>Nine Features Wanted for Ontologies
+I think the market has spoken in preferring the term of 'knowledge graph' over that for 'ontology.' I suppose we could argue nuances in differences for what the terms mean. We will continue to use both terms, more-or-less interchangeably. But, personally, I do find the concept of 'knowledge graph' easier to convey to clients.
+As we see knowledge graphs proliferate in many settings — from virtual agents (Siri, Alexa, Cortana and Google Assistant, among others) to search and AI platforms (Watson) — I'd like to take stock of the state-of-the-art and make some recommendations for what I would like to see in the next generation of knowledge graphs. We are just at the beginning of tapping the potential of knowledge graphs, as my recommendations show.
+Going back for twenty years to Nicola Guarino in 1998 [1] and Michael Uschold in 2008 [2], there is a sense that ontologies could be relied upon for even more central aspects of overall applications. Both Guarino and Uschold termed this potential ’ontology-driven information systems.’ It is informative of the role that ontologies may play by listing some of these incipient potentials, some of which have only been contemplated or met in one or two actual installations. Let me list nine main areas of (largely) untapped potential:
+
+	
+Context and meaning — by this, I mean the ability to model contexts and situations, which requires specific concepts for such and an ability to express gradations of adjacency (spatial and otherwise). Determining or setting contexts is essential to disambiguate meaning. Context and situations have been particularly difficult ideas for ontologies to model, especially those that have a binary or dichotomous design;
+
+	
+A relations component — true, OWL offers the distinction of annotation, object and datatype properties, and we can express property characteristics such as transitivity, domain, range, cardinality, inversion, reflexivity, disjunction and the like, but it is a rare ontology that uses any or many of these constructs. The subProperty expression is used, but only in limited instances and rarely in a systematic schema. For example, it is readily obvious that some broader predicates such as animalAction could be split into  involuntaryAction and voluntaryAction, and then into specific actions such as breathing or walking, and so on, but schema with these kinds of logical property subsumptions are not evident. Structurally, we can use OWL to reason over actions and relations in a similar means as we reason over entities and types, but our common ontologies have yet to do so. Creating such schema are within grasp since we have language structures such as VerbNet and other resources we could put to the task;
+
+	
+An attributes component — the lack of a schema and organized presentation of attributes means it is a challenge to do ABox-level integration and interoperability. As with a relations component, this gap is largely due to the primary focus on concepts and entities in the early stages of semantic technologies. Optimally, what we would like to see is a well-organized attributes schema that enables instance data characteristics from different sources to be mapped to a canonical attributes schema. Once in place, not only would mapping be aided, but we should also be able to reason over attributes and use them as intensional cues for classifying instances. At one time Google touted its Biperpedia initiative [3] to organize attributes, but that effort went totally silent a couple of years ago;
+
+	
+A quantity units ontology —  is the next step beyond attributes, as we attempt to bring data values for quantities (and well as the units and labeling used) into alignment. Fortunately, of late, the QUDT ontologies (quantities, units and data types) has become an active project again with many external supporters. Something like this needs to accompany the other recommendations listed;
+
+	
+A statistics and probabilities ontology —  the world is not black-and-white, but vibrantly colored with all kinds of shades. We need to be able to handle gradations as well as binary choices. Being able to add probabilistic reasoners is appropriate given the idea of continua (Thirdness) from Charles Sanders Peirce and capturing the idea of fallibility. Probabilistic reasoning is still a young field in ontology. Some early possibilities include Costa [4] and the PR-OWL ontology using Multi-Entity Bayesian Networks (MEBN) [5] which are a probabilistic first-order logic that goes beyond Peirce’s classic deterministic logic; as well as fuzzy logic applied to ontologies [6];
+
+	
+Abductive reasoning and hypothesis generation —  Peirce explicated a third kind of logical reasoning, abduction, that combines hypothesis generation with an evaluation of likelihood of success and effort required. This logic method has yet to be implemented in any standard Web ontologies to my knowledge. The method could be very useful to pose desired outcome cases and then to work through what may be required to get there. Adding this to existing knowledge graphs would likely require developing a bespoke abductive reasoner;
+
+	
+Rich feature set for KBAI —  we want a rich features set useful to provide labeled instances for supervised machine learners. I addressed this need earlier with a rather comprehensive listing of possible features for knowledge graphs useful to learners [7]. We now need to start evaluating this features pool to provide pragmatic guidance for which features and learners match best for various knowledge-based artificial intelligence (KBAI) tasks;
+
+	
+Consistent, clean, correct and coherent — we want knowledge graphs that are as free from error as possible to make sure we are not feeding garbage to our machine learners and as a coherent basis for evaluating new additions and mappings; and
+
+	
+ODapps — ‘ontology-driven applications’ go beyond the mere templating or completions of user interface components to devise generic software packages driven by ontology specifications for specific applications. We have developed and deployed ODapps to import or export datasets; create, update, delete (CRUD) or otherwise manage data records; search records with full-text and faceted search; manage access control at the interacting levels of users, datasets, tools, and CRUD rights; browse or view existing records or record sets, based on simple to possible complex selection or filtering criteria; or process results sets through workflows of various natures, involving specialized analysis, information extraction or other functions. ODapps are designed more similarly to widgets or API-based frameworks than to the dedicated software of the past, though the dedicated functionality is quite similar. The major change in ODapps is to use a relatively common abstraction layer that responds to the structure and conventions of the guiding ontologies. We may embed these ODapps in a layout canvas for a Web page, where, as the user interacts with the system, the service generates new queries (most often SPARQL) to the various Web services endpoints, which produce new structured results sets, which can drive new displays and visualizations. As new user interactions occur, the iteration cycle is generated anew, again starting a new cycle of queries and results sets.
+
+
+Fortunately, we are actively addressing multiple of these recommendations (#1 - #3, #6 - #9) with our KBpedia initiative. We are also planning to add mapping to QUDT (#4) in a near-future release. We are presently evaluating probabilistic reasoners and hypothesis generators (#5 and #6).
+Realizing these potentials will enable our knowledge management (KM) efforts to shift to the description, nature, and relationships of the information environment. In other words, ontologies themselves need to become the focus of development. KM no longer needs to be abstracted to the IT department or third-party software. The actual concepts, terminology and relations that comprise coherent ontologies now become the explicit focus of KM activities, and subject to the direct control and refinement by their users, the knowledge workers, and subject matter experts.
+We are still some months from satisfying our desiderata for knowledge graphs. Fortunately, we have already made good progress, and we are close at hand to check off all of the boxes. Stay tuned!
+
+[1] N. Guarino, “Formal Ontology and Information Systems,” in Proceedings of FOIS’98, Trento, Italy, 1998, pp. 3–15.
+[2] M. Uschold, “Ontology-Driven Information Systems: Past, Present and Future,” in Proceedings of the Fifth International Conference on Formal Ontology in Information Systems (FOIS 2008), Carola Eschenbach and Michael Grüninger, eds., IOS Press, Amsterdam, Netherlands, 2008, pp. 3–20.
+[3] R. Gupta, A. Halevy, X. Wang, S.E. Whang, and F. Wu. "Biperpedia: An Ontology for Search Applications," Proceedings of the VLDB Endowment 7, no. 7, 2014, pp. 505-516.
+[4] P. C. Costa, “Bayesian Semantics for the Semantic Web,” Ph.D., George Mason University, 2005.
+[5] K. B. Laskey, “MEBN: A Language for First-Order Bayesian Knowledge Bases,” Artificial Intelligence, vol. 172, no. 2–3, pp. 140–178, Feb. 2008.
+[6] F. Bobillo and U. Straccia, “Fuzzy Ontology Representation Using OWL 2,” International Journal of Approximate Reasoning, vol. 52, no. 7, pp. 1073–1094, Oct. 2011.
+[7] M.K. Bergman, "A (Partial) Taxonomy of Machine Learning Features," AI3:::Adaptive Information blog, November 23, 2015.
+&#160;</sioc:content>
+	<content:encoded><![CDATA[<span class="Z3988" title="ctx_ver=Z39.88-2004&#38;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&#38;rfr_id=info%3Asid%2Focoins.info%3Agenerator&#38;rft.type=&#38;rft.format=text&#38;rft.title=Desiderata for Knowledge Graphs&#38;rft.source=AI3:::Adaptive Information&#38;rft.date=2018-02-18&#38;rft.identifier=http://www.mkbergman.com/?p=2135&#38;rft.language=English&#38;rft.subject=KBpedia&#38;rft.subject=Ontologies&#38;rft.subject=Ontology Best Practices&#38;rft.subject=Peircean Principles&#38;rft.au=Michael K. Bergman"></span><h2><a href="http://www.mkbergman.com/wp-content/themes/ai3v2/images/2007Posts/071115_e8_560.png"><img style="margin-right: 10px; width: 280px;" title="The Compleat Knowledge Graph" alt="The Compleat Knowledge Graph" src="http://www.mkbergman.com/wp-content/themes/ai3v2/images/2007Posts/071115_e8_560.png" align="left" /></a>Nine Features Wanted for Ontologies</h2>
+<p>I think the market has spoken in preferring the term of &#8216;knowledge graph&#8217; over that for &#8216;ontology.&#8217; I suppose we could argue nuances in differences for what the terms mean. We will continue to use both terms, more-or-less interchangeably. But, personally, I do find the concept of &#8216;knowledge graph&#8217; easier to convey to clients.</p>
+<p>As we see knowledge graphs proliferate in many settings — from virtual agents (<a href="https://en.wikipedia.org/wiki/Siri">Siri</a>, <a href="https://en.wikipedia.org/wiki/Amazon_Alexa">Alexa</a>, <a href="https://en.wikipedia.org/wiki/Cortana_%28software%29">Cortana</a> and <a href="https://en.wikipedia.org/wiki/Google_Now">Google Assistant</a>, among <a href="https://en.wikipedia.org/wiki/Virtual_assistant_(artificial_intelligence)">others</a>) to <a href="https://en.wikipedia.org/wiki/Knowledge_Graph">search</a> and AI platforms (<a href="https://en.wikipedia.org/wiki/Watson_%28computer%29">Watson</a>) — I&#8217;d like to take stock of the state-of-the-art and make some recommendations for what I would like to see in the next generation of knowledge graphs. We are just at the beginning of tapping the potential of knowledge graphs, as my recommendations show.</p>
+<p>Going back for twenty years to Nicola Guarino in 1998 <a href="#des1">[1]</a> and Michael Uschold in 2008 <a href="#des2">[2]</a>, there is a sense that ontologies could be relied upon for even more central aspects of overall applications. Both Guarino and Uschold termed this potential ’ontology-driven information systems.’ It is informative of the role that ontologies may play by listing some of these incipient potentials, some of which have only been contemplated or met in one or two actual installations. Let me list nine main areas of (largely) untapped potential:</p>
+<ol>
+<li>
+<p><em>Context and meaning</em> — by this, I mean the ability to model contexts and situations, which requires specific concepts for such and an ability to express gradations of adjacency (spatial and otherwise). Determining or setting contexts is essential to disambiguate meaning. Context and situations have been particularly difficult ideas for ontologies to model, especially those that have a binary or dichotomous design;</p>
+</li>
+<li>
+<p>A <i>relations component</i> — true, OWL offers the distinction of annotation, object and datatype properties, and we can express property characteristics such as transitivity, domain, range, cardinality, inversion, reflexivity, disjunction and the like, but it is a rare ontology that uses any or many of these constructs. The <code>subProperty</code> expression is used, but only in limited instances and rarely in a systematic schema. For example, it is readily obvious that some broader predicates such as <code>animalAction</code> could be split into  <code>involuntaryAction</code> and <code>voluntaryAction</code>, and then into specific actions such as <code>breathing</code> or <code>walking</code>, and so on, but schema with these kinds of logical property subsumptions are not evident. Structurally, we can use OWL to reason over actions and relations in a similar means as we reason over entities and types, but our common ontologies have yet to do so. Creating such schema are within grasp since we have language structures such as <a href="https://en.wikipedia.org/wiki/VerbNet">VerbNet</a> and other resources we could put to the task;</p>
+</li>
+<li>
+<p>An <i>attributes component — </i>the lack of a schema and organized presentation of attributes means it is a challenge to do <a href="https://en.wikipedia.org/wiki/Abox">ABox</a>-level integration and interoperability. As with a <em>relations</em> component, this gap is largely due to the primary focus on concepts and entities in the early stages of semantic technologies. Optimally, what we would like to see is a well-organized attributes schema that enables instance data characteristics from different sources to be mapped to a canonical attributes schema. Once in place, not only would mapping be aided, but we should also be able to reason over attributes and use them as intensional cues for classifying instances. At one time Google touted its Biperpedia initiative <a href="#des3">[3]</a> to organize attributes, but that effort went totally silent a couple of years ago;</p>
+</li>
+<li>
+<p>A <i>quantity units ontology — </i> is the next step beyond attributes, as we attempt to bring data values for quantities (and well as the units and labeling used) into alignment. Fortunately, of late, the <a href="http://www.qudt.org/">QUDT ontologies</a> (quantities, units and data types) has become an active project again with many external supporters. Something like this needs to accompany the other recommendations listed;</p>
+</li>
+<li>
+<p>A <i>statistics and probabilities ontology — </i> the world is not black-and-white, but vibrantly colored with all kinds of shades. We need to be able to handle gradations as well as binary choices. Being able to add probabilistic reasoners is appropriate given the idea of continua (Thirdness) from <a href="https://en.wikipedia.org/wiki/Charles_Sanders_Peirce">Charles Sanders Peirce</a> and capturing the idea of <a href="https://en.wikipedia.org/wiki/Fallibilism">fallibility</a>. Probabilistic reasoning is still a young field in ontology. Some early possibilities include Costa <a href="#des4">[4]</a> and the <a href="http://www.pr-owl.org/">PR-OWL</a> ontology using Multi-Entity Bayesian Networks (MEBN) <a href="#des5">[5]</a> which are a probabilistic first-order logic that goes beyond Peirce’s classic deterministic logic; as well as fuzzy logic applied to ontologies <a href="#des6">[6]</a>;</p>
+</li>
+<li>
+<p><em>Abductive reasoning and hypothesis generation</em> —  Peirce explicated a third kind of logical reasoning, <a href="https://en.wikipedia.org/wiki/Abductive_reasoning">abduction</a>, that combines hypothesis generation with an evaluation of likelihood of success and effort required. This logic method has yet to be implemented in any standard Web ontologies to my knowledge. The method could be very useful to pose desired outcome cases and then to work through what may be required to get there. Adding this to existing knowledge graphs would likely require developing a bespoke abductive reasoner;</p>
+</li>
+<li>
+<p><em>Rich feature set for KBAI</em> —  we want a rich features set useful to provide labeled instances for supervised machine learners. I addressed this need earlier with a rather comprehensive listing of possible features for knowledge graphs useful to learners <a href="#des7">[7]</a>. We now need to start evaluating this features pool to provide pragmatic guidance for which features and learners match best for various knowledge-based artificial intelligence (<a href="http://www.mkbergman.com/category/kbai/">KBAI</a>) tasks;</p>
+</li>
+<li>
+<p><em>Consistent, clean, correct </em>and<em> coherent</em> — we want knowledge graphs that are as free from error as possible to make sure we are not feeding garbage to our machine learners and as a coherent basis for evaluating new additions and mappings; and</p>
+</li>
+<li>
+<p><i>ODapps — </i>‘ontology-driven applications’ go beyond the mere templating or completions of user interface components to devise generic software packages driven by ontology specifications for specific applications. We have developed and deployed ODapps to import or export datasets; create, update, delete (<a class="western" href="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a>) or otherwise manage data records; search records with full-text and faceted search; manage access control at the interacting levels of users, datasets, tools, and CRUD rights; browse or view existing records or record sets, based on simple to possible complex selection or filtering criteria; or process results sets through workflows of various natures, involving specialized analysis, information extraction or other functions. ODapps are designed more similarly to widgets or API-based frameworks than to the dedicated software of the past, though the dedicated functionality is quite similar. The major change in ODapps is to use a relatively common abstraction layer that responds to the structure and conventions of the guiding ontologies. We may embed these ODapps in a layout canvas for a Web page, where, as the user interacts with the system, the service generates new queries (most often <a href="http://en.wikipedia.org/wiki/Sparql">SPARQL</a>) to the various Web services endpoints, which produce new structured results sets, which can drive new displays and visualizations. As new user interactions occur, the iteration cycle is generated anew, again starting a new cycle of queries and results sets.</p>
+</li>
+</ol>
+<p>Fortunately, we are actively addressing multiple of these recommendations (#1 &#8211; #3, #6 &#8211; #9) with our <a href="http://kbpedia.com/">KBpedia</a> initiative. We are also planning to add mapping to QUDT (#4) in a near-future release. We are presently evaluating probabilistic reasoners and hypothesis generators (#5 and #6).</p>
+<p>Realizing these potentials will enable our <span>knowledge management (KM) efforts to shift to the description, nature, and relationships of the information environment. In other words, ontologies themselves need to become the focus of development. KM no longer needs to be abstracted to the IT department or third-party software. The actual concepts, terminology and relations that comprise coherent ontologies now become the explicit focus of KM activities, and subject to the direct control and refinement by their users, the knowledge workers, and subject matter experts.</span></p>
+<p>We are still some months from satisfying our desiderata for knowledge graphs. Fortunately, we have already made good progress, and we are close at hand to check off all of the boxes. Stay tuned!</p>
+<hr style="margin: 15px 0px;" width="33%" size="1" align="left" />
+<div style="margin: 10px 0pt; font-size: 10px;"><a name="des1"></a>[1] N. Guarino, “Formal Ontology and Information Systems,” in <i>Proceedings of FOIS’98</i>, Trento, Italy, 1998, pp. 3–15.</div>
+<div style="margin: 10px 0pt; font-size: 10px;"><a name="des2"></a>[2] M. Uschold, “Ontology-Driven Information Systems: Past, Present and Future,” in <i>Proceedings of the Fifth International Conference on Formal Ontology in Information Systems (FOIS 2008), Carola Eschenbach and Michael Grüninger, eds., IOS Press</i>, Amsterdam, Netherlands, 2008, pp. 3–20.</div>
+<div style="margin: 10px 0pt; font-size: 10px;"><a name="des3"></a>[3] R. Gupta, A. Halevy, X. Wang, S.E. Whang, and F. Wu. &#8220;Biperpedia: An Ontology for Search Applications,&#8221; <i>Proceedings of the VLDB Endowment</i> 7, no. 7, 2014, pp. 505-516.</div>
+<div style="margin: 10px 0pt; font-size: 10px;"><a name="des4"></a>[4] P. C. Costa, “Bayesian Semantics for the Semantic Web,” Ph.D., George Mason University, 2005.</div>
+<div style="margin: 10px 0pt; font-size: 10px;"><a name="des5"></a>[5] K. B. Laskey, “MEBN: A Language for First-Order Bayesian Knowledge Bases,” <i>Artificial Intelligence</i>, vol. 172, no. 2–3, pp. 140–178, Feb. 2008.</div>
+<div style="margin: 10px 0pt; font-size: 10px;"><a name="des6"></a>[6] F. Bobillo and U. Straccia, “Fuzzy Ontology Representation Using OWL 2,” <i>International Journal of Approximate Reasoning</i>, vol. 52, no. 7, pp. 1073–1094, Oct. 2011.</div>
+<div style="margin: 10px 0pt; font-size: 10px;"><a name="des7"></a>[7] M.K. Bergman, &#8220;A (Partial) Taxonomy of Machine Learning Features,&#8221; <i>AI3:::Adaptive Information</i> blog, November 23, 2015.</div>
+<p>&#160;</p>
+]]></content:encoded>
+	<sioc:topic rdfs:label="KBpedia" rdf:resource="http://www.mkbergman.com/category/kbpedia/"/>
+	<sioc:topic rdfs:label="Ontologies" rdf:resource="http://www.mkbergman.com/category/ontologies/"/>
+	<sioc:topic rdfs:label="Ontology Best Practices" rdf:resource="http://www.mkbergman.com/category/ontology-best-practices/"/>
+	<sioc:topic rdfs:label="Peircean Principles" rdf:resource="http://www.mkbergman.com/category/peircean-principles/"/>
+	<sioc:links_to rdf:resource="http://www.mkbergman.com/wp-content/themes/ai3v2/images/2007Posts/071115_e8_560.png" rdfs:label="&#060;img style=&#034;margin-right: 10px; width: 280px;&#034; title=&#034;The Compleat Knowledge Graph&#034; alt=&#034;The Compleat Knowledge Graph&#034; src=&#034;http://www.mkbergman.com/wp-content/themes/ai3v2/images/2007Posts/071115_e8_560.png&#034; align=&#034;left&#034; /&#062;"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Siri" rdfs:label="Siri"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Amazon_Alexa" rdfs:label="Alexa"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Cortana_%28software%29" rdfs:label="Cortana"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Google_Now" rdfs:label="Google Assistant"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Virtual_assistant_(artificial_intelligence)" rdfs:label="others"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Knowledge_Graph" rdfs:label="search"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Watson_%28computer%29" rdfs:label="Watson"/>
+	<sioc:links_to rdf:resource="#des1" rdfs:label="[1]"/>
+	<sioc:links_to rdf:resource="#des2" rdfs:label="[2]"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/VerbNet" rdfs:label="VerbNet"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Abox" rdfs:label="ABox"/>
+	<sioc:links_to rdf:resource="#des3" rdfs:label="[3]"/>
+	<sioc:links_to rdf:resource="http://www.qudt.org/" rdfs:label="QUDT ontologies"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Charles_Sanders_Peirce" rdfs:label="Charles Sanders Peirce"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Fallibilism" rdfs:label="fallibility"/>
+	<sioc:links_to rdf:resource="#des4" rdfs:label="[4]"/>
+	<sioc:links_to rdf:resource="http://www.pr-owl.org/" rdfs:label="PR-OWL"/>
+	<sioc:links_to rdf:resource="#des5" rdfs:label="[5]"/>
+	<sioc:links_to rdf:resource="#des6" rdfs:label="[6]"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Abductive_reasoning" rdfs:label="abduction"/>
+	<sioc:links_to rdf:resource="#des7" rdfs:label="[7]"/>
+	<sioc:links_to rdf:resource="http://www.mkbergman.com/category/kbai/" rdfs:label="KBAI"/>
+	<sioc:links_to rdf:resource="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete" rdfs:label="CRUD"/>
+	<sioc:links_to rdf:resource="http://en.wikipedia.org/wiki/Sparql" rdfs:label="SPARQL"/>
+	<sioc:links_to rdf:resource="http://kbpedia.com/" rdfs:label="KBpedia"/>
+</sioc:Post>
+
+</rdf:RDF>

@@ -1,0 +1,74 @@
+<sparql xmlns="http://www.w3.org/2005/sparql-results#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/sw/DataAccess/rf1/result2.xsd">
+ <head>
+  <variable name="uri"/>
+  <variable name="N"/>
+  <variable name="B"/>
+ </head>
+ <results distinct="false" ordered="true">
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/Niall_Rafferty</uri></binding>
+   <binding name="N"><literal xml:lang="en">Niall Rafferty</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1980-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/The_Young_and_the_Restless_characters_(2011)</uri></binding>
+   <binding name="N"><literal xml:lang="en">Primrose DeVille</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1976-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/The_Young_and_the_Restless_characters_(2011)</uri></binding>
+   <binding name="N"><literal xml:lang="en">Angelo Veneziano</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1976-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/The_Young_and_the_Restless_characters_(2011)</uri></binding>
+   <binding name="N"><literal xml:lang="en">Lucy Romalotti</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1976-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/The_Young_and_the_Restless_characters_(2011)</uri></binding>
+   <binding name="N"><literal xml:lang="en">Moses Winters</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1976-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/The_Young_and_the_Restless_characters_(2011)</uri></binding>
+   <binding name="N"><literal xml:lang="en">Caleb Atkinson</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1976-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/The_Young_and_the_Restless_characters_(2011)</uri></binding>
+   <binding name="N"><literal xml:lang="en">Piper Welch</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1976-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/Kwon_Yang-sook</uri></binding>
+   <binding name="N"><literal xml:lang="en">Kwon Yang-sook</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1947-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/List_of_Emmerdale_Farm_characters_(1982)</uri></binding>
+   <binding name="N"><literal xml:lang="en">Samuel Skilbeck</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1982-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/List_of_Emmerdale_Farm_characters_(1982)</uri></binding>
+   <binding name="N"><literal xml:lang="en">Joan MacDonald</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1982-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/Cane_Ashby</uri></binding>
+   <binding name="N"><literal xml:lang="en">Cane Ashby</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1976-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/Walter_Simmons</uri></binding>
+   <binding name="N"><literal xml:lang="en">Walter Simmons</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">1972-12-23</literal></binding>
+  </result>
+  <result>
+   <binding name="uri"><uri>http://dbpedia.org/resource/Butler_Blue</uri></binding>
+   <binding name="N"><literal xml:lang="en">Butler Blue II</literal></binding>
+   <binding name="B"><literal datatype="http://www.w3.org/2001/XMLSchema#date">2011-12-23</literal></binding>
+  </result>
+ </results>
+</sparql>

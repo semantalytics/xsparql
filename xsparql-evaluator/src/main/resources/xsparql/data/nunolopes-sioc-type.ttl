@@ -1,0 +1,83 @@
+@prefix :  <http://xmlns.com/foaf/0.1/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix rss:  <http://purl.org/rss/1.0/> .
+@prefix admin:  <http://webns.net/mvcb/> .
+@prefix dc:  <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix content:  <http://purl.org/rss/1.0/modules/content/> .
+@prefix sioc:  <http://rdfs.org/sioc/ns#> .
+
+<file:///home/zcwhitl/git/xsparql/xsparql-test-suite/src/main/resources/xsparql/data/sioc.rdf>
+        rdf:type              foaf:Document ;
+        dc:title              "SIOC Site profile for \"AI3:::Adaptive Information\"" ;
+        dc:description        "A SIOC profile describes the structure and contents of a weblog in a machine readable form. For more information please refer to http://sioc-project.org/." ;
+        foaf:primaryTopic     <http://www.mkbergman.com/> ;
+        admin:generatorAgent  <http://rdfs.org/sioc/wp-sioc.php?version=1.25> .
+
+<http://www.mkbergman.com/>
+        rdf:type        sioc:Site ;
+        dc:title        "AI3:::Adaptive Information" ;
+        dc:description  "Weblog: AI3:::Adaptive Information" ;
+        sioc:link       <http://www.mkbergman.com/> ;
+        sioc:host_of    <http://www.mkbergman.com/index.php?sioc_type=site#weblog> ;
+        sioc:has_group  <http://www.mkbergman.com/index.php?sioc_type=site#authors> .
+
+<http://www.mkbergman.com/index.php?sioc_type=site#weblog>
+        rdf:type   sioc:Forum ;
+        sioc:name  "Main blog at AI3:::Adaptive Information" ;
+        sioc:link  <http://www.mkbergman.com/index.php?sioc_type=site#weblog/> .
+
+<http://www.mkbergman.com/2187/knowledge-representation-practionary-book-now-released/>
+        rdf:type  sioc:Post ;
+        dc:title  "<i>Knowledge Representation Practionary</i> Book Now Released" .
+
+<http://www.mkbergman.com/index.php?sioc_type=site#weblog>
+        sioc:container_of  <http://www.mkbergman.com/2187/knowledge-representation-practionary-book-now-released/> .
+
+<http://www.mkbergman.com/2187/knowledge-representation-practionary-book-now-released/>
+        rdfs:seeAlso  <http://www.mkbergman.com/index.php?sioc_type=post&sioc_id=2187> .
+
+<http://www.mkbergman.com/2180/announcing-my-new-knowledge-representation-book/>
+        rdf:type  sioc:Post ;
+        dc:title  "Announcing My New Knowledge Representation Book" .
+
+<http://www.mkbergman.com/index.php?sioc_type=site#weblog>
+        sioc:container_of  <http://www.mkbergman.com/2180/announcing-my-new-knowledge-representation-book/> .
+
+<http://www.mkbergman.com/2180/announcing-my-new-knowledge-representation-book/>
+        rdfs:seeAlso  <http://www.mkbergman.com/index.php?sioc_type=post&sioc_id=2180> .
+
+<http://www.mkbergman.com/2176/statistics-on-the-kbpedia-v-160-release/>
+        rdf:type  sioc:Post ;
+        dc:title  "Statistics on the KBpedia v 160 Release" .
+
+<http://www.mkbergman.com/index.php?sioc_type=site#weblog>
+        sioc:container_of  <http://www.mkbergman.com/2176/statistics-on-the-kbpedia-v-160-release/> .
+
+<http://www.mkbergman.com/2176/statistics-on-the-kbpedia-v-160-release/>
+        rdfs:seeAlso  <http://www.mkbergman.com/index.php?sioc_type=post&sioc_id=2176> .
+
+<http://www.mkbergman.com/2168/woohoo-kbpedia-is-now-open-source/>
+        rdf:type  sioc:Post ;
+        dc:title  "Woohoo! KBpedia is Now Open Source" .
+
+<http://www.mkbergman.com/index.php?sioc_type=site#weblog>
+        sioc:container_of  <http://www.mkbergman.com/2168/woohoo-kbpedia-is-now-open-source/> .
+
+<http://www.mkbergman.com/2168/woohoo-kbpedia-is-now-open-source/>
+        rdfs:seeAlso  <http://www.mkbergman.com/index.php?sioc_type=post&sioc_id=2168> .
+
+<http://www.mkbergman.com/2135/desiderata-for-knowledge-graphs/>
+        rdf:type  sioc:Post ;
+        dc:title  "Desiderata for Knowledge Graphs" .
+
+<http://www.mkbergman.com/index.php?sioc_type=site#weblog>
+        sioc:container_of  <http://www.mkbergman.com/2135/desiderata-for-knowledge-graphs/> .
+
+<http://www.mkbergman.com/2135/desiderata-for-knowledge-graphs/>
+        rdfs:seeAlso  <http://www.mkbergman.com/index.php?sioc_type=post&sioc_id=2135> .
+
+<http://www.mkbergman.com/index.php?sioc_type=site#weblog>
+        rdfs:seeAlso  <http://www.mkbergman.com/index.php?sioc_type=site&paged=2> .

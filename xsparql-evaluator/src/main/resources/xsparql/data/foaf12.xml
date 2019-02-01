@@ -1,0 +1,947 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<rdf:RDF 
+xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xml:base="http://www.deri.ie/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:bibtex="http://purl.oclc.org/NET/nknouf/ns/bibtex#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+<rdf:Description rdf:about="fileadmin/scripts/foaf.php?id=12">
+  <rdfs:label>FOAF file of Stefan Decker</rdfs:label> 
+ </rdf:Description><foaf:Person rdf:about="http://www.deri.ie/about/team/member/Stefan_Decker#me">
+	<foaf:name>Stefan Decker</foaf:name><foaf:title>Prof. Dr.</foaf:title><foaf:firstName>Stefan</foaf:firstName>
+		<foaf:surname>Decker</foaf:surname><foaf:phone rdf:resource="tel:+353-91-495011"/><foaf:mbox_sha1sum>1bc1f862b688a45b7e0c8d4a8467c23177c53fad</foaf:mbox_sha1sum><foaf:homepage rdf:resource="http://www.stefandecker.org"/><foaf:workplaceHomepage rdf:resource="http://www.deri.ie/"/><foaf:img rdf:resource="http://www.deri.ie/uploads/tx_derimp/stefan_decker_03.jpg"/></foaf:Person>
+
+
+
+<bibtex:book rdf:about="publications/monographs#uid_19">
+  <bibtex:hasTitle>The Social Semantic Web</bibtex:hasTitle>
+              <dc:title>The Social Semantic Web</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasPublisher>Springer</bibtex:hasPublisher><bibtex:hasAuthor>John Breslin and Alexandre Passant and Stefan Decker</bibtex:hasAuthor>
+              <foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasISBN>3642011713</bibtex:hasISBN><bibtex:hasAbstract>The Social Web (including services such as MySpace, Flickr, last.fm, and WordPress) has captured the attention of millions of users as well as billions of dollars in investment and acquisition. Social websites, evolving around the connections between people and their objects of interest, are encountering boundaries in the areas of information integration, dissemination, reuse, portability, searchability, automation and demanding tasks like querying. The Semantic Web is an ideal platform for interlinking and performing operations on diverse person- and object-related data available from the Social Web, and has produced a variety of approaches to overcome the boundaries being experienced in Social Web application areas.
+
+
+After a short overview of both the Social Web and the Semantic Web, Breslin et al. describe some popular social media and social networking applications, list their strengths and limitations, and describe some applications of Semantic Web technology to address their current shortcomings by enhancing them with semantics. Across these social websites, they demonstrate a twofold approach for interconnecting the islands that are social websites with semantic technologies, and for powering semantic applications with rich community-created content. They conclude with observations on how the application of Semantic Web technologies to the Social Web is leading towards the &quot;Social Semantic Web&quot; (sometimes also called &quot;Web 3.0&quot;), forming a network of interlinked and semantically-rich content and knowledge.
+
+
+The book is intended for computer science professionals, researchers, and graduates interested in understanding the technologies and research issues involved in applying Semantic Web technologies to social software. Practitioners and developers interested in applications such as blogs, social networks or wikis will also learn about methods for increasing the levels of automation in these forms of Web communication.</bibtex:hasAbstract>	</bibtex:book><bibtex:book rdf:about="publications/monographs#uid_15">
+  <bibtex:hasTitle>Reasoning Web, Third International Summer School 2007</bibtex:hasTitle>
+              <dc:title>Reasoning Web, Third International Summer School 2007</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasPublisher>Springer</bibtex:hasPublisher><bibtex:hasEditor>Grigoris Antoniou and Uwe AÃmann and Cristina Baroglio and Stefan Decker and Nicola Henze and Paula-Lavinia Patranjan and Robert Tolksdorf</bibtex:hasEditor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasISBN>3540746137</bibtex:hasISBN>	</bibtex:book><bibtex:inbook rdf:about="publications/monographs/book-chapters#uid_117">
+  <bibtex:hasTitle>Searching and Browsing Linked Data with SWSE</bibtex:hasTitle>
+              <dc:title>Searching and Browsing Linked Data with SWSE</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2012</bibtex:hasYear>
+		<bibtex:hasAuthor>Andreas Harth and Aidan Hogan and JÃ¼rgen Umbrich and Sheila Kinsella and Axel Polleres and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+		<bibtex:hasBooktitle>Semantic Search over the Web</bibtex:hasBooktitle><bibtex:hasPublisher>Springer (to appear)</bibtex:hasPublisher><bibtex:hasEditor>Roberto De Virgilio and Francesco Guerra and Yannis Velegrakis</bibtex:hasEditor>	</bibtex:inbook><bibtex:inbook rdf:about="publications/monographs/book-chapters#uid_70">
+  <bibtex:hasTitle>Enhancing Enterprise 2.0 Ecosystems Using Semantic Web and Linked.- Data Technologies: The SemSLATES Approach</bibtex:hasTitle>
+              <dc:title>Enhancing Enterprise 2.0 Ecosystems Using Semantic Web and Linked.- Data Technologies: The SemSLATES Approach</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasAuthor>Alexandre Passant and Philippe Laublet and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+		<bibtex:hasBooktitle>Linking Enterprise Data</bibtex:hasBooktitle><bibtex:hasPublisher>Springer</bibtex:hasPublisher><bibtex:hasEditor>David Wood</bibtex:hasEditor>	</bibtex:inbook><bibtex:inbook rdf:about="publications/monographs/book-chapters#uid_65">
+  <bibtex:hasTitle>Understanding Virtual Communities by Using Semantic Web Technologies</bibtex:hasTitle>
+              <dc:title>Understanding Virtual Communities by Using Semantic Web Technologies</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasAuthor>Alexandre Passant and Sheila Kinsella and Uldis Bojars and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+		<bibtex:hasBooktitle>Handbook of Research on Methods and Techniques for Studying Virtual Communities:Paradigms and Phenomena</bibtex:hasBooktitle><bibtex:hasPublisher>IGI Global</bibtex:hasPublisher><bibtex:hasEditor>Ben K. Daniel</bibtex:hasEditor>	</bibtex:inbook><bibtex:inbook rdf:about="publications/monographs/book-chapters#uid_50">
+  <bibtex:hasTitle>The Future of Social Websites: Sharing Data and Trusted Applications with Semantics</bibtex:hasTitle>
+              <dc:title>The Future of Social Websites: Sharing Data and Trusted Applications with Semantics</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasAuthor>Sheila Kinsella and Alexandre Passant and John Breslin and Stefan Decker and Ajit Jaokar</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+		<bibtex:hasBooktitle>Advances in Computers, 76</bibtex:hasBooktitle><bibtex:hasPublisher>Elsevier</bibtex:hasPublisher><bibtex:hasEditor>Marvin Zelkowitz</bibtex:hasEditor>	</bibtex:inbook><bibtex:inbook rdf:about="publications/monographs/book-chapters#uid_54">
+  <bibtex:hasTitle>The Social Semantic Desktop: A New Paradigm Towards Deploying the Semantic Web on the Desktop.</bibtex:hasTitle>
+              <dc:title>The Social Semantic Desktop: A New Paradigm Towards Deploying the Semantic Web on the Desktop.</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasAuthor>Ansgar Bernardi and Stefan Decker and Ludger van Elst and Gunnar Grimnes and Tudor Groza and Siegfried Handschuh and Mehdi Jazayeri and Cedric Mesnage and Knud MÃ¶ller and Gerald Reif and Michael Sintek</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+		<bibtex:hasBooktitle>Semantic Web Engineering in the Knowledge Society</bibtex:hasBooktitle><bibtex:hasPublisher>IGI Global</bibtex:hasPublisher><bibtex:hasEditor>Jorge Cardoso and Miltiadis D. Lytras</bibtex:hasEditor>	</bibtex:inbook><bibtex:inbook rdf:about="publications/monographs/book-chapters#uid_41">
+  <bibtex:hasTitle>Applications of Semantic Web Methodologies and Techniques to Social Networks and Social Websites</bibtex:hasTitle>
+              <dc:title>Applications of Semantic Web Methodologies and Techniques to Social Networks and Social Websites</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasAuthor>Sheila Kinsella and John Breslin and Alexandre Passant and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+		<bibtex:hasBooktitle>Reasoning Web, Fourth International Summer School 2008</bibtex:hasBooktitle><bibtex:hasPublisher>Springer</bibtex:hasPublisher><bibtex:hasEditor>Cristina Baroglio and Piero A. Bonatti and Jan Maluszynski and Massimo Marchiori and Axel Polleres and Sebastian Schaffert</bibtex:hasEditor>	</bibtex:inbook><bibtex:inbook rdf:about="publications/monographs/book-chapters#uid_37">
+  <bibtex:hasTitle>Online Social and Business Networking Communities</bibtex:hasTitle>
+              <dc:title>Online Social and Business Networking Communities</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasAuthor>Ina O'Murchu and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+		<bibtex:hasBooktitle>Viral Marketing Concepts and Cases</bibtex:hasBooktitle><bibtex:hasPublisher>Icfai Books</bibtex:hasPublisher><bibtex:hasEditor>Swapna Gopalan and Nasreen Taher</bibtex:hasEditor>	</bibtex:inbook><bibtex:inbook rdf:about="publications/monographs/book-chapters#uid_12">
+  <bibtex:hasTitle>Situation and Perspective of Knowledge Engineering</bibtex:hasTitle>
+              <dc:title>Situation and Perspective of Knowledge Engineering</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2004</bibtex:hasYear>
+		<bibtex:hasAuthor>Rudi Studer and Stefan Decker and Dieter Fensel and Steffen Staab</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+		<bibtex:hasBooktitle>Knowledge Engineering and Agent Technology, IOS Series on Frontiers in Artificial Intelligence and Applications, Volume 52</bibtex:hasBooktitle><bibtex:hasPublisher>IOS Press</bibtex:hasPublisher><bibtex:hasEditor>Jose Cuena and Yves Demazeau and Ana GarcÃ­a Serrano and Jan Treur</bibtex:hasEditor>	</bibtex:inbook><bibtex:proceedings rdf:about="publications/monographs/proceedings#uid_80">
+  <bibtex:hasTitle>Proceedings of Linked Data in the Future Internet at the Future Internet Assembly, Ghent</bibtex:hasTitle>
+              <dc:title>Proceedings of Linked Data in the Future Internet at the Future Internet Assembly, Ghent</dc:title>
+ 	<bibtex:hasEditor>S\"oren Auer and Stefan Decker and Manfred Hauswirth</bibtex:hasEditor>
+	<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasPublisher>FIA-Ghent2010-Proceedings</bibtex:hasPublisher>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear><bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">12</bibtex:hasMonth><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">700</bibtex:hasVolume><bibtex:hasSeries>CEUR Workshop Proceedings ISSN 1613-0073</bibtex:hasSeries>	</bibtex:proceedings><bibtex:proceedings rdf:about="publications/monographs/proceedings#uid_70">
+  <bibtex:hasTitle>Proceedings of the 1st Workshop on Personal Semantic Data</bibtex:hasTitle>
+              <dc:title>Proceedings of the 1st Workshop on Personal Semantic Data</dc:title>
+ 	<bibtex:hasEditor>Laura Dragan and Bernhard Schandl and Charlie Abela and Tudor Groza and Gunnar Grimnes and Stefan Decker</bibtex:hasEditor>
+	<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasPublisher>CEUR-WS Workshop Proceedings</bibtex:hasPublisher>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear><bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth>	</bibtex:proceedings><bibtex:proceedings rdf:about="publications/monographs/proceedings#uid_33">
+  <bibtex:hasTitle>The Semantic Web - ISWC 2006, 5th International Semantic Web Conference</bibtex:hasTitle>
+              <dc:title>The Semantic Web - ISWC 2006, 5th International Semantic Web Conference</dc:title>
+ 	<bibtex:hasEditor>Isabel F. Cruz and Stefan Decker and Dean Allemang and Chris Preist and Daniel Schwabe and Peter Mika and Michael Uschold and Lora Aroyo</bibtex:hasEditor>
+	<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasPublisher>Springer</bibtex:hasPublisher>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear><bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4273</bibtex:hasNumber><bibtex:hasSeries>LNCS</bibtex:hasSeries><bibtex:hasAddress>Athens, GA, USA</bibtex:hasAddress>	</bibtex:proceedings><bibtex:proceedings rdf:about="publications/monographs/proceedings#uid_41">
+  <bibtex:hasTitle>SemDesk 2006 - Semantic Desktop and Social Semantic Collaboration</bibtex:hasTitle>
+              <dc:title>SemDesk 2006 - Semantic Desktop and Social Semantic Collaboration</dc:title>
+ 	<bibtex:hasEditor>Stefan Decker and Jack Park and Leo Sauermann and SÃ¶ren Auer and Siegfried Handschuh</bibtex:hasEditor>
+	<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasPublisher>CEUR Workshop Proceedings</bibtex:hasPublisher>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear><bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">202</bibtex:hasVolume>	</bibtex:proceedings><bibtex:proceedings rdf:about="publications/monographs/proceedings#uid_46">
+  <bibtex:hasTitle>Applications of Logic Programming in the Semantic Web and Semantic Web Services</bibtex:hasTitle>
+              <dc:title>Applications of Logic Programming in the Semantic Web and Semantic Web Services</dc:title>
+ 	<bibtex:hasEditor>Axel Polleres and Stefan Decker and Gopal Gupta and Jos de Bruijn</bibtex:hasEditor>
+	<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasPublisher>CEUR Workshop Proceedings</bibtex:hasPublisher>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear><bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">8</bibtex:hasMonth><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">196</bibtex:hasVolume>	</bibtex:proceedings><bibtex:proceedings rdf:about="publications/monographs/proceedings#uid_44">
+  <bibtex:hasTitle>Semantic Desktop Workshop</bibtex:hasTitle>
+              <dc:title>Semantic Desktop Workshop</dc:title>
+ 	<bibtex:hasEditor>Stefan Decker and Jack Park and Dennis Quan and Leo Sauermann</bibtex:hasEditor>
+	<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasPublisher>CEUR Workshop Proceedings</bibtex:hasPublisher>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear><bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth>	</bibtex:proceedings><bibtex:proceedings rdf:about="publications/monographs/proceedings#uid_20">
+  <bibtex:hasTitle>Proceedings of the WWW2004 Workshop on Application Design, Development and Implementation Issues in the Semantic Web</bibtex:hasTitle>
+              <dc:title>Proceedings of the WWW2004 Workshop on Application Design, Development and Implementation Issues in the Semantic Web</dc:title>
+ 	<bibtex:hasEditor>Christoph Bussler and Stefan Decker and Daniel Schwabe and Oscar Pastor</bibtex:hasEditor>
+	<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasPublisher>CEUR Workshop Proceedings</bibtex:hasPublisher>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2004</bibtex:hasYear><bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasMonth><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">105</bibtex:hasVolume><bibtex:hasAddress>New York, NY, USA</bibtex:hasAddress>	</bibtex:proceedings><bibtex:articles rdf:about="publications/papers/journal-articles#uid_237">
+  <bibtex:hasTitle>An empirical survey of Linked Data conformance</bibtex:hasTitle>
+              <dc:title>An empirical survey of Linked Data conformance</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2012</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Aidan Hogan and JÃ¼rgen Umbrich and Andreas Harth and Richard Cyganiak and Axel Polleres and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Journal of Web Semantics</bibtex:hasJournal><bibtex:hasPages>14Â44</bibtex:hasPages><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">14</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_257">
+  <bibtex:hasTitle>Mapping between RDF and XML with XSPARQL</bibtex:hasTitle>
+              <dc:title>Mapping between RDF and XML with XSPARQL</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2012</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Stefan Bischof and Stefan Decker and Thomas Krennwallner and Nuno Lopes and Axel Polleres</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Journal on Data Semantics</bibtex:hasJournal><bibtex:hasPages>147-185</bibtex:hasPages><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_198">
+  <bibtex:hasTitle>Searching and Browsing Linked Data with SWSE: the Semantic Web Search Engine</bibtex:hasTitle>
+              <dc:title>Searching and Browsing Linked Data with SWSE: the Semantic Web Search Engine</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2011</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">12</bibtex:hasMonth>
+		<bibtex:hasAuthor>Aidan Hogan and Andreas Harth and JÃ¼rgen Umbrich and Sheila Kinsella and Axel Polleres and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Journal of Web Semantics</bibtex:hasJournal><bibtex:hasPages>365Â401</bibtex:hasPages><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_176">
+  <bibtex:hasTitle>An empirically-grounded conceptual architecture for applications on the Web of Data</bibtex:hasTitle>
+              <dc:title>An empirically-grounded conceptual architecture for applications on the Web of Data</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2011</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Benjamin Heitmann and Richard Cyganiak and Conor Hayes and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>IEEE Transactions on Systems, Man and Cybernetics, Part C-Applications and Reviews</bibtex:hasJournal>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_223">
+  <bibtex:hasTitle>Scalable and Distributed Methods for Entity Matching, Consolidation and Disambiguation over Linked Data Corpora</bibtex:hasTitle>
+              <dc:title>Scalable and Distributed Methods for Entity Matching, Consolidation and Disambiguation over Linked Data Corpora</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2011</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Aidan Hogan and Antoine Zimmermann and JÃ¼rgen Umbrich and Axel Polleres and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Journal of Web Semantics</bibtex:hasJournal><bibtex:hasPages>76Â110</bibtex:hasPages><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_150">
+  <bibtex:hasTitle>Sig.ma: Live views on the Web of Data</bibtex:hasTitle>
+              <dc:title>Sig.ma: Live views on the Web of Data</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth>
+		<bibtex:hasAuthor>Giovanni Tummarello and Richard Cyganiak and Michelle Catasta and Szymon Danielczyk and Renaud Delbru and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Journal of Web Semantics: Science, Services and Agents on the World Wide Web</bibtex:hasJournal>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_92">
+  <bibtex:hasTitle>CORAAL -- Dive into Publications, Bathe in the Knowledge</bibtex:hasTitle>
+              <dc:title>CORAAL -- Dive into Publications, Bathe in the Knowledge</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">7</bibtex:hasMonth>
+		<bibtex:hasAuthor>Vit Novacek and Tudor Groza and Siegfried Handschuh and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Journal of Web Semantics (to appear)</bibtex:hasJournal><bibtex:hasPages>176-181</bibtex:hasPages><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2-3</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">8</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_121">
+  <bibtex:hasTitle>Capturing Rhetoric and Argumentation Aspects within Scientific Publications</bibtex:hasTitle>
+              <dc:title>Capturing Rhetoric and Argumentation Aspects within Scientific Publications</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Tudor Groza and Siegfried Handschuh and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Journal of Data Semantics (to appear)</bibtex:hasJournal><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">XV</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_130">
+  <bibtex:hasTitle>Can we ever catch up with the Web?</bibtex:hasTitle>
+              <dc:title>Can we ever catch up with the Web?</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Axel Polleres and Aidan Hogan and Andreas Harth and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Semantic Web Â Interoperability, Usability, Applicability</bibtex:hasJournal><bibtex:hasPages>45Â52</bibtex:hasPages><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">12</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_132">
+  <bibtex:hasTitle>Annotation-based access control for collaborative information spaces</bibtex:hasTitle>
+              <dc:title>Annotation-based access control for collaborative information spaces</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Peyman Nasirifard and Vassilios Peristeras and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Computers in Human Behavior, Elsevier (In press)</bibtex:hasJournal>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_80">
+  <bibtex:hasTitle>Eye of the Tiger</bibtex:hasTitle>
+              <dc:title>Eye of the Tiger</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</bibtex:hasMonth>
+		<bibtex:hasAuthor>Vit Novacek and Tudor Groza and Siegfried Handschuh and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Technology Ireland Journal</bibtex:hasJournal><bibtex:hasPages>30-33</bibtex:hasPages><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">39</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_94">
+  <bibtex:hasTitle>CERA: A Collaborative Environment Reference Architecture for Interoperable CWE Systems</bibtex:hasTitle>
+              <dc:title>CERA: A Collaborative Environment Reference Architecture for Interoperable CWE Systems</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</bibtex:hasMonth>
+		<bibtex:hasAuthor>Vassilios Peristeras and Manuel Fradinho and Deirdre Lee and Wolfgang Prinz and Rudolf Ruland and Kashif Iqbal and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Service Oriented Computing and Applications</bibtex:hasJournal><bibtex:hasPages>3-23</bibtex:hasPages><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_93">
+  <bibtex:hasTitle>An Abstract Framework for Modeling Argumentation in Virtual Communities</bibtex:hasTitle>
+              <dc:title>An Abstract Framework for Modeling Argumentation in Virtual Communities</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Tudor Groza and Siegfried Handschuh and John G. Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>International Journal of Virtual Communities and Social Networking</bibtex:hasJournal>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_104">
+  <bibtex:hasTitle>A URI is worth a thousand tags: From tagging to Linked Data with MOAT</bibtex:hasTitle>
+              <dc:title>A URI is worth a thousand tags: From tagging to Linked Data with MOAT</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Alexandre Passant and Philippe Laublet and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>International Journal on Semantic Web and Information Systems</bibtex:hasJournal><bibtex:hasPages>72-94</bibtex:hasPages><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_59">
+  <bibtex:hasTitle>Personal Knowledge Management for Knowledge Workers using Social Semantic Technologies</bibtex:hasTitle>
+              <dc:title>Personal Knowledge Management for Knowledge Workers using Social Semantic Technologies</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">12</bibtex:hasMonth>
+		<bibtex:hasAuthor>Hak Lae Kim and Jae Hwa Choi and John Breslin and Stefan Decker and Hong Gee Kim</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>International Journal of Intelligent Information and Database Systems</bibtex:hasJournal><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_70">
+  <bibtex:hasTitle>Interlinking the Social Web with Semantics</bibtex:hasTitle>
+              <dc:title>Interlinking the Social Web with Semantics</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasMonth>
+		<bibtex:hasAuthor>Uldis Bojars and John Breslin and Vassilios Peristeras and Giovanni Tummarello and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>IEEE Intelligent Systems</bibtex:hasJournal><bibtex:hasPages>29-40</bibtex:hasPages><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">23</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_60">
+  <bibtex:hasTitle>Context Modeling and Measuring for Proactive Resource Recommendation in Business Collaboration</bibtex:hasTitle>
+              <dc:title>Context Modeling and Measuring for Proactive Resource Recommendation in Business Collaboration</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Ruinan Gong and Ke Ning and Qing Li and David O'Sullivan and Yuliu Chen and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Computers &amp; Industrial Engineering</bibtex:hasJournal>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_85">
+  <bibtex:hasTitle>ActiveRDF: embedding Semantic Web data into object-oriented languages</bibtex:hasTitle>
+              <dc:title>ActiveRDF: embedding Semantic Web data into object-oriented languages</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Eyal Oren and Benjamin Heitmann and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Journal of Web Semantics</bibtex:hasJournal><bibtex:hasPages>191-202</bibtex:hasPages><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_54">
+  <bibtex:hasTitle>The Future of Social Networks on the Internet: The Need for Semantics</bibtex:hasTitle>
+              <dc:title>The Future of Social Networks on the Internet: The Need for Semantics</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth>
+		<bibtex:hasAuthor>John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>IEEE Internet Computing</bibtex:hasJournal><bibtex:hasPages>86-90</bibtex:hasPages><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_45">
+  <bibtex:hasTitle>A flexible integration framework for Semantic Web 2.0 applications</bibtex:hasTitle>
+              <dc:title>A flexible integration framework for Semantic Web 2.0 applications</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth>
+		<bibtex:hasAuthor>Eyal Oren and Cedric Mesnage and Benjamin Heitmann and Armin Haller and Manfred Hauswirth and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>IEEE Software</bibtex:hasJournal><bibtex:hasPages>64-71</bibtex:hasPages><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">24</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_29">
+  <bibtex:hasTitle>SIOC: An Approach to Connect Web-Based Communities</bibtex:hasTitle>
+              <dc:title>SIOC: An Approach to Connect Web-Based Communities</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth>
+		<bibtex:hasAuthor>John Breslin and Stefan Decker and Andreas Harth and Uldis Bojars</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>The International Journal of Web-Based Communities</bibtex:hasJournal><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_30">
+  <bibtex:hasTitle>Towards Semantically-Interlinked Online Communities</bibtex:hasTitle>
+              <dc:title>Towards Semantically-Interlinked Online Communities</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">12</bibtex:hasMonth>
+		<bibtex:hasAuthor>Uldis Bojars and John Breslin and Andreas Harth and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>The UPGRADE European Journal for the Informatics Professional</bibtex:hasJournal><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_31">
+  <bibtex:hasTitle>Semantic Social Network Portal for Enterprise Online Communities</bibtex:hasTitle>
+              <dc:title>Semantic Social Network Portal for Enterprise Online Communities</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth>
+		<bibtex:hasAuthor>Marco Neumann and Ina O'Murchu and John Breslin and Stefan Decker and Deirdre Hogan and Ciaran MacDonaill</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>The Journal of European Industrial Training (Special Edition)</bibtex:hasJournal><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">29</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_28">
+  <bibtex:hasTitle>Semantic innovation management across the extended enterprise</bibtex:hasTitle>
+              <dc:title>Semantic innovation management across the extended enterprise</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</bibtex:hasMonth>
+		<bibtex:hasAuthor>Ke Ning and David O'Sullivan and Qinxiang Zhu and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>International Journal of Industrial and Systems Engineering (IJISE)</bibtex:hasJournal><bibtex:hasPages>109-128</bibtex:hasPages><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_24">
+  <bibtex:hasTitle>Where are the rules?</bibtex:hasTitle>
+              <dc:title>Where are the rules?</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2003</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth>
+		<bibtex:hasAuthor>Ian Horrocks and JÃ¼rgen Angele and Stefan Decker and Michael Kifer and Benjamin Grosof and Gerd Wagner</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>IEEE Intelligent Systems</bibtex:hasJournal><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">18</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_3">
+  <bibtex:hasTitle>Situation and Perspective of Knowledge Engineering</bibtex:hasTitle>
+              <dc:title>Situation and Perspective of Knowledge Engineering</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2003</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Rudi Studer and Stefan Decker and Dieter Fensel and Steffen Staab</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Knowledge Engineering and Agent Technology, IOS Series on Frontiers in Artificial Intelligence and Applications</bibtex:hasJournal><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">52</bibtex:hasVolume>	</bibtex:articles><bibtex:articles rdf:about="publications/papers/journal-articles#uid_4">
+  <bibtex:hasTitle>The Unified Problem-solving Method Development Language UPML</bibtex:hasTitle>
+              <dc:title>The Unified Problem-solving Method Development Language UPML</dc:title>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2003</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth>
+		<bibtex:hasAuthor>Dieter Fensel and Enrico Motta and Frank van Harmelen and Richard V. Benjamins and Monica Crubezy and Stefan Decker and Mauro Gaspari and Rix Groenboom and William Grosso and Mark Musen and Enric Plaza and Guus Schreiber and Rudi Studer and Bob Wielinga</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+  <bibtex:hasJournal>Knowledge and Information Systems (KAIS): An International Journal</bibtex:hasJournal><bibtex:hasPages>83-131</bibtex:hasPages><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</bibtex:hasNumber><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasVolume>	</bibtex:articles><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_841">
+  <bibtex:hasTitle>Protect Your RDF Data!</bibtex:hasTitle>
+              <dc:title>Protect Your RDF Data!</dc:title>
+		<bibtex:hasAuthor>Sabrina Kirrane and Nuno Lopes and Alessandra Mileo and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 2nd Joint International Semantic Technology Conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2012</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">12</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_821">
+  <bibtex:hasTitle>Knowledge Management on the Desktop</bibtex:hasTitle>
+              <dc:title>Knowledge Management on the Desktop</dc:title>
+		<bibtex:hasAuthor>Laura Dragan and Stefan Decker </bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 18th International Conference on Knowledge Engineering and Knowledge Management (EKAW2012)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2012</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_785">
+  <bibtex:hasTitle>Improving the Recall of Live Linked Data Querying through Reasoning</bibtex:hasTitle>
+              <dc:title>Improving the Recall of Live Linked Data Querying through Reasoning</dc:title>
+		<bibtex:hasAuthor>JÃ¼rgen Umbrich,  Aidan Hogan, Axel Polleres and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>International Conference on Web Reasoning and Rule Systems</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2012</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth><bibtex:hasAddress>Vienna</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_795">
+  <bibtex:hasTitle>Deletion Discussions in Wikipedia: Decision Factors and Outcomes</bibtex:hasTitle>
+              <dc:title>Deletion Discussions in Wikipedia: Decision Factors and Outcomes</dc:title>
+		<bibtex:hasAuthor>Jodi Schneider and Alexandre Passant and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>WikiSym2012: Proceedings of the 2012 International Symposium on Wikis</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2012</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">8</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_745">
+  <bibtex:hasTitle>A Dual-Mode User Interface for Accessing 3D Content on the World Wide Web </bibtex:hasTitle>
+              <dc:title>A Dual-Mode User Interface for Accessing 3D Content on the World Wide Web </dc:title>
+		<bibtex:hasAuthor>Jacek Jankowski and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 21st International World Wide Web Conference (WWW'12)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2012</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</bibtex:hasMonth><bibtex:hasAddress>Lyon, France</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_731">
+  <bibtex:hasTitle>An Access Control Framework for the Web of Data</bibtex:hasTitle>
+              <dc:title>An Access Control Framework for the Web of Data</dc:title>
+		<bibtex:hasAuthor>Owen Sacco and Alexandre Passant and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>IEEE 10th International Conference on Trust, Security and Privacy in Computing and Communications (TrustCom-11)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2011</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_672">
+  <bibtex:hasTitle>On the Semantics of Heterogeneous Querying of Relational, XML and RDF Data with XSPARQL</bibtex:hasTitle>
+              <dc:title>On the Semantics of Heterogeneous Querying of Relational, XML and RDF Data with XSPARQL</dc:title>
+		<bibtex:hasAuthor>Nuno Lopes and Stefan Bischof and Stefan Decker and Axel Polleres</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 15th Portuguese Conference on Artificial Intelligence (EPIA) 2011, Computational Logic with Applications Track</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2011</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasEditor>to appear</bibtex:hasEditor><bibtex:hasPublisher>to appear</bibtex:hasPublisher>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_700">
+  <bibtex:hasTitle>Linking Semantic Desktop Data to the Web of Data</bibtex:hasTitle>
+              <dc:title>Linking Semantic Desktop Data to the Web of Data</dc:title>
+		<bibtex:hasAuthor>Laura Dragan and Renaud Delbru and Tudor Groza and Siegfried Handschuh and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 10th International Semantic Web Conference (ISWC 2011)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2011</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_708">
+  <bibtex:hasTitle>Getting the Meaning Right: A Complementary Distributional Layer for the Web Semantics</bibtex:hasTitle>
+              <dc:title>Getting the Meaning Right: A Complementary Distributional Layer for the Web Semantics</dc:title>
+		<bibtex:hasAuthor>Vit Novacek and Siegfried Handschuh and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of ISWC'11 (Part I)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2011</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasEditor>L. Aroyo et al.</bibtex:hasEditor><bibtex:hasSeries>LNCS</bibtex:hasSeries><bibtex:hasNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">7031</bibtex:hasNumber><bibtex:hasPages>504-519</bibtex:hasPages><bibtex:hasPublisher>Springer-Verlag</bibtex:hasPublisher><bibtex:hasAddress>Berlin Heidelberg</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_698">
+  <bibtex:hasTitle>The Semantic Desktop at Work: Interlinking Notes</bibtex:hasTitle>
+              <dc:title>The Semantic Desktop at Work: Interlinking Notes</dc:title>
+		<bibtex:hasAuthor>Laura Dragan and Siegfried Handschuh and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 7th International Conference on Semantic Systems (I-SEMANTICS 2011)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2011</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth><bibtex:hasPublisher>ACM ICP</bibtex:hasPublisher>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_586">
+  <bibtex:hasTitle>Using Social Media to Spread Science and to Engage Readers in Conversation</bibtex:hasTitle>
+              <dc:title>Using Social Media to Spread Science and to Engage Readers in Conversation</dc:title>
+		<bibtex:hasAuthor>Julie Letierce and Alexandre Passant and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>11th International Conference on Public Communication of Science &amp; Technology (PCST 2010)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">12</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_571">
+  <bibtex:hasTitle>SAOR: Template Rule Optimisations for Distributed Reasoning over 1 Billion Linked Data Triples</bibtex:hasTitle>
+              <dc:title>SAOR: Template Rule Optimisations for Distributed Reasoning over 1 Billion Linked Data Triples</dc:title>
+		<bibtex:hasAuthor>Aidan Hogan and Jeff Z. Pan and Axel Polleres and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 9th International Semantic Web Conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasEditor>Peter Patel-Schneider et al. </bibtex:hasEditor><bibtex:hasPublisher>Springer</bibtex:hasPublisher>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_536">
+  <bibtex:hasTitle>Social People-Tagging vs. Social Bookmark-Tagging</bibtex:hasTitle>
+              <dc:title>Social People-Tagging vs. Social Bookmark-Tagging</dc:title>
+		<bibtex:hasAuthor>Peyman Nasirifard and Sheila Kinsella and Krystian Samp and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 17th International Conference on Knowledge Engineering and Knowledge Management (EKAW'10)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasPublisher>Springer</bibtex:hasPublisher><bibtex:hasAddress>Lisbon, Portugal</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_529">
+  <bibtex:hasTitle>Rethinking Microblogging: Open, Distributed, Semantic</bibtex:hasTitle>
+              <dc:title>Rethinking Microblogging: Open, Distributed, Semantic</dc:title>
+		<bibtex:hasAuthor>Alexandre Passant and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 10th International Conference on Web Engineering (ICWE2010)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">7</bibtex:hasMonth><bibtex:hasSeries>LNCS</bibtex:hasSeries><bibtex:hasPublisher>Springer</bibtex:hasPublisher>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_590">
+  <bibtex:hasTitle>A Node Indexing Scheme for Web Entity Retrieval</bibtex:hasTitle>
+              <dc:title>A Node Indexing Scheme for Web Entity Retrieval</dc:title>
+		<bibtex:hasAuthor>Renaud Delbru and Nickolai Toupikov and Michele Catasta and Giovanni Tummarello and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 7th Extended Semantic Web Conference (ESWC 2010)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_594">
+  <bibtex:hasTitle>Hierarchical Link Analysis for Ranking Web Data</bibtex:hasTitle>
+              <dc:title>Hierarchical Link Analysis for Ranking Web Data</dc:title>
+		<bibtex:hasAuthor>Renaud Delbru and Nickolai Toupikov and Michele Catasta and Giovanni Tummarello and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 7th Extended Semantic Web Conference (ESWC 2010)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_546">
+  <bibtex:hasTitle>Supporting menu design with radial layouts</bibtex:hasTitle>
+              <dc:title>Supporting menu design with radial layouts</dc:title>
+		<bibtex:hasAuthor>Krystian Samp and Stefan Decker </bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the International Conference on Advanced Visual Interfaces (AVI 2010) </bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_513">
+  <bibtex:hasTitle>Understanding how Twitter is used to spread scientific messages</bibtex:hasTitle>
+              <dc:title>Understanding how Twitter is used to spread scientific messages</dc:title>
+		<bibtex:hasAuthor>Julie Letierce, Alexandre Passant, John Breslin, Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Web Science Conference (WebSci10) </bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</bibtex:hasMonth><bibtex:hasAddress>Raleigh, NC, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_520">
+  <bibtex:hasTitle>Integrating Text with Video and 3D Graphics: The Effects of Text Drawing Styles on Text Readability</bibtex:hasTitle>
+              <dc:title>Integrating Text with Video and 3D Graphics: The Effects of Text Drawing Styles on Text Readability</dc:title>
+		<bibtex:hasAuthor>Jacek Jankowski and Krystian Samp and Izabela Irzynska and Marek Jozwowicz and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 28th International Conference on Human Factors in Computing Systems 2010 (CHI'10)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth><bibtex:hasAddress>Atlanta, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_592">
+  <bibtex:hasTitle>Sig.ma: to see the Web of data, to foresee its future</bibtex:hasTitle>
+              <dc:title>Sig.ma: to see the Web of data, to foresee its future</dc:title>
+		<bibtex:hasAuthor>Giovanni Tummarello and Stefan Decker </bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>European Semantic technology conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">12</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_481">
+  <bibtex:hasTitle>SemSLATES: Improving Enterprise 2.0 Information Systems thanks to Semantic Web Technologies</bibtex:hasTitle>
+              <dc:title>SemSLATES: Improving Enterprise 2.0 Information Systems thanks to Semantic Web Technologies</dc:title>
+		<bibtex:hasAuthor>Alexandre Passant and Philippe Laublet and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 5th International Conference on Collaborative Computing: Networking, Applications and Worksharing</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasPublisher>IEEE</bibtex:hasPublisher>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_452">
+  <bibtex:hasTitle>Extracting and Utilizing Social Networks from Log Files of Shared Workspaces</bibtex:hasTitle>
+              <dc:title>Extracting and Utilizing Social Networks from Log Files of Shared Workspaces</dc:title>
+		<bibtex:hasAuthor>Peyman Nasirifard and Vassilios Peristeras and Conor Hayes and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 10th IFIP Working Conference on Virtual Enterprises</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasPublisher>Springer</bibtex:hasPublisher>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_470">
+  <bibtex:hasTitle>Produce and Consume Linked Data with Drupal!</bibtex:hasTitle>
+              <dc:title>Produce and Consume Linked Data with Drupal!</dc:title>
+		<bibtex:hasAuthor>StÃ©phane Corlosquet and Renaud Delbru and Tim Clark and Axel Polleres and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 8th International Semantic Web Conference (ISWC 2009)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasPublisher>Springer</bibtex:hasPublisher>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_472">
+  <bibtex:hasTitle>Using Naming Authority to Rank Data and Ontologies for Web Search</bibtex:hasTitle>
+              <dc:title>Using Naming Authority to Rank Data and Ontologies for Web Search</dc:title>
+		<bibtex:hasAuthor>Andreas Harth and Sheila Kinsella and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 8th International Semantic Web Conference (ISWC 2009)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasPublisher>Springer</bibtex:hasPublisher><bibtex:hasAddress>Chantilly, Virginia, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_473">
+  <bibtex:hasTitle>Towards Lightweight and Robust Large Scale Emergent Knowledge Processing</bibtex:hasTitle>
+              <dc:title>Towards Lightweight and Robust Large Scale Emergent Knowledge Processing</dc:title>
+		<bibtex:hasAuthor>Vit Novacek and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of ISWC 2009</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasEditor>Abraham Bernstein et al.</bibtex:hasEditor><bibtex:hasPublisher>Springer</bibtex:hasPublisher>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_477">
+  <bibtex:hasTitle>On the Ostensibly Silent 'W' in OWL 2 RL</bibtex:hasTitle>
+              <dc:title>On the Ostensibly Silent 'W' in OWL 2 RL</dc:title>
+		<bibtex:hasAuthor>Aidan Hogan and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the Third International Conference on Web Reasoning and Rule Systems (RR)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasPublisher>Springer</bibtex:hasPublisher>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_483">
+  <bibtex:hasTitle>Bridging the Gap Between Linked Data and the Semantic Desktop</bibtex:hasTitle>
+              <dc:title>Bridging the Gap Between Linked Data and the Semantic Desktop</dc:title>
+		<bibtex:hasAuthor>Tudor Groza and Laura Dragan and Siegfried Handschuh and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 8th International Semantic Web Conference (ISWC 2009)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasAddress>Chantilly, Virginia, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_440">
+  <bibtex:hasTitle>Federating Distributed Social Data to Build an Interlinked Online Information Society</bibtex:hasTitle>
+              <dc:title>Federating Distributed Social Data to Build an Interlinked Online Information Society</dc:title>
+		<bibtex:hasAuthor>Alexandre Passant and Matthias Samwald and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the WebSci'09: Society On-Line, 18-20 March 2009, Athens, Greece.</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_495">
+  <bibtex:hasTitle>Analysis and Representation of Tagging Practices in Online Communities</bibtex:hasTitle>
+              <dc:title>Analysis and Representation of Tagging Practices in Online Communities</dc:title>
+		<bibtex:hasAuthor>Hak Lae Kim and Simon Scerri and John G. Breslin and Stefan Decker and Hong Gee Kim</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the AAAI 2009 Spring Symposium on Social Semantic Web: Where Web 2.0 meets Web 3.0</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_461">
+  <bibtex:hasTitle>Accessing Cultural Heritage using the Web of Data</bibtex:hasTitle>
+              <dc:title>Accessing Cultural Heritage using the Web of Data</dc:title>
+		<bibtex:hasAuthor>Jacek Jankowski and Yolanda Cobos and Michael Hausenblas and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>10th International Symposium on Virtual Reality, Archaeology and Cultural Heritage 2009 (VAST'09)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth><bibtex:hasEditor>K. Debattista, C. Perlingieri, D. Pitzalis, and S. Spina</bibtex:hasEditor><bibtex:hasAddress>St.Julians, Malta</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_462">
+  <bibtex:hasTitle>2LIP: Filling the Gap between the Current and the Three-Dimensional Web</bibtex:hasTitle>
+              <dc:title>2LIP: Filling the Gap between the Current and the Three-Dimensional Web</dc:title>
+		<bibtex:hasAuthor>Jacek Jankowski and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 14th International Conference on 3D Web Technology 2009 (Web3D'09)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth><bibtex:hasAddress>Darmstadt, Germany</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_463">
+  <bibtex:hasTitle>2LIPGarden: 3D Hypermedia for Everyone</bibtex:hasTitle>
+              <dc:title>2LIPGarden: 3D Hypermedia for Everyone</dc:title>
+		<bibtex:hasAuthor>Jacek Jankowski and Izabela Irzynska and Bill McDaniel and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 20th ACM Conference on Hypertext and Hypermedia 2009 (HT'09)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</bibtex:hasMonth><bibtex:hasAddress>Torino, Italy</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_388">
+  <bibtex:hasTitle>The State of the Art in Tag Ontologies: A Semantic Model for Tagging and Folksonomies</bibtex:hasTitle>
+              <dc:title>The State of the Art in Tag Ontologies: A Semantic Model for Tagging and Folksonomies</dc:title>
+		<bibtex:hasAuthor>Hak Lae Kim and Simon Scerri and John Breslin and Stefan Decker and Hong Gee Kim</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the Dublin Core Conference 2008</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_405">
+  <bibtex:hasTitle>An Annotation-based Access Control Model and Tools for Collaborative Information Spaces</bibtex:hasTitle>
+              <dc:title>An Annotation-based Access Control Model and Tools for Collaborative Information Spaces</dc:title>
+		<bibtex:hasAuthor>Peyman Nasirifard and Vassilios Peristeras and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 1st World Summit on the Knowledge Society (WSKS'08)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth><bibtex:hasAddress>Athens, Greece</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_380">
+  <bibtex:hasTitle>Review and Alignment of Tag Ontologies for Semantically-Linked Data in Collaborative Tagging Spaces</bibtex:hasTitle>
+              <dc:title>Review and Alignment of Tag Ontologies for Semantically-Linked Data in Collaborative Tagging Spaces</dc:title>
+		<bibtex:hasAuthor>Hak Lae Kim and Alexandre Passant and John Breslin and Simon Scerri and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 2nd International Conference on Semantic Computing</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">8</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_376">
+  <bibtex:hasTitle>Tight Coupling of Personal Interests with Multi-dimensional Visualization for Exploration and Analysis of Text Collections</bibtex:hasTitle>
+              <dc:title>Tight Coupling of Personal Interests with Multi-dimensional Visualization for Exploration and Analysis of Text Collections</dc:title>
+		<bibtex:hasAuthor>VinhTuan Thai and Siegfried Handschuh and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 12th International Conference on Information Visualisation (IV08)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">7</bibtex:hasMonth><bibtex:hasPublisher>IEEE Computer Society</bibtex:hasPublisher><bibtex:hasAddress>London, UK</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_395">
+  <bibtex:hasTitle>An Interactive Map of Semantic Web Ontology Usage</bibtex:hasTitle>
+              <dc:title>An Interactive Map of Semantic Web Ontology Usage</dc:title>
+		<bibtex:hasAuthor>Sheila Kinsella and Uldis Bojars and Andreas Harth and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 12th International Conference on Information Visualisation (IV08)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">7</bibtex:hasMonth><bibtex:hasPublisher>IEEE Computer Society</bibtex:hasPublisher><bibtex:hasAddress>London, UK</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_430">
+  <bibtex:hasTitle>Four Heuristics to Guide Structured Content Crawling</bibtex:hasTitle>
+              <dc:title>Four Heuristics to Guide Structured Content Crawling</dc:title>
+		<bibtex:hasAuthor>JÃ¼rgen Umbrich and Andreas Harth and Aidan Hogan and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>8th International Conference on Web Engineering (Short Paper)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">7</bibtex:hasMonth><bibtex:hasAddress>New York, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_367">
+  <bibtex:hasTitle>Semantic Email as a Communication Medium for the Social Semantic Desktop</bibtex:hasTitle>
+              <dc:title>Semantic Email as a Communication Medium for the Social Semantic Desktop</dc:title>
+		<bibtex:hasAuthor>Simon Scerri and Siegfried Handschuh and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 5th European Semantic Web Conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth><bibtex:hasAddress>Tenerife, Canary Islands, Spain</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_371">
+  <bibtex:hasTitle>IVEA: An Information Visualization Tool for Personalized Exploratory Document Collection Analysis</bibtex:hasTitle>
+              <dc:title>IVEA: An Information Visualization Tool for Personalized Exploratory Document Collection Analysis</dc:title>
+		<bibtex:hasAuthor>VinhTuan Thai and Siegfried Handschuh and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 5th European Semantic Web Conference (ESWC 2008)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth><bibtex:hasAddress>Tenerife, Spain</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_397">
+  <bibtex:hasTitle>KonneXSALT: First Steps Towards a Semantic Claim Federation Infrastructure</bibtex:hasTitle>
+              <dc:title>KonneXSALT: First Steps Towards a Semantic Claim Federation Infrastructure</dc:title>
+		<bibtex:hasAuthor>Tudor Groza and Siegfried Handschuh and Knud MÃ¶ller and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 5th European Semantic Web Conference (ESWC 2008)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_398">
+  <bibtex:hasTitle>Semantic Sitemaps: Efficient and Flexible Access to Datasets on the Semantic Web</bibtex:hasTitle>
+              <dc:title>Semantic Sitemaps: Efficient and Flexible Access to Datasets on the Semantic Web</dc:title>
+		<bibtex:hasAuthor>Richard Cyganiak and Holger Stenzhorn and Renaud Delbru and Stefan Decker and Giovanni Tummarello</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the Proceedings of the 5th European Semantic Web Conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_403">
+  <bibtex:hasTitle>Building a Semantic Web Search Engine: Challenges and Solutions</bibtex:hasTitle>
+              <dc:title>Building a Semantic Web Search Engine: Challenges and Solutions</dc:title>
+		<bibtex:hasAuthor>Andreas Harth and Aidan Hogan and JÃ¼rgen Umbrich and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 3rd XTech Conference, 2008</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasMonth><bibtex:hasAddress>Dublin, Ireland</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_345">
+  <bibtex:hasTitle>YARS2: A Federated Repository for Querying Graph Structured Data from the Web</bibtex:hasTitle>
+              <dc:title>YARS2: A Federated Repository for Querying Graph Structured Data from the Web</dc:title>
+		<bibtex:hasAuthor>Andreas Harth and JÃ¼rgen Umbrich and Aidan Hogan and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 6th International Semantic Web Conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasAddress>Busan, South Korea</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_343">
+  <bibtex:hasTitle>SALT: Weaving the claim web</bibtex:hasTitle>
+              <dc:title>SALT: Weaving the claim web</dc:title>
+		<bibtex:hasAuthor>Tudor Groza and Knud MÃ¶ller and Siegfried Handschuh and Diana Trif and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 6th International Semantic Web Conference (ISWC2007)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasPublisher>Springer</bibtex:hasPublisher><bibtex:hasAddress>Busan, South Korea</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_281">
+  <bibtex:hasTitle>A Context-Aware Resource Recommendation System for Business Collaboration</bibtex:hasTitle>
+              <dc:title>A Context-Aware Resource Recommendation System for Business Collaboration</dc:title>
+		<bibtex:hasAuthor>Ke Ning and Ruinan Gong and Stefan Decker and Yuliu Chen and David O'Sullivan</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 9th IEEE Conference on E-Commerce Technology (CEC' 07) and the 4th IEEE Conference on Enterprise Computing, E-Commerce and E-Services (EEE ' 07) (to appear)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">7</bibtex:hasMonth><bibtex:hasPublisher>IEEE Computer Society Press</bibtex:hasPublisher><bibtex:hasAddress>Tokyo, Japan</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_252">
+  <bibtex:hasTitle>Simple algorithms for predicate suggestions using similarity and co-occurrence</bibtex:hasTitle>
+              <dc:title>Simple algorithms for predicate suggestions using similarity and co-occurrence</dc:title>
+		<bibtex:hasAuthor>Eyal Oren and Sebastian Gerke and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the European Semantic Web Conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth><bibtex:hasAddress>Innsbruck, Austria</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_262">
+  <bibtex:hasTitle>SALT - Semantically Annotated LaTeX for scientific publications</bibtex:hasTitle>
+              <dc:title>SALT - Semantically Annotated LaTeX for scientific publications</dc:title>
+		<bibtex:hasAuthor>Tudor Groza and Siegfried Handschuh and Knud MÃ¶ller and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 4th European Semantic Web Conference (to appear)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth><bibtex:hasAddress>Innsbruck, Austria</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_247">
+  <bibtex:hasTitle>ActiveRDF: Object-oriented semantic web programming</bibtex:hasTitle>
+              <dc:title>ActiveRDF: Object-oriented semantic web programming</dc:title>
+		<bibtex:hasAuthor>Eyal Oren and Renaud Delbru and Sebastian Gerke and Armin Haller and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the International World-Wide Web Conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasMonth><bibtex:hasAddress>Banff, Canada</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_266">
+  <bibtex:hasTitle>A DRM Solution Based on Social Networks and Enabling the Idea of Fair Use</bibtex:hasTitle>
+              <dc:title>A DRM Solution Based on Social Networks and Enabling the Idea of Fair Use</dc:title>
+		<bibtex:hasAuthor>Slawomir Grzonkowski and Brian Ensor and Sebastian Ryszard Kruk and Adam Gzella and Stefan Decker and Bill McDaniel</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Media in Transition: creativity, ownership and collaboration in the digital age</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</bibtex:hasMonth><bibtex:hasEditor>Brad Seawell</bibtex:hasEditor><bibtex:hasOrganization>Massachusetts Institute of Technology</bibtex:hasOrganization><bibtex:hasAddress>Cambridge, Boston, MA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_221">
+  <bibtex:hasTitle>Extending faceted navigation for RDF data</bibtex:hasTitle>
+              <dc:title>Extending faceted navigation for RDF data</dc:title>
+		<bibtex:hasAuthor>Eyal Oren and Renaud Delbru and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 5th International Semantic Web Conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasAddress>Athens, Georgia, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_248">
+  <bibtex:hasTitle>MultiCrawler: A Pipelined Architecture for Crawling and Indexing Semantic Web Data</bibtex:hasTitle>
+              <dc:title>MultiCrawler: A Pipelined Architecture for Crawling and Indexing Semantic Web Data</dc:title>
+		<bibtex:hasAuthor>Andreas Harth and JÃ¼rgen Umbrich and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 5th International Semantic Web Conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasAddress>Athens, GA, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_392">
+  <bibtex:hasTitle>Building a Heterogeneous Network of Digital Libraries on the Semantic Web</bibtex:hasTitle>
+              <dc:title>Building a Heterogeneous Network of Digital Libraries on the Semantic Web</dc:title>
+		<bibtex:hasAuthor>Sebastian Ryszard Kruk and Mariusz Cygan and Piotr Piotrowski and Krystian Samp and Adam Westerski and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the Semantics2006</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasAddress>Vienna, Austria</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_175">
+  <bibtex:hasTitle>Semantic Wikis for Personal Knowledge Management</bibtex:hasTitle>
+              <dc:title>Semantic Wikis for Personal Knowledge Management</dc:title>
+		<bibtex:hasAuthor>Eyal Oren and Max VÃ¶lkel and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 17th International Conference on Database and Expert Systems Applications</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth><bibtex:hasAddress>Krakow, Poland</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_364">
+  <bibtex:hasTitle>Semantic Documentation using Semantic Web Technologies and Social Web</bibtex:hasTitle>
+              <dc:title>Semantic Documentation using Semantic Web Technologies and Social Web</dc:title>
+		<bibtex:hasAuthor>Hak Lae Kim and Hong Gee Kim and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the International Conference on Next Generation Web Services Practices</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth><bibtex:hasPages>27-32</bibtex:hasPages><bibtex:hasPublisher>IEEE Computer Society</bibtex:hasPublisher><bibtex:hasAddress>Washington, DC, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_231">
+  <bibtex:hasTitle>The Semantic Grid: Requirements, Infrastructure and Methodology</bibtex:hasTitle>
+              <dc:title>The Semantic Grid: Requirements, Infrastructure and Methodology</dc:title>
+		<bibtex:hasAuthor>Kashif Iqbal and Stefan Decker and Mark Baker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the International Conference on Grid and Pervasive Computing</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasMonth><bibtex:hasEditor>Yeh-Ching Chung and JosÃ© E. Moreira</bibtex:hasEditor><bibtex:hasSeries>LNCS</bibtex:hasSeries><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3947</bibtex:hasVolume><bibtex:hasPages>415-426</bibtex:hasPages><bibtex:hasPublisher>Springer</bibtex:hasPublisher><bibtex:hasAddress>Taiwan, China</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_76">
+  <bibtex:hasTitle>Towards Semantic Web Services in Grid Environments</bibtex:hasTitle>
+              <dc:title>Towards Semantic Web Services in Grid Environments</dc:title>
+		<bibtex:hasAuthor>Ioan Toma and Dumitru Roman and Kashif Iqbal and Juergen Hofer and Dieter Fensel and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 1st International Conference on Semantics, Knowledge and Grid (SKG2005)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_191">
+  <bibtex:hasTitle>Optimized Index Structures for Querying RDF from the Web</bibtex:hasTitle>
+              <dc:title>Optimized Index Structures for Querying RDF from the Web</dc:title>
+		<bibtex:hasAuthor>Andreas Harth and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 3rd Latin American Web Congress</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasAddress>Buenos Aires, Argentina</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_301">
+  <bibtex:hasTitle>JeromeDL - Adding Semantic Web Technologies to Digital Libraries</bibtex:hasTitle>
+              <dc:title>JeromeDL - Adding Semantic Web Technologies to Digital Libraries</dc:title>
+		<bibtex:hasAuthor>Sebastian Ryszard Kruk and Stefan Decker and Lech Zieborak</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 16th International Conference on Database and Expert Systems Applications</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">8</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_161">
+  <bibtex:hasTitle>semiBlog - Semantic Publishing of Desktop Data</bibtex:hasTitle>
+              <dc:title>semiBlog - Semantic Publishing of Desktop Data</dc:title>
+		<bibtex:hasAuthor>Knud MÃ¶ller and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 14th Conference on Information Systems Development (ISD2005)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">8</bibtex:hasMonth><bibtex:hasAddress>Karlstad, Sweden</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_192">
+  <bibtex:hasTitle>WikiOnt: An Ontology for Describing and Exchanging Wikipedia Articles</bibtex:hasTitle>
+              <dc:title>WikiOnt: An Ontology for Describing and Exchanging Wikipedia Articles</dc:title>
+		<bibtex:hasAuthor>Andreas Harth and Hannes Gassert and Ina O'Murchu and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 1st International Wikimedia Conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">8</bibtex:hasMonth><bibtex:hasAddress>Frankfurt a. M., Germany</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_152">
+  <bibtex:hasTitle>Dealing with Semantic Interoperation of Data</bibtex:hasTitle>
+              <dc:title>Dealing with Semantic Interoperation of Data</dc:title>
+		<bibtex:hasAuthor>Prasenjit Mitra and Gio Wiederhold and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 2nd IEEE International Symposium on Data Interoperability</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth><bibtex:hasAddress>Sardinia, Italy</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_154">
+  <bibtex:hasTitle>Towards Semantically Interlinked Online Communities</bibtex:hasTitle>
+              <dc:title>Towards Semantically Interlinked Online Communities</dc:title>
+		<bibtex:hasAuthor>John Breslin and Andreas Harth and Uldis Bojars and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 2nd European Semantic Web Conference (ESWC2005)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasMonth><bibtex:hasAddress>Heraklion, Greece</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_153">
+  <bibtex:hasTitle>An Approach to Connect Web-Based Communities</bibtex:hasTitle>
+              <dc:title>An Approach to Connect Web-Based Communities</dc:title>
+		<bibtex:hasAuthor>John Breslin and Stefan Decker and Andreas Harth</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 2nd IADIS International Conference on Web Based Communities (WBC 2005)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</bibtex:hasMonth><bibtex:hasPages>272Â275</bibtex:hasPages><bibtex:hasAddress>Carvoeiro, Portugal</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_129">
+  <bibtex:hasTitle>Ontology-based Resource Matching in the Grid---The Grid meets the Semantic Web (extended version)</bibtex:hasTitle>
+              <dc:title>Ontology-based Resource Matching in the Grid---The Grid meets the Semantic Web (extended version)</dc:title>
+		<bibtex:hasAuthor>Hongsuda Tangmunarunkit and Stefan Decker and Carl Kesselman</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the 2nd International Semantic Web Conference</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2003</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasAddress>Sanibel-Captiva Islands, Florida, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/conference-papers#uid_128">
+  <bibtex:hasTitle>Description logic programs: combining logic programs with description logic</bibtex:hasTitle>
+              <dc:title>Description logic programs: combining logic programs with description logic</dc:title>
+		<bibtex:hasAuthor>Benjamin Grosof and Ian Horrocks and Raphael Volz and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/>
+ 	<bibtex:hasBooktitle>Proceedings of the International Conference on World Wide Web (WWW2003)</bibtex:hasBooktitle>
+		<bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2003</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasMonth><bibtex:hasAddress>Budapest, Hungary</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_448">
+  <bibtex:hasTitle>Making Internet-Connected Objects readily useful</bibtex:hasTitle>
+              <dc:title>Making Internet-Connected Objects readily useful</dc:title>
+		<bibtex:hasAuthor>Manfred Hauswirth and Dennis Pfisterer and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Interconnecting Smart Objects with the Internet Workshop, Prague</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2011</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_388">
+  <bibtex:hasTitle>RDF needs annotations</bibtex:hasTitle>
+              <dc:title>RDF needs annotations</dc:title>
+		<bibtex:hasAuthor>Nuno Lopes and Antoine Zimmermann and Aidan Hogan and Gergely LukÃ¡csy and Axel Polleres and Umberto Straccia and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the W3C Workshop on RDF Next Steps</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth><bibtex:hasAddress>Stanford, Palo Alto, CA, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_389">
+  <bibtex:hasTitle>RDF and XML: Towards a unified query layer</bibtex:hasTitle>
+              <dc:title>RDF and XML: Towards a unified query layer</dc:title>
+		<bibtex:hasAuthor>Nuno Lopes and Stefan Bischof and O. Erling and Axel Polleres and Alexandre Passant and D. Berrueta and A. Campos and J. Euzenat and K. Idehen and Stefan Decker and StÃ©phane Corlosquet and J. Kopecky and J. Saarela and Thomas Krennwallner and D. Palmisano</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the W3C Workshop on RDF Next Steps</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth><bibtex:hasAddress>Stanford, Palo Alto, CA, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_372">
+  <bibtex:hasTitle>Weaving the Pedantic Web</bibtex:hasTitle>
+              <dc:title>Weaving the Pedantic Web</dc:title>
+		<bibtex:hasAuthor>Aidan Hogan and Andreas Harth and Alexandre Passant and Stefan Decker and Axel Polleres</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>3rd International Workshop on Linked Data on the Web (LDOW2010), in conjunction with 19th International World Wide Web Conference</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</bibtex:hasMonth><bibtex:hasPublisher>CEUR</bibtex:hasPublisher><bibtex:hasAddress>Raleigh, North Carolina, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_373">
+  <bibtex:hasTitle>Towards Dataset Dynamics: Change Frequency of Linked Open Data Sources</bibtex:hasTitle>
+              <dc:title>Towards Dataset Dynamics: Change Frequency of Linked Open Data Sources</dc:title>
+		<bibtex:hasAuthor>JÃ¼rgen Umbrich and Michael Hausenblas and Aidan Hogan and Axel Polleres and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>3rd International Workshop on Linked Data on the Web (LDOW2010), in conjunction with 19th International World Wide Web Conference</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2010</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</bibtex:hasMonth><bibtex:hasPublisher>CEUR</bibtex:hasPublisher><bibtex:hasAddress>Raleigh, North Carolina, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_412">
+  <bibtex:hasTitle>Social Semantics and Linked Data for improving access to financial data on the Web</bibtex:hasTitle>
+              <dc:title>Social Semantics and Linked Data for improving access to financial data on the Web</dc:title>
+		<bibtex:hasAuthor>Alexandre Passant and Michael Hausenblas and Sean O'Riain and Kingsley Idehen and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>W3C Workshop on Improving Access to Financial Data on the Web</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasOrganization>W3C co hosted with XBRL International </bibtex:hasOrganization><bibtex:hasAddress>Arlington, Virginia, USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_362">
+  <bibtex:hasTitle>Implementing Semantic Web applications: reference architecture and challenges</bibtex:hasTitle>
+              <dc:title>Implementing Semantic Web applications: reference architecture and challenges</dc:title>
+		<bibtex:hasAuthor>Benjamin Heitmann and Sheila Kinsella and Conor Hayes and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the 5th Workshop on Semantic Web Enabled Software Engineering, in conjunction with International Semantic Web Conference 2009</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_344">
+  <bibtex:hasTitle>The SIOC Project: Semantically-Interlinked Online Communities</bibtex:hasTitle>
+              <dc:title>The SIOC Project: Semantically-Interlinked Online Communities</dc:title>
+		<bibtex:hasAuthor>Uldis Bojars and Alexandre Passant and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the The MALLOW Workshop on Coordination, Organization, Institutions and Norms in agent systems in on-line communities (COIN2009)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth><bibtex:hasAddress>Torino, Italy</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_357">
+  <bibtex:hasTitle>A Lightweight Web Video Model with Content and Context Descriptions for Integration with Linked Data</bibtex:hasTitle>
+              <dc:title>A Lightweight Web Video Model with Content and Context Descriptions for Integration with Linked Data</dc:title>
+		<bibtex:hasAuthor>Smitashree Choudhury and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the Semantic Authoring, Annotation and Knowledge Markup Workshop (SAAKM 2009), in conjunction with 5th International Conference on Knowledge Capture (K-CAP 2009), Redondo Beach, California, USA</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_331">
+  <bibtex:hasTitle>Privacy Concerns of FOAF-Based Linked Data</bibtex:hasTitle>
+              <dc:title>Privacy Concerns of FOAF-Based Linked Data</dc:title>
+		<bibtex:hasAuthor>Peyman Nasirifard and Michael Hausenblas and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the Trust and Privacy on the Social and Semantic Web, in conjunction with The 6th Annual European Semantic Web Conference (ESWC'09)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_333">
+  <bibtex:hasTitle>Semantic Search for Enterprise 2.0</bibtex:hasTitle>
+              <dc:title>Semantic Search for Enterprise 2.0</dc:title>
+		<bibtex:hasAuthor>Alexandre Passant and Philippe Laublet and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the Semantic Search 2009 Workshop, in conjunction with 18th World Wide Web conference (WWW2009)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_322">
+  <bibtex:hasTitle>SIOC: Content Exchange and Semantic Interoperability Between Social Networks</bibtex:hasTitle>
+              <dc:title>SIOC: Content Exchange and Semantic Interoperability Between Social Networks</dc:title>
+		<bibtex:hasAuthor>John Breslin and Uldis Bojars and Alexandre Passant and Sergio FernÃ¡ndez and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>W3C Workshop on the Future of Social Networking</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_323">
+  <bibtex:hasTitle>Integrating Social Networks and Sensor Networks</bibtex:hasTitle>
+              <dc:title>Integrating Social Networks and Sensor Networks</dc:title>
+		<bibtex:hasAuthor>John Breslin and Stefan Decker and Manfred Hauswirth and Gearoid Hynes and Danh Le Phuoc and  Alexandre Passant and Axel Polleres and Cornelius Rabsch and Vinny Reynolds</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>W3C Workshop on the Future of Social Networking</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_324">
+  <bibtex:hasTitle>Enabling Trust and Privacy on the Social Web</bibtex:hasTitle>
+              <dc:title>Enabling Trust and Privacy on the Social Web</dc:title>
+		<bibtex:hasAuthor>Alexandre Passant and Philipp Kaerger and Michael Hausenblas and Daniel Olmedilla and Axel Polleres and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>W3C Workshop on the Future of Social Networking</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2009</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_311">
+  <bibtex:hasTitle>Context Dependent Reasoning for Semantic Documents in Sindice</bibtex:hasTitle>
+              <dc:title>Context Dependent Reasoning for Semantic Documents in Sindice</dc:title>
+		<bibtex:hasAuthor>Renaud Delbru and Axel Polleres and Giovanni Tummarello and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the 4th International Workshop on Scalable Semantic Web Knowledge Base Systems (SSWS 2008), in conjunction with 7th International Semantic Web Conference (ISWC2008)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasAddress>Kalrsruhe, Germany</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_315">
+  <bibtex:hasTitle>SWSE: Objects before documents!</bibtex:hasTitle>
+              <dc:title>SWSE: Objects before documents!</dc:title>
+		<bibtex:hasAuthor>Andreas Harth and Aidan Hogan and JÃ¼rgen Umbrich and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the Billion Triple Semantic Web Challenge, in conjunction with 7th International Semantic Web Conference</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10</bibtex:hasMonth><bibtex:hasAddress>Karlsruhe, Germany</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_309">
+  <bibtex:hasTitle>Enabling Networked Knowledge</bibtex:hasTitle>
+              <dc:title>Enabling Networked Knowledge</dc:title>
+		<bibtex:hasAuthor>Stefan Decker and Manfred Hauswirth</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the 12th International Workshop on Cooperative Information Agents XII (CIA 2008)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth><bibtex:hasSeries>LNCS</bibtex:hasSeries><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5180</bibtex:hasVolume><bibtex:hasAddress>Prague, Czech Republic</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_297">
+  <bibtex:hasTitle>Social Networks and Data Portability using Semantic Web technologies</bibtex:hasTitle>
+              <dc:title>Social Networks and Data Portability using Semantic Web technologies</dc:title>
+		<bibtex:hasAuthor>Uldis Bojars and Alexandre Passant and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>2nd Workshop on Social Aspects of the Web (SAW 2008), in conjunction with 11th International Conference on Business Information Systems (BIS 2008)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_280">
+  <bibtex:hasTitle>Atom Interface - a novel interface for exploring and browsing semantic space</bibtex:hasTitle>
+              <dc:title>Atom Interface - a novel interface for exploring and browsing semantic space</dc:title>
+		<bibtex:hasAuthor>Krystian Samp and Cosmin Basca and Bill McDaniel and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>CEUR workshop proceedings, in conjunction with CHI (Computer-Human Interaction)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2008</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_275">
+  <bibtex:hasTitle>Towards a social provenance model for the Web</bibtex:hasTitle>
+              <dc:title>Towards a social provenance model for the Web</dc:title>
+		<bibtex:hasAuthor>Andreas Harth and Axel Polleres and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Workshop on Principles of Provenance (PrOPr)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_299">
+  <bibtex:hasTitle>SWSE: Answers Before Links!</bibtex:hasTitle>
+              <dc:title>SWSE: Answers Before Links!</dc:title>
+		<bibtex:hasAuthor>Andreas Harth and Aidan Hogan and Renaud Delbru and JÃ¼rgen Umbrich and Sean O'Riain and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the Semantic Web Challenge, in conjunction with ISWC / ASWC</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasEditor>Jennifer Golbeck and Peter Mika</bibtex:hasEditor><bibtex:hasSeries>CEUR Workshop Proceedings</bibtex:hasSeries><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">295</bibtex:hasVolume><bibtex:hasPublisher>CEUR-WS.org</bibtex:hasPublisher><bibtex:hasAddress>Busan, Korea</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_228">
+  <bibtex:hasTitle>Performing Object Consolidation on the Semantic Web Data Graph</bibtex:hasTitle>
+              <dc:title>Performing Object Consolidation on the Semantic Web Data Graph</dc:title>
+		<bibtex:hasAuthor>Aidan Hogan and Andreas Harth and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of I3: Identity, Identifiers, Identification (to appear), in conjunction with 16th International World Wide Web Conference (WWW2007)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2007</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasMonth><bibtex:hasAddress>Banff, Alberta, Canada</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_227">
+  <bibtex:hasTitle>ReConRank: A Scalable Ranking Method for Semantic Web Data with Context</bibtex:hasTitle>
+              <dc:title>ReConRank: A Scalable Ranking Method for Semantic Web Data with Context</dc:title>
+		<bibtex:hasAuthor>Aidan Hogan and Andreas Harth and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of Second International Workshop on Scalable Semantic Web Knowledge Base Systems (SSWS 2006), in conjunction with International Semantic Web Conference (ISWC 2006)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasAddress>Athens, GA, USA.</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_281">
+  <bibtex:hasTitle>Translating Documents into Semantic Documents using Semantic Web and Web2.0</bibtex:hasTitle>
+              <dc:title>Translating Documents into Semantic Documents using Semantic Web and Web2.0</dc:title>
+		<bibtex:hasAuthor>Hak Lae Kim and Hong Gee Kim and Jae Hwa Choi and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the  1st Semantic Authoring and Annotation Workshop (SAAW2006), in conjunction with the 5th International Semantic Web Conference (ISWC 2006)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">209</bibtex:hasVolume>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_226">
+  <bibtex:hasTitle>How Semantic Desktop and Web 2.0 can help Personal Knowledge Management?</bibtex:hasTitle>
+              <dc:title>How Semantic Desktop and Web 2.0 can help Personal Knowledge Management?</dc:title>
+		<bibtex:hasAuthor>Hak Lae Kim and Honggee Kim and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of Workshop on Semantic Web Applications and Tools, in conjunction with 1st Asian Semantic Web Conference (ASWC 2006)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2006</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth><bibtex:hasAddress>Beijing China</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_182">
+  <bibtex:hasTitle>Harvesting Desktop Data for Semantic Blogging</bibtex:hasTitle>
+              <dc:title>Harvesting Desktop Data for Semantic Blogging</dc:title>
+		<bibtex:hasAuthor>Knud MÃ¶ller and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the first Semantic Desktop Workshop (SemDesk2005), in conjunction with 4th International Semantic Web Conference (ISWC2005)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasAddress>Galway, Ireland</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_246">
+  <bibtex:hasTitle>Semantic Social Collaborative Filtering with FOAFRealm</bibtex:hasTitle>
+              <dc:title>Semantic Social Collaborative Filtering with FOAFRealm</dc:title>
+		<bibtex:hasAuthor>Sebastian Ryszard Kruk and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the Semantic Desktop Workshop, in conjunction with ISWC 2005</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_151">
+  <bibtex:hasTitle>On P2P Collaboration Infrastructures</bibtex:hasTitle>
+              <dc:title>On P2P Collaboration Infrastructures</dc:title>
+		<bibtex:hasAuthor>Manfred Hauswirth and Ivana Podnar and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the 3rd International Workshop on Distributed and Mobile Collaboration (DMC 2005)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6</bibtex:hasMonth><bibtex:hasAddress>Linkoping, Sweden</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_150">
+  <bibtex:hasTitle>TRIPLE - an RDF Rule Language with Context and Use Cases</bibtex:hasTitle>
+              <dc:title>TRIPLE - an RDF Rule Language with Context and Use Cases</dc:title>
+		<bibtex:hasAuthor>Stefan Decker and Michael Sintek and Andreas Billig and Nicola Henze and Peter Dolog and Wolfgang Nejdl and Andreas Harth and Andreas Leicher and Susanne Busse and J. G. Suess and Zoltan Miklos and J.-L. Ambite and M. Weathers and G. Neumann and U. Zdun</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the W3C Workshop on Rule Languages for Interoperability</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2005</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">4</bibtex:hasMonth><bibtex:hasAddress>Washington, D.C., USA</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_164">
+  <bibtex:hasTitle>Towards an Integrated Corpus for the Evaluation of Named Entity Recognition and Object Consolidation</bibtex:hasTitle>
+              <dc:title>Towards an Integrated Corpus for the Evaluation of Named Entity Recognition and Object Consolidation</dc:title>
+		<bibtex:hasAuthor>Knud MÃ¶ller and Alexander Schutz and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the SemAnnot Workshop, in conjunction with International Semantic Web Conference</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2004</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11</bibtex:hasMonth><bibtex:hasAddress>Hiroshima, Japan</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_156">
+  <bibtex:hasTitle>Linking Semantically Enabled Online Community Sites</bibtex:hasTitle>
+              <dc:title>Linking Semantically Enabled Online Community Sites</dc:title>
+		<bibtex:hasAuthor>Andreas Harth and John Breslin and Ina O'Murchu and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the 1st Workshop on Friend of a Friend, Social Networking and the Semantic Web</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2004</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth><bibtex:hasAddress>Galway, Ireland</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_254">
+  <bibtex:hasTitle>Social Networking Portals: An Overview and Evaluation</bibtex:hasTitle>
+              <dc:title>Social Networking Portals: An Overview and Evaluation</dc:title>
+		<bibtex:hasAuthor>Ina O'Murchu and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the 1st Workshop on Friend of a Friend, Social Networking and the (Semantic) Web (FOAF Galway)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2004</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">9</bibtex:hasMonth><bibtex:hasPages>226-228</bibtex:hasPages>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_201">
+  <bibtex:hasTitle>Online Social and Business Networking Communities</bibtex:hasTitle>
+              <dc:title>Online Social and Business Networking Communities</dc:title>
+		<bibtex:hasAuthor>Ina O'Murchu and John Breslin and Stefan Decker</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Proceedings of the Workshop on the Application of Semantic Web Technologies to Web Communities, in conjunction with 16th European Conference on Artificial Intelligence 2004 (ECAI 2004)</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2004</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">8</bibtex:hasMonth><bibtex:hasAddress>Valencia, Spain</bibtex:hasAddress>	</bibtex:inproceedings><bibtex:inproceedings rdf:about="publications/papers/workshop-papers#uid_130">
+  <bibtex:hasTitle>The Networked Semantic Desktop</bibtex:hasTitle>
+              <dc:title>The Networked Semantic Desktop</dc:title>
+		<bibtex:hasAuthor>Stefan Decker and Martin Frank</bibtex:hasAuthor>
+		<foaf:maker rdf:resource="http://www.deri.ie/about/team/member/Stefan_Decker#me"/><bibtex:hasBooktitle>Workshop on Application Design, Development and Implementation Issues in the Semantic, in conjunction with WWW2004</bibtex:hasBooktitle><bibtex:hasYear rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2004</bibtex:hasYear>
+		<bibtex:hasMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5</bibtex:hasMonth><bibtex:hasAddress>New York, USA</bibtex:hasAddress>	</bibtex:inproceedings></rdf:RDF>

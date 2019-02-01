@@ -39,6 +39,8 @@
 package org.sourceforge.xsparql.sparql.arq;
 
 import org.apache.jena.query.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sourceforge.xsparql.rewriter.Helper;
 import org.w3c.dom.Document;
 
@@ -52,6 +54,7 @@ public class SPARQLQuery {
 
 	private String query;
 	private Dataset dataset = null;
+	private static final Logger logger = LoggerFactory.getLogger(SPARQLQuery.class);
 
 	// ----------------------------------------------------------------------------------------------------
 	// SPARQL
@@ -81,6 +84,7 @@ public class SPARQLQuery {
 	 */
 	public ResultSet getResults() {
 
+		logger.debug("Preparing query {}", query);
 		Query q = QueryFactory.create(query);
 		QueryExecution qe;
 

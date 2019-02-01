@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="WP SIOC Plugin - v. 1.25 - http://rdfs.org/sioc/wordpress/" -->
+<rdf:RDF
+	xmlns="http://xmlns.com/foaf/0.1/"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:rss="http://purl.org/rss/1.0/"
+	xmlns:admin="http://webns.net/mvcb/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:sioc="http://rdfs.org/sioc/ns#">
+
+<!-- sioc_type = site -->
+
+
+<foaf:Document rdf:about="">
+	<dc:title>SIOC Site profile for "AI3:::Adaptive Information"</dc:title>
+	<dc:description>A SIOC profile describes the structure and contents of a weblog in a machine readable form. For more information please refer to http://sioc-project.org/.</dc:description>
+	<foaf:primaryTopic rdf:resource="http://www.mkbergman.com/"/>
+	<admin:generatorAgent rdf:resource="http://rdfs.org/sioc/wp-sioc.php?version=1.25"/>
+</foaf:Document>
+
+<sioc:Site rdf:about="http://www.mkbergman.com/">
+	<dc:title>AI3:::Adaptive Information</dc:title>
+	<dc:description>Weblog: AI3:::Adaptive Information</dc:description>
+	<sioc:link rdf:resource="http://www.mkbergman.com/"/>
+	<sioc:host_of rdf:resource="http://www.mkbergman.com/index.php?sioc_type=site#weblog"/>
+	<sioc:has_group rdf:resource="http://www.mkbergman.com/index.php?sioc_type=site#authors"/>
+</sioc:Site>
+
+<sioc:Forum rdf:about="http://www.mkbergman.com/index.php?sioc_type=site#weblog">
+	<sioc:name>Main blog at AI3:::Adaptive Information</sioc:name>
+	<sioc:link rdf:resource="http://www.mkbergman.com/index.php?sioc_type=site#weblog/"/>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.mkbergman.com/2187/knowledge-representation-practionary-book-now-released/" dc:title="&#060;i&#062;Knowledge Representation Practionary&#060;/i&#062; Book Now Released">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=post&amp;sioc_id=2187"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.mkbergman.com/2180/announcing-my-new-knowledge-representation-book/" dc:title="Announcing My New Knowledge Representation Book">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=post&amp;sioc_id=2180"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.mkbergman.com/2176/statistics-on-the-kbpedia-v-160-release/" dc:title="Statistics on the KBpedia v 160 Release">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=post&amp;sioc_id=2176"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.mkbergman.com/2168/woohoo-kbpedia-is-now-open-source/" dc:title="Woohoo! KBpedia is Now Open Source">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=post&amp;sioc_id=2168"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.mkbergman.com/2135/desiderata-for-knowledge-graphs/" dc:title="Desiderata for Knowledge Graphs">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=post&amp;sioc_id=2135"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=site&amp;paged=2"/>
+</sioc:Forum>
+
+</rdf:RDF>

@@ -1,0 +1,77 @@
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:	    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix lm:         <http://jena.hpl.hp.com/2004/08/location-mapping#> .
+
+# Application location to alternative location mappings.
+#
+# + Order does not matter.
+# + The location mapping parser looks for lm:mapping properties
+#   and uses the object value so this can be written in several different styles.
+#
+# The translation algorithm is:
+#
+# 1 - Exact mappings: these are tried before attempting a prefix match.
+# 2 - By prefix: find the longest matching prefix
+# 3 - Use the original if no alternative.
+
+# Use N3's , (multiple objects => multiple statements of same subject and predicate)
+
+[] lm:mapping
+   [ lm:name "http://xsparql.deri.org/data/relations.rdf" ; lm:altName "file:src/main/resources/xsparql/data/relations.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/relations.xml" ; lm:altName "file:src/main/resources/xsparql/data/relations.xml" ],
+   [ lm:name "http://xsparql.deri.org/data/relations.ttl" ; lm:altName "file:src/main/resources/xsparql/data/relations.ttl" ],
+   [ lm:name "http://xsparql.deri.org/data/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/foaf.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/manifest-syntax.ttl" ; lm:altName "file:src/main/resources/xsparql/data/manifest-syntax.ttl" ],
+   [ lm:name "http://xsparql.deri.org/data/sample_distribution_data.n3" ; lm:altName "file:src/main/resources/xsparql/data/sample_distribution_data.n3" ],
+   [ lm:name "http://xsparql.deri.org/data/sample_distribution_data.nt" ; lm:altName "file:src/main/resources/xsparql/data/sample_distribution_data.nt" ],
+   [ lm:name "http://polleres.net/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/polleres-foaf.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/sample_person_geodata.rdf" ; lm:altName "file:src/main/resources/xsparql/data/sample_person_geodata.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/vCard.rdf" ; lm:altName "file:src/main/resources/xsparql/data/vCard.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/vCard.ttl" ; lm:altName "file:src/main/resources/xsparql/data/vCard.ttl" ],
+   [ lm:name "http://members.deri.at/~jamess/foaf_james.xml" ; lm:altName "file:src/main/resources/xsparql/data/foaf_james.xml" ],
+   [ lm:name "http://www.scharffe.fr/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/scharffe-foaf.rdf" ],
+   [ lm:name "http://tinf2.vub.ac.be/~sheymans/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/sheymans-foaf.rdf" ],
+   [ lm:name "http://www.deri.ie/fileadmin/scripts/foaf.php?id=12" ; lm:altName "file:src/main/resources/xsparql/data/foaf12.xml" ],
+   [ lm:name "http://sw.deri.org/~haller/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/haller-foaf.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/literals.ttl" ; lm:altName "file:src/main/resources/xsparql/data/literals.ttl" ],
+   [ lm:name "http://members.deri.at/~holgerl/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/holgerl-foaf.rdf" ],
+   [ lm:name "http://www.kr.tuwien.ac.at/staff/roman/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/roman-foaf.rdf" ],
+   [ lm:name "http://www.kr.tuwien.ac.at/staff/faber/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/faber-foaf.rdf" ],
+   [ lm:name "http://www.kr.tuwien.ac.at/staff/faber/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/faber-foaf.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/alice.ttl" ; lm:altName "file:src/main/resources/xsparql/data/alice.ttl" ],
+   [ lm:name "http://nunolopes.org/blog/index.php?sioc_type=site" ; lm:altName "file:src/main/resources/xsparql/data/nunolopes-sioc-type.ttl" ],
+   [ lm:name "http://nunolopes.org/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/nunolopes-foaf.rdf" ],
+   [ lm:name "http://hometown.aol.com/chbussler/foaf/chbussler.foaf" ; lm:altName "file:src/main/resources/xsparql/data/chbussler-foaf.rdf" ],
+   [ lm:name "http://www.harth.org/andreas/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/andreas-foaf.rdf" ],
+   [ lm:name "http://danbri.org/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/danbri-foaf.rdf" ],
+   [ lm:name "http://g1o.net/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/g1o-foaf.rdf" ],
+   [ lm:name "http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2084.rdf" ; lm:altName "file:src/main/resources/xsparql/data/uni-karlsruhe-2084-foaf.rdf" ],
+   [ lm:name "http://page.mi.fu-berlin.de/mochol/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/mochol-foaf.rdf" ],
+   [ lm:name "http://www.ee.surrey.ac.uk/Personal/A.Zhdanova/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/A.Zhdanova-foaf.rdf" ],
+   [ lm:name "http://www.mkbergman.com/?sioc_type=site" ; lm:altName "file:src/main/resources/xsparql/data/mkbergman-sioc-type-site.rdf" ],
+   [ lm:name "http://www.mkbergman.com/index.php?sioc_type=post&sioc_id=2135" ; lm:altName "file:src/main/resources/xsparql/data/mkbergman-sioc-2135.rdf" ],
+   [ lm:name "http://www.mkbergman.com/index.php?sioc_type=post&sioc_id=2168" ; lm:altName "file:src/main/resources/xsparql/data/mkbergman-sioc-2168.rdf" ],
+   [ lm:name "http://www.mkbergman.com/index.php?sioc_type=post&sioc_id=2176" ; lm:altName "file:src/main/resources/xsparql/data/mkbergman-sioc-2176.rdf" ],
+   [ lm:name "http://www.mkbergman.com/index.php?sioc_type=post&sioc_id=2180" ; lm:altName "file:src/main/resources/xsparql/data/mkbergman-sioc-2180.rdf" ],
+   [ lm:name "http://www.mkbergman.com/index.php?sioc_type=post&sioc_id=2187" ; lm:altName "file:src/main/resources/xsparql/data/mkbergman-sioc-2187.rdf" ],
+   [ lm:name "http://www.debruijn.net/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/debruijn-foaf.rdf" ],
+   [ lm:name "http://cyber.law.harvard.edu/rss/examples/rss2sample.xml" ; lm:altName "file:src/main/resources/xsparql/data/rss2sample.xml" ],
+   [ lm:name "http://www.gibbi.com/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/gibbi-foaf.rdf" ],
+   [ lm:name "http://richard.cyganiak.de/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/cyganiak-foaf.rdf" ],
+   [ lm:name "http://stefanbischof.at/xsparql/relations.ttl" ; lm:altName "file:src/main/resources/xsparql/data/stefanbischof-relations.ttl" ],
+   [ lm:name "http://stefanbischof.at/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/stefanbischof-foaf.rdf" ],
+   [ lm:name "http://www-cdr.stanford.edu/~petrie/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/petrie-foaf.rdf" ],
+   [ lm:name "http://page.mi.fu-berlin.de/~nixon/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/nixon-foaf.rdf" ],
+   [ lm:name "http://sw.deri.org/~ina/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/ina-foaf.rdf" ],
+   [ lm:name "http://nets.ii.uam.es/~rlara/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/rlara-foaf.rdf" ],
+   [ lm:name "http://eyaloren.org/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/eyaloren-foaf.rdf" ],
+   [ lm:name "http://www.postsubmeta.net/foaf.rdf" ; lm:altName "file:src/main/resources/xsparql/data/postsubmeta-foaf.rdf" ],
+   [ lm:name "http://xsparql.deri.org/data/json-example1.json" ; lm:altName "file:src/main/resources/xsparql/data/json-example1.json" ],
+   [ lm:name "http://cgi.w3.org/cgi-bin/tidy?docAddr=http%3A%2F%2Ftwitter.com%2Fterraces" ; lm:altName "file:src/main/resources/xsparql/data/terraces-twitter.html" ],
+   [ lm:name "http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&api_key=16307daa8ce0d0cc1dab015e0fdab8ec&user=jacktrades" ; lm:altName "file:src/main/resources/xsparql/data/audioscrobbler-user-get-top-artists.xml" ],
+   [ lm:name "http://dbpedia.org/sparql?format=application/sparql-results+xml&default-graph-uri=http://dbpedia.org&query=PREFIX%20dbpedia%3A%20%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F%3E%20%20%20SELECT%20%24b%20%24c%20%20%20from%20%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2FOpel_Astra%3E%20%20where%20%20%7B%20dbpedia%3AOpel_Astra%20%24b%20%24c%20.%20%20%20%7D%20" ; lm:altName "file:src/main/resources/xsparql/data/dbpedia-endpoint01.srx" ],
+   [ lm:name "http://dbpedia.org/sparql?format=application/sparql-results+xml&default-graph-uri=http://dbpedia.org&query=PREFIX%20%3A%20%3Chttp%3A%2F%2Fexample.org%2F%3E%20%20PREFIX%20dbpedia2%3A%20%3Chttp%3A%2F%2Fdbpedia.org%2Fproperty%2F%3E%20%20PREFIX%20foaf%3A%20%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%20%20%20SELECT%20%24uri%20%24N%20%24B%20%20%20%20%20from%20%3Chttp%3A%2F%2Fdbpedia.org%2F%3E%20%20%20%20where%20%20%7B%20%24uri%20dbpedia2%3Aborn%20%24B%20%3B%20%20%20%20foaf%3Aname%20%24N%20.%20%20%20%20%20%20filter%28%20regex%28str%28%24B%29%2Cstr%28%2212-23%22%29%29%29%20%7D%20" ; lm:altName "file:src/main/resources/xsparql/data/dbpedia-endpoint03.srx" ],
+   [ lm:name "http://example.org/x/src/main/resources/xsparql/testcases-dawg/data-r2/basic/data-1.ttl" ; lm:altName "file:src/main/resources/xsparql/testcases-dawg/data-r2/basic/data-1.ttl" ]
+   .
+

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="WP SIOC Plugin - v. 1.25 - http://rdfs.org/sioc/wordpress/" -->
+<rdf:RDF
+	xmlns="http://xmlns.com/foaf/0.1/"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:rss="http://purl.org/rss/1.0/"
+	xmlns:admin="http://webns.net/mvcb/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:sioc="http://rdfs.org/sioc/ns#">
+
+<!-- sioc_type = post -->
+
+<foaf:Document rdf:about="">
+	<dc:title>SIOC Post profile for "AI3:::Adaptive Information"</dc:title>
+	<dc:description>A SIOC profile describes the structure and contents of a weblog in a machine readable form. For more information please refer to http://sioc-project.org/.</dc:description>
+	<foaf:primaryTopic rdf:resource="http://www.mkbergman.com/2168/woohoo-kbpedia-is-now-open-source/"/>
+	<admin:generatorAgent rdf:resource="http://rdfs.org/sioc/wp-sioc.php?version=1.25"/>
+</foaf:Document>
+
+<sioc:Post rdf:about="http://www.mkbergman.com/2168/woohoo-kbpedia-is-now-open-source/">
+	<sioc:link rdf:resource="http://www.mkbergman.com/2168/woohoo-kbpedia-is-now-open-source/"/>
+	<sioc:has_container rdf:resource="http://www.mkbergman.com/index.php?sioc_type=site#weblog"/>
+	<dc:title>Woohoo! KBpedia is Now Open Source</dc:title>
+	<sioc:has_creator>
+		<sioc:User rdf:about="http://www.mkbergman.com/author/mkb/" rdfs:label="Mike Bergman">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=user&amp;sioc_id=2"/>
+		</sioc:User>
+	</sioc:has_creator>
+	<foaf:maker>
+		<foaf:Person rdf:about="http://www.mkbergman.com/author/mkb/#foaf" rdfs:label="Mike Bergman">
+			<foaf:mbox_sha1sum>b6876bb3a1ddb7cb934f8a991366fcb8dd64a7e0</foaf:mbox_sha1sum>
+			<foaf:homepage rdf:resource="http://www.mkbergman.com"/>
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=user&amp;sioc_id=2"/>
+		</foaf:Person>
+	</foaf:maker>
+	<dcterms:created>2018-10-23T17:50:21Z</dcterms:created>
+	<sioc:content>A Major Milestone in Semantic Technologies and AI After a Decade of Effort
+Fred Giasson and I are very (no, make that supremely!) pleased to announce the availability of KBpedia as open source. Woohoo! The complete open source KBpedia includes its upper ontology (KKO), full knowledge graph, mappings to major leading knowledge bases, and 70 logical concept groupings called typologies. We are also today announcing version 1.60 of KBpedia, with greatly expanded mappings.
+For those who have been following our work, it should be clear that this release represents the culmination of more than ten years of steady development. KBpedia is the second-generation knowledge graph successor to UMBEL, which we will now begin to retire. KBpedia, when first released in 2016, only provided its upper portion, the KBpedia Knowledge Ontology (KKO), as open source. While we had some proprietary needs in the first years of the structure, we're really pleased to return to our roots in open source semantic technologies and software. Open source brings greater contributions and greater scrutiny, both important to growth and improvements.
+KBpedia is a computable knowledge structure that combines seven major public knowledge bases — Wikipedia, Wikidata, schema.org, DBpedia, GeoNames, OpenCyc, and UMBEL. KBpedia supplements these core KBs with mappings to more than a score of additional leading vocabularies. The entire KBpedia structure is computable, meaning it can be reasoned over and logically sliced-and-diced to produce training sets and reference standards for machine learning and data interoperability. KBpedia provides a coherent overlay for retrieving and organizing Wikipedia or Wikidata content. KBpedia greatly reduces the time and effort traditionally required for knowledge-based artificial intelligence (KBAI) tasks.
+KBpedia is a comprehensive knowledge structure for promoting data interoperability and KBAI. KBpedia's upper structure, KKO, is based on the universal categories and knowledge representation theories of the great 19th century American logician, polymath and scientist, Charles Sanders Peirce. This design provides a logical and coherent underpinning to the entire structure. The design is also modular and fairly straightforward to adapt to enterprise or domain purposes. KBpedia was first released in October 2016.
+"We began KBpedia with machine learning and AI as the driving factors," said Fred, also the technical lead on the project. "Those remain challenging, but we are also seeing huge demands to bring a workable structure that can leverage Wikidata and Wikipedia," he said. "We are seeing the convergence of massive public data with open semantic technologies and the ideas of knowledge graphs to show the way," he stated. Here are some of the leading purposes and use cases for KBpedia:
+
+	
+
+	A coherent and computable overlay to both Wikipedia and Wikidata
+	Integrating domain data
+	Fine-grained entity identification, extraction and tagging
+	Faceted, semantic search and retrieval
+	Mapping and integration of external datasets
+	Natural language processing and computational linguistics
+	Knowledge graph creation, extension and maintenance
+	Tailored filtering, slicing-and-dicing, and extraction of domain knowledge structures
+	Data harvesting, transformation and ingest
+	Data interoperability, re-use of existing content and data assets, and knowledge discovery
+	Supervised, semi-supervised and distant supervised machine learning for:
+
+
+	Typing, classification, extraction, and tagging of entities, attributes and relations
+
+
+	Unsupervised and deep learning.
+
+The KBpedia Web site provides a working KBpedia explorer and demo of how the system may be applied to local content for tagging or analysis. KBpedia splits between entities and concepts, on the one hand, and splits in predicates based on attributes, external relations, and pointers or indexes, all informed by Charles Peirce's prescient theories of knowledge representation. I will have much further to say about the project and its relation to Peirce in the coming weeks.
+The new v 1.60 release of KBpedia has 55,000 reference concepts in its guiding knowledge graph, which ties into an estimated 30 million entities, mostly from Wikidata. The system is inherently multi-lingual, though the current release is in English only. We hope to see multiple language versions emerge, which should be straightforward given the dominance of links from Wikipedia and Wikidata. As it stands, the core structure of KBpedia provides direct links to millions of external reference sources. A subsequent post will document the changes in version 1.60 in detail.
+With this open source release, we will next shift our attention to expand the coverage of links to external sources. By moving to open source, we hope to see problems with the structure emerge as well as contributions now come from others. When you pull back the curtain with open source a premium gets placed on having clean assignments and structure that can stand up to inspection. Fortunately, Fred has designed a build system that starts with clean 'triples' input files.We make changes, re-run the structure against logic and consistency tests, fix the issues, and run again. We conducted tens of builds of the complete KBpedia structure in the transition from the prior versions to the current release. While we have a top-down design based on Peirce, we build the entire structure from the bottom up from these simple input specifications. The next phase in the our KBpedia release plan is also to release these build routines as open source.
+Though tremendous strides have been made in the past decade in leveraging knowledge bases for artificial intelligence, we are butting up against two limitations. Our first problem is that we are relying on knowledge sources like Wikipedia that were never designed for AI or data integration purposes. The second problem is that we do not have repeatable building blocks that can be extended to any domain or any enterprise. AI is sexy and attractive, but way too expensive. We hope the current open source release of KBpedia moves us closer to overcoming these problems.
+Downloads
+Here are the various KBpedia resources that you may download or use with attribution:
+
+	The complete  KBpedia knowledge graph (7 MB, zipped). This download is likely your most useful starting point
+	KBpedia's upper ontology,  KKO (304 KB), which is easily inspected and navigated in an editor
+	The annotated KKO (291 KB). This is NOT an active ontology, but is has the upper concepts annotated to more clearly show the Peircean categories of Firstness (1ns), Secondness (2ns), and Thirdness (3ns)
+	The  68 individual KBpedia typologies in N3 format
+	The  KBpedia mappings to the seven core knowledge bases and the additional extended knowledge bases in N3 format
+	A version of the full KBpedia knowledge graph extended with  linkages to the external resources (8.7 MB, zipped), and
+	A version of the full KBpedia knowledge graph extended with  inferences and linkages (11.6 MB, zipped).
+
+The last two resources require time and sufficient memory to load. We invite and welcome contributions or commentary on any of these resources.
+All resources are available under the Creative Commons Attribution 4.0 International (CC BY 4.0) license. KBpedia's development to date has been sponsored by Cognonto Corporation.
+
+</sioc:content>
+	<content:encoded><![CDATA[<span class="Z3988" title="ctx_ver=Z39.88-2004&#38;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&#38;rfr_id=info%3Asid%2Focoins.info%3Agenerator&#38;rft.type=&#38;rft.format=text&#38;rft.title=Woohoo! KBpedia is Now Open Source&#38;rft.source=AI3:::Adaptive Information&#38;rft.date=2018-10-23&#38;rft.identifier=http://www.mkbergman.com/?p=2168&#38;rft.language=English&#38;rft.subject=KBpedia&#38;rft.subject=Knowledge-based Artificial Intelligence&#38;rft.subject=Ontologies&#38;rft.subject=Open Source&#38;rft.subject=Semantic Web&#38;rft.au=Michael K. Bergman"></span><h2><a href="http://kbpedia.org/"><img title="KBpedia" alt="KBpedia" src="http://www.mkbergman.com/wp-content/themes/ai3v2/images/2018Posts/kbpedia-logo-1200.png" style="margin-right: 10px; width: 240px;" align="left" /></a>A Major Milestone in Semantic Technologies and AI After a Decade of Effort</h2>
+<p>Fred Giasson and I are very (no, make that supremely!) pleased to announce the availability of <a href="http://kbpedia.org/">KBpedia</a> as open source. Woohoo! The complete open source KBpedia includes its <a href="http://kbpedia.org/docs/kko-upper-structure/">upper ontology (KKO)</a>, full knowledge graph, mappings to major leading knowledge bases, and 70 logical concept groupings called typologies. We are also today announcing version 1.60 of KBpedia, with greatly expanded mappings.</p>
+<p>For those who have been following our work, it should be clear that this release represents the culmination of more than ten years of steady development. KBpedia is the second-generation knowledge graph successor to <a href="http://umbel.org/">UMBEL</a>, which we will now begin to retire. KBpedia, when first released in 2016, only provided its upper portion, the <a href="http://kbpedia.org/docs/kko-upper-structure/">KBpedia Knowledge Ontology (KKO)</a>, as open source. While we had some proprietary needs in the first years of the structure, we&#8217;re really pleased to return to our roots in open source semantic technologies and software. Open source brings greater contributions and greater scrutiny, both important to growth and improvements.</p>
+<p>KBpedia is a computable knowledge structure that combines seven major public knowledge bases — <a href="https://en.wikipedia.org/wiki/Wikipedia">Wikipedia</a>, <a href="https://en.wikipedia.org/wiki/Wikidata">Wikidata</a>, <a href="https://schema.org/">schema.org</a>, <a href="http://dbpedia.org/">DBpedia</a>, <a href="https://en.wikipedia.org/wiki/GeoNames">GeoNames</a>, <a href="https://en.wikipedia.org/wiki/Cyc">OpenCyc</a>, and <a href="http://umbel.org/">UMBEL</a>. KBpedia supplements these core KBs with mappings to more than a score of additional leading vocabularies. The entire KBpedia structure is computable, meaning it can be reasoned over and logically sliced-and-diced to produce training sets and reference standards for machine learning and data interoperability. KBpedia provides a coherent overlay for retrieving and organizing Wikipedia or Wikidata content. KBpedia greatly reduces the time and effort traditionally required for knowledge-based artificial intelligence (<a href="http://www.mkbergman.com/category/kbai/">KBAI</a>) tasks.</p>
+<p>KBpedia is a comprehensive knowledge structure for promoting data interoperability and KBAI. KBpedia&#8217;s upper structure, KKO, is based on the universal categories and knowledge representation theories of the great 19th century American logician, polymath and scientist, <a href="https://en.wikipedia.org/wiki/Charles_Sanders_Peirce">Charles Sanders Peirce</a>. This design provides a logical and coherent underpinning to the entire structure. The design is also modular and fairly straightforward to adapt to enterprise or domain purposes. KBpedia was first released in October 2016.</p>
+<p>&#8220;We began KBpedia with machine learning and AI as the driving factors,&#8221; said Fred, also the technical lead on the project. &#8220;Those remain challenging, but we are also seeing huge demands to bring a workable structure that can leverage Wikidata and Wikipedia,&#8221; he said. &#8220;We are seeing the convergence of massive public data with open semantic technologies and the ideas of knowledge graphs to show the way,&#8221; he stated. Here are some of the leading purposes and use cases for KBpedia:</p>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>A coherent and computable overlay to both Wikipedia and Wikidata</li>
+<li>Integrating domain data</li>
+<li>Fine-grained entity identification, extraction and tagging</li>
+<li>Faceted, semantic search and retrieval</li>
+<li>Mapping and integration of external datasets</li>
+<li>Natural language processing and computational linguistics</li>
+<li>Knowledge graph creation, extension and maintenance</li>
+<li>Tailored filtering, slicing-and-dicing, and extraction of domain knowledge structures</li>
+<li>Data harvesting, transformation and ingest</li>
+<li>Data interoperability, re-use of existing content and data assets, and knowledge discovery</li>
+<li>Supervised, semi-supervised and distant supervised machine learning for:
+<ul>
+<li>Typing, classification, extraction, and tagging of entities, attributes and relations</li>
+</ul>
+</li>
+<li>Unsupervised and deep learning.</li>
+</ul>
+<p>The KBpedia Web site provides a working <a href="http://kbpedia.org/knowledge-graph">KBpedia explorer</a> and <a href="http://kbpedia.org/demo/">demo</a> of how the system may be applied to local content for tagging or analysis. KBpedia splits between entities and concepts, on the one hand, and splits in predicates based on attributes, external relations, and pointers or indexes, all informed by Charles Peirce&#8217;s prescient theories of knowledge representation. I will have much further to say about the project and its relation to Peirce in the coming weeks.</p>
+<p>The new v 1.60 release of KBpedia has 55,000 reference concepts in its guiding knowledge graph, which ties into an estimated 30 million entities, mostly from Wikidata. The system is inherently multi-lingual, though the current release is in English only. We hope to see multiple language versions emerge, which should be straightforward given the dominance of links from Wikipedia and Wikidata. As it stands, the core structure of KBpedia provides direct links to millions of external reference sources. A subsequent post will document the changes in version 1.60 in detail.</p>
+<p>With this open source release, we will next shift our attention to expand the coverage of links to external sources. By moving to open source, we hope to see problems with the structure emerge as well as contributions now come from others. When you pull back the curtain with open source a premium gets placed on having clean assignments and structure that can stand up to inspection. Fortunately, Fred has designed a build system that starts with clean &#8216;triples&#8217; input files.We make changes, re-run the structure against logic and consistency tests, fix the issues, and run again. We conducted tens of builds of the complete KBpedia structure in the transition from the prior versions to the current release. While we have a top-down design based on Peirce, we build the entire structure from the bottom up from these simple input specifications. The next phase in the our KBpedia release plan is also to release these build routines as open source.</p>
+<p>Though tremendous strides have been made in the past decade in leveraging knowledge bases for artificial intelligence, we are butting up against two limitations. Our first problem is that we are relying on knowledge sources like Wikipedia that were never designed for AI or data integration purposes. The second problem is that we do not have repeatable building blocks that can be extended to any domain or any enterprise. AI is sexy and attractive, but way too expensive. We hope the current open source release of KBpedia moves us closer to overcoming these problems.</p>
+<h3>Downloads</h3>
+<p>Here are the various KBpedia resources that you may download or use with attribution:</p>
+<ul>
+<li>The complete <a href="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kbpedia_reference_concepts.zip"> KBpedia knowledge graph</a> (7 MB, zipped). This download is likely your most useful starting point</li>
+<li>KBpedia&#8217;s upper ontology, <a href="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kko.n3"> KKO</a> (304 KB), which is easily inspected and navigated in an editor</li>
+<li>The <a href="http://kbpedia.org/knowledge-graph/reference-concept/?uri=Person">annotated KKO</a> (291 KB). This is NOT an active ontology, but is has the upper concepts annotated to more clearly show the Peircean categories of Firstness (1ns), Secondness (2ns), and Thirdness (3ns)</li>
+<li>The <a href="https://github.com/Cognonto/kbpedia/tree/master/versions/1.60/typologies"> 68 individual KBpedia typologies</a> in N3 format</li>
+<li>The <a href="https://github.com/Cognonto/kbpedia/tree/master/versions/1.60/linkages"> KBpedia mappings</a> to the seven core knowledge bases and the additional extended knowledge bases in N3 format</li>
+<li>A version of the full KBpedia knowledge graph extended with <a href="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kbpedia_reference_concepts_linkage.zip"> linkages to the external resources</a> (8.7 MB, zipped), and</li>
+<li>A version of the full KBpedia knowledge graph extended with <a href="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kko.n3"> inferences and linkages</a> (11.6 MB, zipped).</li>
+</ul>
+<p>The last two resources require time and sufficient memory to load. We invite and welcome contributions or commentary on any of these resources.</p>
+<p>All resources are available under the Creative Commons <a href="https://creativecommons.org/licenses/by/4.0/">Attribution 4.0 International (CC BY 4.0)</a> license. KBpedia&#8217;s development to date has been sponsored by <a href="http://cognonto.com/">Cognonto Corporation</a>.</p>
+</li>
+</ul>
+]]></content:encoded>
+	<sioc:topic rdfs:label="KBpedia" rdf:resource="http://www.mkbergman.com/category/kbpedia/"/>
+	<sioc:topic rdfs:label="Knowledge-based Artificial Intelligence" rdf:resource="http://www.mkbergman.com/category/kbai/"/>
+	<sioc:topic rdfs:label="Ontologies" rdf:resource="http://www.mkbergman.com/category/ontologies/"/>
+	<sioc:topic rdfs:label="Open Source" rdf:resource="http://www.mkbergman.com/category/open-source/"/>
+	<sioc:topic rdfs:label="Semantic Web" rdf:resource="http://www.mkbergman.com/category/semantic-web/"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/" rdfs:label="&#060;img title=&#034;KBpedia&#034; alt=&#034;KBpedia&#034; src=&#034;http://www.mkbergman.com/wp-content/themes/ai3v2/images/2018Posts/kbpedia-logo-1200.png&#034; style=&#034;margin-right: 10px; width: 240px;&#034; align=&#034;left&#034; /&#062;"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/" rdfs:label="KBpedia"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/docs/kko-upper-structure/" rdfs:label="upper ontology (KKO)"/>
+	<sioc:links_to rdf:resource="http://umbel.org/" rdfs:label="UMBEL"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/docs/kko-upper-structure/" rdfs:label="KBpedia Knowledge Ontology (KKO)"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Wikipedia" rdfs:label="Wikipedia"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Wikidata" rdfs:label="Wikidata"/>
+	<sioc:links_to rdf:resource="https://schema.org/" rdfs:label="schema.org"/>
+	<sioc:links_to rdf:resource="http://dbpedia.org/" rdfs:label="DBpedia"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/GeoNames" rdfs:label="GeoNames"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Cyc" rdfs:label="OpenCyc"/>
+	<sioc:links_to rdf:resource="http://umbel.org/" rdfs:label="UMBEL"/>
+	<sioc:links_to rdf:resource="http://www.mkbergman.com/category/kbai/" rdfs:label="KBAI"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Charles_Sanders_Peirce" rdfs:label="Charles Sanders Peirce"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/knowledge-graph" rdfs:label="KBpedia explorer"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/demo/" rdfs:label="demo"/>
+	<sioc:links_to rdf:resource="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kbpedia_reference_concepts.zip" rdfs:label="KBpedia knowledge graph"/>
+	<sioc:links_to rdf:resource="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kko.n3" rdfs:label="KKO"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/knowledge-graph/reference-concept/?uri=Person" rdfs:label="annotated KKO"/>
+	<sioc:links_to rdf:resource="https://github.com/Cognonto/kbpedia/tree/master/versions/1.60/typologies" rdfs:label="68 individual KBpedia typologies"/>
+	<sioc:links_to rdf:resource="https://github.com/Cognonto/kbpedia/tree/master/versions/1.60/linkages" rdfs:label="KBpedia mappings"/>
+	<sioc:links_to rdf:resource="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kbpedia_reference_concepts_linkage.zip" rdfs:label="linkages to the external resources"/>
+	<sioc:links_to rdf:resource="https://github.com/Cognonto/kbpedia/blob/master/versions/1.60/kko.n3" rdfs:label="inferences and linkages"/>
+	<sioc:links_to rdf:resource="https://creativecommons.org/licenses/by/4.0/" rdfs:label="Attribution 4.0 International (CC BY 4.0)"/>
+	<sioc:links_to rdf:resource="http://cognonto.com/" rdfs:label="Cognonto Corporation"/>
+</sioc:Post>
+
+</rdf:RDF>
