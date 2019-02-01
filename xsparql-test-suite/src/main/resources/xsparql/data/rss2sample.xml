@@ -1,42 +1,336 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta name="viewport" content="width=device-width" /><title>https://cyber.harvard.edu/rss/examples/rss2sample.xml</title><link rel="stylesheet" type="text/css" href="rss2sample_files/viewsource.css" /></head><body id="viewsource" class="highlight" style="-moz-tab-size: 4" contextmenu="actions"><pre id="line1"><span></span><span class="pi">&lt;?xml version="1.0"?&gt;</span><span>
-<span id="line2"></span></span><span>&lt;<span class="start-tag">rss</span> <span class="attribute-name">version</span>="<a class="attribute-value">2.0</a>"&gt;</span><span>
-<span id="line3"></span>   </span><span>&lt;<span class="start-tag">channel</span>&gt;</span><span>
-<span id="line4"></span>      </span><span>&lt;<span class="start-tag">title</span>&gt;</span><span>Liftoff News</span><span>&lt;/<span class="end-tag">title</span>&gt;</span><span>
-<span id="line5"></span>      </span><span>&lt;<span class="start-tag">link</span>&gt;</span><span>http://liftoff.msfc.nasa.gov/</span><span>&lt;/<span class="end-tag">link</span>&gt;</span><span>
-<span id="line6"></span>      </span><span>&lt;<span class="start-tag">description</span>&gt;</span><span>Liftoff to Space Exploration.</span><span>&lt;/<span class="end-tag">description</span>&gt;</span><span>
-<span id="line7"></span>      </span><span>&lt;<span class="start-tag">language</span>&gt;</span><span>en-us</span><span>&lt;/<span class="end-tag">language</span>&gt;</span><span>
-<span id="line8"></span>      </span><span>&lt;<span class="start-tag">pubDate</span>&gt;</span><span>Tue, 10 Jun 2003 04:00:00 GMT</span><span>&lt;/<span class="end-tag">pubDate</span>&gt;</span><span>
-<span id="line9"></span>      </span><span>&lt;<span class="start-tag">lastBuildDate</span>&gt;</span><span>Tue, 10 Jun 2003 09:41:01 GMT</span><span>&lt;/<span class="end-tag">lastBuildDate</span>&gt;</span><span>
-<span id="line10"></span>      </span><span>&lt;<span class="start-tag">docs</span>&gt;</span><span>http://blogs.law.harvard.edu/tech/rss</span><span>&lt;/<span class="end-tag">docs</span>&gt;</span><span>
-<span id="line11"></span>      </span><span>&lt;<span class="start-tag">generator</span>&gt;</span><span>Weblog Editor 2.0</span><span>&lt;/<span class="end-tag">generator</span>&gt;</span><span>
-<span id="line12"></span>      </span><span>&lt;<span class="start-tag">managingEditor</span>&gt;</span><span>editor@example.com</span><span>&lt;/<span class="end-tag">managingEditor</span>&gt;</span><span>
-<span id="line13"></span>      </span><span>&lt;<span class="start-tag">webMaster</span>&gt;</span><span>webmaster@example.com</span><span>&lt;/<span class="end-tag">webMaster</span>&gt;</span><span>
-<span id="line14"></span>      </span><span>&lt;<span class="start-tag">item</span>&gt;</span><span>
-<span id="line15"></span>         </span><span>&lt;<span class="start-tag">title</span>&gt;</span><span>Star City</span><span>&lt;/<span class="end-tag">title</span>&gt;</span><span>
-<span id="line16"></span>         </span><span>&lt;<span class="start-tag">link</span>&gt;</span><span>http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp</span><span>&lt;/<span class="end-tag">link</span>&gt;</span><span>
-<span id="line17"></span>         </span><span>&lt;<span class="start-tag">description</span>&gt;</span><span>How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's <span class="entity"><span>&amp;</span>lt;</span>a href="http://howe.iki.rssi.ru/GCTC/gctc_e.htm"<span class="entity"><span>&amp;</span>gt;</span>Star City<span class="entity"><span>&amp;</span>lt;</span>/a<span class="entity"><span>&amp;</span>gt;</span>.</span><span>&lt;/<span class="end-tag">description</span>&gt;</span><span>
-<span id="line18"></span>         </span><span>&lt;<span class="start-tag">pubDate</span>&gt;</span><span>Tue, 03 Jun 2003 09:39:21 GMT</span><span>&lt;/<span class="end-tag">pubDate</span>&gt;</span><span>
-<span id="line19"></span>         </span><span>&lt;<span class="start-tag">guid</span>&gt;</span><span>http://liftoff.msfc.nasa.gov/2003/06/03.html#item573</span><span>&lt;/<span class="end-tag">guid</span>&gt;</span><span>
-<span id="line20"></span>      </span><span>&lt;/<span class="end-tag">item</span>&gt;</span><span>
-<span id="line21"></span>      </span><span>&lt;<span class="start-tag">item</span>&gt;</span><span>
-<span id="line22"></span>         </span><span>&lt;<span class="start-tag">description</span>&gt;</span><span>Sky watchers in Europe, Asia, and parts of Alaska and Canada will experience a <span class="entity"><span>&amp;</span>lt;</span>a href="http://science.nasa.gov/headlines/y2003/30may_solareclipse.htm"<span class="entity"><span>&amp;</span>gt;</span>partial eclipse of the Sun<span class="entity"><span>&amp;</span>lt;</span>/a<span class="entity"><span>&amp;</span>gt;</span> on Saturday, May 31st.</span><span>&lt;/<span class="end-tag">description</span>&gt;</span><span>
-<span id="line23"></span>         </span><span>&lt;<span class="start-tag">pubDate</span>&gt;</span><span>Fri, 30 May 2003 11:06:42 GMT</span><span>&lt;/<span class="end-tag">pubDate</span>&gt;</span><span>
-<span id="line24"></span>         </span><span>&lt;<span class="start-tag">guid</span>&gt;</span><span>http://liftoff.msfc.nasa.gov/2003/05/30.html#item572</span><span>&lt;/<span class="end-tag">guid</span>&gt;</span><span>
-<span id="line25"></span>      </span><span>&lt;/<span class="end-tag">item</span>&gt;</span><span>
-<span id="line26"></span>      </span><span>&lt;<span class="start-tag">item</span>&gt;</span><span>
-<span id="line27"></span>         </span><span>&lt;<span class="start-tag">title</span>&gt;</span><span>The Engine That Does More</span><span>&lt;/<span class="end-tag">title</span>&gt;</span><span>
-<span id="line28"></span>         </span><span>&lt;<span class="start-tag">link</span>&gt;</span><span>http://liftoff.msfc.nasa.gov/news/2003/news-VASIMR.asp</span><span>&lt;/<span class="end-tag">link</span>&gt;</span><span>
-<span id="line29"></span>         </span><span>&lt;<span class="start-tag">description</span>&gt;</span><span>Before man travels to Mars, NASA hopes to design new engines that will let us fly through the Solar System more quickly.  The proposed VASIMR engine would do that.</span><span>&lt;/<span class="end-tag">description</span>&gt;</span><span>
-<span id="line30"></span>         </span><span>&lt;<span class="start-tag">pubDate</span>&gt;</span><span>Tue, 27 May 2003 08:37:32 GMT</span><span>&lt;/<span class="end-tag">pubDate</span>&gt;</span><span>
-<span id="line31"></span>         </span><span>&lt;<span class="start-tag">guid</span>&gt;</span><span>http://liftoff.msfc.nasa.gov/2003/05/27.html#item571</span><span>&lt;/<span class="end-tag">guid</span>&gt;</span><span>
-<span id="line32"></span>      </span><span>&lt;/<span class="end-tag">item</span>&gt;</span><span>
-<span id="line33"></span>      </span><span>&lt;<span class="start-tag">item</span>&gt;</span><span>
-<span id="line34"></span>         </span><span>&lt;<span class="start-tag">title</span>&gt;</span><span>Astronauts' Dirty Laundry</span><span>&lt;/<span class="end-tag">title</span>&gt;</span><span>
-<span id="line35"></span>         </span><span>&lt;<span class="start-tag">link</span>&gt;</span><span>http://liftoff.msfc.nasa.gov/news/2003/news-laundry.asp</span><span>&lt;/<span class="end-tag">link</span>&gt;</span><span>
-<span id="line36"></span>         </span><span>&lt;<span class="start-tag">description</span>&gt;</span><span>Compared to earlier spacecraft, the International Space Station has many luxuries, but laundry facilities are not one of them.  Instead, astronauts have other options.</span><span>&lt;/<span class="end-tag">description</span>&gt;</span><span>
-<span id="line37"></span>         </span><span>&lt;<span class="start-tag">pubDate</span>&gt;</span><span>Tue, 20 May 2003 08:56:02 GMT</span><span>&lt;/<span class="end-tag">pubDate</span>&gt;</span><span>
-<span id="line38"></span>         </span><span>&lt;<span class="start-tag">guid</span>&gt;</span><span>http://liftoff.msfc.nasa.gov/2003/05/20.html#item570</span><span>&lt;/<span class="end-tag">guid</span>&gt;</span><span>
-<span id="line39"></span>      </span><span>&lt;/<span class="end-tag">item</span>&gt;</span><span>
-<span id="line40"></span>   </span><span>&lt;/<span class="end-tag">channel</span>&gt;</span><span>
-<span id="line41"></span></span><span>&lt;/<span class="end-tag">rss</span>&gt;</span><span></span></pre><menu type="context" id="actions"><menuitem id="goToLine" label="Go to Line…" accesskey="L"></menuitem><menuitem id="wrapLongLines" label="Wrap Long Lines" type="checkbox"></menuitem><menuitem id="highlightSyntax" label="Syntax Highlighting" type="checkbox" checked="true"></menuitem></menu></body></html>
+<?xml version="1.0" standalone="yes"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width"></meta>
+        <title>https://cyber.harvard.edu/rss/examples/rss2sample.xml</title>
+        <link rel="stylesheet" type="text/css" href="rss2sample_files/viewsource.css"></link>
+    </head>
+    <body class="highlight" id="viewsource" style="-moz-tab-size: 4" contextmenu="actions">
+        <pre id="line1">
+            <span></span>
+            <span class="pi">&lt;?xml version="1.0"?&gt;</span>
+            <span>
+                <span id="line2"></span>
+            </span>
+            <span>&lt;<span class="start-tag">rss</span>
+                <span class="attribute-name">version</span>="<a shape="rect" class="attribute-value">2.0</a>"&gt;
+            </span>
+            <span>
+                <span id="line3"></span>
+            </span>
+            <span>&lt;<span class="start-tag">channel</span>&gt;
+            </span>
+            <span>
+                <span id="line4"></span>
+            </span>
+            <span>&lt;<span class="start-tag">title</span>&gt;
+            </span>
+            <span>Liftoff News</span>
+            <span>&lt;/<span class="end-tag">title</span>&gt;
+            </span>
+            <span>
+                <span id="line5"></span>
+            </span>
+            <span>&lt;<span class="start-tag">link</span>&gt;
+            </span>
+            <span>http://liftoff.msfc.nasa.gov/</span>
+            <span>&lt;/<span class="end-tag">link</span>&gt;
+            </span>
+            <span>
+                <span id="line6"></span>
+            </span>
+            <span>&lt;<span class="start-tag">description</span>&gt;
+            </span>
+            <span>Liftoff to Space Exploration.</span>
+            <span>&lt;/<span class="end-tag">description</span>&gt;
+            </span>
+            <span>
+                <span id="line7"></span>
+            </span>
+            <span>&lt;<span class="start-tag">language</span>&gt;
+            </span>
+            <span>en-us</span>
+            <span>&lt;/<span class="end-tag">language</span>&gt;
+            </span>
+            <span>
+                <span id="line8"></span>
+            </span>
+            <span>&lt;<span class="start-tag">pubDate</span>&gt;
+            </span>
+            <span>Tue, 10 Jun 2003 04:00:00 GMT</span>
+            <span>&lt;/<span class="end-tag">pubDate</span>&gt;
+            </span>
+            <span>
+                <span id="line9"></span>
+            </span>
+            <span>&lt;<span class="start-tag">lastBuildDate</span>&gt;
+            </span>
+            <span>Tue, 10 Jun 2003 09:41:01 GMT</span>
+            <span>&lt;/<span class="end-tag">lastBuildDate</span>&gt;
+            </span>
+            <span>
+                <span id="line10"></span>
+            </span>
+            <span>&lt;<span class="start-tag">docs</span>&gt;
+            </span>
+            <span>http://blogs.law.harvard.edu/tech/rss</span>
+            <span>&lt;/<span class="end-tag">docs</span>&gt;
+            </span>
+            <span>
+                <span id="line11"></span>
+            </span>
+            <span>&lt;<span class="start-tag">generator</span>&gt;
+            </span>
+            <span>Weblog Editor 2.0</span>
+            <span>&lt;/<span class="end-tag">generator</span>&gt;
+            </span>
+            <span>
+                <span id="line12"></span>
+            </span>
+            <span>&lt;<span class="start-tag">managingEditor</span>&gt;
+            </span>
+            <span>editor@example.com</span>
+            <span>&lt;/<span class="end-tag">managingEditor</span>&gt;
+            </span>
+            <span>
+                <span id="line13"></span>
+            </span>
+            <span>&lt;<span class="start-tag">webMaster</span>&gt;
+            </span>
+            <span>webmaster@example.com</span>
+            <span>&lt;/<span class="end-tag">webMaster</span>&gt;
+            </span>
+            <span>
+                <span id="line14"></span>
+            </span>
+            <span>&lt;<span class="start-tag">item</span>&gt;
+            </span>
+            <span>
+                <span id="line15"></span>
+            </span>
+            <span>&lt;<span class="start-tag">title</span>&gt;
+            </span>
+            <span>Star City</span>
+            <span>&lt;/<span class="end-tag">title</span>&gt;
+            </span>
+            <span>
+                <span id="line16"></span>
+            </span>
+            <span>&lt;<span class="start-tag">link</span>&gt;
+            </span>
+            <span>http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp</span>
+            <span>&lt;/<span class="end-tag">link</span>&gt;
+            </span>
+            <span>
+                <span id="line17"></span>
+            </span>
+            <span>&lt;<span class="start-tag">description</span>&gt;
+            </span>
+            <span>How do Americans get ready to work with Russians aboard the International Space Station? They take a
+                crash course in culture, language and protocol at Russia's
+                <span class="entity"><span>&amp;</span>lt;
+                </span>
+                a href="http://howe.iki.rssi.ru/GCTC/gctc_e.htm"
+                <span class="entity"><span>&amp;</span>gt;
+                </span>
+                Star City
+                <span class="entity"><span>&amp;</span>lt;
+                </span>
+                /a
+                <span class="entity"><span>&amp;</span>gt;
+                </span>
+                .
+            </span>
+            <span>&lt;/<span class="end-tag">description</span>&gt;
+            </span>
+            <span>
+                <span id="line18"></span>
+            </span>
+            <span>&lt;<span class="start-tag">pubDate</span>&gt;
+            </span>
+            <span>Tue, 03 Jun 2003 09:39:21 GMT</span>
+            <span>&lt;/<span class="end-tag">pubDate</span>&gt;
+            </span>
+            <span>
+                <span id="line19"></span>
+            </span>
+            <span>&lt;<span class="start-tag">guid</span>&gt;
+            </span>
+            <span>http://liftoff.msfc.nasa.gov/2003/06/03.html#item573</span>
+            <span>&lt;/<span class="end-tag">guid</span>&gt;
+            </span>
+            <span>
+                <span id="line20"></span>
+            </span>
+            <span>&lt;/<span class="end-tag">item</span>&gt;
+            </span>
+            <span>
+                <span id="line21"></span>
+            </span>
+            <span>&lt;<span class="start-tag">item</span>&gt;
+            </span>
+            <span>
+                <span id="line22"></span>
+            </span>
+            <span>&lt;<span class="start-tag">description</span>&gt;
+            </span>
+            <span>Sky watchers in Europe, Asia, and parts of Alaska and Canada will experience a
+                <span class="entity"><span>&amp;</span>lt;
+                </span>
+                a href="http://science.nasa.gov/headlines/y2003/30may_solareclipse.htm"
+                <span class="entity"><span>&amp;</span>gt;
+                </span>
+                partial eclipse of the Sun
+                <span class="entity"><span>&amp;</span>lt;
+                </span>
+                /a
+                <span class="entity"><span>&amp;</span>gt;
+                </span>
+                on Saturday, May 31st.
+            </span>
+            <span>&lt;/<span class="end-tag">description</span>&gt;
+            </span>
+            <span>
+                <span id="line23"></span>
+            </span>
+            <span>&lt;<span class="start-tag">pubDate</span>&gt;
+            </span>
+            <span>Fri, 30 May 2003 11:06:42 GMT</span>
+            <span>&lt;/<span class="end-tag">pubDate</span>&gt;
+            </span>
+            <span>
+                <span id="line24"></span>
+            </span>
+            <span>&lt;<span class="start-tag">guid</span>&gt;
+            </span>
+            <span>http://liftoff.msfc.nasa.gov/2003/05/30.html#item572</span>
+            <span>&lt;/<span class="end-tag">guid</span>&gt;
+            </span>
+            <span>
+                <span id="line25"></span>
+            </span>
+            <span>&lt;/<span class="end-tag">item</span>&gt;
+            </span>
+            <span>
+                <span id="line26"></span>
+            </span>
+            <span>&lt;<span class="start-tag">item</span>&gt;
+            </span>
+            <span>
+                <span id="line27"></span>
+            </span>
+            <span>&lt;<span class="start-tag">title</span>&gt;
+            </span>
+            <span>The Engine That Does More</span>
+            <span>&lt;/<span class="end-tag">title</span>&gt;
+            </span>
+            <span>
+                <span id="line28"></span>
+            </span>
+            <span>&lt;<span class="start-tag">link</span>&gt;
+            </span>
+            <span>http://liftoff.msfc.nasa.gov/news/2003/news-VASIMR.asp</span>
+            <span>&lt;/<span class="end-tag">link</span>&gt;
+            </span>
+            <span>
+                <span id="line29"></span>
+            </span>
+            <span>&lt;<span class="start-tag">description</span>&gt;
+            </span>
+            <span>Before man travels to Mars, NASA hopes to design new engines that will let us fly through the Solar
+                System more quickly. The proposed VASIMR engine would do that.
+            </span>
+            <span>&lt;/<span class="end-tag">description</span>&gt;
+            </span>
+            <span>
+                <span id="line30"></span>
+            </span>
+            <span>&lt;<span class="start-tag">pubDate</span>&gt;
+            </span>
+            <span>Tue, 27 May 2003 08:37:32 GMT</span>
+            <span>&lt;/<span class="end-tag">pubDate</span>&gt;
+            </span>
+            <span>
+                <span id="line31"></span>
+            </span>
+            <span>&lt;<span class="start-tag">guid</span>&gt;
+            </span>
+            <span>http://liftoff.msfc.nasa.gov/2003/05/27.html#item571</span>
+            <span>&lt;/<span class="end-tag">guid</span>&gt;
+            </span>
+            <span>
+                <span id="line32"></span>
+            </span>
+            <span>&lt;/<span class="end-tag">item</span>&gt;
+            </span>
+            <span>
+                <span id="line33"></span>
+            </span>
+            <span>&lt;<span class="start-tag">item</span>&gt;
+            </span>
+            <span>
+                <span id="line34"></span>
+            </span>
+            <span>&lt;<span class="start-tag">title</span>&gt;
+            </span>
+            <span>Astronauts' Dirty Laundry</span>
+            <span>&lt;/<span class="end-tag">title</span>&gt;
+            </span>
+            <span>
+                <span id="line35"></span>
+            </span>
+            <span>&lt;<span class="start-tag">link</span>&gt;
+            </span>
+            <span>http://liftoff.msfc.nasa.gov/news/2003/news-laundry.asp</span>
+            <span>&lt;/<span class="end-tag">link</span>&gt;
+            </span>
+            <span>
+                <span id="line36"></span>
+            </span>
+            <span>&lt;<span class="start-tag">description</span>&gt;
+            </span>
+            <span>Compared to earlier spacecraft, the International Space Station has many luxuries, but laundry
+                facilities are not one of them. Instead, astronauts have other options.
+            </span>
+            <span>&lt;/<span class="end-tag">description</span>&gt;
+            </span>
+            <span>
+                <span id="line37"></span>
+            </span>
+            <span>&lt;<span class="start-tag">pubDate</span>&gt;
+            </span>
+            <span>Tue, 20 May 2003 08:56:02 GMT</span>
+            <span>&lt;/<span class="end-tag">pubDate</span>&gt;
+            </span>
+            <span>
+                <span id="line38"></span>
+            </span>
+            <span>&lt;<span class="start-tag">guid</span>&gt;
+            </span>
+            <span>http://liftoff.msfc.nasa.gov/2003/05/20.html#item570</span>
+            <span>&lt;/<span class="end-tag">guid</span>&gt;
+            </span>
+            <span>
+                <span id="line39"></span>
+            </span>
+            <span>&lt;/<span class="end-tag">item</span>&gt;
+            </span>
+            <span>
+                <span id="line40"></span>
+            </span>
+            <span>&lt;/<span class="end-tag">channel</span>&gt;
+            </span>
+            <span>
+                <span id="line41"></span>
+            </span>
+            <span>&lt;/<span class="end-tag">rss</span>&gt;
+            </span>
+            <span></span>
+        </pre>
+        <menu id="actions" type="context">
+            <menuitem id="goToLine" label="Go to Line&#65533;" accesskey="L"></menuitem>
+            <menuitem id="wrapLongLines" label="Wrap Long Lines" type="checkbox"></menuitem>
+            <menuitem id="highlightSyntax" label="Syntax Highlighting" type="checkbox" checked="true"></menuitem>
+        </menu>
+    </body>
+</html>

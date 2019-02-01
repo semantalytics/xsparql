@@ -1,4 +1,4 @@
-base <http://example.org/>
+base <./>
 <results>
 {for (uri("uri") as $uri) (iri("iri") as $iri)
 from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/functions/data.ttl> where {}
