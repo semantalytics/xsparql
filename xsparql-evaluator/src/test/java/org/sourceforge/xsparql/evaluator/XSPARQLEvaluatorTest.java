@@ -39,6 +39,7 @@
 package org.sourceforge.xsparql.evaluator;
 
 import static org.junit.Assert.*;
+import static org.junit.runners.Parameterized.*;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -50,31 +51,40 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import javax.xml.transform.stream.StreamSource;
 
+import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import org.antlr.runtime.RecognitionException;
+import org.apache.jena.ext.com.google.common.collect.Lists;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.sourceforge.xsparql.evaluator.XSPARQLEvaluator;
 
-/**
- * @author stefan
- * 
- */
+@RunWith(Parameterized.class)
 public class XSPARQLEvaluatorTest {
 
+  private String filename;
+
+  public XSPARQLEvaluatorTest(String filename) {
+    this.filename = filename;
+  }
+
+  @Parameters(name = "{index}: {0}")
+  public static Iterable<String[]> data() {
+    return listFiles("examples");
+  }
   /**
    * Test method for
-   * {@link org.sourceforge.xsparql.evaluator.XSPARQLEvaluator#evaluate(java.io.Reader, java.io.OutputStream)}
+   * {@link org.sourceforge.xsparql.evaluator.XSPARQLEvaluator#evaluate(Reader, Writer)}
    * .
    */
   @Test
   public void testEvaluateReaderOutputStream() {
     try {
 
-      for (String filename : listFiles("examples")) {
         if (filename.endsWith(".xsparql")) {
           System.out.println(filename);
           Reader queryReader = loadReaderFromClasspath(filename);
@@ -83,7 +93,6 @@ public class XSPARQLEvaluatorTest {
           Writer o = new StringWriter();
           xe.evaluate(queryReader, o);
           // ignore the OutputStream for now
-        }
       }
 
     } catch (RecognitionException e) {
@@ -98,7 +107,7 @@ public class XSPARQLEvaluatorTest {
 
   /**
    * Test method for
-   * {@link org.sourceforge.xsparql.evaluator.XSPARQLEvaluator#evaluate(String)} .
+   * {@link org.sourceforge.xsparql.evaluator.XSPARQLEvaluator#evaluate(Reader)}
    */
   @Test
   public void testEvaluateString() {
@@ -144,16 +153,16 @@ public class XSPARQLEvaluatorTest {
    * 
    * @throws IOException
    */
-  private List<String> listFiles(String dirname) {
-    List<String> filenames = new LinkedList<String>();
+  private static List<String[]> listFiles(String dirname) {
+    List<String[]> filenames = new LinkedList<String[]>();
 
-    InputStream is = getClass().getClassLoader().getResourceAsStream(dirname);
+    InputStream is = XSPARQLEvaluatorTest.class.getClassLoader().getResourceAsStream(dirname);
     if (is != null) {
       BufferedReader rdr = new BufferedReader(new InputStreamReader(is));
       String line;
       try {
         while ((line = rdr.readLine()) != null) {
-          filenames.add(dirname + "/" + line);
+          filenames.add(new String[] {dirname + "/" + line});
         }
       } catch (IOException e) {
         e.printStackTrace();

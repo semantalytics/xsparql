@@ -6,7 +6,8 @@ prefix lfm: <http://purl.org/ontology/last-fm/>
 prefix dc: <http://purl.org/dc/elements/1.1/> 
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
 prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> 
-prefix event: <http://purl.org/NET/c4dm/event.owl#> 
+prefix event: <http://purl.org/NET/c4dm/event.owl#>
+prefix xs: <http://www.w3.org/2001/XMLSchema>
 
 declare variable $user := 'jacktrades'; 
 
@@ -14,9 +15,9 @@ declare variable $user := 'jacktrades';
 let $lastfm := fn:concat("http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&amp;api_key=16307daa8ce0d0cc1dab015e0fdab8ec&amp;user=", $user) 
   for $artistInfo in doc($lastfm)//artist[@rank < 6] 
   let $artist := data($artistInfo/name) 
-  let $uri := fn:concat("http://lastfm.rdfize.com/artists/", fn:encode-for-uri($artist))
+  let $uri := xs:anyURI(fn:concat("http://lastfm.rdfize.com/artists/", fn:encode-for-uri($artist)))
   for * from $uri
-  where { $event mo:performer $uri ; a mo:Performance. 
+  where { $event mo:performer $uri ; a mo:Performance.
           $event event:place $venue; rdfs:label $label . 
           optional { $venue geo:long $long; geo:lat $lat } } 
 
