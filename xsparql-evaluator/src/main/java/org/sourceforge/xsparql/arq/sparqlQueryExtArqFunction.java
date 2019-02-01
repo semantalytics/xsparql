@@ -56,14 +56,8 @@ import org.sourceforge.xsparql.sparql.arq.InMemoryDatasetManager;
 import org.sourceforge.xsparql.sparql.arq.SPARQLQuery;
 import org.sourceforge.xsparql.xquery.saxon.sparqlQueryExtFunction;
 
-/**
- * 
- * @author Nuno Lopes
- */
 public class sparqlQueryExtArqFunction extends sparqlQueryExtFunction {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 3473182871822843811L;
 
 	@Override

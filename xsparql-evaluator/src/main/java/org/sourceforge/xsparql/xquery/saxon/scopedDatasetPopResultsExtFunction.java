@@ -38,36 +38,19 @@
  */ 
 package org.sourceforge.xsparql.xquery.saxon;
 
-//import net.sf.saxon.functions.*;
 import net.sf.saxon.lib.*;
 
-//import com.hp.hpl.jena.query.*;
-//import java.io.*;
-
-//import javax.xml.transform.stream.StreamSource;
-
-import net.sf.saxon.tree.iter.*;
-import net.sf.saxon.om.*;
+import net.sf.saxon.om.Item;
+import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.trans.XPathException;
 
-//import net.sf.saxon.value.StringValue;
-
-/**
- * 
- * @author Nuno Lopes
- */
 public class scopedDatasetPopResultsExtFunction extends ExtensionFunctionDefinition {
 
-  /**
-	 * 
-	 */
   private static final long serialVersionUID = -3618421782402392314L;
-  /**
-   * Name of the function
-   * 
-   */
+
   private static StructuredQName funcname = new StructuredQName("_xsparql",
       "http://xsparql.deri.org/demo/xquery/xsparql.xquery",
       "scopedDatasetPopResults");

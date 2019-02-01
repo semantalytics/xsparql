@@ -61,22 +61,13 @@ import org.sourceforge.xsparql.xquery.XQueryEvaluator;
  * Class to evaluate an XSPARQL query. Either use the <code>evaluate</code>
  * methods or use the <code>XSPARQLProcessor.process</code> and the
  * <code>evaluateRewritten</code> method.
- * 
- * 
- * @author Nuno Lopes
  */
 public final class XSPARQLEvaluator {
 
 	private SQLQuery sqlQuery = null;
-
-	/**
-	 * 
-	 */
 	private XSPARQLProcessor xsparqlProc;
-	/**
-	 * 
-	 */
 	private XQueryEvaluator xqueryEval;
+
 	/**
 	 * Path to Jena TDB database
 	 */
@@ -117,48 +108,9 @@ public final class XSPARQLEvaluator {
 //		this.tdbDir = tdbDir;
 //	}
 
-
-
-	public Set<URL> getDefaultGraphs() {
-		return defaultGraphs;
-	}
-
-	public void addDefaultGraph(URL graph) {
-		this.defaultGraphs.add(graph);
-	}
-
-	public void addDefaultGraphs(Collection<URL> graphs) {
-		this.defaultGraphs.addAll(graphs);
-	}
-
-	public Set<URL> getNamedGraphs() {
-		return namedGraphs;
-	}
-
-	public void addNamedGraph(URL namedGraph) {
-		this.namedGraphs.add(namedGraph);
-	}
-
-	public void addNamedGraphs(Collection<URL> namedGraphs) {
-		this.namedGraphs.addAll(namedGraphs);
-	}
-
-	/**
-	 * @param xqueryExternalVars
-	 */
-	public void setXqueryExternalVars(Map<String, String> xqueryExternalVars) {
-		this.externalVars = xqueryExternalVars;
-	}
-
-	/**
-	 */
-	public void addXQueryExternalVar(String key, String value) {
-		this.externalVars.put(key, value);
-	}
-
 	/**
 	 * Creates a new <code>XSPARQLEvaluator</code> instance.
-	 * 
+	 *
 	 */
 	public XSPARQLEvaluator() {
 		super();
@@ -166,23 +118,54 @@ public final class XSPARQLEvaluator {
 		xqueryEngine = XQueryEngine.SAXONHE;
 	}
 
+	public Set<URL> getDefaultGraphs() {
+		return defaultGraphs;
+	}
+
+	public void addDefaultGraph(final URL graph) {
+		this.defaultGraphs.add(graph);
+	}
+
+	public void addDefaultGraphs(final Collection<URL> graphs) {
+		this.defaultGraphs.addAll(graphs);
+	}
+
+	public Set<URL> getNamedGraphs() {
+		return namedGraphs;
+	}
+
+	public void addNamedGraph(final URL namedGraph) {
+		this.namedGraphs.add(namedGraph);
+	}
+
+	public void addNamedGraphs(final Collection<URL> namedGraphs) {
+		this.namedGraphs.addAll(namedGraphs);
+	}
+
+	/**
+	 * @param xqueryExternalVars
+	 */
+	public void setXqueryExternalVars(final Map<String, String> xqueryExternalVars) {
+		this.externalVars = xqueryExternalVars;
+	}
+
+	public void addXQueryExternalVar(final String key, final String value) {
+		this.externalVars.put(key, value);
+	}
+
 	/**
 	 * The input stream <code>is</code> is processed as containing an XSPARQL
 	 * query, the XQuery is evaluated and the result is output to the stream
 	 * <code>out</code>.
 	 * 
-	 * @param is
-	 *          XSPARQL query
-	 * @param out
-	 *          a <code>PrintStream</code> value
+	 * @param is XSPARQL query
+	 * @param out a <code>PrintStream</code> value
 	 * @exception Exception
-	 *              if an error occurs
 	 */
-	public void evaluate(Reader is, Writer out) throws Exception {
+	public void evaluate(final Reader is, final Writer out) throws Exception {
 		xsparqlProc.setQueryFilename(this.queryFilename);
 		final String xquery = xsparqlProc.process(is);
-		this.evaluateRewrittenQuery(new BufferedReader(new StringReader(xquery)),
-				out);
+		this.evaluateRewrittenQuery(new BufferedReader(new StringReader(xquery)), out);
 	}
 
 	/**
@@ -191,8 +174,7 @@ public final class XSPARQLEvaluator {
 	 * name, variable value) in <code>args</code>. The evaluation result is then
 	 * returned as String.
 	 * 
-	 * @param query
-	 *          XSPARQL query
+	 * @param query XSPARQL query
 	 * @return query evaluation result
 	 * @throws Exception
 	 */
@@ -203,8 +185,7 @@ public final class XSPARQLEvaluator {
 	}
 
 	/**
-	 * @param xquery
-	 *          Rewritten XSPARQL query
+	 * @param xquery Rewritten XSPARQL query
 	 * @throws Exception
 	 */
 	public String evaluateRewrittenQuery(final String xquery) throws Exception {
@@ -215,13 +196,11 @@ public final class XSPARQLEvaluator {
 	}
 
 	/**
-	 * @param query
-	 *          Rewritten XSPARQL query
-	 * @param out
-	 *          Evaluation result
+	 * @param query Rewritten XSPARQL query
+	 * @param out Evaluation result
 	 * @throws Exception
 	 */
-	public void evaluateRewrittenQuery(Reader query, Writer out) throws Exception {
+	public void evaluateRewrittenQuery(final Reader query, final Writer out) throws Exception {
 
 		xqueryEval = xqueryEngine.getXQueryEvaluator();
 		xqueryEval.setExternalVariables(externalVars);
@@ -232,19 +211,19 @@ public final class XSPARQLEvaluator {
 		xqueryEval.evaluate(query, out);
 	}
 
-	public void setXQueryEngine(XQueryEngine xee) {
+	public void setXQueryEngine(final XQueryEngine xee) {
 		this.xqueryEngine = xee;
 	}
 
-	public void setSource(Source source) {
+	public void setSource(final Source source) {
 		this.source = source;
 	}
 
-	public void setQueryFilename(String filename) {
+	public void setQueryFilename(final String filename) {
 		this.queryFilename = filename;
 	}
 
-	public void setDBconnection(SQLQuery q) {
+	public void setDBconnection(final SQLQuery q) {
 		this.sqlQuery = q;
 	}
 

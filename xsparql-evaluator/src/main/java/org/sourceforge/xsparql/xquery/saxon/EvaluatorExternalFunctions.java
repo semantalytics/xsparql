@@ -45,36 +45,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONSerializer;
 import net.sf.json.xml.XMLSerializer;
 import org.apache.jena.util.FileManager;
 
-/**
- * Library of Java methods for usage from within XQuery queries when using Saxon
- * 
- * @author Stefan Bischof
- * @author Nuno Lopes
- * 
- */
 class EvaluatorExternalFunctions {
 
 	/**
 	 * Saves string s to a local file.
 	 * 
-	 * @param prefix
-	 *          Turtle preamble
-	 * @param n3
-	 *          Turtle content
+	 * @param prefix Turtle preamble
+	 * @param n3 Turtle content
 	 * @return URI of local file containing string s
 	 */
-	public static String turtleGraphToURI(String prefix, String n3) {
+	public static String turtleGraphToURI(final String prefix, final String n3) {
 		URL retURL = null;
 
 		try {
@@ -106,7 +92,7 @@ class EvaluatorExternalFunctions {
 	 * @param loc location of the data
 	 * 
 	 */
-	public static String jsonToXML(String loc) {
+	public static String jsonToXML(final String loc) {
 		String xml = "";
 		String jsonData = "";
 
@@ -142,9 +128,5 @@ class EvaluatorExternalFunctions {
 		}
 
 		return xml;
-
 	}
-
-
-
 }

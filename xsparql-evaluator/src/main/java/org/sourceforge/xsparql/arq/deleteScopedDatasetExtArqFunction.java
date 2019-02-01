@@ -38,19 +38,14 @@
  */ 
 package org.sourceforge.xsparql.arq;
 
+import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.om.SequenceIterator;
 import org.sourceforge.xsparql.xquery.saxon.deleteScopedDatasetExtFunction;
 
-import net.sf.saxon.lib.*;
-
 import net.sf.saxon.tree.iter.*;
-import net.sf.saxon.om.*;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.trans.XPathException;
 
-/**
- * 
- * @author Nuno Lopes
- */
 public class deleteScopedDatasetExtArqFunction extends deleteScopedDatasetExtFunction {
 	private static final long serialVersionUID = -7577497271941404411L;
 
@@ -64,7 +59,7 @@ public class deleteScopedDatasetExtArqFunction extends deleteScopedDatasetExtFun
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public SequenceIterator call(SequenceIterator[] arguments,
-					XPathContext context) throws XPathException {
+										 XPathContext context) throws XPathException {
 
 				String id = arguments[0].next().getStringValue();
 

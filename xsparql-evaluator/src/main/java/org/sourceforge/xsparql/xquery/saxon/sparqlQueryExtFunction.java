@@ -48,17 +48,10 @@ import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.SequenceType;
 
-/**
- * 
- * @author Nuno Lopes
- */
 public class sparqlQueryExtFunction extends ExtensionFunctionDefinition {
 
   private static final long serialVersionUID = -3012293238578637469L;
-  /**
-   * Name of the function
-   * 
-   */
+
   private static StructuredQName funcname = new StructuredQName("_xsparql",
       "http://xsparql.deri.org/demo/xquery/xsparql.xquery", "_sparqlQuery");
 

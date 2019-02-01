@@ -55,11 +55,8 @@ import net.sf.saxon.value.SequenceType;
 import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 import org.sourceforge.xsparql.sql.SQLQuery;
 
-
 /**
  * Saxon External call for implementing SQL queries. 
- * 
- * @author Nuno Lopes
  */
 public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
 
@@ -71,10 +68,6 @@ public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
   private final static Logger logger = Logger.getLogger(XSPARQLProcessor.class
 	      .getClass().getName());
 
-    /**
-   * Name of the function
-   * 
-   */
   private static StructuredQName funcname = new StructuredQName("_xsparql",
       "http://xsparql.deri.org/demo/xquery/xsparql.xquery", "_sqlQuery");
 

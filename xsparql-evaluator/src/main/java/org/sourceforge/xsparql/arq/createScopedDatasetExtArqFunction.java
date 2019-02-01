@@ -38,25 +38,21 @@
  */ 
 package org.sourceforge.xsparql.arq;
 
-import net.sf.saxon.lib.*;
-
-import java.io.*;
-
 import javax.xml.transform.stream.StreamSource;
 
+import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.tree.iter.SingletonIterator;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
 import org.sourceforge.xsparql.xquery.saxon.createScopedDatasetExtFunction;
 
-import net.sf.saxon.tree.iter.*;
-import net.sf.saxon.om.*;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.trans.XPathException;
 
-/**
- * 
- * @author Nuno Lopes
- */
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+
 public class createScopedDatasetExtArqFunction extends createScopedDatasetExtFunction {
 	private static final long serialVersionUID = -3645845258989697549L;
 
@@ -65,21 +61,17 @@ public class createScopedDatasetExtArqFunction extends createScopedDatasetExtFun
 
 		return new ExtensionFunctionCall() {
 
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 7030338651481369238L;
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public SequenceIterator call(SequenceIterator[] arguments,
-					XPathContext context) throws XPathException {
+										 XPathContext context) throws XPathException {
 
 				String q = arguments[0].next().getStringValue();
 				String id = arguments[1].next().getStringValue();
 
-				ResultSet resultSet = ScopedDatasetManager.createScopedDataset(q,
-						id);
+				ResultSet resultSet = ScopedDatasetManager.createScopedDataset(q, id);
 
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				ResultSetFormatter.outputAsXML(outputStream, resultSet);

@@ -57,12 +57,10 @@ import org.sourceforge.xsparql.sql.SQLQuery;
  * 
  * Usage: 1) use the setter methods to influence the evaluation 2) call one of
  * the evaluate methods
- * 
- * @author Nuno Lopes
  */
 public interface XQueryEvaluator {
 
-	public void setExternalVariables(Map<String, String> xqueryExternalVars);
+	void setExternalVariables(Map<String, String> xqueryExternalVars);
 
 	/**
 	 * Set to <code>true</code> the XQuery engine is validating
@@ -70,30 +68,28 @@ public interface XQueryEvaluator {
 	 * @param validatingXQuery
 	 *          <code>true</code> to use a validating XQuery engine
 	 */
-	public void setValidatingXQuery(boolean validatingXQuery);
+	void setValidatingXQuery(boolean validatingXQuery);
 
 	/**
 	 * Set source for the query.
 	 * 
-	 * @param source
-	 *          Source of the query.
+	 * @param source Source of the query.
 	 */
-	public void setSource(Source source);
+	void setSource(Source source);
 
 	/**
 	 * Evaluate XQuery query <code>query</code> and output the result to
 	 * <code>out</code>.
 	 * 
-	 * @param query
-	 *          XQuery query
+	 * @param query XQuery query
 	 * @throws Exception
 	 */
-	public String evaluate(final String query) throws Exception;
+	String evaluate(final String query) throws Exception;
 
-	public void evaluate(final InputStream query, OutputStream out)
+	void evaluate(final InputStream query, OutputStream out)
 			throws Exception;
 
-	public void evaluate(final Reader query, Writer out) throws Exception;
+	void evaluate(final Reader query, Writer out) throws Exception;
 
 	/**
 	 * Set to <code>true</code> to omit XML declaration in the beginning of the
@@ -101,17 +97,16 @@ public interface XQueryEvaluator {
 	 * 
 	 * @param xmloutput
 	 */
-	public void setOmitXMLDecl(final boolean xmloutput);
+	void setOmitXMLDecl(final boolean xmloutput);
 
 	/**
 	 * Instanciate the output method of the specific xquery evaluator
 	 * 
 	 */
-	public void setOutputMethod(String outputMethod);
+	void setOutputMethod(String outputMethod);
 
+	void setDBconnection(SQLQuery q);
 
-	public void setDBconnection(SQLQuery q);
-
-	public void setDataset(Set<URL> defaultGraph, Set<URL> namedGraphs, DatasetManager manager);
+	void setDataset(Set<URL> defaultGraph, Set<URL> namedGraphs, DatasetManager manager);
 
 }

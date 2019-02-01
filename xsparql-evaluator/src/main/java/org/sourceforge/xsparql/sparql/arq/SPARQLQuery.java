@@ -46,9 +46,6 @@ import org.w3c.dom.Document;
 
 /**
  * Use the ARQ API to pose SPARQL queries
- *
- * @author Nuno Lopes
- * 
  */
 public class SPARQLQuery {
 
@@ -56,23 +53,19 @@ public class SPARQLQuery {
 	private Dataset dataset = null;
 	private static final Logger logger = LoggerFactory.getLogger(SPARQLQuery.class);
 
-	// ----------------------------------------------------------------------------------------------------
-	// SPARQL
-
 	/**
 	 * Creates a new <code>SPARQLQuery</code> instance.
 	 * 
 	 */
-	public SPARQLQuery(String query) {
-		this.query = query;
-		this.dataset = null;
+	public SPARQLQuery(final String query) {
+		this(query, null);
 	}
 
 	/**
 	 * Creates a new <code>SPARQLQuery</code> instance.
 	 * 
 	 */
-	public SPARQLQuery(String query, Dataset dataset) {
+	public SPARQLQuery(final String query, final Dataset dataset) {
 		this.query = query;
 		this.dataset = dataset;
 	}
@@ -85,12 +78,12 @@ public class SPARQLQuery {
 	public ResultSet getResults() {
 
 		logger.debug("Preparing query {}", query);
-		Query q = QueryFactory.create(query);
+		final Query q = QueryFactory.create(query);
 		QueryExecution qe;
 
 		if (dataset == null) {
 			qe = QueryExecutionFactory.create(q);
-			if(qe.getQuery().getDatasetDescription()==null)
+			if(qe.getQuery().getDatasetDescription() == null)
 				qe = QueryExecutionFactory.create(q, DatasetFactory.createMem());
 				
 		} else {
@@ -106,11 +99,9 @@ public class SPARQLQuery {
 	 * @return XML results of the query
 	 */
 	public Document getResultsAsXML() {
-		ResultSet resultSet = getResults();
-
-		String xml = ResultSetFormatter.asXMLString(resultSet);
+		final ResultSet resultSet = getResults();
+		final String xml = ResultSetFormatter.asXMLString(resultSet);
 
 		return Helper.parseXMLString(xml);
 	}
-
 }

@@ -44,43 +44,35 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.jena.query.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sourceforge.xsparql.sparql.arq.DatasetResults;
 import org.sourceforge.xsparql.sparql.arq.InMemoryDatasetManager;
 
 /**
  * Library of Java methods for usage from within XQuery queries when using Saxon
- * 
- * @author Stefan Bischof
- * @author Nuno Lopes
- * 
  */
 class ScopedDatasetManager {
 
-	private static Map<String, DatasetResults> scopedDataset = new HashMap<String, DatasetResults>();
-
-	private static InMemoryDatasetManager inMemoryDataset = null;
-	
-	
-
-	// ----------------------------------------------------------------------------------------------------
-	// Scoped Dataset
+	private static final Logger logger = LoggerFactory.getLogger(ScopedDatasetManager.class);
+	private static final Map<String, DatasetResults> scopedDataset = new HashMap<String, DatasetResults>();
+	private static final InMemoryDatasetManager inMemoryDataset = null;
 
 	/**
 	 * Evaluates a SPARQL query, storing the bindings to be reused later. Used for
 	 * the ScopedDataset.
 	 * 
-	 * @param q
-	 *          query to be executed
-	 * @param id
-	 *          solution id
+	 * @param q query to be executed
+	 * @param id solution id
 	 * @return XML results of the query
 	 */
-	public static ResultSet createScopedDataset(String q, String id) {
+	public static ResultSet createScopedDataset(final String q, final String id) {
 
-		// System.out.println("createScopedDataset(" + q + "," + id + ")");
+		logger.debug("Create scoped dataset query={}, id={}", q, id);
 
 		if (scopedDataset.containsKey(id)) {
 			// error?
+            logger.debug("Scoped dataset contains key {}", id);
 		}
 
 		Query query = QueryFactory.create(q);
@@ -97,63 +89,61 @@ class ScopedDatasetManager {
 		scopedDataset.put(id, ds);
 
 		return results;
-
 	}
 
 	/**
 	 * Evaluates a SPARQL query, using previously stored dataset and bindings.
 	 * Used for the ScopedDataset.
 	 * 
-	 * @param q
-	 *          query to be executed
-	 * @param id
-	 *          solution id
-	 * @param joinVars
-	 *          joining variables that will be put in the initialBinding
-	 * @param pos
-	 *          current iteration
+	 * @param q query to be executed
+	 * @param id solution id
+	 * @param joinVars joining variables that will be put in the initialBinding
+	 * @param pos current iteration
 	 * @return XML results of the query
 	 */
-	public static ResultSet sparqlScopedDataset(String q, String id,
-			String joinVars, int pos) {
+	public static ResultSet sparqlScopedDataset(final String q,
+												final String id,
+												final String joinVars,
+												final int pos) {
+
+		logger.debug("Create scoped dataset query={}, id={}, joinVars={}, position={}",
+				     Arrays.asList(q, id, joinVars, pos));
+
 		if (!scopedDataset.containsKey(id)) {
 			// error ??
+			logger.debug("Scoped dataset does not contain key {}", id);
 		}
 
-		Dataset dataset = scopedDataset.get(id).getDataset();
-		ResultSetRewindable results = scopedDataset.get(id).getResults();
+		final Dataset dataset = scopedDataset.get(id).getDataset();
+		final ResultSetRewindable results = scopedDataset.get(id).getResults();
 		results.reset();
 
 		// used to filter solutions
-		QuerySolutionMap initialBinding = createSolutionMap(results, joinVars, pos);
+		final QuerySolutionMap initialBinding = createSolutionMap(results, joinVars, pos);
 
-		QueryExecution qe = QueryExecutionFactory
-				.create(q, dataset, initialBinding);
+		final QueryExecution qe = QueryExecutionFactory.create(q, dataset, initialBinding);
 
-		ResultSet resultSet = qe.execSelect();
+		final ResultSet resultSet = qe.execSelect();
 		// store current resultSet in case there is further nesting
-		ResultSetRewindable results2 = scopedDataset.get(id).addResults(resultSet);
 
-		return results2;
+		return scopedDataset.get(id).addResults(resultSet);
 	}
 
 	/**
 	 * Creates an initialBinding from the previous solutions and the join vars.
 	 * 
-	 * @param results
-	 *          previous resultSet
-	 * @param joinVars
-	 *          joining variables that will be put in the initialBinding
-	 * @param pos
-	 *          current iteration
+	 * @param results previous resultSet
+	 * @param joinVars joining variables that will be put in the initialBinding
+	 * @param pos current iteration
 	 * @return QuerySolutionMap to be used for filtering results
 	 */
-	private static QuerySolutionMap createSolutionMap(
-			ResultSetRewindable results, String joinVars, int pos) {
+	private static QuerySolutionMap createSolutionMap(final ResultSetRewindable results,
+													  final String joinVars,
+													  final int pos) {
 
-		QuerySolutionMap initialBinding = new QuerySolutionMap();
+		final QuerySolutionMap initialBinding = new QuerySolutionMap();
 
-		String[] joinVarsArray = joinVars.split(",");
+		final String[] joinVarsArray = joinVars.split(",");
 
 		QuerySolution s = new QuerySolutionMap();
 
@@ -169,9 +159,10 @@ class ScopedDatasetManager {
 			it++;
 		}
 
-		Iterator<String> iterator = Arrays.asList(joinVarsArray).iterator();
+		final Iterator<String> iterator = Arrays.asList(joinVarsArray).iterator();
+
 		while (iterator.hasNext()) {
-			String st = iterator.next();
+			final String st = iterator.next();
 
 			if (s.contains(st)) {
 				initialBinding.add(st, s.get(st));
@@ -184,27 +175,26 @@ class ScopedDatasetManager {
 	/**
 	 * Deletes stored dataset and solutions.
 	 * 
-	 * @param id
-	 *          solution id
+	 * @param id solution id
 	 */
-	public static void deleteScopedDataset(String id) {
+	public static void deleteScopedDataset(final String id) {
 
-		// System.out.println("deleteScopedDataset(" + id + ")");
+	    logger.debug("Deleting scoped dataset {}", id);
 
-		// delete dataset from scope, no longer needed
 		scopedDataset.remove(id);
 	}
 
 	/**
 	 * Deletes the last results from the stack.
 	 * 
-	 * @param id
-	 *          solution id
+	 * @param id solution id
 	 */
-	public static void scopedDatasetPopResults(String id) {
+	public static void scopedDatasetPopResults(final String id) {
+
+		logger.debug("Deleting scoped dataset results {}", id);
 
 		// delete dataset from scope, no longer needed
-		if (scopedDataset.size() > 0) {
+		if (!scopedDataset.isEmpty()) {
 			scopedDataset.get(id).popResults();
 		}
 	}

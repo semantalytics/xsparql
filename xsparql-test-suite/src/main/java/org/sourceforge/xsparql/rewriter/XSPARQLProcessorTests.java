@@ -147,6 +147,7 @@ public class XSPARQLProcessorTests {
 		    Helper.printTree(tree);
 		} catch (RecognitionException e) {
 			logger.error("Error while parsing the query "+filename, e);
+			e.printStackTrace();
 			fail();
 		}
 	}
@@ -178,9 +179,11 @@ public class XSPARQLProcessorTests {
 		    assertEquals(0, processor.getNumberOfSyntaxErrors());
 		} catch (RecognitionException e) {
 			logger.error("Error while parsing the query "+filename, e);
+			e.printStackTrace();
 			fail();
 		} catch (Exception e) {
 			logger.error("Error while serialising the query "+filename, e);
+			e.printStackTrace();
 			fail();
 		}
 	}

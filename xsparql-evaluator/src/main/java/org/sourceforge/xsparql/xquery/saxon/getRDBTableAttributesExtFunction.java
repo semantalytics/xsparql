@@ -38,7 +38,6 @@
  */ 
 package org.sourceforge.xsparql.xquery.saxon;
 
-//import net.sf.saxon.functions.*;
 import java.io.ByteArrayInputStream;
 import java.util.LinkedList;
 import java.util.List;
@@ -56,23 +55,11 @@ import net.sf.saxon.value.SequenceType;
 
 import org.sourceforge.xsparql.sql.SQLQuery;
 
-/**
- * 
- * @author Nuno Lopes
- */
 public class getRDBTableAttributesExtFunction extends ExtensionFunctionDefinition {
 
-  /**
-	 * 
-	 */
   private static final long serialVersionUID = 8641294257135052785L;
-  
   private SQLQuery query = null;
 
-  /**
-   * Name of the function
-   * 
-   */
   private static StructuredQName funcname = new StructuredQName("xsparql",
       "http://xsparql.deri.org/demo/xquery/sparql-functions.xquery", "getRDBTableAttributes");
 
@@ -142,8 +129,6 @@ public class getRDBTableAttributesExtFunction extends ExtensionFunctionDefinitio
 	        		new StreamSource(inputStream)));
 
       }
-
     };
   }
-
 }

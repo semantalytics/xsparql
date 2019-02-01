@@ -49,7 +49,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -68,9 +67,7 @@ import net.sf.saxon.s9api.Serializer;
 import net.sf.saxon.s9api.XQueryCompiler;
 import net.sf.saxon.s9api.XdmAtomicValue;
 
-import org.apache.jena.riot.system.stream.StreamManager;
 import org.apache.jena.util.FileManager;
-import org.apache.jena.util.LocationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sourceforge.xsparql.sparql.DatasetManager;
@@ -80,73 +77,64 @@ import org.sourceforge.xsparql.xquery.XQueryEvaluator;
 
 /**
  * Evaluate an XQuery using the Saxon API
- * 
- * @author Nuno Lopes
  */
 public class xqueryEvaluatorSaxon implements XQueryEvaluator {
+
 	private static final Logger logger = LoggerFactory.getLogger(xqueryEvaluatorSaxon.class);
-	
 	private Processor proc;
-
 	private XQueryCompiler xqueryComp;
-
 	private Serializer serializer;
-
 	private Source source = null;
-
 	private boolean omitXMLDecl = true;
-
 	private SQLQuery sqlQuery = null;
-
 	private Set<URL> defaultGraph;
 	private Set<URL> namedGraphs;
-	
 	private DatasetManager datasetManager;
-	
-	public void setDBconnection(SQLQuery q) {
-		this.sqlQuery = q;
-
-		// RDB functions
-		proc.registerExtensionFunction(new sqlQueryExtFunction(sqlQuery));
-		proc.registerExtensionFunction(new getRDBTablesExtFunction(sqlQuery));
-		proc.registerExtensionFunction(new getRDBTableAttributesExtFunction(sqlQuery));
-
-	}
-	
-	@Override
-	public void setDataset(Set<URL> defaultGraph, Set<URL> namedGraphs, DatasetManager manager) {
-		this.defaultGraph = defaultGraph;
-		this.namedGraphs = namedGraphs;
-		datasetManager = manager;
-	}
 
 	/**
 	 * use validating XQuery engine
 	 */
 	public boolean validatingXQuery = true;
 
-	public void setValidatingXQuery(boolean validatingXQuery) {
-		this.validatingXQuery = validatingXQuery;
-	}
-
 	/**
 	 * external variables for Xquery evaluation TODO refactor
 	 */
 	public Map<String, String> xqueryExternalVars = new HashMap<String, String>();
 
-	public void setExternalVariables(Map<String, String> xqueryExternalVars) {
+	public void setDBconnection(final SQLQuery q) {
+		this.sqlQuery = q;
+
+		// RDB functions
+		proc.registerExtensionFunction(new sqlQueryExtFunction(sqlQuery));
+		proc.registerExtensionFunction(new getRDBTablesExtFunction(sqlQuery));
+		proc.registerExtensionFunction(new getRDBTableAttributesExtFunction(sqlQuery));
+	}
+	
+	@Override
+	public void setDataset(final Set<URL> defaultGraph,
+						   final Set<URL> namedGraphs,
+						   final DatasetManager manager) {
+		this.defaultGraph = defaultGraph;
+		this.namedGraphs = namedGraphs;
+		datasetManager = manager;
+	}
+
+	public void setValidatingXQuery(final boolean validatingXQuery) {
+		this.validatingXQuery = validatingXQuery;
+	}
+
+	public void setExternalVariables(final Map<String, String> xqueryExternalVars) {
 		this.xqueryExternalVars = xqueryExternalVars;
 	}
 
-	public void setSource(Source source) {
+	public void setSource(final Source source) {
 		this.source = source;
 	}
 
 	/**
 	 * Creates a new <code>XQueryEvaluatorSaxon</code> instance.
-	 * 
 	 */
-	public xqueryEvaluatorSaxon(boolean licensedVersion) {
+	public xqueryEvaluatorSaxon(final boolean licensedVersion) {
 
 		proc = new Processor(licensedVersion);
 
@@ -217,13 +205,12 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 	 * Evaluate the XQuery query using the s9api of Saxon
 	 * 
 	 * @param query
-	 * @param out
-	 *          output
-	 * @param vars
-	 *          list of external variables
+	 * @param out output
+	 * @param vars list of external variables
 	 */
-	public void evaluate(final String query, OutputStream out,
-			Map<String, String> vars) throws Exception {
+	public void evaluate(final String query,
+						 final OutputStream out,
+						 final Map<String, String> vars) throws Exception {
 
 		if (vars != null) {
 			xqueryExternalVars = vars;
@@ -238,7 +225,7 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 	 * 
 	 * @see org.deri.xquery.XQueryEvaluator#setOmitXMLDecl(boolean)
 	 */
-	public void setOmitXMLDecl(boolean xmloutput) {
+	public void setOmitXMLDecl(final boolean xmloutput) {
 		this.omitXMLDecl = xmloutput;
 
 	}
@@ -248,13 +235,10 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 	 * 
 	 * @see org.deri.xquery.XQueryEvaluator#applyOutputProperty()
 	 */
-	public void setOutputMethod(String outputMethod) {
+	public void setOutputMethod(final String outputMethod) {
 		serializer.setOutputProperty(Serializer.Property.METHOD, outputMethod);
 	}
 
-	/**
-	 * 
-	 */
 	private void initializeSerializer() {
 		serializer = new Serializer();
 		// can be xml, html, xhtml, or text.
@@ -264,12 +248,12 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 		serializer.setOutputProperty(Serializer.Property.INDENT, "yes");
 	}
 
-	public void evaluate(InputStream query, OutputStream out) throws Exception {
+	public void evaluate(final InputStream query, final OutputStream out) throws Exception {
 		evaluate(new BufferedReader(new InputStreamReader(query)),
 				new BufferedWriter(new OutputStreamWriter(out)));
 	}
 
-	public void evaluate(Reader query, Writer out) throws Exception {
+	public void evaluate(final Reader query, final Writer out) throws Exception {
 		serializer.setOutputWriter(out);
 
 		// create a new XQuery compiler, this should be able to be reused,
@@ -306,7 +290,5 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 		} catch (SaxonApiException e) {
 			throw new Exception(e.getMessage());
 		}
-
 	}
-
 }

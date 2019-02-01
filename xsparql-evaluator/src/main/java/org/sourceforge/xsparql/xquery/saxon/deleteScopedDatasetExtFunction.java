@@ -38,27 +38,19 @@
  */ 
 package org.sourceforge.xsparql.xquery.saxon;
 
-import net.sf.saxon.lib.*;
-
-import net.sf.saxon.om.*;
+import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.lib.ExtensionFunctionDefinition;
+import net.sf.saxon.om.Item;
+import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.trans.XPathException;
 
-//import net.sf.saxon.value.StringValue;
-
-/**
- * 
- * @author Nuno Lopes
- */
 public class deleteScopedDatasetExtFunction extends ExtensionFunctionDefinition {
 
   private static final long serialVersionUID = -3735327662234448340L;
 
-  /**
-   * Name of the function
-   * 
-   */
   private static StructuredQName funcname = new StructuredQName("_xsparql",
       "http://xsparql.deri.org/demo/xquery/xsparql.xquery",
       "deleteScopedDataset");

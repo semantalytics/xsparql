@@ -11,8 +11,8 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.sourceforge.xsparql.sparql.DatasetManager;
 
 public class InMemoryDatasetManager implements DatasetManager {
+
 	public static final InMemoryDatasetManager INSTANCE = new InMemoryDatasetManager();
-	
 	private Dataset inMemoryDataset;
 	private boolean emptyDataset;
 	
@@ -29,7 +29,7 @@ public class InMemoryDatasetManager implements DatasetManager {
 	}
 
 	@Override
-	public void setDataset(Set<URL> defaultGraph, Set<URL> namedGraphs) {
+	public void setDataset(final Set<URL> defaultGraph, final Set<URL> namedGraphs) {
 		Model dModel = ModelFactory.createDefaultModel();
 		if(defaultGraph!=null && defaultGraph.size()>0){
 			emptyDataset=false;

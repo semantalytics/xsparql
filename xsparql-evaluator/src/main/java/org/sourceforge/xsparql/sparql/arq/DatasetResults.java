@@ -47,36 +47,29 @@ import java.util.Stack;
 
 /**
  * class for datasets and results of datasets for the parser.
- * 
- * @author Nuno Lopes
- * 
  */
 public class DatasetResults {
 
-  private Dataset scopedDataset;
-  private Stack<ResultSetRewindable> scopedDatasetResults;
+  private final Dataset scopedDataset;
+  private final Stack<ResultSetRewindable> scopedDatasetResults;
 
   /**
    * Creates a new <code>DatasetResults</code> instance.
    * 
-   * @param ds
-   *          a <code>Dataset</code> value
+   * @param ds a <code>Dataset</code> value
    */
-  public DatasetResults(Dataset ds) {
+  public DatasetResults(final Dataset ds) {
     scopedDataset = ds;
-
     scopedDatasetResults = new Stack<ResultSetRewindable>();
-
   }
 
   /**
    * Converts a ResultSet into a ResultSetRewindable.
    * 
-   * @param rs
-   *          a <code>ResultSet</code> value
+   * @param rs a <code>ResultSet</code> value
    * @return a <code>ResultSetRewindable</code> value
    */
-  public ResultSetRewindable addResults(ResultSet rs) {
+  public ResultSetRewindable addResults(final ResultSet rs) {
     ResultSetRewindable res = ResultSetFactory.makeRewindable(rs);
     scopedDatasetResults.add(res);
 

@@ -53,10 +53,6 @@ import net.sf.saxon.om.*;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.trans.XPathException;
 
-/**
- * 
- * @author Nuno Lopes
- */
 public class sparqlScopedDatasetExtArqFunction extends scopedDatasetPopResultsExtFunction {
 	private static final long serialVersionUID = -796576654750929677L;
 

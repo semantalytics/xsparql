@@ -41,10 +41,6 @@ package org.sourceforge.xsparql.evaluator;
 
 import org.sourceforge.xsparql.xquery.XQueryEvaluator;
 
-/**
- * @author stefan
- * 
- */
 public enum XQueryEngine {
   SAXONHE(new org.sourceforge.xsparql.xquery.saxon.xqueryEvaluatorSaxon(false)), 
   SAXONEE(new org.sourceforge.xsparql.xquery.saxon.xqueryEvaluatorSaxon(true)), 
