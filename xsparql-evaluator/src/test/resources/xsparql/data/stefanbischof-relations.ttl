@@ -1,0 +1,9 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+
+[] foaf:name "Stefan";
+   foaf:homepage <http://stefanbischof.at/> ;
+   foaf:knows [foaf:name "Alice"] .
+
+[] foaf:name "Stefan";
+   foaf:homepage <http://www.stefandecker.org/> ;
+   foaf:knows [foaf:name "Bob"] .

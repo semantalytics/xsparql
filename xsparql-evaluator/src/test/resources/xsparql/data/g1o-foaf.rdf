@@ -1,0 +1,68 @@
+<rdf:RDF
+    xmlns:j.0="http://xmlns.com/foaf/0.1/"
+    xmlns:wot="http://xmlns.com/wot/0.1/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <j.0:PersonalProfileDocument>
+    <j.0:primaryTopic>
+      <j.0:Person rdf:about="http://g1o.net#me"
+         j.0:givenname="Giovanni"
+         j.0:family_name="Tummarello"
+         j.0:nick="Jccq"
+         j.0:title="Ph.D"
+         j.0:icqChatID="68832951">
+        <j.0:knows>
+          <j.0:Person
+             j.0:mbox="olmedilla@l3s.de">
+            <j.0:name>Daniel Olmedilla</j.0:name>
+            <j.0:mbox_sha1sum>50ba0a36e73aaf5aa86cd7e5cc809aa51bd0e5a7</j.0:mbox_sha1sum>
+          </j.0:Person>
+
+        </j.0:knows>
+        <j.0:knows>
+          <j.0:Person
+             j.0:mbox="jeen.broekstra@aduna.biz">
+            <j.0:name>Jeen Broekstra</j.0:name>
+            <j.0:mbox_sha1sum>18f3526f45d5f349a4ee8bf051aa58882a84b828</j.0:mbox_sha1sum>
+          </j.0:Person>
+        </j.0:knows>
+        <j.0:knows>
+          <j.0:Person rdf:about="http://richard.cyganiak.de/foaf.rdf#cygri">
+	   </j.0:Person>
+        </j.0:knows>
+	
+        <j.0:name>Giovanni Tummarello</j.0:name>
+        <j.0:homepage rdf:resource="http://g1o.net"/>
+        <j.0:phone>+353 87 3231282</j.0:phone>
+        <j.0:depiction rdf:resource="http://g1o.net/primopiano.JPG"/>
+        <j.0:mbox rdf:resource="mailto:giovanni@wup.it"/>
+        <j.0:interest rdf:resource="http://lirica.com"/>
+        <j.0:currentProject rdf:resource="http://dbin.org"/>
+        <j.0:currentProject rdf:resource="http://sindice.com"/>
+        <j.0:schoolHomepage rdf:resource="http://univpm.it"/>
+        <j.0:weblog rdf:resource="http://www.wup.it"/>
+        <j.0:workInfoHomepage rdf:resource="http://www.deri.ie/about/"/>
+        <j.0:workplaceHomepage rdf:resource="http://www.deri.ie"/>
+      </j.0:Person>
+    </j.0:primaryTopic>
+    <j.0:maker rdf:nodeID="A0"/>
+  </j.0:PersonalProfileDocument>
+  <j.0:Image rdf:about="http://g1o.net/albums/Idleing-in-downtown-Calgary/IMGP0055.sized.jpg">
+	<j.0:Depicts rdf:resource="http://eyaloren.org/foaf.rdf#me"/>
+  </j.0:Image>
+  <j.0:Image rdf:about="http://g1o.net/albums/Idleing-in-downtown-Calgary/IMGP0072.sized.jpg">
+	<j.0:Depicts rdf:resource="http://eyaloren.org/foaf.rdf#me"/>
+	<j.0:Depicts>
+		<j.0:Person>
+       	 <j.0:name>Axel Polleres</j.0:name>
+        	 <j.0:isPrimaryTopicOf rdf:resource="http://www.polleres.net"/>
+      		</j.0:Person>
+	</j.0:Depicts>
+  </j.0:Image>
+
+<wot:PubKey>
+ <wot:identify rdf:resource="http://g1o.net#me"/>
+ <wot:pubkeyAddress
+ rdf:resource="http://g1o.net/publickey.txt"/>
+</wot:PubKey>
+
+</rdf:RDF>

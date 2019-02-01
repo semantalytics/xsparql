@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="WP SIOC Plugin - v. 1.25 - http://rdfs.org/sioc/wordpress/" -->
+<rdf:RDF
+	xmlns="http://xmlns.com/foaf/0.1/"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:rss="http://purl.org/rss/1.0/"
+	xmlns:admin="http://webns.net/mvcb/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:sioc="http://rdfs.org/sioc/ns#">
+
+<!-- sioc_type = post -->
+
+<foaf:Document rdf:about="">
+	<dc:title>SIOC Post profile for "AI3:::Adaptive Information"</dc:title>
+	<dc:description>A SIOC profile describes the structure and contents of a weblog in a machine readable form. For more information please refer to http://sioc-project.org/.</dc:description>
+	<foaf:primaryTopic rdf:resource="http://www.mkbergman.com/2180/announcing-my-new-knowledge-representation-book/"/>
+	<admin:generatorAgent rdf:resource="http://rdfs.org/sioc/wp-sioc.php?version=1.25"/>
+</foaf:Document>
+
+<sioc:Post rdf:about="http://www.mkbergman.com/2180/announcing-my-new-knowledge-representation-book/">
+	<sioc:link rdf:resource="http://www.mkbergman.com/2180/announcing-my-new-knowledge-representation-book/"/>
+	<sioc:has_container rdf:resource="http://www.mkbergman.com/index.php?sioc_type=site#weblog"/>
+	<dc:title>Announcing My New Knowledge Representation Book</dc:title>
+	<sioc:has_creator>
+		<sioc:User rdf:about="http://www.mkbergman.com/author/mkb/" rdfs:label="Mike Bergman">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=user&amp;sioc_id=2"/>
+		</sioc:User>
+	</sioc:has_creator>
+	<foaf:maker>
+		<foaf:Person rdf:about="http://www.mkbergman.com/author/mkb/#foaf" rdfs:label="Mike Bergman">
+			<foaf:mbox_sha1sum>b6876bb3a1ddb7cb934f8a991366fcb8dd64a7e0</foaf:mbox_sha1sum>
+			<foaf:homepage rdf:resource="http://www.mkbergman.com"/>
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=user&amp;sioc_id=2"/>
+		</foaf:Person>
+	</foaf:maker>
+	<dcterms:created>2018-11-20T07:53:21Z</dcterms:created>
+	<sioc:content>Practical Guidance on How to Leverage Knowledge Graphs, Semantic Technologies, and KBpedia
+As readers of this blog well know, I am passionate on topics related to semantic technologies, knowledge graphs (ontologies), data structs, and artificial intelligence. Readers also probably know that I have found Charles S. Peirce, the 19th century American logician, scientist, and philosopher, to have remarkable insights on all aspects of knowledge representation. I'm proud to now announce my new book, A Knowledge Representation Practionary: Guidelines Based on Charles Sanders Peirce (Springer), that combines these viewpoints into a comprehensive whole. The 464 pp book is available for pre-order from Springer or from  Amazon (and others, I'm sure). Formal release is due the second week of December.
+Peirce's practical guidelines and universal categories provide a structured approach to knowledge representation that captures differences in events, entities, relations, attributes, types, and concepts. Besides the ability to capture meaning and context, this Peircean approach is also well-suited to machine learning and knowledge-based artificial intelligence (KBAI). Peirce is a founder of pragmatism, the uniquely American philosophy. We have already used this viewpoint to produce the KBpedia knowledge base and artifact, which we just released as open source. My book combines that viewpoint with the experience that Fred Giasson and I gained over the past decade with commercial clients in semantic and AI technologies. While KBpedia and the book stand on their own and do not depend on each other, they do reference one another, and those with serious interest may find it useful to keep KBpedia open as they progress through the book's chapters.
+I use the term practionary for the book — a decidedly new term — because the Peircean scholar Kelly Parker first  coined that term to capture Charles Perice's uniquely pragmatic way to fully explicate a particular domain of inquiry. In our case, of course, that domain is knowledge representation, which is shorthand for how to represent human symbolic information and knowledge to computers to solve complex questions. KR applications range from semantic technologies and knowledge management and machine learning to information integration, data interoperability, and natural language understanding. Knowledge representation is an essential foundation for knowledge-based AI. The practionary approach is a soup-to-nuts way to fully apprehend a given topic. To my knowledge, the book is the first attempt to put this Peircean method and framework into action.
+I structure the book into five parts, following Peirce's own approach. The first and last parts are bookends. The first bookend sets the context and background. The concluding bookend presents practical applications from following the guidelines. In between, the three main parts mirror Peirce's three universal categories, the meat of his approach. The first of these three addresses the terminologies and grammar of knowledge representation. The next discusses the actual components or building blocks for KR systems. And the third provides what generalities we may derive about how to design, build, test, and follow best practices in putting a system together. Throughout, the book refers to and leverages the open source KBpedia knowledge graph and its public knowledge bases, including Wikipedia and Wikidata. Actual practitioners may find KBpedia, built from the ground up on these Peircean principles, a ready baseline to build their own domain knowledge graph and applications.
+Here are the parts and chapters of the book:
+
+
+
+ 
+
+
+
+Preface
+vii
+
+
+ 1. Introduction
+1
+
+
+
+Structure of the Book
+2
+
+
+
+Overview of Contents
+3
+
+
+
+Key Themes
+10
+
+
+ 2. Information, Knowledge, Representation
+15
+
+
+
+What is Information?
+16
+
+
+
+What is Knowledge?
+27
+
+
+
+What is Representation?
+33
+
+
+Part I: Knowledge Representation in Context
+
+
+ 3. The Situation
+45
+
+
+
+Information and Economic Wealth
+46
+
+
+
+Untapped Information Assets
+54
+
+
+
+Impediments to Information Sharing
+61
+
+
+ 4. The Opportunity
+65
+
+
+
+KM and A Spectrum of Applications
+66
+
+
+
+Data Interoperability
+69
+
+
+
+Knowledge-based Artificial Intelligence
+74
+
+
+ 5. The Precepts
+85
+
+
+
+Equal Class Data Citizens
+86
+
+
+
+Addressing Semantic Heterogeneity
+91
+
+
+
+Carving Nature at the Joints
+97
+
+
+Part II: A Grammar for Knowledge Representation
+
+
+ 6. The Universal Categories
+107
+
+
+
+A Foundational Mindset
+108
+
+
+
+Firstness, Secondness, Thirdness
+112
+
+
+
+The Lens of the Universal Categories
+116
+
+
+ 7. A KR Terminology
+129
+
+
+
+Things of the World
+131
+
+
+
+Hierarchies in Knowledge Representation
+135
+
+
+
+A Three-Relations Model
+143
+
+
+ 8. KR Vocabulary and Languages
+151
+
+
+
+Logical Considerations
+153
+
+
+
+Pragmatic Model and Language Choices
+163
+
+
+
+The KBpedia Vocabulary
+167
+
+
+Part III: Components of Knowledge Representation
+
+
+ 9. Keeping the Design Open
+183
+
+
+
+The Context of Openness
+184
+
+
+
+Information Management Concepts
+193
+
+
+
+Taming a Bestiary of Data Structs
+200
+
+
+10. Modular, Expandable Typologies
+207
+
+
+
+Types as Organizing Constructs
+208
+
+
+
+A Flexible Typology Design
+215
+
+
+
+KBpedia’s Typologies
+219
+
+
+11. Knowledge Graphs and Bases
+227
+
+
+
+Graphs and Connectivity
+228
+
+
+
+Upper, Domain and Administrative Ontologies
+237
+
+
+
+KBpedia’s Knowledge Bases
+242
+
+
+Part IV: Building KR Systems
+
+
+12. Platforms and Knowledge Management
+251
+
+
+
+Uses and Work Splits
+252
+
+
+
+Platform Considerations
+262
+
+
+
+A Web-oriented Architecture
+268
+
+
+13. Building Out The System
+273
+
+
+
+Tailoring for Domain Uses
+274
+
+
+
+Mapping Schema and Knowledge Bases
+280
+
+
+
+‘Pay as You Benefit’
+291
+
+
+14. Testing and Best Practices
+295
+
+
+
+A Primer on Knowledge Statistics
+296
+
+
+
+Builds and Testing
+304
+
+
+
+Some Best Practices
+309
+
+
+Part V: Practical Potentials and Outcomes
+
+
+15. Potential Uses in Breadth
+319
+
+
+
+Near-term Potentials
+320
+
+
+
+Logic and Representation
+327
+
+
+
+Potential Methods and Applications
+332
+
+
+16. Potential Uses in Depth
+343
+
+
+
+Workflows and BPM
+343
+
+
+
+Semantic Parsing
+349
+
+
+
+Cognitive Robotics and Agents
+361
+
+
+17. Conclusion
+371
+
+
+
+The Sign and Information Theoretics
+372
+
+
+
+Peirce: The Philosopher of KR
+373
+
+
+
+Reasons to Question Premises
+377
+
+
+
+
+
+
+
+Appendix A: Perspectives on Peirce
+381
+
+
+
+
+
+
+
+Appendix B: The KBpedia Resource
+409
+
+
+
+
+
+
+
+Appendix C: KBpedia Feature Possibilities
+421
+
+
+
+
+
+
+
+Glossary
+435
+
+
+Index
+451
+
+
+
+
+My intent is to produce a book of enduring, practical guidelines for how to think about KR and to design knowledge management (KM) systems. I emphasize how-to guidance and ways to think about KR problems. The audience in my mind are enterprise information and knowledge managers who are contemplating a new knowledge initiative. However, early reviewers have told me the basics are useful to students and researchers at all levels.
+I am not even-handed in this book. My explicit purpose is to offer a fresh viewpoint on KR as informed by Peirce and our experience in building systems. For more balanced treatments, I recommend the excellent reference texts by van Harmelan et al. or Brachman and Levesque. Still, for those looking at the practical side of things, I hope this book may become an essential addition to theory and practice for KR and semantic technology. Peirce has a profound understanding of meaning and context that I believe is of benefit to knowledge management practitioners and AI researchers alike.
+Individuals with a Springer subscription may get a softcover copy of the e-book for $24.99 under  Springer's MyCopy program. The standard e-book is available for $129 and hardcover copies are available for $169; see the standard Springer order site. Students or individuals without Springer subscriptions who can not afford these prices should contact me directly for possible alternatives.</sioc:content>
+	<content:encoded><![CDATA[<span class="Z3988" title="ctx_ver=Z39.88-2004&#38;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&#38;rfr_id=info%3Asid%2Focoins.info%3Agenerator&#38;rft.type=&#38;rft.format=text&#38;rft.title=Announcing My New Knowledge Representation Book&#38;rft.source=AI3:::Adaptive Information&#38;rft.date=2018-11-20&#38;rft.identifier=http://www.mkbergman.com/?p=2180&#38;rft.language=English&#38;rft.subject=Book Reviews&#38;rft.subject=Charles Sanders Peirce&#38;rft.subject=KBpedia&#38;rft.subject=Knowledge-based Artificial Intelligence&#38;rft.subject=Peircean Principles&#38;rft.au=Michael K. Bergman"></span><h2><a href="https://www.springer.com/us/book/9783319980911"><img title="A Knowledge Representation Practionary" alt="A Knowledge Representation Practionary" src="http://www.mkbergman.com/wp-content/themes/ai3v2/images/krp-full.jpg" style="border: 0px solid; width: 360px; margin-right: 10px;" align="left" /></a>Practical Guidance on How to Leverage Knowledge Graphs, Semantic Technologies, and KBpedia</h2>
+<p>As readers of this blog well know, I am passionate on topics related to semantic technologies, knowledge graphs (ontologies), data structs, and artificial intelligence. Readers also probably know that I have found <a href="https://en.wikipedia.org/wiki/Charles_Sanders_Peirce">Charles S. Peirce</a>, the 19th century American logician, scientist, and philosopher, to have remarkable insights on all aspects of <a href="https://en.wikipedia.org/wiki/Knowledge_representation_and_reasoning">knowledge representation</a>. I&#8217;m proud to now announce my new book, <em><a href="https://www.springer.com/us/book/9783319980911">A</a> <a href="https://www.springer.com/us/book/9783319980911">Knowledge Representation Practionary: Guidelines Based on Charles Sanders Peirce</a></em> (Springer), that combines these viewpoints into a comprehensive whole. The 464 pp book is available for <a href="https://www.springer.com/us/book/9783319980911">pre-order from Springer</a> or from <a href="https://www.amazon.com/Knowledge-Representation-Practionary-Guidelines-Charles/dp/3319980912/"> Amazon</a> (and others, I&#8217;m sure). Formal release is due the second week of December.</p>
+<p>Peirce&#8217;s practical guidelines and universal categories provide a structured approach to knowledge representation that captures differences in events, entities, relations, attributes, types, and concepts. Besides the ability to capture meaning and context, this Peircean approach is also well-suited to machine learning and knowledge-based artificial intelligence (<a href="http://www.mkbergman.com/category/kbai/">KBAI</a>). Peirce is a founder of <a href="https://en.wikipedia.org/wiki/Pragmatism">pragmatism</a>, the uniquely American philosophy. We have already used this viewpoint to produce the <a href="http://kbpedia.org/">KBpedia knowledge base and artifact</a>, which we <a href="http://www.mkbergman.com/2168/woohoo-kbpedia-is-now-open-source/">just released as open source</a>. My book combines that viewpoint with the experience that <a href="http://fgiasson.com/">Fred Giasson</a> and I gained over the past decade with commercial clients in semantic and AI technologies. While KBpedia and the book stand on their own and do not depend on each other, they do reference one another, and those with serious interest may find it useful to keep KBpedia open as they progress through the book&#8217;s chapters.</p>
+<p>I use the term <em>practionary</em> for the book — a decidedly new term — because the Peircean scholar Kelly Parker first <a href="https://www.amazon.com/Continuity-Peirces-Vanderbilt-American-Philosophy/dp/0826512968"> coined that term</a> to capture Charles Perice&#8217;s uniquely pragmatic way to fully explicate a particular domain of inquiry. In our case, of course, that domain is <em>knowledge representation</em>, which is shorthand for how to represent human symbolic information and knowledge to computers to solve complex questions. KR applications range from semantic technologies and knowledge management and machine learning to information integration, data interoperability, and natural language understanding. Knowledge representation is an essential foundation for knowledge-based AI. The <em>practionary</em> approach is a soup-to-nuts way to fully apprehend a given topic. To my knowledge, the book is the first attempt to put this Peircean method and framework into action.</p>
+<p>I structure the book into five parts, following Peirce&#8217;s own approach. The first and last parts are bookends. The first bookend sets the context and background. The concluding bookend presents practical applications from following the guidelines. In between, the three main parts mirror Peirce&#8217;s three universal categories, the meat of his approach. The first of these three addresses the terminologies and grammar of knowledge representation. The next discusses the actual components or building blocks for KR systems. And the third provides what generalities we may derive about how to design, build, test, and follow best practices in putting a system together. Throughout, the book refers to and leverages the open source KBpedia knowledge graph and its public knowledge bases, including Wikipedia and Wikidata. Actual practitioners may find KBpedia, built from the ground up on these Peircean principles, a ready baseline to build their own domain knowledge graph and applications.</p>
+<p>Here are the parts and chapters of the book:</p>
+<p><center></p>
+<table style="width: 660px;" cellspacing="0" border="0">
+<colgroup width="40"></colgroup>
+<colgroup width="540"></colgroup>
+<tbody>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;"><i>Preface</i></td>
+<td style="padding: 2px; text-align: right;">vii</td>
+</tr>
+<tr>
+<td colspan="2" rowspan="1" style="padding: 2px; text-align: left;"> 1. Introduction</td>
+<td style="padding: 2px; text-align: right;" sdval="1" sdnum="1033;">1</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Structure of the Book</td>
+<td style="padding: 2px; text-align: right;" sdval="2" sdnum="1033;">2</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Overview of Contents</td>
+<td style="padding: 2px; text-align: right;" sdval="3" sdnum="1033;">3</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Key Themes</td>
+<td style="padding: 2px; text-align: right;" sdval="10" sdnum="1033;">10</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;"> 2. Information, Knowledge, Representation</td>
+<td style="padding: 2px; text-align: right;" sdval="15" sdnum="1033;">15</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">What is Information?</td>
+<td style="padding: 2px; text-align: right;" sdval="16" sdnum="1033;">16</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">What is Knowledge?</td>
+<td style="padding: 2px; text-align: right;" sdval="27" sdnum="1033;">27</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">What is Representation?</td>
+<td style="padding: 2px; text-align: right;" sdval="33" sdnum="1033;">33</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: center;" colspan="3" valign="middle"><b>Part I: Knowledge Representation in Context</b></td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;"> 3. The Situation</td>
+<td style="padding: 2px; text-align: right;" sdval="45" sdnum="1033;">45</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Information and Economic Wealth</td>
+<td style="padding: 2px; text-align: right;" sdval="46" sdnum="1033;">46</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Untapped Information Assets</td>
+<td style="padding: 2px; text-align: right;" sdval="54" sdnum="1033;">54</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Impediments to Information Sharing</td>
+<td style="padding: 2px; text-align: right;" sdval="61" sdnum="1033;">61</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;"> 4. The Opportunity</td>
+<td style="padding: 2px; text-align: right;" sdval="65" sdnum="1033;">65</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">KM and A Spectrum of Applications</td>
+<td style="padding: 2px; text-align: right;" sdval="66" sdnum="1033;">66</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Data Interoperability</td>
+<td style="padding: 2px; text-align: right;" sdval="69" sdnum="1033;">69</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Knowledge-based Artificial Intelligence</td>
+<td style="padding: 2px; text-align: right;" sdval="74" sdnum="1033;">74</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;"> 5. The Precepts</td>
+<td style="padding: 2px; text-align: right;" sdval="85" sdnum="1033;">85</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Equal Class Data Citizens</td>
+<td style="padding: 2px; text-align: right;" sdval="86" sdnum="1033;">86</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Addressing Semantic Heterogeneity</td>
+<td style="padding: 2px; text-align: right;" sdval="91" sdnum="1033;">91</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Carving Nature at the Joints</td>
+<td style="padding: 2px; text-align: right;" sdval="97" sdnum="1033;">97</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: center;" colspan="3" valign="middle"><b>Part II: A Grammar for Knowledge Representation</b></td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;"> 6. The Universal Categories</td>
+<td style="padding: 2px; text-align: right;" sdval="107" sdnum="1033;">107</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">A Foundational Mindset</td>
+<td style="padding: 2px; text-align: right;" sdval="108" sdnum="1033;">108</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Firstness, Secondness, Thirdness</td>
+<td style="padding: 2px; text-align: right;" sdval="112" sdnum="1033;">112</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">The Lens of the Universal Categories</td>
+<td style="padding: 2px; text-align: right;" sdval="116" sdnum="1033;">116</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;"> 7. A KR Terminology</td>
+<td style="padding: 2px; text-align: right;" sdval="129" sdnum="1033;">129</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Things of the World</td>
+<td style="padding: 2px; text-align: right;" sdval="131" sdnum="1033;">131</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Hierarchies in Knowledge Representation</td>
+<td style="padding: 2px; text-align: right;" sdval="135" sdnum="1033;">135</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">A Three-Relations Model</td>
+<td style="padding: 2px; text-align: right;" sdval="143" sdnum="1033;">143</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;"> 8. KR Vocabulary and Languages</td>
+<td style="padding: 2px; text-align: right;" sdval="151" sdnum="1033;">151</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Logical Considerations</td>
+<td style="padding: 2px; text-align: right;" sdval="153" sdnum="1033;">153</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Pragmatic Model and Language Choices</td>
+<td style="padding: 2px; text-align: right;" sdval="163" sdnum="1033;">163</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">The KBpedia Vocabulary</td>
+<td style="padding: 2px; text-align: right;" sdval="167" sdnum="1033;">167</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: center;" colspan="3" valign="middle"><b>Part III: Components of Knowledge Representation</b></td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;"> 9. Keeping the Design Open</td>
+<td style="padding: 2px; text-align: right;" sdval="183" sdnum="1033;">183</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">The Context of Openness</td>
+<td style="padding: 2px; text-align: right;" sdval="184" sdnum="1033;">184</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Information Management Concepts</td>
+<td style="padding: 2px; text-align: right;" sdval="193" sdnum="1033;">193</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Taming a Bestiary of Data Structs</td>
+<td style="padding: 2px; text-align: right;" sdval="200" sdnum="1033;">200</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">10. Modular, Expandable Typologies</td>
+<td style="padding: 2px; text-align: right;" sdval="207" sdnum="1033;">207</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Types as Organizing Constructs</td>
+<td style="padding: 2px; text-align: right;" sdval="208" sdnum="1033;">208</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">A Flexible Typology Design</td>
+<td style="padding: 2px; text-align: right;" sdval="215" sdnum="1033;">215</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">KBpedia’s Typologies</td>
+<td style="padding: 2px; text-align: right;" sdval="219" sdnum="1033;">219</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">11. Knowledge Graphs and Bases</td>
+<td style="padding: 2px; text-align: right;" sdval="227" sdnum="1033;">227</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Graphs and Connectivity</td>
+<td style="padding: 2px; text-align: right;" sdval="228" sdnum="1033;">228</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Upper, Domain and Administrative Ontologies</td>
+<td style="padding: 2px; text-align: right;" sdval="237" sdnum="1033;">237</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">KBpedia’s Knowledge Bases</td>
+<td style="padding: 2px; text-align: right;" sdval="242" sdnum="1033;">242</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: center;" colspan="3" valign="middle"><b>Part IV: Building KR Systems</b></td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">12. Platforms and Knowledge Management</td>
+<td style="padding: 2px; text-align: right;" sdval="251" sdnum="1033;">251</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Uses and Work Splits</td>
+<td style="padding: 2px; text-align: right;" sdval="252" sdnum="1033;">252</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Platform Considerations</td>
+<td style="padding: 2px; text-align: right;" sdval="262" sdnum="1033;">262</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">A Web-oriented Architecture</td>
+<td style="padding: 2px; text-align: right;" sdval="268" sdnum="1033;">268</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">13. Building Out The System</td>
+<td style="padding: 2px; text-align: right;" sdval="273" sdnum="1033;">273</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Tailoring for Domain Uses</td>
+<td style="padding: 2px; text-align: right;" sdval="274" sdnum="1033;">274</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Mapping Schema and Knowledge Bases</td>
+<td style="padding: 2px; text-align: right;" sdval="280" sdnum="1033;">280</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">‘Pay as You Benefit’</td>
+<td style="padding: 2px; text-align: right;" sdval="291" sdnum="1033;">291</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">14. Testing and Best Practices</td>
+<td style="padding: 2px; text-align: right;" sdval="295" sdnum="1033;">295</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">A Primer on Knowledge Statistics</td>
+<td style="padding: 2px; text-align: right;" sdval="296" sdnum="1033;">296</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Builds and Testing</td>
+<td style="padding: 2px; text-align: right;" sdval="304" sdnum="1033;">304</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Some Best Practices</td>
+<td style="padding: 2px; text-align: right;" sdval="309" sdnum="1033;">309</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: center;" colspan="3" valign="middle"><b>Part V: Practical Potentials and Outcomes</b></td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">15. Potential Uses in Breadth</td>
+<td style="padding: 2px; text-align: right;" sdval="319" sdnum="1033;">319</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Near-term Potentials</td>
+<td style="padding: 2px; text-align: right;" sdval="320" sdnum="1033;">320</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Logic and Representation</td>
+<td style="padding: 2px; text-align: right;" sdval="327" sdnum="1033;">327</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Potential Methods and Applications</td>
+<td style="padding: 2px; text-align: right;" sdval="332" sdnum="1033;">332</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">16. Potential Uses in Depth</td>
+<td style="padding: 2px; text-align: right;" sdval="343" sdnum="1033;">343</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Workflows and BPM</td>
+<td style="padding: 2px; text-align: right;" sdval="343" sdnum="1033;">343</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Semantic Parsing</td>
+<td style="padding: 2px; text-align: right;" sdval="349" sdnum="1033;">349</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Cognitive Robotics and Agents</td>
+<td style="padding: 2px; text-align: right;" sdval="361" sdnum="1033;">361</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">17. Conclusion</td>
+<td style="padding: 2px; text-align: right;" sdval="371" sdnum="1033;">371</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">The Sign and Information Theoretics</td>
+<td style="padding: 2px; text-align: right;" sdval="372" sdnum="1033;">372</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Peirce: The Philosopher of KR</td>
+<td style="padding: 2px; text-align: right;" sdval="373" sdnum="1033;">373</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;">Reasons to Question Premises</td>
+<td style="padding: 2px; text-align: right;" sdval="377" sdnum="1033;">377</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: right;"></td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">Appendix A: Perspectives on Peirce</td>
+<td style="padding: 2px; text-align: right;" sdval="381" sdnum="1033;">381</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: right;"></td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">Appendix B: The KBpedia Resource</td>
+<td style="padding: 2px; text-align: right;" sdval="409" sdnum="1033;">409</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: right;"></td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">Appendix C: KBpedia Feature Possibilities</td>
+<td style="padding: 2px; text-align: right;" sdval="421" sdnum="1033;">421</td>
+</tr>
+<tr>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: left;"></td>
+<td style="padding: 2px; text-align: right;"></td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">Glossary</td>
+<td style="padding: 2px; text-align: right;" sdval="435" sdnum="1033;">435</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 2px; text-align: left;">Index</td>
+<td style="padding: 2px; text-align: right;" sdval="451" sdnum="1033;">451</td>
+</tr>
+</tbody>
+</table>
+<p></center></p>
+<p>My intent is to produce a book of enduring, practical guidelines for how to think about KR and to design knowledge management (KM) systems. I emphasize how-to guidance and ways to think about KR problems. The audience in my mind are enterprise information and knowledge managers who are contemplating a new knowledge initiative. However, early reviewers have told me the basics are useful to students and researchers at all levels.</p>
+<p>I am not even-handed in this book. My explicit purpose is to offer a fresh viewpoint on KR as informed by Peirce and our experience in building systems. For more balanced treatments, I recommend the excellent reference texts by <a href="https://dai.fmph.uniba.sk/~sefranek/kri/handbook/handbook_of_kr.pdf">van Harmelan <em>et al.</em></a> or <a href="https://www.elsevier.com/books/knowledge-representation-and-reasoning/brachman/978-1-55860-932-7">Brachman and Levesque</a>. Still, for those looking at the practical side of things, I hope this book may become an essential addition to theory and practice for KR and semantic technology. Peirce has a profound understanding of meaning and context that I believe is of benefit to knowledge management practitioners and AI researchers alike.</p>
+<p>Individuals with a Springer subscription may get a softcover copy of the e-book for $24.99 under <a href="https://www.springer.com/gp/authors-editors/book-authors-editors/author-services/your-book-in-all-formats/ebooks-go-in-print-mycopy/19882"> Springer&#8217;s MyCopy program</a>. The standard e-book is available for $129 and hardcover copies are available for $169; see the standard <a href="https://www.springer.com/us/book/9783319980911">Springer order site</a>. Students or individuals without Springer subscriptions who can not afford these prices should contact <a href="mailto:mailto:mike@mkbergman.com">me directly</a> for possible alternatives.</p>
+]]></content:encoded>
+	<sioc:topic rdfs:label="Book Reviews" rdf:resource="http://www.mkbergman.com/category/book-reviews/"/>
+	<sioc:topic rdfs:label="Charles Sanders Peirce" rdf:resource="http://www.mkbergman.com/category/c-s-peirce/"/>
+	<sioc:topic rdfs:label="KBpedia" rdf:resource="http://www.mkbergman.com/category/kbpedia/"/>
+	<sioc:topic rdfs:label="Knowledge-based Artificial Intelligence" rdf:resource="http://www.mkbergman.com/category/kbai/"/>
+	<sioc:topic rdfs:label="Peircean Principles" rdf:resource="http://www.mkbergman.com/category/peircean-principles/"/>
+	<sioc:has_reply>
+		<sioc:Post rdf:about="http://www.mkbergman.com/2180/announcing-my-new-knowledge-representation-book/#comment-507395">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=comment&amp;sioc_id=507395"/>
+		</sioc:Post>
+	</sioc:has_reply>
+	<sioc:has_reply>
+		<sioc:Post rdf:about="http://www.mkbergman.com/2180/announcing-my-new-knowledge-representation-book/#comment-507396">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=comment&amp;sioc_id=507396"/>
+		</sioc:Post>
+	</sioc:has_reply>
+	<sioc:has_reply>
+		<sioc:Post rdf:about="http://www.mkbergman.com/2180/announcing-my-new-knowledge-representation-book/#comment-507397">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=comment&amp;sioc_id=507397"/>
+		</sioc:Post>
+	</sioc:has_reply>
+	<sioc:has_reply>
+		<sioc:Post rdf:about="http://www.mkbergman.com/2180/announcing-my-new-knowledge-representation-book/#comment-507398">
+			<rdfs:seeAlso rdf:resource="http://www.mkbergman.com/index.php?sioc_type=comment&amp;sioc_id=507398"/>
+		</sioc:Post>
+	</sioc:has_reply>
+	<sioc:links_to rdf:resource="https://www.springer.com/us/book/9783319980911" rdfs:label="&#060;img title=&#034;A Knowledge Representation Practionary&#034; alt=&#034;A Knowledge Representation Practionary&#034; src=&#034;http://www.mkbergman.com/wp-content/themes/ai3v2/images/krp-full.jpg&#034; style=&#034;border: 0px solid; width: 360px; margin-right: 10px;&#034; align=&#034;left&#034; /&#062;"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Charles_Sanders_Peirce" rdfs:label="Charles S. Peirce"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Knowledge_representation_and_reasoning" rdfs:label="knowledge representation"/>
+	<sioc:links_to rdf:resource="https://www.springer.com/us/book/9783319980911" rdfs:label="A"/>
+	<sioc:links_to rdf:resource="https://www.springer.com/us/book/9783319980911" rdfs:label="Knowledge Representation Practionary: Guidelines Based on Charles Sanders Peirce"/>
+	<sioc:links_to rdf:resource="https://www.springer.com/us/book/9783319980911" rdfs:label="pre-order from Springer"/>
+	<sioc:links_to rdf:resource="https://www.amazon.com/Knowledge-Representation-Practionary-Guidelines-Charles/dp/3319980912/" rdfs:label="Amazon"/>
+	<sioc:links_to rdf:resource="http://www.mkbergman.com/category/kbai/" rdfs:label="KBAI"/>
+	<sioc:links_to rdf:resource="https://en.wikipedia.org/wiki/Pragmatism" rdfs:label="pragmatism"/>
+	<sioc:links_to rdf:resource="http://kbpedia.org/" rdfs:label="KBpedia knowledge base and artifact"/>
+	<sioc:links_to rdf:resource="http://www.mkbergman.com/2168/woohoo-kbpedia-is-now-open-source/" rdfs:label="just released as open source"/>
+	<sioc:links_to rdf:resource="http://fgiasson.com/" rdfs:label="Fred Giasson"/>
+	<sioc:links_to rdf:resource="https://www.amazon.com/Continuity-Peirces-Vanderbilt-American-Philosophy/dp/0826512968" rdfs:label="coined that term"/>
+	<sioc:links_to rdf:resource="https://dai.fmph.uniba.sk/~sefranek/kri/handbook/handbook_of_kr.pdf" rdfs:label="van Harmelan &#060;em&#062;et al.&#060;/em&#062;"/>
+	<sioc:links_to rdf:resource="https://www.elsevier.com/books/knowledge-representation-and-reasoning/brachman/978-1-55860-932-7" rdfs:label="Brachman and Levesque"/>
+	<sioc:links_to rdf:resource="https://www.springer.com/gp/authors-editors/book-authors-editors/author-services/your-book-in-all-formats/ebooks-go-in-print-mycopy/19882" rdfs:label="Springer&#039;s MyCopy program"/>
+	<sioc:links_to rdf:resource="https://www.springer.com/us/book/9783319980911" rdfs:label="Springer order site"/>
+	<sioc:links_to rdf:resource="mailto:mailto:mike@mkbergman.com" rdfs:label="me directly"/>
+</sioc:Post>
+
+</rdf:RDF>

@@ -1,0 +1,93 @@
+<rdf:RDF
+
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#"
+	xmlns:air="http://www.daml.org/2001/10/html/airport-ont#"
+	xmlns:wn="http://xmlns.com/wordnet/1.6/" xmlns:foaf="http://xmlns.com/foaf/0.1/">
+      
+
+	<foaf:Person rdf:about="http://sw.deri.org/~haller/foaf.rdf#ah">
+		<rdfs:seeAlso rdf:resource="http://sw.deri.org/~haller/foaf.rdf"/>
+		<foaf:name>Armin Haller</foaf:name>
+		<foaf:firstName>Armin</foaf:firstName>
+		<foaf:surname>Haller</foaf:surname>
+		<foaf:mbox_sha1sum>27b6f733669bacbba6b48416209196c68f1f2944</foaf:mbox_sha1sum>
+		<foaf:homepage rdf:resource="http://www.armin-haller.com"/>
+		<foaf:homepage rdf:resource="http://www.deri.ie/about/team/member/armin_haller"/>
+		<foaf:depiction rdf:resource="http://sw.deri.org/~haller/images/me.gif"/>
+		<foaf:phone rdf:resource="tel:+353-91-512-660"/>
+		<foaf:workplaceHomepage rdf:resource="http://www.deri.ie/"/>
+		<foaf:openid rdf:resource="http://tuttogaz.myopenid.com/"/>
+        
+		<contact:nearestAirport>
+			<wn:Airport>
+	          	  	<air:name>Galway Airport</air:name>
+	          	  	<air:iataCode>GWY</air:iataCode>
+				<air:icaoCode>EICM</air:icaoCode>
+				<air:sameIndividualAs rdf:resource="http://www.daml.org/cgi-bin/airport?BGM"/>
+				<air:location>Galway, Galway, Ireland</air:location>
+				<air:latitude>53.3016666</air:latitude>
+				<air:longitude>-8.9375</air:longitude>
+				<air:elevation>813</air:elevation>
+			</wn:Airport>
+		</contact:nearestAirport>
+	
+		<foaf:knows>
+			<foaf:Person rdf:about="http://harth.org/andreas/foaf#ah">
+				<foaf:name>Andreas Harth</foaf:name>
+				<rdfs:seeAlso rdf:resource="http://sw.deri.ie/~aharth/foaf.rdf"/>
+			</foaf:Person>
+	        </foaf:knows>
+		<foaf:knows>
+			<foaf:Person>
+				<foaf:name>Brahmananda Sapkota</foaf:name>
+				<foaf:mbox rdf:resource="mailto:bnsapkota@gmail.com"/>
+				<rdfs:seeAlso rdf:resource="http://sw.deri.org/~bnsapkota/foaf.rdf"/>
+				<foaf:depiction rdf:resource="http://sw.deri.org/~bnsapkota/np/pictures/DSC00108.JPG"/>
+			</foaf:Person>
+		</foaf:knows>
+		<foaf:knows>
+			<foaf:Person rdf:about="http://m3pe.org/~eyal/foaf.rdf#me">
+				<foaf:name>Eyal Oren</foaf:name>
+				<foaf:mbox rdf:resource="mailto:eyal.oren@deri.org"/>
+				<rdfs:seeAlso rdf:resource="http://sw.deri.org/~eyal/foaf.rdf"/>
+			</foaf:Person>
+		</foaf:knows>
+		<foaf:knows>
+			<foaf:Person rdf:about="http://sw.deri.org/~knud/">
+				<foaf:name>Knud Moeller</foaf:name>
+				<rdfs:seeAlso rdf:resource="http://sw.deri.org/~knud/knudfoaf.rdf"/>
+			</foaf:Person>
+		</foaf:knows>
+		<foaf:knows>
+			<foaf:Person>
+				<foaf:name>Simeon Petkov</foaf:name>
+				<foaf:mbox rdf:resource="mailto:simeon.petkov@deri.org"/>
+				<rdfs:seeAlso rdf:resource="http://stud3.tuwien.ac.at/~e9925150/foaf.rdf"/>
+			</foaf:Person>
+		</foaf:knows>
+		<foaf:knows>
+			<foaf:Person>
+				<foaf:name>Stefan Decker</foaf:name>
+				<foaf:mbox rdf:resource="mailto:stefan.decker@deri.org"/>
+				<rdfs:seeAlso rdf:resource="http://www.isi.edu/~stefan/foaf.rdf"/>
+			</foaf:Person>
+		</foaf:knows>
+		<foaf:knows>
+			<foaf:Person>
+				<foaf:name>Dieter Fensel</foaf:name>
+				<foaf:mbox rdf:resource="mailto:dieter.fensel@deri.org"/>
+				<foaf:depiction rdf:resource="http://www.fensel.com/dieter.jpg"/>
+			</foaf:Person>
+		</foaf:knows>
+		<foaf:knows>
+			<foaf:Person>
+				<foaf:name>Michael Genesereth</foaf:name>
+				<foaf:mbox rdf:resource="mailto:genesereth@cs.stanford.edu"/>
+				<foaf:depiction rdf:resource="http://forum.stanford.edu/graphics/photo/4004"/>
+			</foaf:Person>
+		</foaf:knows>
+
+	</foaf:Person>
+</rdf:RDF>

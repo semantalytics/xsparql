@@ -1,0 +1,212 @@
+<rdf:RDF
+    xmlns:admin="http://webns.net/mvcb/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  <foaf:PersonalProfileDocument rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2084.rdf">
+    <foaf:primaryTopic>
+      <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2084instance">
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id64instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_64.rdf"/>
+            <foaf:mbox_sha1sum>84f34f56ead40a2a96aaec4150542e5e66b6a6ee</foaf:mbox_sha1sum>
+            <foaf:name>Gisela Schillinger</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2132instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2132.rdf"/>
+            <foaf:mbox_sha1sum>670f3116e7d2ccc3a75c35c2c0dfa98ed21591e9</foaf:mbox_sha1sum>
+            <foaf:name>Yimin Wang</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:workplaceHomepage rdf:resource="http://www.aifb.uni-karlsruhe.de/Forschungsgruppen/WBS"/>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id80instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_80.rdf"/>
+            <foaf:mbox_sha1sum>488158951bf1f1d3ebd84d349ff4f2efd9ea2c7d</foaf:mbox_sha1sum>
+            <foaf:name>Marc Ehrig</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2147instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2147.rdf"/>
+            <foaf:mbox_sha1sum>9cdaa286e9c5925f4062331ff35bc69139a80631</foaf:mbox_sha1sum>
+            <foaf:name>Tuvshintur Tserendorj</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2139instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2139.rdf"/>
+            <foaf:mbox_sha1sum>9feecc02a7d8f58e14454e5f612430c9d6fef44c</foaf:mbox_sha1sum>
+            <foaf:name>Sebastian Rudolph</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id98instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_98.rdf"/>
+            <foaf:mbox_sha1sum>608010f61b71bcb7c3131dc3422d2769f491685e</foaf:mbox_sha1sum>
+            <foaf:name>Philipp Cimiano</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:family_name>Hitzler</foaf:family_name>
+        <foaf:title>Dr. habil.</foaf:title>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2078instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2078.rdf"/>
+            <foaf:mbox_sha1sum>ef01be026f1f5c36c2a5e4117e36d7632ad48f05</foaf:mbox_sha1sum>
+            <foaf:name>Steffen Lamparter</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id90instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_90.rdf"/>
+            <foaf:mbox_sha1sum>73e4b2ce39a7430abc4211f31fafcd3606d2c13a</foaf:mbox_sha1sum>
+            <foaf:name>Jens Hartmann</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2079instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2079.rdf"/>
+            <foaf:mbox_sha1sum>14a7cd7edc9363f8c14297cc3a580dbf58f5f306</foaf:mbox_sha1sum>
+            <foaf:name>Stephan Bloehdorn</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:depiction rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/Bilder/U1p2l3o4a5d2084"/>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2107instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2107.rdf"/>
+            <foaf:mbox_sha1sum>5fdb4cd3e8fa4a7c46f4c80c61dacdbe3936c94e</foaf:mbox_sha1sum>
+            <foaf:name>Markus Krötzsch</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2145instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2145.rdf"/>
+            <foaf:mbox_sha1sum>341135ecce60617686f8165887968d4be8df3438</foaf:mbox_sha1sum>
+            <foaf:name>Anna-Maria Eberhardt</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2133instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2133.rdf"/>
+            <foaf:mbox_sha1sum>75f27bef0303136acf50dfb089affced5b0744e4</foaf:mbox_sha1sum>
+            <foaf:name>Holger Lewen</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:givenname>Pascal</foaf:givenname>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id51instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_51.rdf"/>
+            <foaf:mbox_sha1sum>0bcf53a6fb2e3485b5e46b1e1b7e065f7f5a321f</foaf:mbox_sha1sum>
+            <foaf:name>Julien Tane</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2123instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2123.rdf"/>
+            <foaf:mbox_sha1sum>4fda911b5b1e6d78d8f7f248ae9a29c99ad69735</foaf:mbox_sha1sum>
+            <foaf:name>Anupriya Ankolekar</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2077instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2077.rdf"/>
+            <foaf:mbox_sha1sum>0150c7a96a0c55de88ad6dcdeadd2d125b213a80</foaf:mbox_sha1sum>
+            <foaf:name>Saartje Brockmans</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2097instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2097.rdf"/>
+            <foaf:mbox_sha1sum>ae1d50afcec0fabd0864f6c2839a929cbbd0a142</foaf:mbox_sha1sum>
+            <foaf:name>Denny Vrandecic</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id20instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_20.rdf"/>
+            <foaf:mbox_sha1sum>25ffb7c1f4d38859edd83c0d377f0941f69ae4ca</foaf:mbox_sha1sum>
+            <foaf:name>York Sure</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:phone rdf:resource="tel:+49-721-608-4751"/>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2023instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2023.rdf"/>
+            <foaf:mbox_sha1sum>4eea38fbe10445d885eb14b2fcab2c0461259884</foaf:mbox_sha1sum>
+            <foaf:name>Peter Haase</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2053instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2053.rdf"/>
+            <foaf:mbox_sha1sum>dd14bf5a6c19abed34824ae89b40f35867443091</foaf:mbox_sha1sum>
+            <foaf:name>Johanna Völker</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2076instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2076.rdf"/>
+            <foaf:mbox_sha1sum>67e6d282563d7971e65bb8bbc6a43bd98c0a0cca</foaf:mbox_sha1sum>
+            <foaf:name>Max Völkel</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2131instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2131.rdf"/>
+            <foaf:mbox_sha1sum>709b605ea530574ee9c01f232d2aee409d509a8e</foaf:mbox_sha1sum>
+            <foaf:name>Sebastian Blohm</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:mbox_sha1sum>c590ec2cffc941acf4141926c0daea87228a1c02</foaf:mbox_sha1sum>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2148instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2148.rdf"/>
+            <foaf:mbox_sha1sum>da39a3ee5e6b4b0d3255bfef95601890afd80709</foaf:mbox_sha1sum>
+            <foaf:name>Roman Korf</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id57instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_57.rdf"/>
+            <foaf:mbox_sha1sum>be88ee62c10e6e98b038e6346fbab66692b0b2b0</foaf:mbox_sha1sum>
+            <foaf:name>Rudi Studer</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:workInfoHomepage rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPerson?id_db=2084"/>
+        <foaf:name>Pascal Hitzler</foaf:name>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2115instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2115.rdf"/>
+            <foaf:mbox_sha1sum>66c2c6914009ff0f3312bbd3273df8de95cb9ee6</foaf:mbox_sha1sum>
+            <foaf:name>Heiko Haller</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:homepage rdf:resource="http://www.aifb.uni-karlsruhe.de/WBS/phi"/>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id83instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_83.rdf"/>
+            <foaf:mbox_sha1sum>487152fd038d0eeddf0a2f047087e779b93c6571</foaf:mbox_sha1sum>
+            <foaf:name>Christoph Tempich</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2143instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_2143.rdf"/>
+            <foaf:mbox_sha1sum>9ce09e1fe59ec7293a3eaa93a3c3d12404859782</foaf:mbox_sha1sum>
+            <foaf:name>Duc Thanh Tran</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+        <foaf:knows>
+          <foaf:Person rdf:about="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id91instance">
+            <rdfs:seeAlso rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonFOAF/foaf_91.rdf"/>
+            <foaf:mbox_sha1sum>d95a5566d39b5e55a80eae46407d6f84678e924e</foaf:mbox_sha1sum>
+            <foaf:name>Sudhir Agarwal</foaf:name>
+          </foaf:Person>
+        </foaf:knows>
+      </foaf:Person>
+    </foaf:primaryTopic>
+    <foaf:maker rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2084instance"/>
+  </foaf:PersonalProfileDocument>
+</rdf:RDF>

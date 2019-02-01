@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:sw="http://www.semanticworld.com/sw/0.1/"
+  >
+
+<foaf:PersonalProfileDocument rdf:about="">
+  <foaf:maker rdf:resource="#me"/>
+  <foaf:primaryTopic rdf:resource="#me"/>
+</foaf:PersonalProfileDocument>
+
+<foaf:Person rdf:ID="me">
+
+  <foaf:name>Christoph Bussler</foaf:name>
+  <foaf:title>Dr</foaf:title>
+  <foaf:givenname>Christoph</foaf:givenname>
+  <foaf:family_name>Bussler</foaf:family_name>
+  <foaf:nick>Chris</foaf:nick>
+  <foaf:mbox_sha1sum>c3851852e12dae64e1e8a8780319333544355f26</foaf:mbox_sha1sum>
+  <foaf:homepage rdf:resource="http://hometown.aol.com/chbussler"/>
+  <foaf:depiction rdf:resource="http://hometown.aol.com/chbussler/pictures/Bussler.gif"/>
+  <foaf:workplaceHomepage rdf:resource="http://www.mercesystems.com"/>
+
+  <foaf:knows>
+    <foaf:Person>
+      <foaf:name>Tim Berners-Lee</foaf:name>
+      <foaf:mbox_sha1sum>965c47c5a70db7407210cef6e4e6f5374a525c5c</foaf:mbox_sha1sum>
+      <rdfs:seeAlso rdf:resource="http://www.w3.org/People/Berners-Lee/card"/>
+    </foaf:Person>
+  </foaf:knows>
+
+  <foaf:knows>
+    <foaf:Person>
+      <foaf:name>Juan Miguel Gomez</foaf:name>
+      <foaf:mbox_sha1sum>ad6878839a62ad39954773750df88f5a212f95e7</foaf:mbox_sha1sum>
+      <rdfs:seeAlso rdf:resource="http://www.jmgomez.net/juanfoaf.rdf"/>
+    </foaf:Person>
+  </foaf:knows>
+
+  <foaf:knows>
+    <foaf:Person>
+      <foaf:name>Knud Moeller</foaf:name>
+      <foaf:mbox_sha1sum>b15d1e7efb11374644555fa9734bf75a553a362c</foaf:mbox_sha1sum>
+      <rdfs:seeAlso rdf:resource="http://www.deri.ie/fileadmin/scripts/foaf.php?id=64"/>
+    </foaf:Person>
+  </foaf:knows>
+  
+  <foaf:knows>
+    <foaf:Person>
+      <foaf:name>Ina O'Murchu</foaf:name>
+      <foaf:mbox_sha1sum>712b83520bf846cdeb5b8158d541108b12a01447</foaf:mbox_sha1sum>
+      <rdfs:seeAlso rdf:resource="http://www.deri.ie/fileadmin/scripts/foaf.php?id=94"/>
+    </foaf:Person>
+  </foaf:knows>
+
+</foaf:Person>
+
+</rdf:RDF>
