@@ -30,7 +30,6 @@
     <module>xsparql-webapp</module>
     <module>xsparql-cli</module>
     <module>xsparql-evaluator</module>
-    <module>xsparql-evaluator-legacy</module>
     <module>xsparql-test-suite</module>
   </modules>
 
