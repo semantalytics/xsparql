@@ -8,13 +8,13 @@ import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.sourceforge.xsparql.sparql.DatasetManager;
 
 public class InMemoryDatasetManager implements DatasetManager {
 
-	private static final Logger logger = LoggerFactory.getLogger(InMemoryDatasetManager.class);
+	private static final Logger logger = LogManager.getLogger(InMemoryDatasetManager.class);
 	public static final InMemoryDatasetManager INSTANCE = new InMemoryDatasetManager();
 	private Dataset inMemoryDataset;
 	private boolean emptyDataset;

@@ -49,10 +49,6 @@ import org.antlr.runtime.tree.CommonTree;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.bridge.SLF4JBridgeHandler;
-import org.sourceforge.xsparql.rewriter.Helper;
-import org.sourceforge.xsparql.rewriter.XSPARQLLexer;
-import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 import org.sourceforge.xsparql.test.Utils;
 
 public class XSPARQLProcessorTests {
@@ -67,15 +63,7 @@ public class XSPARQLProcessorTests {
 		processor = new XSPARQLProcessor();
 		processor.setAst(true);
 	}
-	
-//	@BeforeClass
-	public static void initLogger(){
-		LogManager.getLogManager().reset();
-		SLF4JBridgeHandler.install();
-//		java.util.logging.Logger.getLogger("global").setLevel(Level.FINEST);
-//		java.util.logging.LogManager.getLogManager().getLogger("").setLevel( Level.FINEST);
-	}
-	
+
 	@Test
 	public void shouldParseQuery() {
 		try{

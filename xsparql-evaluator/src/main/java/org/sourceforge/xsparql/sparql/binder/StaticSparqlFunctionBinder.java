@@ -3,7 +3,6 @@ package org.sourceforge.xsparql.sparql.binder;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sun.tools.javac.util.List;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
 
 import org.sourceforge.xsparql.sparql.DatasetManager;

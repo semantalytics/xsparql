@@ -55,10 +55,11 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.antlr.runtime.RecognitionException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.openrdf.model.BNode;
@@ -78,8 +79,6 @@ import org.openrdf.repository.sail.SailRepository;
 import org.openrdf.rio.RDFFormat;
 import org.openrdf.rio.RDFParseException;
 import org.openrdf.sail.memory.MemoryStore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sourceforge.xsparql.evaluator.XSPARQLEvaluator;
 import org.sourceforge.xsparql.test.Utils;
 import org.xml.sax.Attributes;
@@ -87,14 +86,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-/**
- * 
- * @author Daniele Dell'Aglio
- *
- */
-
 public class EvaluationTest {
-	protected final static Logger logger = LoggerFactory.getLogger(EvaluationTest.class);
+	protected final static Logger logger = LogManager.getLogger(EvaluationTest.class);
 	
 	private static final String prefixes = "prefix rs: <http://www.w3.org/2001/sw/DataAccess/tests/result-set#> " +
 			"prefix foaf: <http://xmlns.com/foaf/0.1/> " +
