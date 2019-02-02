@@ -73,6 +73,7 @@ public class XSPARQLEvaluatorTest {
   public static Iterable<String[]> data() {
     return listFiles("examples");
   }
+
   /**
    * Test method for
    * {@link org.sourceforge.xsparql.evaluator.XSPARQLEvaluator#evaluate(Reader, Writer)}

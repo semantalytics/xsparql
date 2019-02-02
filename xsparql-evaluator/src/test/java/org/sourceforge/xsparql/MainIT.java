@@ -14,7 +14,9 @@ package org.sourceforge.xsparql;
 
 import junit.framework.TestCase;
 
-public class MainIT extends TestCase {
+import static org.junit.Assert.fail;
+
+public class MainIT {
 
   public void testMain() {
     fail("Not yet implemented"); // TODO
