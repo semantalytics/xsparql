@@ -69,22 +69,10 @@ public class XSPARQLProcessorTest {
    * integration.
    */
   @Test
-  public void testSimple() {
+  public void testSimple() throws Exception {
 	  processor = new XSPARQLProcessor();
-    try {
       processor.setQueryFilename("5");
       processor.process(new StringReader("5"));
-    } catch (RecognitionException e) {
-      fail("Exception: " + e.getMessage());
-    } catch (IOException e) {
-      fail("Exception: " + e.getMessage());
-    } catch (Exception e) {
-      if(e.getMessage() == null) {
-        fail("Unknown exception");
-      } else {
-        fail("Exception: " + e.getMessage());
-      }
-    }
   }
 
   /**
@@ -93,8 +81,7 @@ public class XSPARQLProcessorTest {
    * Run all the query files in the resources/examples directory.
    */
   @Test
-  public void testProcessReaderString() {
-    try {
+  public void testProcessReaderString() throws Exception {
 
       for (String filename : listFiles("examples")) {
         if (filename.endsWith(".xsparql")) {
@@ -103,15 +90,6 @@ public class XSPARQLProcessorTest {
           processor.process(queryReader);
         }
       }
-
-    } catch (RecognitionException e) {
-      fail("Exception: " + e.getMessage());
-    } catch (Exception e) {
-      ByteArrayOutputStream os = new ByteArrayOutputStream();
-      PrintStream ps = new PrintStream(os);
-      e.printStackTrace(ps);
-      fail("Exception: " + os.toString());
-    }
   }
 
   /**
