@@ -8,10 +8,13 @@ import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.RDFDataMgr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sourceforge.xsparql.sparql.DatasetManager;
 
 public class InMemoryDatasetManager implements DatasetManager {
 
+	private static final Logger logger = LoggerFactory.getLogger(InMemoryDatasetManager.class);
 	public static final InMemoryDatasetManager INSTANCE = new InMemoryDatasetManager();
 	private Dataset inMemoryDataset;
 	private boolean emptyDataset;
@@ -29,20 +32,20 @@ public class InMemoryDatasetManager implements DatasetManager {
 	}
 
 	@Override
-	public void setDataset(final Set<URL> defaultGraph, final Set<URL> namedGraphs) {
-		Model dModel = ModelFactory.createDefaultModel();
-		if(defaultGraph!=null && defaultGraph.size()>0){
-			emptyDataset=false;
-			for(URL f : defaultGraph){
-				dModel.add(RDFDataMgr.loadModel(f.toString()));
+	public void setDataset(final Set<URL> defaultGraphUrls, final Set<URL> namedGraphUrls) {
+		final Model dModel = ModelFactory.createDefaultModel();
+		if(defaultGraphUrls != null && !defaultGraphUrls.isEmpty()) {
+			emptyDataset = false;
+			for(final URL defaultGraphUrl : defaultGraphUrls) {
+				dModel.add(RDFDataMgr.loadModel(defaultGraphUrl.toExternalForm()));
 			}
 			inMemoryDataset.setDefaultModel(dModel);
 		}
 
-		if(namedGraphs!=null && namedGraphs.size()>0){
-			emptyDataset=false;
-			for(URL f : namedGraphs){
-				inMemoryDataset.addNamedModel(f.toString(), RDFDataMgr.loadModel(f.toString()));
+		if(namedGraphUrls != null && !namedGraphUrls.isEmpty()) {
+			emptyDataset = false;
+			for(final URL namedGraphUrl : namedGraphUrls) {
+				inMemoryDataset.addNamedModel(namedGraphUrl.toString(), RDFDataMgr.loadModel(namedGraphUrl.toExternalForm()));
 			}
 		}
 	}

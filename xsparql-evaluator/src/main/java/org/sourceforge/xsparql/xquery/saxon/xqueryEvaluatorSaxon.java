@@ -99,10 +99,10 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 	/**
 	 * external variables for Xquery evaluation TODO refactor
 	 */
-	public Map<String, String> xqueryExternalVars = new HashMap<String, String>();
+	private Map<String, String> xqueryExternalVars = new HashMap<String, String>();
 
-	public void setDBconnection(final SQLQuery q) {
-		this.sqlQuery = q;
+	public void setDBconnection(final SQLQuery sqlQuery) {
+		this.sqlQuery = sqlQuery;
 
 		// RDB functions
 		proc.registerExtensionFunction(new sqlQueryExtFunction(sqlQuery));
@@ -113,10 +113,10 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 	@Override
 	public void setDataset(final Set<URL> defaultGraph,
 						   final Set<URL> namedGraphs,
-						   final DatasetManager manager) {
+						   final DatasetManager datasetManager) {
 		this.defaultGraph = defaultGraph;
 		this.namedGraphs = namedGraphs;
-		datasetManager = manager;
+		this.datasetManager = datasetManager;
 	}
 
 	public void setValidatingXQuery(final boolean validatingXQuery) {
@@ -141,17 +141,19 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 		proc.registerExtensionFunction(new turtleGraphToURIExtFunction());
 		proc.registerExtensionFunction(new jsonDocExtFunction());
 
-		Set<URL> sparqlFunctionBinderPaths = new LinkedHashSet<URL>();
+		final Set<URL> sparqlFunctionBinderPaths = new LinkedHashSet<URL>();
+
 		try{
 			ClassLoader cl = xqueryEvaluatorSaxon.class.getClassLoader();
 			Enumeration<URL> paths = cl.getResources("org/sourceforge/xsparql/sparql/binder/StaticSparqlFunctionBinder.class");
-			while(paths.hasMoreElements()){
+			while(paths.hasMoreElements()) {
 				sparqlFunctionBinderPaths.add(paths.nextElement());
 			}
 	    } catch (IOException e) {
 	    	logger.error("Error while loading the class loader");
 	    }
-		if(sparqlFunctionBinderPaths.size()>1){
+
+		if(sparqlFunctionBinderPaths.size() > 1) {
 			logger.error("There are too many SPARQL Evaluators!");
 			throw new RuntimeException("Too many SPARQL evals");
 		}
@@ -171,7 +173,6 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 		//    proc.setConfigurationProperty(FeatureKeys.TRACE_EXTERNAL_FUNCTIONS, true);
 
 		initializeSerializer();
-
 	}
 	
 	/**
@@ -227,7 +228,6 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 	 */
 	public void setOmitXMLDecl(final boolean xmloutput) {
 		this.omitXMLDecl = xmloutput;
-
 	}
 
 	/*
@@ -261,8 +261,7 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 		// http://sourceforge.net/tracker/?func=detail&aid=3008672&group_id=29872&atid=397617
 		xqueryComp = proc.newXQueryCompiler();
 
-		net.sf.saxon.s9api.XQueryEvaluator evaluator = xqueryComp.compile(query)
-				.load();
+		net.sf.saxon.s9api.XQueryEvaluator evaluator = xqueryComp.compile(query).load();
 
 		//TODO: reset at every evaluation (it should be optimizable) 
 		if (datasetManager != null) {

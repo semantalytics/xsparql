@@ -3,6 +3,7 @@ package org.sourceforge.xsparql.sparql.binder;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.sun.tools.javac.util.List;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
 
 import org.sourceforge.xsparql.sparql.DatasetManager;
@@ -15,7 +16,8 @@ import org.sourceforge.xsparql.xquery.saxon.arq.scopedDatasetPopResultsExtArqFun
 import org.sourceforge.xsparql.xquery.saxon.arq.sparqlQueryExtArqFunction;
 import org.sourceforge.xsparql.xquery.saxon.arq.sparqlScopedDatasetExtArqFunction;
 
-public class StaticSparqlFunctionBinder implements SparqlFunctionBinder{
+public class StaticSparqlFunctionBinder implements SparqlFunctionBinder {
+
 	private static final StaticSparqlFunctionBinder INSTANCE = new StaticSparqlFunctionBinder();
 	
 	public static StaticSparqlFunctionBinder getInstance(){
@@ -45,7 +47,7 @@ public class StaticSparqlFunctionBinder implements SparqlFunctionBinder{
 	}
 	
 	public Set<ExtensionFunctionDefinition> getSparqlFunctionDefinitions(){
-		Set<ExtensionFunctionDefinition> defs = new HashSet<ExtensionFunctionDefinition>();
+		final Set<ExtensionFunctionDefinition> defs = new HashSet<ExtensionFunctionDefinition>();
 		defs.add(new sparqlQueryExtArqFunction());
 		defs.add(new createScopedDatasetExtArqFunction());
 		defs.add(new deleteScopedDatasetExtArqFunction());

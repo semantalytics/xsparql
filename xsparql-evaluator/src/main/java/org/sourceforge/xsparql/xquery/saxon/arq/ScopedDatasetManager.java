@@ -66,26 +66,26 @@ class ScopedDatasetManager {
 	 * @param id solution id
 	 * @return XML results of the query
 	 */
-	public static ResultSet createScopedDataset(final String q, final String id) {
+	public static ResultSet createScopedDataset(final Query query, final String id) {
 
-		logger.debug("Create scoped dataset query={}, id={}", q, id);
+		logger.debug("Create scoped dataset id={}, query={}}", id, query);
 
 		if (scopedDataset.containsKey(id)) {
 			// error?
             logger.debug("Scoped dataset contains key {}", id);
 		}
 
-		Query query = QueryFactory.create(q);
 		Dataset dataset = DatasetFactory.create(
 				query.getGraphURIs(),
 				query.getNamedGraphURIs());
 
-		QueryExecution qe = QueryExecutionFactory.create(query, dataset);
+		QueryExecution queryExecution = QueryExecutionFactory.create(query, dataset);
 
-		ResultSet resultSet = qe.execSelect();
+		ResultSet resultSet = queryExecution.execSelect();
 
 		DatasetResults ds = new DatasetResults(dataset);
 		ResultSetRewindable results = ds.addResults(resultSet);
+
 		scopedDataset.put(id, ds);
 
 		return results;

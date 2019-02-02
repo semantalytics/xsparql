@@ -41,8 +41,10 @@ package org.sourceforge.xsparql.xquery.saxon.arq;
 import javax.xml.transform.stream.StreamSource;
 
 import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.tree.iter.SingletonIterator;
+import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
 import org.sourceforge.xsparql.xquery.saxon.createScopedDatasetExtFunction;
@@ -54,6 +56,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 public class createScopedDatasetExtArqFunction extends createScopedDatasetExtFunction {
+
 	private static final long serialVersionUID = -3645845258989697549L;
 
 	@Override
@@ -65,21 +68,20 @@ public class createScopedDatasetExtArqFunction extends createScopedDatasetExtFun
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
-			public SequenceIterator call(SequenceIterator[] arguments,
-										 XPathContext context) throws XPathException {
+			public SequenceIterator call(final SequenceIterator[] arguments,
+										 final XPathContext context) throws XPathException {
 
-				String q = arguments[0].next().getStringValue();
-				String id = arguments[1].next().getStringValue();
+				final String query = arguments[0].next().getStringValue();
+				final String id = arguments[1].next().getStringValue();
 
-				ResultSet resultSet = ScopedDatasetManager.createScopedDataset(q, id);
+				final ResultSet resultSet = ScopedDatasetManager.createScopedDataset(QueryFactory.create(query), id);
 
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				ResultSetFormatter.outputAsXML(outputStream, resultSet);
-				ByteArrayInputStream inputStream = new ByteArrayInputStream(
-						outputStream.toByteArray());
+				ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
-				return SingletonIterator.makeIterator(context.getConfiguration()
-						.buildDocument(new StreamSource(inputStream)));
+				DocumentInfo documentInfo = context.getConfiguration().buildDocument(new StreamSource(inputStream));
+				return SingletonIterator.makeIterator(documentInfo);
 			}
 
 		};
