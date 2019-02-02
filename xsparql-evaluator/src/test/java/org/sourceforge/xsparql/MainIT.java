@@ -10,7 +10,7 @@
  * Created: 09 February 2011, Reasoning and Querying Unit (URQ), Digital Enterprise Research Institute (DERI) on behalf of
  * NUI Galway.
  */
-package org.deri.xsparql;
+package org.sourceforge.xsparql;
 
 import junit.framework.TestCase;
 

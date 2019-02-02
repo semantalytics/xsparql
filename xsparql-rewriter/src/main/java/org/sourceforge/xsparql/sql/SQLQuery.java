@@ -71,17 +71,12 @@ import org.w3c.dom.Element;
 
 /**
  * Class used to perform SQL queries via JDBC.
- * 
- * @author Nuno Lopes
- * 
  */
 
 public class SQLQuery {
 
     private Connection db;
-    
     private String dbDriver;
-    
     private final static Logger logger = Logger.getLogger(XSPARQLProcessor.class
 	      .getClass().getName());
 
@@ -93,7 +88,13 @@ public class SQLQuery {
      * Creates a new <code>SQLQuery</code> instance.
      * 
      */
-    public SQLQuery(String driver, String dbServer, String dbPort, String database, String instance, String username, String password) {
+    public SQLQuery(final String driver,
+					String dbServer,
+					String dbPort,
+					final String database,
+					final String instance,
+					final String username,
+					final String password) {
 	logger.info("dbDriver: " + driver + ", dbServer: " + dbServer + ", dbPort: " + dbPort + ", dbName: " + database + ", dbInstance: " + instance + ", dbUser: " + username + ", dbPass: " + password);
 
 	if (driver == null || database == null || username == null) {

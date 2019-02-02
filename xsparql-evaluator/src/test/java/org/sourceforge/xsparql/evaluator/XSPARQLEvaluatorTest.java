@@ -55,13 +55,10 @@ import java.util.*;
 
 import javax.xml.transform.stream.StreamSource;
 
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import org.antlr.runtime.RecognitionException;
-import org.apache.jena.ext.com.google.common.collect.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.sourceforge.xsparql.evaluator.XSPARQLEvaluator;
 
 @RunWith(Parameterized.class)
 public class XSPARQLEvaluatorTest {

@@ -42,37 +42,25 @@ import org.antlr.runtime.tree.*;
 
 /**
  * class of scopedDatasets for the parser.
- * 
- * @author Nuno Lopes
- * 
  */
 public class ScopedDataset {
 
   private boolean scopedDataset;
-
   private String id;
-
   private CommonTree sparqlFunctionTree;
   private CommonTree sparqlResultsFunctionTree;
   private CommonTree sparqlResultsIdTree;
-
   private String posVar;
 
   /**
    * Creates a new <code>ScopedDataset</code> instance.
    * 
-   * @param scoped
-   *          determines if the instance referes to a scoped dataset
-   * @param i
-   *          identifier of the scoped dataset
-   * @param sf
-   *          SPARQL function to be called
-   * @param sr
-   *          SPARQL results function to be called
-   * @param idTree
-   *          results of the SPARQL call
-   * @param pos
-   *          position we are processing
+   * @param scoped determines if the instance referes to a scoped dataset
+   * @param i identifier of the scoped dataset
+   * @param sf SPARQL function to be called
+   * @param sr SPARQL results function to be called
+   * @param idTree results of the SPARQL call
+   * @param pos position we are processing
    */
   public ScopedDataset(boolean scoped, String i, CommonTree sf, CommonTree sr,
       CommonTree idTree, String pos) {

@@ -47,20 +47,11 @@ import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
 import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
-import org.sourceforge.xsparql.rewriter.XQuerySerializer;
-import org.sourceforge.xsparql.rewriter.XSPARQL;
-import org.sourceforge.xsparql.rewriter.XSPARQLLexer;
-import org.sourceforge.xsparql.rewriter.XSPARQLRewriter;
-import org.sourceforge.xsparql.rewriter.XSPARQLSimplifier;
 import org.sourceforge.xsparql.sql.SQLQuery;
 
 
 /**
  * Main XSPARQL rewriter translator class
- * 
- * @author Stefan Bischof 
- * @author Nuno Lopes 
- * 
  */
 public class XSPARQLProcessor {
 
@@ -70,7 +61,7 @@ public class XSPARQLProcessor {
   /**
    * Path of the XQuery StringTemplate Template in the Classpath
    */
-  private final static String XQUERYTEMPLATE = "/templates/XQuery.stg";
+  private static final String XQUERYTEMPLATE = "/templates/XQuery.stg";
 
   /**
    * Number of occurred syntax errors
@@ -170,10 +161,6 @@ public class XSPARQLProcessor {
    */
   private static String dbPasswd = null;
 
-
-
-
-
   /**
    * XQuery engine to be used for evaluation/code production.
    */
@@ -213,8 +200,7 @@ public class XSPARQLProcessor {
   /**
    * Process XSPARQL query given as an InputStream
    * 
-   * @param is
-   *          XSPARQL query
+   * @param is XSPARQL query
    * @return string with rewriten XQuery
    * @throws RecognitionException
    * @throws IOException
@@ -269,7 +255,7 @@ public class XSPARQLProcessor {
    * 
    * @param tree
    */
-  private void printAST(CommonTree tree) {
+  private void printAST(final CommonTree tree) {
     if (this.dot) {
       Helper.writeDotFile(
           tree,
@@ -416,23 +402,23 @@ public class XSPARQLProcessor {
     return ret;
   }
 
-  public void setWarnIfNestedConstruct(boolean b) {
+  public void setWarnIfNestedConstruct(final boolean b) {
     this.warnIfNestedConstruct = b;
   }
 
-  public void setAst(boolean has) {
+  public void setAst(final boolean has) {
     this.ast = has;
   }
 
-  public void setDebugLexer(boolean has) {
+  public void setDebugLexer(final boolean has) {
     this.debuglexer = has;
   }
 
-  public void setDebug(boolean has) {
+  public void setDebug(final boolean has) {
     this.debug = has;
   }
 
-  public void setDot(boolean has) {
+  public void setDot(final boolean has) {
     this.dot = has;
   }
 
@@ -525,56 +511,56 @@ public class XSPARQLProcessor {
   /**
    * set the DB name
    */
-  public void setDBDriver(String driver) {
+  public void setDBDriver(final String driver) {
     dbDriver = driver;
   }
 
   /**
    * set the DB server
    */
-  public void setDBServer(String server) {
+  public void setDBServer(final String server) {
       dbServer = server;
   }
 
   /**
    * set the DB port
    */
-  public void setDBPort(String port) {
+  public void setDBPort(final String port) {
       dbPort = port;
   }
   
   /**
    * set the DB name
    */
-  public void setDBName(String name) {
+  public void setDBName(final String name) {
     dbName = name;
   }
   
   /**
    * set the DB instance name
    */
-  public void setDBInstance(String instance) {
+  public void setDBInstance(final String instance) {
       dbInstance = instance;
   }
 
   /**
    * set the DB user
    */
-  public void setDBUser(String user) {
+  public void setDBUser(final String user) {
     dbUser = user;
   }
   
   /**
    * set the DB password
    */
-  public void setDBPasswd(String passwd) {
+  public void setDBPasswd(final String passwd) {
     dbPasswd = passwd;
   }
 
   /**
    * set the DB info from configuration file
    */
-  public void setDBConfig(File file) {
+  public void setDBConfig(final File file) {
       Properties configFile = new Properties();
       try {
 	  configFile.load(new FileReader(file));

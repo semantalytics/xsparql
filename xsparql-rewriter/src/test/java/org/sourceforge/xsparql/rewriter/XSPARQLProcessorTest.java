@@ -53,12 +53,7 @@ import java.util.List;
 
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
-import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 
-/**
- * @author stefan
- * 
- */
 public class XSPARQLProcessorTest {
 
   private XSPARQLProcessor processor;
