@@ -36,42 +36,45 @@
  * University of Technology,  Nuno Lopes on behalf of NUI Galway.
  *
  */ 
-package org.sourceforge.xsparql.arq;
+package org.sourceforge.xsparql.xquery.saxon.arq;
+
+import net.sf.saxon.lib.*;
+
+import java.io.*;
 
 import javax.xml.transform.stream.StreamSource;
 
-import net.sf.saxon.lib.ExtensionFunctionCall;
-import net.sf.saxon.om.SequenceIterator;
-import net.sf.saxon.tree.iter.SingletonIterator;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
-import org.sourceforge.xsparql.xquery.saxon.createScopedDatasetExtFunction;
+import org.sourceforge.xsparql.xquery.saxon.scopedDatasetPopResultsExtFunction;
 
+import net.sf.saxon.tree.iter.*;
+import net.sf.saxon.om.*;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.trans.XPathException;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
-public class createScopedDatasetExtArqFunction extends createScopedDatasetExtFunction {
-	private static final long serialVersionUID = -3645845258989697549L;
+public class sparqlScopedDatasetExtArqFunction extends scopedDatasetPopResultsExtFunction {
+	private static final long serialVersionUID = -796576654750929677L;
 
 	@Override
 	public ExtensionFunctionCall makeCallExpression() {
 
 		return new ExtensionFunctionCall() {
 
-			private static final long serialVersionUID = 7030338651481369238L;
+			private static final long serialVersionUID = -4576064130906433346L;
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public SequenceIterator call(SequenceIterator[] arguments,
-										 XPathContext context) throws XPathException {
+					XPathContext context) throws XPathException {
 
 				String q = arguments[0].next().getStringValue();
 				String id = arguments[1].next().getStringValue();
+				String joinVars = arguments[2].next().getStringValue();
+				int pos = new Integer(arguments[3].next().getStringValue()).intValue();
 
-				ResultSet resultSet = ScopedDatasetManager.createScopedDataset(q, id);
+				ResultSet resultSet = ScopedDatasetManager.sparqlScopedDataset(q,
+						id, joinVars, pos);
 
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				ResultSetFormatter.outputAsXML(outputStream, resultSet);

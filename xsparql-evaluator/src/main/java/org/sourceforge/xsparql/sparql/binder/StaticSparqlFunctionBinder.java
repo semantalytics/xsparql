@@ -9,11 +9,11 @@ import org.sourceforge.xsparql.sparql.DatasetManager;
 import org.sourceforge.xsparql.sparql.SparqlFunctionBinder;
 import org.sourceforge.xsparql.sparql.UnexpectedParameterException;
 import org.sourceforge.xsparql.sparql.arq.InMemoryDatasetManager;
-import org.sourceforge.xsparql.arq.createScopedDatasetExtArqFunction;
-import org.sourceforge.xsparql.arq.deleteScopedDatasetExtArqFunction;
-import org.sourceforge.xsparql.arq.scopedDatasetPopResultsExtArqFunction;
-import org.sourceforge.xsparql.arq.sparqlQueryExtArqFunction;
-import org.sourceforge.xsparql.arq.sparqlScopedDatasetExtArqFunction;
+import org.sourceforge.xsparql.xquery.saxon.arq.createScopedDatasetExtArqFunction;
+import org.sourceforge.xsparql.xquery.saxon.arq.deleteScopedDatasetExtArqFunction;
+import org.sourceforge.xsparql.xquery.saxon.arq.scopedDatasetPopResultsExtArqFunction;
+import org.sourceforge.xsparql.xquery.saxon.arq.sparqlQueryExtArqFunction;
+import org.sourceforge.xsparql.xquery.saxon.arq.sparqlScopedDatasetExtArqFunction;
 
 public class StaticSparqlFunctionBinder implements SparqlFunctionBinder{
 	private static final StaticSparqlFunctionBinder INSTANCE = new StaticSparqlFunctionBinder();

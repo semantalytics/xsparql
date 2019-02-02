@@ -36,45 +36,49 @@
  * University of Technology,  Nuno Lopes on behalf of NUI Galway.
  *
  */ 
-package org.sourceforge.xsparql.arq;
 
-import net.sf.saxon.lib.*;
+package org.sourceforge.xsparql.xquery.saxon.arq;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 import javax.xml.transform.stream.StreamSource;
 
+import net.sf.saxon.expr.XPathContext;
+import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.iter.SingletonIterator;
+
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
-import org.sourceforge.xsparql.xquery.saxon.scopedDatasetPopResultsExtFunction;
+import org.sourceforge.xsparql.sparql.arq.InMemoryDatasetManager;
+import org.sourceforge.xsparql.sparql.arq.SPARQLQuery;
+import org.sourceforge.xsparql.xquery.saxon.sparqlQueryExtFunction;
 
-import net.sf.saxon.tree.iter.*;
-import net.sf.saxon.om.*;
-import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.trans.XPathException;
+public class sparqlQueryExtArqFunction extends sparqlQueryExtFunction {
 
-public class sparqlScopedDatasetExtArqFunction extends scopedDatasetPopResultsExtFunction {
-	private static final long serialVersionUID = -796576654750929677L;
+	private static final long serialVersionUID = 3473182871822843811L;
 
 	@Override
 	public ExtensionFunctionCall makeCallExpression() {
 
 		return new ExtensionFunctionCall() {
-
-			private static final long serialVersionUID = -4576064130906433346L;
+			private static final long serialVersionUID = -7804360181553074638L;
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public SequenceIterator call(SequenceIterator[] arguments,
 					XPathContext context) throws XPathException {
 
-				String q = arguments[0].next().getStringValue();
-				String id = arguments[1].next().getStringValue();
-				String joinVars = arguments[2].next().getStringValue();
-				int pos = new Integer(arguments[3].next().getStringValue()).intValue();
+				String queryString = arguments[0].next().getStringValue();
 
-				ResultSet resultSet = ScopedDatasetManager.sparqlScopedDataset(q,
-						id, joinVars, pos);
+				SPARQLQuery query;
+				if(InMemoryDatasetManager.INSTANCE.isEmpty())
+					query = new SPARQLQuery(queryString);
+				else 
+					query = new SPARQLQuery(queryString, InMemoryDatasetManager.INSTANCE.getDataset());
+				ResultSet resultSet = query.getResults();
 
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				ResultSetFormatter.outputAsXML(outputStream, resultSet);
@@ -83,6 +87,7 @@ public class sparqlScopedDatasetExtArqFunction extends scopedDatasetPopResultsEx
 
 				return SingletonIterator.makeIterator(context.getConfiguration()
 						.buildDocument(new StreamSource(inputStream)));
+
 			}
 
 		};

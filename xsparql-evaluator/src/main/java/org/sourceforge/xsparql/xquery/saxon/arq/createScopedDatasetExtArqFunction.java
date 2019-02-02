@@ -36,81 +36,53 @@
  * University of Technology,  Nuno Lopes on behalf of NUI Galway.
  *
  */ 
-package org.sourceforge.xsparql.arq;
+package org.sourceforge.xsparql.xquery.saxon.arq;
+
+import javax.xml.transform.stream.StreamSource;
 
 import net.sf.saxon.lib.ExtensionFunctionCall;
-import net.sf.saxon.lib.ExtensionFunctionDefinition;
 import net.sf.saxon.om.SequenceIterator;
-import net.sf.saxon.om.StructuredQName;
-import net.sf.saxon.tree.iter.EmptyIterator;
-import net.sf.saxon.value.SequenceType;
+import net.sf.saxon.tree.iter.SingletonIterator;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
+import org.sourceforge.xsparql.xquery.saxon.createScopedDatasetExtFunction;
+
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.trans.XPathException;
 
-public class scopedDatasetPopResultsExtArqFunction extends ExtensionFunctionDefinition {
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
-  private static final long serialVersionUID = -3618421782402392314L;
+public class createScopedDatasetExtArqFunction extends createScopedDatasetExtFunction {
+	private static final long serialVersionUID = -3645845258989697549L;
 
-  private static StructuredQName funcname = new StructuredQName("_xsparql",
-      "http://xsparql.deri.org/demo/xquery/xsparql.xquery",
-      "scopedDatasetPopResults");
+	@Override
+	public ExtensionFunctionCall makeCallExpression() {
 
-  // new StructuredQName("_java", "java:org.deri.sparql.Sparql",
-  // "scopedDatasetPopResults");
+		return new ExtensionFunctionCall() {
 
-  public scopedDatasetPopResultsExtArqFunction() {
-  }
+			private static final long serialVersionUID = 7030338651481369238L;
 
-  @Override
-  public StructuredQName getFunctionQName() {
-    return funcname;
-  }
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			@Override
+			public SequenceIterator call(SequenceIterator[] arguments,
+										 XPathContext context) throws XPathException {
 
-  @Override
-  public int getMinimumNumberOfArguments() {
-    return 1;
-  }
+				String q = arguments[0].next().getStringValue();
+				String id = arguments[1].next().getStringValue();
 
-  @Override
-  public int getMaximumNumberOfArguments() {
-    return 1;
-  }
+				ResultSet resultSet = ScopedDatasetManager.createScopedDataset(q, id);
 
-  @Override
-  public SequenceType[] getArgumentTypes() {
-    return new SequenceType[] { SequenceType.SINGLE_STRING };
-  }
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+				ResultSetFormatter.outputAsXML(outputStream, resultSet);
+				ByteArrayInputStream inputStream = new ByteArrayInputStream(
+						outputStream.toByteArray());
 
-  @Override
-  public SequenceType getResultType(SequenceType[] suppliedArgumentTypes) {
-    return SequenceType.ANY_SEQUENCE;
-  }
+				return SingletonIterator.makeIterator(context.getConfiguration()
+						.buildDocument(new StreamSource(inputStream)));
+			}
 
-  @Override
-  public boolean hasSideEffects() {
-    return true;
-  }
-
-  @Override
-  public ExtensionFunctionCall makeCallExpression() {
-
-    return new ExtensionFunctionCall() {
-
-      private static final long serialVersionUID = -1452266931467431145L;
-
-      @SuppressWarnings({ "unchecked", "rawtypes" })
-      @Override
-      public SequenceIterator call(SequenceIterator[] arguments,
-                                   XPathContext context) throws XPathException {
-
-        String id = arguments[0].next().getStringValue();
-
-        ScopedDatasetManager.scopedDatasetPopResults(id);
-
-        return EmptyIterator.getInstance();
-      }
-
-    };
-  }
+		};
+	}
 
 }

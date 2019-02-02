@@ -50,7 +50,7 @@ import org.w3c.dom.Document;
 public class SPARQLQuery {
 
 	private String query;
-	private Dataset dataset = null;
+	private Dataset dataset;
 	private static final Logger logger = LoggerFactory.getLogger(SPARQLQuery.class);
 
 	/**

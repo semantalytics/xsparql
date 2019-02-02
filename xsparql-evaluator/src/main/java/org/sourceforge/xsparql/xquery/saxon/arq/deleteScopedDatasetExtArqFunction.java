@@ -36,7 +36,7 @@
  * University of Technology,  Nuno Lopes on behalf of NUI Galway.
  *
  */ 
-package org.sourceforge.xsparql.arq;
+package org.sourceforge.xsparql.xquery.saxon.arq;
 
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.om.SequenceIterator;
