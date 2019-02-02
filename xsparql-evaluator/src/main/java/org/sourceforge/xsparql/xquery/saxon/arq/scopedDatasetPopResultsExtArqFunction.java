@@ -103,7 +103,7 @@ public class scopedDatasetPopResultsExtArqFunction extends ExtensionFunctionDefi
       public SequenceIterator call(SequenceIterator[] arguments,
                                    XPathContext context) throws XPathException {
 
-        String id = arguments[0].next().getStringValue();
+        final String id = arguments[0].next().getStringValue();
 
         ScopedDatasetManager.scopedDatasetPopResults(id);
 

@@ -38,18 +38,12 @@
  */ 
 package org.sourceforge.xsparql.xquery.saxon.arq;
 
-import net.sf.saxon.lib.*;
-
-import java.io.*;
-
-import javax.xml.transform.stream.StreamSource;
-
+import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.om.SequenceIterator;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
+import org.sourceforge.xsparql.XSPARQLUtils;
 import org.sourceforge.xsparql.xquery.saxon.scopedDatasetPopResultsExtFunction;
 
-import net.sf.saxon.tree.iter.*;
-import net.sf.saxon.om.*;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.trans.XPathException;
 
@@ -66,23 +60,20 @@ public class sparqlScopedDatasetExtArqFunction extends scopedDatasetPopResultsEx
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public SequenceIterator call(SequenceIterator[] arguments,
-					XPathContext context) throws XPathException {
+										 XPathContext context) throws XPathException {
 
-				String q = arguments[0].next().getStringValue();
-				String id = arguments[1].next().getStringValue();
-				String joinVars = arguments[2].next().getStringValue();
-				int pos = new Integer(arguments[3].next().getStringValue()).intValue();
+				final String query = arguments[0].next().getStringValue();
+				final String id = arguments[1].next().getStringValue();
+				final String joinVars = arguments[2].next().getStringValue();
+				final int position = new Integer(arguments[3].next().getStringValue()).intValue();
 
-				ResultSet resultSet = ScopedDatasetManager.sparqlScopedDataset(q,
-						id, joinVars, pos);
 
-				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-				ResultSetFormatter.outputAsXML(outputStream, resultSet);
-				ByteArrayInputStream inputStream = new ByteArrayInputStream(
-						outputStream.toByteArray());
+				final ResultSet resultSet = ScopedDatasetManager.sparqlScopedDataset(query,
+						                                                             id,
+						                                                             joinVars,
+						                                                             position);
 
-				return SingletonIterator.makeIterator(context.getConfiguration()
-						.buildDocument(new StreamSource(inputStream)));
+				return XSPARQLUtils.resultSetToSequenceIterator(resultSet, context);
 			}
 
 		};

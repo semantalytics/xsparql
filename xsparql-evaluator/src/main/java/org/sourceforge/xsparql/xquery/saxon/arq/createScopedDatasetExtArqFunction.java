@@ -38,22 +38,15 @@
  */ 
 package org.sourceforge.xsparql.xquery.saxon.arq;
 
-import javax.xml.transform.stream.StreamSource;
-
 import net.sf.saxon.lib.ExtensionFunctionCall;
-import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.SequenceIterator;
-import net.sf.saxon.tree.iter.SingletonIterator;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
+import org.sourceforge.xsparql.XSPARQLUtils;
 import org.sourceforge.xsparql.xquery.saxon.createScopedDatasetExtFunction;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.trans.XPathException;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 
 public class createScopedDatasetExtArqFunction extends createScopedDatasetExtFunction {
 
@@ -76,12 +69,7 @@ public class createScopedDatasetExtArqFunction extends createScopedDatasetExtFun
 
 				final ResultSet resultSet = ScopedDatasetManager.createScopedDataset(QueryFactory.create(query), id);
 
-				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-				ResultSetFormatter.outputAsXML(outputStream, resultSet);
-				ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-
-				DocumentInfo documentInfo = context.getConfiguration().buildDocument(new StreamSource(inputStream));
-				return SingletonIterator.makeIterator(documentInfo);
+				return XSPARQLUtils.resultSetToSequenceIterator(resultSet, context);
 			}
 
 		};

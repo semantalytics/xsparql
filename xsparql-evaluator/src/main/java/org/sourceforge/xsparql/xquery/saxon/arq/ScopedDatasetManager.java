@@ -62,7 +62,7 @@ class ScopedDatasetManager {
 	 * Evaluates a SPARQL query, storing the bindings to be reused later. Used for
 	 * the ScopedDataset.
 	 * 
-	 * @param q query to be executed
+	 * @param query query to be executed
 	 * @param id solution id
 	 * @return XML results of the query
 	 */

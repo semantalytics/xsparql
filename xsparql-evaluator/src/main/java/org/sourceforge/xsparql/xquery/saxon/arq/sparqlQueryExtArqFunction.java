@@ -39,19 +39,13 @@
 
 package org.sourceforge.xsparql.xquery.saxon.arq;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
-import javax.xml.transform.stream.StreamSource;
-
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.tree.iter.SingletonIterator;
 
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
+import org.sourceforge.xsparql.XSPARQLUtils;
 import org.sourceforge.xsparql.sparql.arq.InMemoryDatasetManager;
 import org.sourceforge.xsparql.sparql.arq.SPARQLQuery;
 import org.sourceforge.xsparql.xquery.saxon.sparqlQueryExtFunction;
@@ -78,16 +72,10 @@ public class sparqlQueryExtArqFunction extends sparqlQueryExtFunction {
 					query = new SPARQLQuery(queryString);
 				else 
 					query = new SPARQLQuery(queryString, InMemoryDatasetManager.INSTANCE.getDataset());
+
 				ResultSet resultSet = query.getResults();
 
-				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-				ResultSetFormatter.outputAsXML(outputStream, resultSet);
-				ByteArrayInputStream inputStream = new ByteArrayInputStream(
-						outputStream.toByteArray());
-
-				return SingletonIterator.makeIterator(context.getConfiguration()
-						.buildDocument(new StreamSource(inputStream)));
-
+				return XSPARQLUtils.resultSetToSequenceIterator(resultSet, context);
 			}
 
 		};
