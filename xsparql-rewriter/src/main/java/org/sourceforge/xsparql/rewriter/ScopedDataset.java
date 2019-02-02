@@ -45,12 +45,12 @@ import org.antlr.runtime.tree.*;
  */
 public class ScopedDataset {
 
-  private boolean scopedDataset;
-  private String id;
+  private final boolean scopedDataset;
+  private final String id;
   private CommonTree sparqlFunctionTree;
   private CommonTree sparqlResultsFunctionTree;
   private CommonTree sparqlResultsIdTree;
-  private String posVar;
+  private final String posVar;
 
   /**
    * Creates a new <code>ScopedDataset</code> instance.
@@ -62,8 +62,12 @@ public class ScopedDataset {
    * @param idTree results of the SPARQL call
    * @param pos position we are processing
    */
-  public ScopedDataset(boolean scoped, String i, CommonTree sf, CommonTree sr,
-      CommonTree idTree, String pos) {
+  public ScopedDataset(final boolean scoped,
+                       final String i,
+                       final CommonTree sf,
+                       final CommonTree sr,
+                       final CommonTree idTree,
+                       final String pos) {
     scopedDataset = scoped;
     id = i;
     sparqlFunctionTree = sf;
@@ -105,7 +109,7 @@ public class ScopedDataset {
    * @param t
    *          a <code>CommonTree</code> value
    */
-  public void setFunctionTree(CommonTree t) {
+  public void setFunctionTree(final CommonTree t) {
     sparqlFunctionTree = t;
   }
 
@@ -125,7 +129,7 @@ public class ScopedDataset {
    * @param t
    *          a <code>CommonTree</code> value
    */
-  public void setResultsTree(CommonTree t) {
+  public void setResultsTree(final CommonTree t) {
     sparqlResultsFunctionTree = t;
   }
 
@@ -144,7 +148,7 @@ public class ScopedDataset {
    * @param t
    *          a <code>CommonTree</code> value
    */
-  public void setIdTree(CommonTree t) {
+  public void setIdTree(final CommonTree t) {
     sparqlResultsIdTree = t;
   }
 

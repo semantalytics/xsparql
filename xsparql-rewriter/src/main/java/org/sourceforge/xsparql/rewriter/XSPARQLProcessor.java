@@ -176,26 +176,18 @@ public class XSPARQLProcessor {
   /**
    * @param xqueryEngine
    */
-  public void setXQueryEngine(String xqueryEngine) {
+  public void setXQueryEngine(final String xqueryEngine) {
     this.xqueryEngine = xqueryEngine;
   }
 
-  /**
-   * @param name
-   */
-  public void setQueryFilename(String name) {
+  public void setQueryFilename(final String name) {
     this.queryFilename = name;
 
   }
 
-  /**
-   * @return
-   */
   public int getNumberOfSyntaxErrors() {
     return this.numSyntaxErrors;
   }
-
-  // Public processing methods
 
   /**
    * Process XSPARQL query given as an InputStream
@@ -247,15 +239,13 @@ public class XSPARQLProcessor {
     return xquery;
   }
 
-  // Private utility methods
-
   /**
-   * Print the AST for debugging if the corresponding switches are set TODO:
-   * Move to helper
-   * 
+   * Print the AST for debugging if the corresponding switches are set
+   *
    * @param tree
    */
   private void printAST(final CommonTree tree) {
+   // TODO: Move to helper
     if (this.dot) {
       Helper.writeDotFile(
           tree,
@@ -312,8 +302,7 @@ public class XSPARQLProcessor {
    * Rewriter translates XSPARQL AST to a XQuery AST
    * 
    * @param tokenStream
-   * @param tree
-   *          XSPARQL AST
+   * @param tree XSPARQL AST
    * @return XQuery AST
    * @throws RecognitionException
    */
@@ -365,8 +354,7 @@ public class XSPARQLProcessor {
    * Create a XQuery query based on a XQuery AST
    * 
    * @param tokenStream
-   * @param tree
-   *          XQuery AST
+   * @param tree XQuery AST
    * @return XQuery Query as String
    * @throws Exception
    * @throws IOException
@@ -422,7 +410,7 @@ public class XSPARQLProcessor {
     this.dot = has;
   }
 
-  public void setVerbose(boolean has) {
+  public void setVerbose(final boolean has) {
     if (has) {
       logger.setLevel(Level.ALL);
     } else {
@@ -430,13 +418,13 @@ public class XSPARQLProcessor {
     }
   }
 
-  public void setEndpointURI(String string) {
+  public void setEndpointURI(final String string) {
     this.endpointURI = string;
     this.setWarnIfNestedConstruct(true);
   }
 
   // TODO: devise a proper debug methodology
-  public void setDebugVersion(boolean has) {
+  public void setDebugVersion(final boolean has) {
     this.debugVersion = has;
     // if(has) {
     // Configuration.xsparqlLibURL =
@@ -444,7 +432,7 @@ public class XSPARQLProcessor {
     // }
   }
 
-  public void setSPARQLEngine(SPARQLEngine se) {
+  public void setSPARQLEngine(final SPARQLEngine se) {
     switch (se) {
     case JOSEKI:
       this.SPARQLmethod = "joseki";
@@ -456,7 +444,7 @@ public class XSPARQLProcessor {
     }
   }
 
-  public void setValidating(boolean b) {
+  public void setValidating(final boolean b) {
     this.validatingXQuery = b;
     // if(b) {
     // Configuration.xsparqlLibURL =

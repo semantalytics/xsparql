@@ -38,10 +38,6 @@
  */ 
 package org.sourceforge.xsparql.rewriter;
 
-/**
- * @author stefan
- *
- */
 public enum SPARQLEngine {
   ARQ,
   JOSEKI;

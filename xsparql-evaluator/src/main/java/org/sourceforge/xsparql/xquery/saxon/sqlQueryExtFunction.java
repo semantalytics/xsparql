@@ -39,7 +39,6 @@
 package org.sourceforge.xsparql.xquery.saxon;
 
 import java.io.ByteArrayInputStream;
-import java.util.logging.Logger;
 
 import javax.xml.transform.stream.StreamSource;
 
@@ -52,6 +51,8 @@ import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.SingletonIterator;
 import net.sf.saxon.value.SequenceType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 import org.sourceforge.xsparql.sql.SQLQuery;
 
@@ -62,37 +63,36 @@ public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
 
  
   private static final long serialVersionUID = 6029071845119045349L;
-
-  private SQLQuery query = null;
-
-  private final static Logger logger = Logger.getLogger(XSPARQLProcessor.class
-	      .getClass().getName());
-
-  private static StructuredQName funcname = new StructuredQName("_xsparql",
-      "http://xsparql.deri.org/demo/xquery/xsparql.xquery", "_sqlQuery");
-
+  private SQLQuery query;
+  private final static Logger logger = LoggerFactory.getLogger(XSPARQLProcessor.class);
+  private static final String functionNamePrefix = "_xsparql";
+  private static final String functionNameUri = "http://xsparql.deri.org/demo/xquery/xsparql.xquery";
+  private static final String functionLocalName = "_sqlQuery";
+  private static StructuredQName functionName = new StructuredQName(functionNamePrefix, functionNameUri, functionLocalName);
+  private static final int MAX_ARGS = 5;
+  private static final int MIN_ARGS = 1;
 
   public sqlQueryExtFunction() {
       this.query = null;
     }
 
-  public sqlQueryExtFunction(SQLQuery q) {
+  public sqlQueryExtFunction(final SQLQuery q) {
     this.query = q;
   }
 
   @Override
   public StructuredQName getFunctionQName() {
-    return funcname;
+    return functionName;
   }
 
   @Override
   public int getMinimumNumberOfArguments() {
-    return 1;
+    return MIN_ARGS;
   }
 
   @Override
   public int getMaximumNumberOfArguments() {
-    return 5;
+    return MAX_ARGS;
   }
 
   @Override
@@ -101,7 +101,7 @@ public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
   }
 
   @Override
-  public SequenceType getResultType(SequenceType[] suppliedArgumentTypes) {
+  public SequenceType getResultType(final SequenceType[] suppliedArgumentTypes) {
     return SequenceType.ANY_SEQUENCE;
   }
 
@@ -127,7 +127,7 @@ public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
             query = new SQLQuery(engine,null,null,db,null,user,null);
         }
         
-        logger.info("sqlQueryExtFunction: " +queryString);
+        logger.info("sqlQueryExtFunction: {}", queryString);
         // SQLQuery query = new SQLQuery(queryString);
 
 //        Document doc = null;

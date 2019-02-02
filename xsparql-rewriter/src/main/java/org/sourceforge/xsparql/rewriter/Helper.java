@@ -52,19 +52,17 @@ import org.antlr.runtime.tree.DOTTreeGenerator;
 import org.antlr.runtime.tree.Tree;
 import org.antlr.stringtemplate.StringTemplate;
 
-import org.w3c.dom.*;
-import javax.xml.parsers.*;
-
+import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.apache.xerces.dom.DocumentImpl;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 /**
  * Class contains only some helper "functions" (static methods)
- * 
- * @author Stefan Bischof
- * @author Nuno Lopes
- * 
  */
 public class Helper {
   private final static Logger logger = Logger.getLogger(Helper.class.getClass()
@@ -72,14 +70,14 @@ public class Helper {
 
   /**
    * Output format of Graphviz dot.
-   * 
+   *
    * Use png|gif|jpg|svg|ps|pdf|...
    */
   private static final String DOTFORMAT = "pdf";
 
   /**
    * If String s starts with <code>lead</code>, remove <code>lead</code>
-   * 
+   *
    * @param s
    *          String
    * @param lead
@@ -96,7 +94,7 @@ public class Helper {
 
   /**
    * Write a String to an OutputStream
-   * 
+   *
    * @param str the string to be written
    * @param out the output stream
    * @throws IOException
@@ -110,7 +108,7 @@ public class Helper {
 
   /**
    * Write a Graphviz DOT created picture of an AST <code>tree</code> to a file
-   * 
+   *
    * @param tree
    */
   static void writeDotFile(final CommonTree tree, final String dotFile) {
@@ -164,9 +162,8 @@ public class Helper {
 
   /**
    * Print an AST to the console (recursive method)
-   * 
-   * @param tree
-   *          current subtree
+   *
+   * @param tree current subtree
    * @param spaces
    *          a string containing a number of spaces dependant on the
    *          indentation level
@@ -186,9 +183,8 @@ public class Helper {
 
   /**
    * Print an AST to the console
-   * 
-   * @param tree
-   *          The AST to print
+   *
+   * @param tree The AST to print
    */
   static void printTree(final Tree tree) {
     System.err.println("Tree");
@@ -198,9 +194,8 @@ public class Helper {
 
   /**
    * Returns an XML document from an XML string
-   * 
-   * @param xml
-   *          string representation of the XML
+   *
+   * @param xml string representation of the XML
    * @return XML Document
    */
   public static Document parseXMLString(String xml) {

@@ -40,9 +40,6 @@ package org.sourceforge.xsparql.rewriter;
 
 /**
  * Simple class to measure execution time
- * 
- * @author Stefan Bischof
- * 
  */
 class StopWatch {
   private long starttime = -1;
