@@ -43,16 +43,16 @@ import org.sourceforge.xsparql.xquery.XQueryEvaluator;
 
 public enum XQueryEngine {
   SAXONHE(new org.sourceforge.xsparql.xquery.saxon.xqueryEvaluatorSaxon(false)), 
-  SAXONEE(new org.sourceforge.xsparql.xquery.saxon.xqueryEvaluatorSaxon(true)), 
+  //SAXONEE(new org.sourceforge.xsparql.xquery.saxon.xqueryEvaluatorSaxon(true)),
   QEXO(new org.sourceforge.xsparql.xquery.saxon.xqueryEvaluatorSaxon(false));
 
-  private XQueryEvaluator xeval;
+  private XQueryEvaluator xQueryEvaluator;
 
-  private XQueryEngine(XQueryEvaluator xeval) {
-    this.xeval = xeval;
+  private XQueryEngine(XQueryEvaluator xQueryEvaluator) {
+    this.xQueryEvaluator = xQueryEvaluator;
   }
 
   public XQueryEvaluator getXQueryEvaluator() {
-    return xeval;
+    return xQueryEvaluator;
   }
 }

@@ -59,7 +59,7 @@ public class StaticSparqlFunctionBinder implements SparqlFunctionBinder {
 	}
 	
 	@Override
-	public void setParameter(String key, String value)
+	public void setParameter(final String key, final String value)
 			throws UnexpectedParameterException {
 		throw new UnexpectedParameterException(key, value);
 		

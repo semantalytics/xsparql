@@ -80,8 +80,7 @@ public class XSPARQLEvaluatorTest {
    * .
    */
   @Test
-  public void testEvaluateReaderOutputStream() {
-    try {
+  public void testEvaluateReaderOutputStream() throws Exception {
 
         if (filename.endsWith(".xsparql")) {
           System.out.println(filename);
@@ -92,15 +91,6 @@ public class XSPARQLEvaluatorTest {
           xe.evaluate(queryReader, o);
           // ignore the OutputStream for now
       }
-
-    } catch (RecognitionException e) {
-      fail("Exception: " + e.getMessage());
-    } catch (Exception e) {
-      ByteArrayOutputStream os = new ByteArrayOutputStream();
-      PrintStream ps = new PrintStream(os);
-      e.printStackTrace(ps);
-      fail("Exception: " + os.toString());
-    }
   }
 
   /**
