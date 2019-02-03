@@ -52,6 +52,8 @@ import java.util.Set;
 
 import javax.xml.transform.Source;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 import org.sourceforge.xsparql.sparql.binder.StaticSparqlFunctionBinder;
 import org.sourceforge.xsparql.sql.SQLQuery;
@@ -63,6 +65,8 @@ import org.sourceforge.xsparql.xquery.XQueryEvaluator;
  * <code>evaluateRewritten</code> method.
  */
 public final class XSPARQLEvaluator {
+
+	private static final Logger logger = LogManager.getLogger(XSPARQLEvaluator.class);
 
 	private SQLQuery sqlQuery = null;
 	private XSPARQLProcessor xsparqlProc;
@@ -165,6 +169,7 @@ public final class XSPARQLEvaluator {
 	public void evaluate(final Reader is, final Writer out) throws Exception {
 		xsparqlProc.setQueryFilename(this.queryFilename);
 		final String xquery = xsparqlProc.process(is);
+		logger.debug("XQuery: {}", xquery);
 		this.evaluateRewrittenQuery(new BufferedReader(new StringReader(xquery)), out);
 	}
 

@@ -147,12 +147,12 @@ public class XSPARQLEvaluatorDawg11Tests extends EvaluationTest {
 		}
 	}
 
-	@Ignore @Override @Test public void shouldEvaluateQueryWithGroundTruth() {
+	@Ignore @Override @Test public void shouldEvaluateQueryWithGroundTruth() throws Exception {
 		assumeTrue(solutionFile!=null);
 		super.shouldEvaluateQueryWithGroundTruth();
 	}
 
-	@Override @Test public void shouldEvaluateQueryWithoutGroundTruth() {
+	@Override @Test public void shouldEvaluateQueryWithoutGroundTruth() throws Exception {
 		assumeTrue(solutionFile!=null);
 		super.shouldEvaluateQueryWithoutGroundTruth();
 	}

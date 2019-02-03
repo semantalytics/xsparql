@@ -49,7 +49,6 @@ import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
 import org.sourceforge.xsparql.sql.SQLQuery;
 
-
 /**
  * Main XSPARQL rewriter translator class
  */

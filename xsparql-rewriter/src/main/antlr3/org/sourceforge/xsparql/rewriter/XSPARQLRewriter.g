@@ -3005,11 +3005,11 @@ literalConstruct
   | ^(T_LITERAL_CONSTRUCT INTEGER AT enclosedExpr)
   -> ^(T_FUNCTION_CALL
         NCNAME[bindingTermFunction]
-       ^(T_PARAMS 
+       ^(T_PARAMS
           QSTRING[""]
           INTEGER
           enclosedExpr
-          QSTRING["\"\""] 
+          QSTRING["\"\""]
         )
       )
   | ^(T_LITERAL_CONSTRUCT INTEGER CARET CARET iriConstruct)
@@ -3026,7 +3026,7 @@ literalConstruct
   | ^(T_LITERAL_CONSTRUCT QSTRING AT enclosedExpr)
   -> ^(T_FUNCTION_CALL
         NCNAME[bindingTermFunction]
-       ^(T_PARAMS 
+       ^(T_PARAMS
           QSTRING[""]
           QSTRING
           enclosedExpr
@@ -3036,7 +3036,7 @@ literalConstruct
   | ^(T_LITERAL_CONSTRUCT QSTRING c1=CARET c2=CARET iriConstruct )
   -> ^(T_FUNCTION_CALL
         NCNAME[bindingTermFunction]
-       ^(T_PARAMS 
+       ^(T_PARAMS
           QSTRING[""]
           QSTRING
           QSTRING[""]
@@ -3046,8 +3046,8 @@ literalConstruct
   | ^(T_LITERAL_CONSTRUCT enclosedExpr)
   -> ^(T_FUNCTION_CALL
         NCNAME[bindingTermFunction]
-       ^(T_PARAMS 
-          enclosedExpr 
+       ^(T_PARAMS
+          enclosedExpr
         )
       )
   ;
@@ -3080,7 +3080,7 @@ iriConstruct
 //                  ^(T_PARAMS ^(T_PAR enclosedExpr QSTRING[$c.token, $c.text] QSTRING[$q.text]))
 //                 )
           )
-        | q=qname 
+        | q=qname
           -> ^(T_FUNCTION_CALL
                NCNAME[serializeFunction]
                ^(T_PARAMS ^(T_PAR enclosedExpr QSTRING[$q.text]))
@@ -3103,11 +3103,11 @@ graphTerm
   ;
 
 blankConstruct
-  : b=BNODE_CONSTRUCT enclosedExpr 
+  : b=BNODE_CONSTRUCT enclosedExpr
   -> ^(T_FUNCTION_CALL
         NCNAME[bindingTermFunction]
-       ^(T_PARAMS 
-          QSTRING[$b.token, $b.text] 
+       ^(T_PARAMS
+          QSTRING[$b.token, $b.text]
           enclosedExpr
           QSTRING[""]
           QSTRING[""]
@@ -3181,7 +3181,7 @@ primaryExpression
   | booleanLiteral
   //| BLANK_NODE_LABEL // added in the implementation
   //| LBRACKET RBRACKET // added in the implementation
-  | var=VAR 
+  | var=VAR
   -> {isBoundEarlier($var.text, Types.SPARQL)}? ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS $var))
   -> {isBoundEarlier($var.text)}? ^(T_FUNCTION_CALL NCNAME[rdfTermFunction] ^(T_PARAMS ^(T_FUNCTION_CALL NCNAME[bindingTermFunction] ^(T_PARAMS $var))))
   -> QSTRING[$var.token, $var.text  ]
@@ -3304,60 +3304,60 @@ builtInCall
 
 aggregate
   : c=COUNT l=LPAR distinct? s=STAR r=RPAR
-  -> QSTRING[$c.token, $c.text] QSTRING[$l.token, $l.text] distinct? QSTRING[$s.token, $s.text] QSTRING[$r.token, $r.text] 
+  -> QSTRING[$c.token, $c.text] QSTRING[$l.token, $l.text] distinct? QSTRING[$s.token, $s.text] QSTRING[$r.token, $r.text]
   | c=COUNT l=LPAR distinct? expression r=RPAR
-  -> QSTRING[$c.token, $c.text] QSTRING[$l.token, $l.text]distinct?  expression QSTRING[$r.token, $r.text] 
+  -> QSTRING[$c.token, $c.text] QSTRING[$l.token, $l.text]distinct?  expression QSTRING[$r.token, $r.text]
   | s=SUM l=LPAR distinct? expression r=RPAR
-  -> QSTRING[$s.token, $s.text] QSTRING[$l.token, $l.text] distinct? expression QSTRING[$r.token, $r.text] 
+  -> QSTRING[$s.token, $s.text] QSTRING[$l.token, $l.text] distinct? expression QSTRING[$r.token, $r.text]
   | mi=MIN l=LPAR distinct? expression r=RPAR
-  -> QSTRING[$mi.token, $mi.text] QSTRING[$l.token, $l.text] distinct? expression QSTRING[$r.token, $r.text] 
+  -> QSTRING[$mi.token, $mi.text] QSTRING[$l.token, $l.text] distinct? expression QSTRING[$r.token, $r.text]
   | ma=MAX l=LPAR distinct? expression r=RPAR
-  -> QSTRING[$ma.token, $ma.text] QSTRING[$l.token, $l.text] distinct? expression QSTRING[$r.token, $r.text] 
+  -> QSTRING[$ma.token, $ma.text] QSTRING[$l.token, $l.text] distinct? expression QSTRING[$r.token, $r.text]
   | a=AVG l=LPAR distinct? expression r=RPAR
-  -> QSTRING[$a.token, $a.text] QSTRING[$l.token, $l.text] distinct? expression QSTRING[$r.token, $r.text] 
+  -> QSTRING[$a.token, $a.text] QSTRING[$l.token, $l.text] distinct? expression QSTRING[$r.token, $r.text]
   | sa=SAMPLE l=LPAR distinct? expression r=RPAR
-  -> QSTRING[$sa.token, $sa.text] QSTRING[$l.token, $l.text] distinct? expression QSTRING[$r.token, $r.text] 
+  -> QSTRING[$sa.token, $sa.text] QSTRING[$l.token, $l.text] distinct? expression QSTRING[$r.token, $r.text]
   | g=GROUP_CONCAT l=LPAR distinct? e=expression r=RPAR
-  -> QSTRING[$g.token, " " + $g.text] QSTRING[$l.token, $l.text] distinct? $e QSTRING[$r.token, $r.text] 
+  -> QSTRING[$g.token, " " + $g.text] QSTRING[$l.token, $l.text] distinct? $e QSTRING[$r.token, $r.text]
   | g=GROUP_CONCAT l=LPAR distinct? e=expression sem=SEMICOLON sep=SEPARATOR eq=EQUALS string r=RPAR
-  -> QSTRING[$g.token, " " + $g.text] QSTRING[$l.token, $l.text] distinct? $e QSTRING[$sem.token, $sem.text] QSTRING[$sep.token, $sep.text] QSTRING[$eq.token, $eq.text] string QSTRING[$r.token, $r.text] 
+  -> QSTRING[$g.token, " " + $g.text] QSTRING[$l.token, $l.text] distinct? $e QSTRING[$sem.token, $sem.text] QSTRING[$sep.token, $sep.text] QSTRING[$eq.token, $eq.text] string QSTRING[$r.token, $r.text]
   ;
 
 existsFunc
   : e=EXISTS groupGraphPattern
-  -> QSTRING[$e.token, " " + $e.text] groupGraphPattern  
+  -> QSTRING[$e.token, " " + $e.text] groupGraphPattern
   ;
-  
+
 notExistsFunc
   : ^(n=NOTKW e=EXISTS groupGraphPattern)
-  -> QSTRING[$n.token, " " + $n.text] QSTRING[$e.token, " " + $e.text] groupGraphPattern  
+  -> QSTRING[$n.token, " " + $n.text] QSTRING[$e.token, " " + $e.text] groupGraphPattern
   ;
 
 expressionList
   : nil
   | l=LPAR expression (COMMA expression)* r=RPAR
-  -> QSTRING[$l.token, $l.text] expression (QSTRING[", "] expression)* QSTRING[$r.token, $r.text] 
+  -> QSTRING[$l.token, $l.text] expression (QSTRING[", "] expression)* QSTRING[$r.token, $r.text]
   ;
 
 substringExpression
   : s=SUBSTR l=LPAR expression COMMA expression (COMMA expression)? r=RPAR
-  -> QSTRING[$s.token, $s.text] QSTRING[$l.token, $l.text] expression QSTRING[", "] expression (QSTRING[", "] expression)? QSTRING[$r.token, $r.text] 
+  -> QSTRING[$s.token, $s.text] QSTRING[$l.token, $l.text] expression QSTRING[", "] expression (QSTRING[", "] expression)? QSTRING[$r.token, $r.text]
   ;
-  
+
 
 strReplaceExpression
   : rep=REPLACE l=LPAR expression COMMA expression COMMA expression (COMMA expression)? r=RPAR
-  -> QSTRING[$rep.token, $rep.text] QSTRING[$l.token, $l.text] expression QSTRING[", "] expression QSTRING[", "] expression (QSTRING[", "] expression)? QSTRING[$r.token, $r.text] 
+  -> QSTRING[$rep.token, $rep.text] QSTRING[$l.token, $l.text] expression QSTRING[", "] expression QSTRING[", "] expression (QSTRING[", "] expression)? QSTRING[$r.token, $r.text]
   ;
 
 nil
   : l=LPAR r=RPAR
   -> QSTRING[$l.token, $l.text] QSTRING[$r.token, $r.text]
   ;
-  
+
 regexExpression
   : r=REGEX l=LPAR e1=expression c1=COMMA e2=expression (c2=COMMA  e3=expression)? r1=RPAR
-  -> QSTRING[$r.token, " " + $r.text] QSTRING[$l.token, $l.text] $e1 QSTRING[$c1.token, $c1.text] $e2 (QSTRING[$c2.token, $c2.text]  $e3)? QSTRING[$r1.token, $r1.text] 
+  -> QSTRING[$r.token, " " + $r.text] QSTRING[$l.token, $l.text] $e1 QSTRING[$c1.token, $c1.text] $e2 (QSTRING[$c2.token, $c2.text]  $e3)? QSTRING[$r1.token, $r1.text]
   ;
 
 iRIrefOrFunction
@@ -3365,11 +3365,11 @@ iRIrefOrFunction
   ;
 
 rdfLiteral
-  : q=QSTRING 
+  : q=QSTRING
   -> QSTRING[$q.token, "\"\""+$q.text+"\"\""]
-  | q=QSTRING a=AT n=NCNAME 
+  | q=QSTRING a=AT n=NCNAME
   -> QSTRING[$q.token, "\"\""+$q.text+"\"\""] QSTRING[$a.token, $a.text] QSTRING[$n.token, $n.text]
-  | q=QSTRING c1=CARET c2=CARET ( o=IRIREF |  o=PNAME_LN)  
+  | q=QSTRING c1=CARET c2=CARET ( o=IRIREF |  o=PNAME_LN)
   -> QSTRING[$q.token, "\"\""+$q.text+"\"\""] QSTRING[$c1.token, "^^"] QSTRING[$o.token, $o.text]
   ;
 
@@ -3387,9 +3387,9 @@ sNumericLiteral
   ;
 
 booleanLiteral
-  : t=TRUE 
+  : t=TRUE
   -> QSTRING[$t.token, $t.text]
-  | f=FALSE 
+  | f=FALSE
   -> QSTRING[$f.token, $f.text]
   ;
 
@@ -3400,7 +3400,7 @@ booleanLiteral
 //   | STRING_LITERAL_LONG2
 //   ;
 string
-  : QSTRING 
+  : QSTRING
 //  : STRING_LITERAL1 | STRING_LITERAL2 | STRING_LITERAL_LONG1 | STRING_LITERAL_LONG2;
   ;
 

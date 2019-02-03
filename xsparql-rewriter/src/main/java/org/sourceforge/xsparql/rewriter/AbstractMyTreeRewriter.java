@@ -47,8 +47,6 @@ import org.antlr.runtime.RecognitionException;
 /**
  * New <code>TreeRewriter</code> to enable output of rewriting actions using the
  * arrow <code>-&gt;</code> symbol.
- * 
- * @author Stefan Bischof
  */
 public abstract class AbstractMyTreeRewriter extends TreeRewriter {
   private static Logger logger = Logger.getLogger(AbstractMyTreeRewriter.class

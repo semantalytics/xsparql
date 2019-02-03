@@ -45,13 +45,14 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.io.StringReader;
-import java.util.logging.Logger;
 
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.DOTTreeGenerator;
 import org.antlr.runtime.tree.Tree;
 import org.antlr.stringtemplate.StringTemplate;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -65,8 +66,8 @@ import javax.xml.parsers.ParserConfigurationException;
  * Class contains only some helper "functions" (static methods)
  */
 public class Helper {
-  private final static Logger logger = Logger.getLogger(Helper.class.getClass()
-      .getName());
+
+  static final Logger logger = LogManager.getLogger(Helper.class);
 
   /**
    * Output format of Graphviz dot.
@@ -78,10 +79,8 @@ public class Helper {
   /**
    * If String s starts with <code>lead</code>, remove <code>lead</code>
    *
-   * @param s
-   *          String
-   * @param lead
-   *          Probable Leading of the String s
+   * @param s String
+   * @param lead Probable Leading of the String s
    * @return String s without lead or just s
    */
   public static String removeLeading(final String s, final String lead) {

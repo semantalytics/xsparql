@@ -77,7 +77,7 @@ public class XSPARQLEvaluatorBase11Tests extends EvaluationTest {
 			return data;
 	}
 
-	@Override @Test public void shouldEvaluateQueryWithoutGroundTruth() {
+	@Override @Test public void shouldEvaluateQueryWithoutGroundTruth() throws Exception {
 		super.shouldEvaluateQueryWithoutGroundTruth();
 	}
 	

@@ -43,7 +43,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +53,6 @@ import java.util.Set;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.antlr.runtime.RecognitionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.AfterClass;
@@ -106,64 +104,32 @@ public class EvaluationTest {
 	}
 	
 	@Test
-	public void shouldEvaluateQueryWithGroundTruth() {
-		XSPARQLEvaluator evalutor;
-		try{
-			Reader queryReader = Utils.loadReaderFromClasspath(queryFile);
-			evalutor = new XSPARQLEvaluator();
-			StringWriter out = new StringWriter();
-			evalutor.evaluate(queryReader, out);
-			solutions = new ArrayList<Map<String,String>>();
-			getXsparqlSolutions(new StringReader(out.toString()));
-	
-			checkSolutions();
-	
-		} catch (RecognitionException e) {
-			fail("Exception: " + e.getMessage());
-		} catch (Exception e) {
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			PrintStream ps = new PrintStream(os);
-			e.printStackTrace(ps);
-			fail("Exception: " + os.toString());
-		}
-	
+	public void shouldEvaluateQueryWithGroundTruth() throws Exception {
+	    evaluate();
+        checkSolutions();
 	}
 	
 	@Test
-	public void shouldEvaluateQueryWithoutGroundTruth() {
-		try {
-			XSPARQLEvaluator evalutor;
-			Reader queryReader = Utils.loadReaderFromClasspath(queryFile);
-			evalutor = new XSPARQLEvaluator();
-			StringWriter out = new StringWriter();
-			evalutor.evaluate(queryReader, out);
-			System.out.println(out.toString());
-		} catch (RecognitionException e) {
-			fail("Exception: " + e.getMessage());
-		} catch (Exception e) {
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			PrintStream ps = new PrintStream(os);
-			e.printStackTrace(ps);
-			fail("Exception: " + os.toString());
-		}
+	public void shouldEvaluateQueryWithoutGroundTruth() throws Exception {
+	    evaluate();
 	}
 
-	@BeforeClass public static void initRepository() {
+	private void evaluate() throws Exception{
+		XSPARQLEvaluator evalutor;
+		Reader queryReader = Utils.loadReaderFromClasspath(queryFile);
+		evalutor = new XSPARQLEvaluator();
+		StringWriter out = new StringWriter();
+		evalutor.evaluate(queryReader, out);
+	}
+
+	@BeforeClass public static void initRepository() throws RepositoryException {
 		repository = new SailRepository(new MemoryStore());
-		try {
-			repository.initialize();
-		} catch (RepositoryException e) {
-			e.printStackTrace();
-			fail();
-		}
-
+        repository.initialize();
 	}
 
 
-	@AfterClass public static void closeRepository() {
-		try {
+	@AfterClass public static void closeRepository() throws RepositoryException {
 			repository.getConnection().close();
-		} catch (RepositoryException e) {e.printStackTrace();}
 	}
 
 	@Before 

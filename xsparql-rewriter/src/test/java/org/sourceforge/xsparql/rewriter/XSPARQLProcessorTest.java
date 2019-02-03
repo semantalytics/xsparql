@@ -85,7 +85,6 @@ public class XSPARQLProcessorTest {
 
       for (String filename : listFiles("examples")) {
         if (filename.endsWith(".xsparql")) {
-          System.out.println("Testing " + filename + " ...");
           Reader queryReader = loadReaderFromClasspath(filename);
           processor.process(queryReader);
         }
@@ -109,6 +108,7 @@ public class XSPARQLProcessorTest {
    * @throws IOException
    */
   private List<String> listFiles(String dirname) {
+
     List<String> filenames = new LinkedList<String>();
 
     InputStream is = getClass().getClassLoader().getResourceAsStream(dirname);

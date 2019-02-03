@@ -1,7 +1,7 @@
 # this query uses unix line end conventions.
 # it is in cvs in binary.
 prefix : <http://example.org/ns#>
-prefix  xsd:    <http://www.w3.org/2001/xmlschema#> 
+prefix xsd: <http://www.w3.org/2001/XMLSchema/>
 
 <results>
 {for $x
