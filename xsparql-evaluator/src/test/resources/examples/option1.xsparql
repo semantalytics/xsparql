@@ -1,4 +1,4 @@
 declare namespace saxon="http://saxon.sf.net/";
-declare variable $x as xs:integer external := "value";
+declare variable $x as xs:integer external := 47;
 
 <value>{$x}</value>

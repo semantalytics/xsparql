@@ -42,11 +42,9 @@ import static org.junit.Assert.*;
 import static org.junit.runners.Parameterized.*;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -55,7 +53,6 @@ import java.util.*;
 
 import javax.xml.transform.stream.StreamSource;
 
-import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
