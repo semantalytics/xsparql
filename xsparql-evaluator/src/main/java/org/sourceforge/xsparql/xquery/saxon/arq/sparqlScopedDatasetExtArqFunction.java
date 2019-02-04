@@ -39,6 +39,7 @@
 package org.sourceforge.xsparql.xquery.saxon.arq;
 
 import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
 import org.apache.jena.query.ResultSet;
 import org.sourceforge.xsparql.XSPARQLUtils;
@@ -59,13 +60,13 @@ public class sparqlScopedDatasetExtArqFunction extends scopedDatasetPopResultsEx
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
-			public SequenceIterator call(SequenceIterator[] arguments,
-										 XPathContext context) throws XPathException {
+			public Sequence call(XPathContext context,
+								 Sequence[] arguments) throws XPathException {
 
-				final String query = arguments[0].next().getStringValue();
-				final String id = arguments[1].next().getStringValue();
-				final String joinVars = arguments[2].next().getStringValue();
-				final int position = new Integer(arguments[3].next().getStringValue()).intValue();
+				final String query = arguments[0].iterate().next().getStringValue();
+				final String id = arguments[1].iterate().next().getStringValue();
+				final String joinVars = arguments[2].iterate().next().getStringValue();
+				final int position = new Integer(arguments[3].iterate().next().getStringValue()).intValue();
 
 
 				final ResultSet resultSet = ScopedDatasetManager.sparqlScopedDataset(query,

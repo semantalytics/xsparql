@@ -41,6 +41,7 @@ package org.sourceforge.xsparql.xquery.saxon;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.value.SequenceType;
@@ -92,8 +93,8 @@ public class deleteScopedDatasetExtFunction extends ExtensionFunctionDefinition 
 		private static final long serialVersionUID = -3923384623083193752L;
 
 		@Override
-		public SequenceIterator<? extends Item> call(
-				SequenceIterator<? extends Item>[] arg0, XPathContext arg1)
+		public Sequence call(XPathContext context,
+                             Sequence[] arg0)
 				throws XPathException {
 			  throw new UnsupportedOperationException("A proper binding should be supplied");
 		}

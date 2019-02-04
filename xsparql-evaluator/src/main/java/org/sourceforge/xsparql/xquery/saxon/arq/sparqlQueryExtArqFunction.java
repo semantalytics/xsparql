@@ -41,6 +41,7 @@ package org.sourceforge.xsparql.xquery.saxon.arq;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
 
@@ -62,18 +63,18 @@ public class sparqlQueryExtArqFunction extends sparqlQueryExtFunction {
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
-			public SequenceIterator call(SequenceIterator[] arguments,
-					XPathContext context) throws XPathException {
+			public Sequence call(XPathContext context,
+								 Sequence[] arguments) throws XPathException {
 
-				String queryString = arguments[0].next().getStringValue();
+				String queryString = arguments[0].iterate().next().getStringValue();
 
-				SPARQLQuery query;
+				final SPARQLQuery query;
 				if(InMemoryDatasetManager.INSTANCE.isEmpty())
 					query = new SPARQLQuery(queryString);
 				else 
 					query = new SPARQLQuery(queryString, InMemoryDatasetManager.INSTANCE.getDataset());
 
-				ResultSet resultSet = query.getResults();
+				final ResultSet resultSet = query.getResults();
 
 				return XSPARQLUtils.resultSetToSequenceIterator(resultSet, context);
 			}
