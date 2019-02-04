@@ -98,27 +98,19 @@ public class XSPARQLEvaluatorTest {
    * {@link org.sourceforge.xsparql.evaluator.XSPARQLEvaluator#evaluate(Reader)}
    */
   @Test
-  public void testEvaluateString() {
-    try {
-      String elementname = "asdf";
-      String content = "lkj";
-      StringReader xml = new StringReader("<" + elementname + ">" + content
+  public void testEvaluateString() throws Exception {
+
+      final String elementname = "asdf";
+      final String content = "lkj";
+      final StringReader xml = new StringReader("<" + elementname + ">" + content
           + "</" + elementname + ">");
 
-      XSPARQLEvaluator xe = new XSPARQLEvaluator();
-      xe.setSource(new StreamSource(xml));
+      final StreamSource streamSource = new StreamSource(xml);
 
-      assertEquals(content,
-          xe.evaluate(new StringReader("/" + elementname + "/text()")));
+      final XSPARQLEvaluator xe = new XSPARQLEvaluator();
+      xe.setSource(streamSource);
 
-    } catch (RecognitionException e) {
-      fail("Exception: " + e.getMessage());
-    } catch (Exception e) {
-      ByteArrayOutputStream os = new ByteArrayOutputStream();
-      PrintStream ps = new PrintStream(os);
-      e.printStackTrace(ps);
-      fail("Exception: " + os.toString());
-    }
+      assertEquals(content, xe.evaluate(new StringReader("/" + elementname + "/text()")));
   }
 
   /**
