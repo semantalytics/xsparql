@@ -64,9 +64,6 @@ import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 
 /**
  * Main entry point for the commandline interface
- * 
- * @author Stefan Bischof
- * @author Nuno Lopes
  */
 public class Main {
 
@@ -86,11 +83,10 @@ public class Main {
   /**
    * Main application entry point
    * 
-   * @param args
-   *          Commandline arguments
+   * @param args Commandline arguments
    * @throws IOException
    */
-  public static void main(final String[] args) throws IOException {
+  public static void main(final String[] args) {
     Main main = new Main();
     
     main.parseOptions(args);
