@@ -157,8 +157,8 @@ varDecl(v1, v2, v3) ::= <<
 declare variable $v1$$if(v2)$ as $v2$$endif$ := $v3$;
 >>
 
-externalVarDecl(v1, v2) ::= <<
-declare variable $v1$$if(v2)$ as $v2$$endif$ external;
+externalVarDecl(v1, v2, v3) ::= <<
+declare variable $v1$$if(v2)$ as $v2$$endif$ external$if(v3)$ := $v3$$endif$;
 >>
 
 qstring(qs) ::= <<

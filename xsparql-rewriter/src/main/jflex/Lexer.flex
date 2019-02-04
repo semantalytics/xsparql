@@ -510,7 +510,6 @@ digit			  = [0-9]
 "strip"                  { return symbol(XSPARQL.STRIP, yytext()); }
 "variable"               { return symbol(XSPARQL.VARIABLE, yytext()); }
 "import"                 { return symbol(XSPARQL.IMPORT, yytext()); }
-"external"               { return symbol(XSPARQL.EXTERNAL, yytext()); }
 "no-preserve"            { return symbol(XSPARQL.NOPRESERVE, yytext()); }
 "preserve"               { return symbol(XSPARQL.PRESERVE, yytext()); }
 "construction"           { return symbol(XSPARQL.CONSTRUCTION, yytext()); }

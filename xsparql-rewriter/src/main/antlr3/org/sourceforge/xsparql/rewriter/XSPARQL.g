@@ -420,8 +420,8 @@ moduleImport
 varDecl
 @init {trace();}
   : DECLARE VARIABLE VAR typeDeclaration?
-  ( ASSIGN exprSingle -> ^(T_VARIABLE_DECL          VAR ^(T_TYPE typeDeclaration?) exprSingle)
-  | EXTERNAL          -> ^(T_EXTERNAL_VARIABLE_DECL VAR ^(T_TYPE typeDeclaration?)           )
+  ( ASSIGN exprSingle             -> ^(T_VARIABLE_DECL          VAR ^(T_TYPE typeDeclaration?) exprSingle)
+  | EXTERNAL (ASSIGN exprSingle)? -> ^(T_EXTERNAL_VARIABLE_DECL VAR ^(T_TYPE typeDeclaration?) exprSingle?)
   )
   ;
 

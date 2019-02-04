@@ -996,7 +996,7 @@ moduleImport
 
 varDecl
   : ^(T_VARIABLE_DECL var=VAR {addVariableToScope($var.text);} ^(T_TYPE typeDeclaration?) exprSingle)
-  | ^(T_EXTERNAL_VARIABLE_DECL var=VAR {addVariableToScope($var.text);} ^(T_TYPE typeDeclaration?))
+  | ^(T_EXTERNAL_VARIABLE_DECL var=VAR {addVariableToScope($var.text);} ^(T_TYPE typeDeclaration?) exprSingle?)
   ;
 
 constructionDecl

@@ -38,19 +38,18 @@
  */ 
 package org.sourceforge.xsparql.rewriter;
 
-import java.util.logging.Logger;
-
 import org.antlr.runtime.tree.*;
 import org.antlr.runtime.RecognizerSharedState;
 import org.antlr.runtime.RecognitionException;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * New <code>TreeRewriter</code> to enable output of rewriting actions using the
  * arrow <code>-&gt;</code> symbol.
  */
 public abstract class AbstractMyTreeRewriter extends TreeRewriter {
-  private static Logger logger = Logger.getLogger(AbstractMyTreeRewriter.class
-      .getClass().getName());
+  private static Logger logger = LogManager.getLogger(AbstractMyTreeRewriter.class);
 
   public AbstractMyTreeRewriter(TreeNodeStream input) {
     super(input);
@@ -65,7 +64,7 @@ public abstract class AbstractMyTreeRewriter extends TreeRewriter {
    * {@inheritDoc}
    */
   @Override
-  public Object applyOnce(Object t, fptr whichRule) {
+  public Object applyOnce(final Object t, final fptr whichRule) {
     if (t == null)
       return null;
     try {
