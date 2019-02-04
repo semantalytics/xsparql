@@ -45,7 +45,9 @@ import javax.xml.transform.stream.StreamSource;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.SingletonIterator;
@@ -104,8 +106,8 @@ public class getRDBTablesExtFunction extends ExtensionFunctionDefinition {
 
       @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
-      public SequenceIterator call(SequenceIterator[] arguments,
-          XPathContext context) throws XPathException {
+      public Sequence call(XPathContext context,
+              Sequence[] arguments) throws XPathException {
 
 //	        SQLQuery query = new SQLQuery();
 
@@ -121,9 +123,9 @@ public class getRDBTablesExtFunction extends ExtensionFunctionDefinition {
 	            new ByteArrayInputStream(doc.getBytes());
 
 
-	        return SingletonIterator.makeIterator(
+	        return SequenceTool.toLazySequence(SingletonIterator.makeIterator(
 	        	context.getConfiguration().buildDocument(
-	        		new StreamSource(inputStream)));
+	        		new StreamSource(inputStream))));
 
       }
     };

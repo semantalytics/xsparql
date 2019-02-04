@@ -45,7 +45,9 @@ import javax.xml.transform.stream.StreamSource;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.SingletonIterator;
@@ -95,14 +97,14 @@ public class jsonDocExtFunction extends ExtensionFunctionDefinition {
 
       @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
-      public SequenceIterator call(SequenceIterator[] arguments,
-          XPathContext context) throws XPathException {
+      public Sequence call(XPathContext context,
+              Sequence[] arguments) throws XPathException {
 
-        String url = arguments[0].next().getStringValue();
+        String url = arguments[0].iterate().next().getStringValue();
 
         String xml = EvaluatorExternalFunctions.jsonToXML(url);
-        return SingletonIterator.makeIterator(context.getConfiguration()
-            .buildDocument(new StreamSource(new ByteArrayInputStream(xml.getBytes()))));
+        return SequenceTool.toLazySequence(SingletonIterator.makeIterator(context.getConfiguration()
+            .buildDocument(new StreamSource(new ByteArrayInputStream(xml.getBytes())))));
 
       }
 

@@ -39,7 +39,9 @@
 package org.sourceforge.xsparql.xquery.saxon.arq;
 
 import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import org.sourceforge.xsparql.xquery.saxon.deleteScopedDatasetExtFunction;
 
 import net.sf.saxon.tree.iter.*;
@@ -58,14 +60,14 @@ public class deleteScopedDatasetExtArqFunction extends deleteScopedDatasetExtFun
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
-			public SequenceIterator call(SequenceIterator[] arguments,
-										 XPathContext context) throws XPathException {
+			public Sequence call(XPathContext context,
+								 Sequence[] arguments) throws XPathException {
 
-				String id = arguments[0].next().getStringValue();
+				String id = arguments[0].iterate().next().getStringValue();
 
 				ScopedDatasetManager.deleteScopedDataset(id);
 
-				return EmptyIterator.getInstance();
+				return SequenceTool.toLazySequence(EmptyIterator.getInstance());
 			}
 
 		};

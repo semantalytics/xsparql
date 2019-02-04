@@ -240,7 +240,7 @@ public class xqueryEvaluatorSaxon implements XQueryEvaluator {
 	}
 
 	private void initializeSerializer() {
-		serializer = new Serializer();
+		serializer = proc.newSerializer();
 		// can be xml, html, xhtml, or text.
 		// TODO: possibly add parameter to the command line.
 		serializer.setOutputProperty(Serializer.Property.OMIT_XML_DECLARATION,

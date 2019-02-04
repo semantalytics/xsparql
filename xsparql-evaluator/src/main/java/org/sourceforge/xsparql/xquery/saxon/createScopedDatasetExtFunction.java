@@ -43,6 +43,7 @@ import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
@@ -92,9 +93,8 @@ public class createScopedDatasetExtFunction extends ExtensionFunctionDefinition 
   public ExtensionFunctionCall makeCallExpression() {
 	  return new ExtensionFunctionCall() {
 		@Override
-		public SequenceIterator<? extends Item> call(
-				SequenceIterator<? extends Item>[] arg0, XPathContext arg1)
-				throws XPathException {
+		public Sequence call(XPathContext context,
+				Sequence[] arg0) throws XPathException {
 			  throw new UnsupportedOperationException("A proper binding should be supplied");
 		}
 	};

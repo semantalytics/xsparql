@@ -40,6 +40,7 @@ package org.sourceforge.xsparql.xquery.saxon.arq;
 
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.tree.iter.EmptyIterator;
@@ -100,14 +101,14 @@ public class scopedDatasetPopResultsExtArqFunction extends ExtensionFunctionDefi
 
       @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
-      public SequenceIterator call(SequenceIterator[] arguments,
-                                   XPathContext context) throws XPathException {
+      public Sequence call(XPathContext context,
+              Sequence[] arguments) throws XPathException {
 
-        final String id = arguments[0].next().getStringValue();
+        final String id = arguments[0].iterate().next().getStringValue();
 
         ScopedDatasetManager.scopedDatasetPopResults(id);
 
-        return EmptyIterator.getInstance();
+        return null;
       }
 
     };

@@ -39,6 +39,7 @@
 package org.sourceforge.xsparql.xquery.saxon.arq;
 
 import net.sf.saxon.lib.ExtensionFunctionCall;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.ResultSet;
@@ -61,11 +62,11 @@ public class createScopedDatasetExtArqFunction extends createScopedDatasetExtFun
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
-			public SequenceIterator call(final SequenceIterator[] arguments,
-										 final XPathContext context) throws XPathException {
+			public Sequence call(final XPathContext context,
+								 final Sequence[] arguments) throws XPathException {
 
-				final String query = arguments[0].next().getStringValue();
-				final String id = arguments[1].next().getStringValue();
+				final String query = arguments[0].iterate().next().getStringValue();
+				final String id = arguments[1].iterate().next().getStringValue();
 
 				final ResultSet resultSet = ScopedDatasetManager.createScopedDataset(QueryFactory.create(query), id);
 
