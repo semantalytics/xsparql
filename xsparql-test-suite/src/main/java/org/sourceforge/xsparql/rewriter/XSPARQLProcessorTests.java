@@ -41,6 +41,10 @@ import static org.junit.Assert.fail;
 import static org.junit.Assume.*;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.logging.LogManager;
 
 import org.antlr.runtime.CommonTokenStream;
@@ -73,8 +77,7 @@ public class XSPARQLProcessorTests {
 		    lexer.setDebug(true);
 	
 		    final CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-	
-//		    System.out.println(tokenStream);
+
 		    logger.debug("Start Parser for {}", filename);
 		    processor.setDebug(true);
 		    CommonTree tree = processor.parse(tokenStream);
@@ -96,7 +99,12 @@ public class XSPARQLProcessorTests {
 	
 		    CommonTree tree = processor.parse(tokenStream);
 		    assumeTrue(processor.getNumberOfSyntaxErrors()==0);
-		    Helper.printTree(tree);
+			try {
+				System.out.println("Query: " + Files.readAllLines(new File(filename).toPath()) );
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Helper.printTree(tree);
 		    
 		    logger.debug("Start Rewriter for {}", filename);
 		    processor.setDebugVersion(true);
@@ -106,7 +114,7 @@ public class XSPARQLProcessorTests {
 	
 		    assertEquals(0, processor.getNumberOfSyntaxErrors());
 		} catch (RecognitionException e) {
-			logger.error("Error while parsing the query "+filename, e);
+			logger.error("Error while parsing the query " + filename, e);
 			fail();
 		}
 	}

@@ -86,6 +86,21 @@ import java.util.Stack;
 %{
 
   private boolean debug = false;
+
+  private static final java.util.Map<Integer, String> state = new java.util.HashMap<>();
+
+  static {
+
+         java.lang.reflect.Field [] classFields = org.sourceforge.xsparql.rewriter.XSPARQLLexer.class.getFields();
+         for (int i = 0; i < classFields.length; i++) {
+           if (classFields[i].getInt(null) == state) {
+               try {
+                   String s = classFields[i].getName();
+                 state.put(i, s);
+                 } catch (Exception e) {}
+           }
+         }
+  }
   
   public void setDebug(boolean debug) {
     this.debug = debug;
@@ -155,22 +170,16 @@ import java.util.Stack;
     * Get the name of a state, like getTokenName
     */
    private static String getStateName(int state) {
-      try {
-         java.lang.reflect.Field [] classFields = org.sourceforge.xsparql.rewriter.XSPARQLLexer.class.getFields();
-         for (int i = 0; i < classFields.length; i++) {
-           if (classFields[i].getInt(null) == state) {
-             return classFields[i].getName();
-           }
-         }
-       } catch (Exception e) {
-         e.printStackTrace(System.err);
+       if(state.containsKey(state)) {
+           return state.get(state);
+       } else {
+           return "UNKNOWN STATE";
        }
 
-       return "UNKNOWN STATE";
    }
 
     private int getLine() {
-        return this.yyline+1;
+        return this.yyline + 1;
     }
 
     private int getColumn() {

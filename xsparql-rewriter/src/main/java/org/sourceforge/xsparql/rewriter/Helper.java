@@ -187,7 +187,8 @@ public class Helper {
   static void printTree(final Tree tree) {
     System.err.println("Tree");
     System.err.println();
-    printTree(tree, "");
+    //printTree(tree, "");
+    System.err.println(new TreePrinter().print(tree));
 
   }
 

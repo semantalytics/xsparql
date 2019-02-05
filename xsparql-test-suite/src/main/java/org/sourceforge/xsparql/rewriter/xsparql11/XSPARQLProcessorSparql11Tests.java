@@ -36,6 +36,7 @@
 
 package org.sourceforge.xsparql.rewriter.xsparql11;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -50,15 +51,19 @@ import org.sourceforge.xsparql.test.Utils;
 
 @RunWith(value = Parameterized.class)
 public class XSPARQLProcessorSparql11Tests extends XSPARQLProcessorTests {
-	public XSPARQLProcessorSparql11Tests(String filename){
+
+	private static final String TEST_DIR = "xsparql/testcases-sparql-1.1";
+	private static final String TEST_EXTENSION = ".xsparql";
+
+	public XSPARQLProcessorSparql11Tests(final String filename){
 		processor = new XSPARQLProcessor();
 		this.filename=filename;
 	}
 	
 	@Parameters(name = "{index} -> {0}")
 	public static Collection<Object[]> data() {
-		List<Object[]> data = new ArrayList<Object[]>();
-		for (String filename : Utils.listFiles(XSPARQLProcessorSparql11Tests.class.getClassLoader().getResource("xsparql/testcases-sparql-1.1").getFile(), ".xsparql", true)) {
+		final List<Object[]> data = new ArrayList<>();
+		for (final String filename : Utils.listFiles(XSPARQLProcessorSparql11Tests.class.getClassLoader().getResource(TEST_DIR).getFile(),TEST_EXTENSION, true)) {
 			data.add(new Object[]{filename});
 		}
 		return data;
