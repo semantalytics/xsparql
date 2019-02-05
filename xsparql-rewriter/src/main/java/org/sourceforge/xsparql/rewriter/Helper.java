@@ -163,9 +163,8 @@ public class Helper {
    * Print an AST to the console (recursive method)
    *
    * @param tree current subtree
-   * @param spaces
-   *          a string containing a number of spaces dependant on the
-   *          indentation level
+   * @param spaces a string containing a number of spaces dependant on the
+   *               indentation level
    */
   private static void printTree(final Tree tree, final String spaces) {
 
@@ -189,6 +188,7 @@ public class Helper {
     System.err.println("Tree");
     System.err.println();
     printTree(tree, "");
+
   }
 
   /**

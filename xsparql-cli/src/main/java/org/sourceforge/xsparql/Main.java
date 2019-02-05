@@ -94,9 +94,11 @@ public class Main {
         if (main.queryFiles.length > 0) {
             for (final File queryFile : main.queryFiles) {
                 try {
+
                     final Reader is = new FileReader(queryFile);
                     final String xquery = main.rewriteQuery(is, queryFile.getName());
                     main.postProcessing(xquery);
+
                 } catch (FileNotFoundException e) {
                     System.err.println("File not found: " + queryFile.getPath());
                 } catch (Exception e) {
@@ -182,6 +184,7 @@ public class Main {
             proc.setQueryFilename(filename);
 
             xquery = proc.process(is);
+
             numOfSyntaxErrors = proc.getNumberOfSyntaxErrors();
 
         } catch (Exception e) {

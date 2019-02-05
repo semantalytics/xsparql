@@ -179,8 +179,8 @@ public class XSPARQLProcessor {
     this.xqueryEngine = xqueryEngine;
   }
 
-  public void setQueryFilename(final String name) {
-    this.queryFilename = name;
+  public void setQueryFilename(final String queryFilename) {
+    this.queryFilename = queryFilename;
 
   }
 
@@ -196,8 +196,7 @@ public class XSPARQLProcessor {
    * @throws RecognitionException
    * @throws IOException
    */
-  public String process(final Reader is) throws RecognitionException,
-      IOException, Exception {
+  public String process(final Reader is) throws Exception {
     CommonTokenStream tokenStream = createTokenStream(is);
 
     if (this.numSyntaxErrors > 0) {
@@ -210,7 +209,7 @@ public class XSPARQLProcessor {
       throw new Exception("Errors for Parser. Translation aborted.");
     }
 
-    printAST(tree);
+    printAST(tree, queryFilename);
 
     tree = rewrite(tokenStream, tree);
 
@@ -218,7 +217,7 @@ public class XSPARQLProcessor {
       throw new Exception("Errors for Rewriter. Translation aborted.");
     }
 
-    printAST(tree);
+    printAST(tree, queryFilename);
 
     tree = simplify(tokenStream, tree);
 
@@ -226,7 +225,7 @@ public class XSPARQLProcessor {
       throw new Exception("Errors for Simplifier. Translation aborted.");
     }
 
-    printAST(tree);
+    printAST(tree, queryFilename);
 
     String xquery = serialize(tokenStream, tree);
 
@@ -242,15 +241,14 @@ public class XSPARQLProcessor {
    * Print the AST for debugging if the corresponding switches are set
    *
    * @param tree
+   * @param queryFilename
    */
-  private void printAST(final CommonTree tree) {
+  private void printAST(final CommonTree tree, final String queryFilename) {
    // TODO: Move to helper
     if (this.dot) {
-      Helper.writeDotFile(
-          tree,
-          this.queryFilename.concat(".").concat(
-              Integer.toString(tempFileCounter)));
-      tempFileCounter++;
+      Helper.writeDotFile(tree,
+                          queryFilename.concat(".").concat(Integer.toString(tempFileCounter)));
+                          tempFileCounter++;
     }
     if (this.ast) {
       Helper.printTree(tree);

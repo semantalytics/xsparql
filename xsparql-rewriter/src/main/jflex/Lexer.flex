@@ -183,7 +183,7 @@ import java.util.Stack;
         token.setCharPositionInLine(getColumn());
 
         if(this.debug) {
-           System.out.println("Line " + (yyline+1) + ", Col " + (yycolumn+1) + " in state " + getStateName(yystate()) + ": " + XSPARQL.tokenNames[type] + " \"" + text + "\"");
+           System.out.println("Line " + (yyline + 1) + ", Col " + (yycolumn + 1) + " in state " + getStateName(yystate()) + ": " + XSPARQL.tokenNames[type] + " \"" + text + "\"");
         }
         return token;
     }
@@ -194,7 +194,7 @@ import java.util.Stack;
         token.setCharPositionInLine(getColumn());
 
         if(this.debug) {
-           System.out.println("Line " + (yyline+1) + ", Col " + (yycolumn+1) + " in state " + getStateName(yystate()) + ": " + XSPARQL.tokenNames[type]);
+           System.out.println("Line " + (yyline + 1) + ", Col " + (yycolumn + 1) + " in state " + getStateName(yystate()) + ": " + XSPARQL.tokenNames[type]);
         }
         return token;
     }
