@@ -61,10 +61,6 @@ import org.sourceforge.xsparql.xquery.saxon.sparqlScopedDatasetExtFunction;
 import org.sourceforge.xsparql.xquery.saxon.sqlQueryExtFunction;
 import org.sourceforge.xsparql.xquery.saxon.turtleGraphToURIExtFunction;
 
-/**
- * @author Nuno Lopes
- *
- */
 public class XSQuery extends Query {
 
     /**
