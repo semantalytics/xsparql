@@ -127,7 +127,6 @@ import java.util.Stack;
       if(this.debug) {
          System.out.println("Push state");
       }
-      :
    }
 
    /*
