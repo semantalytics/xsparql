@@ -65,10 +65,6 @@ import org.sourceforge.xsparql.sparql.arq.DatasetResults;
 
 /**
  * Library of Java methods for usage from within XQuery queries when using Saxon
- * 
- * @author Stefan Bischof
- * @author Nuno Lopes
- * 
  */
 class EvaluatorExternalFunctions {
 
@@ -78,16 +74,11 @@ class EvaluatorExternalFunctions {
 
 	private static Dataset inMemoryDataset = null;
 
-	// ----------------------------------------------------------------------------------------------------
-	// constructed Dataset
-
 	/**
 	 * Saves string s to a local file.
 	 * 
-	 * @param prefix
-	 *          Turtle preamble
-	 * @param n3
-	 *          Turtle content
+	 * @param prefix Turtle preamble
+	 * @param n3 Turtle content
 	 * @return URI of local file containing string s
 	 */
 	public static String turtleGraphToURI(String prefix, String n3) {

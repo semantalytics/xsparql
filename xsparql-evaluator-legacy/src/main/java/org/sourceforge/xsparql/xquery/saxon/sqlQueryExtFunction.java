@@ -46,7 +46,9 @@ import javax.xml.transform.stream.StreamSource;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.SingletonIterator;
@@ -58,8 +60,6 @@ import org.sourceforge.xsparql.sql.SQLQuery;
 
 /**
  * Saxon External call for implementing SQL queries. 
- * 
- * @author Nuno Lopes
  */
 public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
 
@@ -71,13 +71,8 @@ public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
   private final static Logger logger = Logger.getLogger(XSPARQLProcessor.class
 	      .getClass().getName());
 
-    /**
-   * Name of the function
-   * 
-   */
   private static StructuredQName funcname = new StructuredQName("_xsparql",
       "http://xsparql.deri.org/demo/xquery/xsparql.xquery", "_sqlQuery");
-
 
   public sqlQueryExtFunction() {
       this.query = null;
@@ -121,15 +116,15 @@ public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-      public SequenceIterator call(SequenceIterator[] arguments,
-          XPathContext context) throws XPathException {
+      public Sequence call(XPathContext context,
+                           Sequence[] arguments) throws XPathException {
 
-        String queryString = arguments[0].next().getStringValue();
+        String queryString = arguments[0].iterate().next().getStringValue();
 
         if(query == null && arguments.length > 1) {
-            String db = arguments[1].next().getStringValue();
-            String engine = arguments[2].next().getStringValue();
-            String user = arguments[3].next().getStringValue();
+            String db = arguments[1].iterate().next().getStringValue();
+            String engine = arguments[2].iterate().next().getStringValue();
+            String user = arguments[3].iterate().next().getStringValue();
 //            String password = arguments[4].next().getStringValue();
             query = new SQLQuery(engine,null,null,db,null,user,null);
         }
@@ -152,7 +147,7 @@ public class sqlQueryExtFunction extends ExtensionFunctionDefinition {
             new ByteArrayInputStream(doc.getBytes());
 
 
-        return SingletonIterator.makeIterator(
+        return SequenceTool.asItem(
         	context.getConfiguration().buildDocument(
         		new StreamSource(inputStream)
 //        		new DOMSource(doc)

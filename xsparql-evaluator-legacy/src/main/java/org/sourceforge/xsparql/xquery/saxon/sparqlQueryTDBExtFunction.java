@@ -49,7 +49,9 @@ import javax.xml.transform.stream.StreamSource;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.SingletonIterator;
@@ -69,20 +71,10 @@ import org.apache.jena.util.FileManager;
 import org.apache.jena.util.FileUtils;
 import org.sourceforge.xsparql.sparql.arq.SPARQLQuery;
 
-/**
- * 
- * @author Nuno Lopes
- */
 public class sparqlQueryTDBExtFunction extends ExtensionFunctionDefinition {
 
-  /**
-	 * 
-	 */
   private static final long serialVersionUID = -4238279113552531635L;
-  /**
-   * Name of the function
-   * 
-   */
+
   private static StructuredQName funcname = new StructuredQName("_xsparql",
       "http://xsparql.deri.org/demo/xquery/xsparql.xquery", "_sparqlQueryTDB");
   private String location;
@@ -129,12 +121,12 @@ public class sparqlQueryTDBExtFunction extends ExtensionFunctionDefinition {
 
       @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
-      public SequenceIterator call(SequenceIterator[] arguments,
-          XPathContext context) throws XPathException {
+      public Sequence call(XPathContext context,
+                           Sequence[] arguments) throws XPathException {
         // TDB.setOptimizerWarningFlag(false);
 
-        String queryString = arguments[0].next().getStringValue();
-        String loc = arguments[1].next().getStringValue();
+        String queryString = arguments[0].iterate().next().getStringValue();
+        String loc = arguments[1].iterate().next().getStringValue();
         if (!loc.equals("")) {
           location = loc;
         }
@@ -159,8 +151,8 @@ public class sparqlQueryTDBExtFunction extends ExtensionFunctionDefinition {
         // Close the dataset.
         dataset.close();
 
-        return SingletonIterator.makeIterator(context.getConfiguration()
-            .buildDocument(new StreamSource(inputStream)));
+        return SequenceTool.asItem(context.getConfiguration()
+                .buildDocument(new StreamSource(inputStream)));
 
       }
 

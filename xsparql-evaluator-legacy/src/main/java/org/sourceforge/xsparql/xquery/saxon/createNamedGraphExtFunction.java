@@ -41,7 +41,9 @@ package org.sourceforge.xsparql.xquery.saxon;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ExtensionFunctionCall;
 import net.sf.saxon.lib.ExtensionFunctionDefinition;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.EmptyIterator;
@@ -51,10 +53,6 @@ import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.update.UpdateAction;
 
-/**
- * 
- * @author Nuno Lopes
- */
 public class createNamedGraphExtFunction extends ExtensionFunctionDefinition {
 
   private static final long serialVersionUID = 5099093796002792831L;
@@ -107,20 +105,17 @@ public class createNamedGraphExtFunction extends ExtensionFunctionDefinition {
 
     return new ExtensionFunctionCall() {
 
-      /**
-		 * 
-		 */
       private static final long serialVersionUID = -7278616556002243718L;
 
       @SuppressWarnings({ "unchecked", "rawtypes" })
       @Override
-      public SequenceIterator call(SequenceIterator[] arguments,
-          XPathContext context) throws XPathException {
+      public Sequence call(XPathContext context,
+                           Sequence[] arguments) throws XPathException {
 
-        String graphName = arguments[0].next().getStringValue();
-        String prefix = arguments[1].next().getStringValue();
-        String data = arguments[2].next().getStringValue();
-        String loc = arguments[3].next().getStringValue();
+        String graphName = arguments[0].iterate().next().getStringValue();
+        String prefix = arguments[1].iterate().next().getStringValue();
+        String data = arguments[2].iterate().next().getStringValue();
+        String loc = arguments[3].iterate().next().getStringValue();
         if (!loc.equals("")) {
           location = loc;
         }
@@ -150,7 +145,7 @@ public class createNamedGraphExtFunction extends ExtensionFunctionDefinition {
           System.exit(1);
         }
 
-        return EmptyIterator.getInstance();
+        return SequenceTool.toLazySequence(EmptyIterator.getInstance());
       }
 
     };
