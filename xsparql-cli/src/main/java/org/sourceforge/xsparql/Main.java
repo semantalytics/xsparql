@@ -56,6 +56,8 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.sourceforge.xsparql.evaluator.XSPARQLEvaluator;
 import org.sourceforge.xsparql.rewriter.Helper;
 import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
@@ -68,6 +70,7 @@ public class Main {
     /**
      * True if parse errors occured
      */
+    private static final Logger logger = LogManager.getLogger(Main.class);
     private boolean parseErrors = false;
     private File[] queryFiles;
     private File outputFile = null;
