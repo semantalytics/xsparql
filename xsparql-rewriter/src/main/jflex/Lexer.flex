@@ -316,9 +316,7 @@ digit = [0-9]
 \)         { return symbol(XSPARQL.RPAR, yytext()); }
 \;         { return symbol(XSPARQL.SEMICOLON, yytext()); }
 \"(\"\"|[^\"])*\" { return symbol(XSPARQL.QSTRING, yytext().substring(1, yytext().length()-1).replaceAll("\"", "\"\"")); }
-\'(\'\'|[^\'])*\' { String ret = yytext().replaceAll("\"", "\"\""); 
-             ret = ret.substring(1, ret.length()-1).replaceAll("''", "'"); 
-             return symbol(XSPARQL.QSTRING, ret); }
+\'(\'\'|[^\'])*\' { return symbol(XSPARQL.QSTRING, yytext().replaceAll("'''", "\"\"\"").substring(1, yytext().length()-1).replaceAll("\"", "\"\"")); }
 {digit}+     { return symbol(XSPARQL.INTEGER, yytext()); }
 /*"."{digit}+  { return symbol(XSPARQL.DECIMAL, yytext()); }*/
 /*[0-9]+"."[0-9]*  { return symbol(XSPARQL.DECIMAL, yytext()); }*/
