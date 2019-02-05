@@ -127,6 +127,7 @@ import java.util.Stack;
       if(this.debug) {
          System.out.println("Push state");
       }
+      switchState(state);
    }
 
    /*
@@ -231,7 +232,6 @@ import java.util.Stack;
 
 %xstates XQueryComment
 
-
 /*
   Macro Declarations
 
@@ -239,39 +239,51 @@ import java.util.Stack;
   in the Lexical Rules Section.
 */
 
-/* A line terminator is a \r (carriage return), \n (line feed), or
-   \r\n. */
+/* A line terminator is a \r (carriage return), \n (line feed), or \r\n. */
 LineTerminator    = \r|\n|\r\n
 
 /* White space is a line terminator, space, tab, or line feed. */
-WhiteSpace        = {LineTerminator} | [ \t\f]
+
+/* SPARQL10 [93] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
+/* SPARQL11 [162] https://www.w3.org/TR/sparql11-query/ */
+WhiteSpace = {LineTerminator} | [ \t\f]
 
 /* SPARQL10 [95] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
 /* SPARQL11 [164] https://www.w3.org/TR/sparql11-query/ */
-PN_CHARS_BASE     = [A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]
-
+PN_CHARS_BASE = [A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]
 
 /* SPARQL10 [96] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
 /* SPARQL11 [165] https://www.w3.org/TR/sparql11-query/ */
-PN_CHARS_U        = {PN_CHARS_BASE} | _
-
+PN_CHARS_U = {PN_CHARS_BASE} | _
 
 /* SPARQL10 [98] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
 /* SPARQL11 [167] https://www.w3.org/TR/sparql11-query/ */
-PN_CHARS          = {PN_CHARS_U} | - | [0-9]
+PN_CHARS = {PN_CHARS_U} | - | {digit} | \u00B7 | [\u0300-\u036F] | [\u203F-\u2040]
 
 /* SPARQL10 [99] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
 /* SPARQL11 [168] https://www.w3.org/TR/sparql11-query/ */
-PN_PREFIX         = {PN_CHARS_BASE} (({PN_CHARS}|\.)* {PN_CHARS})?
+PN_PREFIX = {PN_CHARS_BASE} (({PN_CHARS}|\.)* {PN_CHARS})?
 
 /* SPARQL10 [100] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
 /* SPARQL11 [169] https://www.w3.org/TR/sparql11-query/ */
-PN_LOCAL          = ( {PN_CHARS_U} | [0-9] ) (({PN_CHARS}|\.)* {PN_CHARS})?
+PN_LOCAL = ( {PN_CHARS_U} | [0-9] ) (({PN_CHARS}|\.)* {PN_CHARS})?
 
-iri               = < ([^<>\"\{\}\|\^`\\])* >
+/* SPARQL10 [70] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
+/* SPARQL11 [139] https://www.w3.org/TR/sparql11-query/ */
+/* TODO not sure if this is correct */
+iri = < ([^<>\"\{\}\|\^`\\])* >
 
-var               = [\$][a-zA-Z]([a-zA-Z0-9\_\-\.]*[a-zA-Z0-9\_\-]+)?
-digit			  = [0-9]
+/* SPARQL10 [75] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
+/* SPARQL11 [144] https://www.w3.org/TR/sparql11-query/ */
+var = [\$][a-zA-Z]([a-zA-Z0-9\_\-\.]*[a-zA-Z0-9\_\-]+)?
+
+/* SPARQL10 [97] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
+/* SPARQL11 [166] https://www.w3.org/TR/sparql11-query/ */
+/* included in definition of var */
+/* VARNAME */
+
+digit = [0-9]
+
 
 %%
 
