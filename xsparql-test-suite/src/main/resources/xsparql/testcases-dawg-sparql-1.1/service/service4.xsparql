@@ -6,7 +6,7 @@ prefix foaf: <http://xmlns.com/foaf/0.1/>
 {for $s $o1 $o2
 from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/service/data04.ttl> where{
   $s $p1 $o1 
-  optional { service <http://example.org/sparql> {$s foaf:knows $o2 }}
+  optional { service <http://dbpedia.org/sparql> {$s foaf:knows $o2 }}
 } values $o2 {
  :b
 }

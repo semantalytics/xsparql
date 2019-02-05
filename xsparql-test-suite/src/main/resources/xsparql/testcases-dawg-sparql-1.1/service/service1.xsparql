@@ -6,8 +6,11 @@ prefix : <http://example.org/>
 {for $s $o1 $o2 
 from <src/main/resources/xsparql/testcases-dawg-sparql-1.1/service/data01.ttl> where{
   $s $p1 $o1 .
-  service <http://example.org/sparql> {
-    $s $p2 $o2
+  service <http://dbpedia.org/sparql> {
+    select $s $p2 $o2 where {
+        $s $p2 $o2 }
+        limit 10
+    }
   }
 } 
 return 
