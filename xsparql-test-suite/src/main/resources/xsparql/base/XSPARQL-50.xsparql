@@ -1,5 +1,4 @@
-
-prefix mo: <http://purl.org/ontology/mo/> 
+prefix mo: <http://purl.org/ontology/mo/>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix foaf: <http://xmlns.com/foaf/0.1/> 
 prefix lfm: <http://purl.org/ontology/last-fm/> 
@@ -10,19 +9,21 @@ prefix event: <http://purl.org/NET/c4dm/event.owl#>
 prefix xs: <http://www.w3.org/2001/XMLSchema>
 prefix dbprop: <http://dbpedia.org/property/>
 
+declare variable $user := 'jacktrades';
 
-let $doc := fn:concat("http://ws.audioscrobbler.com/2.0/?method=user.gettopartists")
-  for $artist in doc($doc//artist)
+let $lastfm := fn:concat("http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&amp;api_key=16307daa8ce0d0cc1dab015e0fdab8ec&amp;user=", $user)
+
+  for $artist in doc($lastfm)//artist
   return
-  let $artistname := data($artist//name)
-  let $uri := xs:anyURI(fn:concat("http://dbpedia.org/resource/", fn:replace(fn:encode-for-uri($artistName), " ", "_"))
+  let $artistName := data($artist//name)
+  let $uri := xs:anyURI(fn:concat("http://dbpedia.org/resource/", fn:encode-for-uri(fn:replace($artistName, " ", "_"))))
   for $origin from $uri
   where { [] dbprop:origin $origin }
 
 return
       <artists>
         <artist>
-          <name>{$artistname}</name>
+          <name>{$artistName}</name>
           <origin>{$origin}</origin>
         </artist>
        </artists>
