@@ -292,9 +292,11 @@ scope SubQueryScope{
   private String basePrefix = null;
 
   private String getSPARQLBasePrefix() {
-    if(basePrefix == null)
+    if(basePrefix == null) {
       return "";
-    return "BASE <" + basePrefix + "> "+System.getProperties().getProperty("line.separator");
+    } else {
+      return "BASE <" + basePrefix + "> " + System.getProperties().getProperty("line.separator");
+    }
   }
 
   /** Add a namespace prefix and the corresponding IRI */
@@ -313,9 +315,7 @@ scope SubQueryScope{
         if(!key.equals(":")) {
            sb.append(":");
         }
-        sb.append(" <");
-        sb.append(namespaces.get(key));
-        sb.append("> ");
+        sb.append(" <").append(namespaces.get(key)).append("> ");
         sb.append(System.getProperties().getProperty("line.separator"));
      }
 
@@ -327,21 +327,17 @@ scope SubQueryScope{
      final StringBuffer sb = new StringBuffer();
      
      if (basePrefix != null) {
-        sb.append("@base <");
-        sb.append(basePrefix);
-        sb.append("> .");
+        sb.append("@base <").append(basePrefix).append("> .");
         sb.append(System.getProperties().getProperty("line.separator"));
      }
      
-     for(String key : namespaces.keySet()) {
+     for(final String key : namespaces.keySet()) {
         sb.append("@prefix ");
         sb.append(key);
         if(!key.equals(":")) {
            sb.append(":");
         }
-        sb.append(" <");
-        sb.append(namespaces.get(key));
-        sb.append("> . ");
+        sb.append(" <").append(namespaces.get(key)).append("> . ");
         sb.append(System.getProperties().getProperty("line.separator"));
      }
 
@@ -425,7 +421,6 @@ scope SubQueryScope{
     }
   }
 
-
   private void addPositionVariableToScope(final String name) {
     logger.entering(this.getClass().getCanonicalName(), "addPositionVariableToScope", name);
     $VariableScope::positions.add(name);
@@ -463,8 +458,6 @@ scope SubQueryScope{
     return containsVar(name, 2) != null;
   }
 
-
-
   private Types containsVar(final String name, int pos) {
     logger.entering(this.getClass().getCanonicalName(), "isBound", name);
     for(int s=$VariableScope.size()-pos; s >= 0; s--) {
@@ -501,7 +494,6 @@ scope SubQueryScope{
   // CONSTANTS
   private static final String xsparqlNamespace = "http://xsparql.deri.org/demo/xquery/xsparql.xquery";
 
-
   private static final String xsparqlAbbrev = "_xsparql";
   private static final String javaExternalAbbrev = "_java";
   private String javaExternalURL;
@@ -509,10 +501,10 @@ scope SubQueryScope{
   private static final String rdfTermFunction = xsparqlAbbrev + ":_rdf_term";
   private static final String bindingTermFunction = xsparqlAbbrev+":_binding_term";
 
-  private static String sparqlFunctionScopedCreate = xsparqlAbbrev+":createScopedDataset";
-  private static String sparqlFunctionScopedInner = xsparqlAbbrev+":sparqlScopedDataset";
-  private static String sparqlFunctionScopedDelete = xsparqlAbbrev+":deleteScopedDataset";
-  private static String sparqlFunctionScopedPop = xsparqlAbbrev+":scopedDatasetPopResults";
+  private static String sparqlFunctionScopedCreate = xsparqlAbbrev + ":createScopedDataset";
+  private static String sparqlFunctionScopedInner = xsparqlAbbrev + ":sparqlScopedDataset";
+  private static String sparqlFunctionScopedDelete = xsparqlAbbrev + ":deleteScopedDataset";
+  private static String sparqlFunctionScopedPop = xsparqlAbbrev + ":scopedDatasetPopResults";
 
   private String sparqlResultsFunctionNode;
   private static String storeGraphFunction;
@@ -521,9 +513,9 @@ scope SubQueryScope{
   private static final String schemaNamespace = "http://www.w3.org/2005/sparql-results#";
   private static String schemaURL = "http://xsparql.deri.org/demo/xquery/sparql.xsd";
 
-  private static final String validSubjectFunction = xsparqlAbbrev+":_validSubject";
-  private static final String validPredicateFunction = xsparqlAbbrev+":_validPredicate";
-  private static final String validObjectFunction = xsparqlAbbrev+":_validObject";
+  private static final String validSubjectFunction = xsparqlAbbrev + ":_validSubject";
+  private static final String validPredicateFunction = xsparqlAbbrev + ":_validPredicate";
+  private static final String validObjectFunction = xsparqlAbbrev + ":_validObject";
 
   private static final String sparqlNamespaceAbbrev = "xsparql";
   private static final String sparqlFunctionsNamespace = "http://xsparql.deri.org/demo/xquery/sparql-functions.xquery";
@@ -630,8 +622,8 @@ scope SubQueryScope{
       this.javaExternalURL = "class:org.deri.xquery.qexo.Sparql";
 
       if (this.sparqlmethod.equals("arq")) {
-        this.evaluationFunction = javaExternalAbbrev+":sparqlResultsIterator";
-        this.sparqlResultsFunctionNode = xsparqlAbbrev+":_sparqlResultsFromNode";
+        this.evaluationFunction = javaExternalAbbrev + ":sparqlResultsIterator";
+        this.sparqlResultsFunctionNode = xsparqlAbbrev + ":_sparqlResultsFromNode";
         this.iterationFunction = "iterator-items";
         externalFunctionAbbrev = javaExternalAbbrev;
       } 
@@ -650,11 +642,11 @@ scope SubQueryScope{
       }
     }
 
-    sparqlFunctionScopedCreate = externalFunctionAbbrev+":createScopedDataset";
-    sparqlFunctionScopedInner = externalFunctionAbbrev+":sparqlScopedDataset";
-    sparqlFunctionScopedDelete = externalFunctionAbbrev+":deleteScopedDataset";
-    sparqlFunctionScopedPop = externalFunctionAbbrev+":scopedDatasetPopResults";
-    storeGraphFunction = externalFunctionAbbrev+":turtleGraphToURI";
+    sparqlFunctionScopedCreate = externalFunctionAbbrev + ":createScopedDataset";
+    sparqlFunctionScopedInner = externalFunctionAbbrev + ":sparqlScopedDataset";
+    sparqlFunctionScopedDelete = externalFunctionAbbrev + ":deleteScopedDataset";
+    sparqlFunctionScopedPop = externalFunctionAbbrev + ":scopedDatasetPopResults";
+    storeGraphFunction = externalFunctionAbbrev + ":turtleGraphToURI";
   
   }
 

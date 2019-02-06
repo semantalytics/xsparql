@@ -36,16 +36,16 @@
 
 package org.sourceforge.xsparql.rewriter.xsparql11;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 import org.sourceforge.xsparql.rewriter.XSPARQLProcessorTests;
 import org.sourceforge.xsparql.test.Utils;
 
@@ -55,9 +55,8 @@ public class XSPARQLProcessorSparql11Tests extends XSPARQLProcessorTests {
 	private static final String TEST_DIR = "xsparql/testcases-sparql-1.1";
 	private static final String TEST_EXTENSION = ".xsparql";
 
-	public XSPARQLProcessorSparql11Tests(final String filename){
-		processor = new XSPARQLProcessor();
-		this.filename=filename;
+	public XSPARQLProcessorSparql11Tests(final String filename) {
+		this.filename = filename;
 	}
 	
 	@Parameters(name = "{index} -> {0}")
@@ -69,9 +68,9 @@ public class XSPARQLProcessorSparql11Tests extends XSPARQLProcessorTests {
 		return data;
 	}
 
-	@Test public void shouldParseQuery() { super.shouldParseQuery(); }
-	@Test public void shouldRewriteQuery() {super.shouldRewriteQuery(); }
-	@Test public void shouldSimplifyQuery() { super.shouldSimplifyQuery(); }
+	@Test public void shouldParseQuery() throws RecognitionException { super.shouldParseQuery(); }
+	@Test public void shouldRewriteQuery() throws IOException, RecognitionException { super.shouldRewriteQuery(); }
+	@Test public void shouldSimplifyQuery() throws RecognitionException { super.shouldSimplifyQuery(); }
 
 
 }

@@ -44,21 +44,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 import org.sourceforge.xsparql.rewriter.XSPARQLProcessorTests;
 import org.sourceforge.xsparql.test.Utils;
 
 @RunWith(value = Parameterized.class)
 public class XSPARQLProcessorSparql11NegativeTests extends XSPARQLProcessorTests {
-	public XSPARQLProcessorSparql11NegativeTests(String filename){
-		processor = new XSPARQLProcessor();
-		this.filename=filename;
+
+	public XSPARQLProcessorSparql11NegativeTests(final String filename) {
+		this.filename = filename;
 	}
 	
 	@Parameters(name = "{index} -> {0}")
 	public static Collection<Object[]> data() {
-		List<Object[]> data = new ArrayList<Object[]>();
-		for (String filename : Utils.listFiles(XSPARQLProcessorSparql11NegativeTests.class.getClassLoader().getResource("xsparql/base-1.1-negative").getFile(), ".xsparql", true)) {
+		final List<Object[]> data = new ArrayList<>();
+		final String dirName = XSPARQLProcessorSparql11NegativeTests.class.getClassLoader().getResource("xsparql/base-1.1-negative").getFile();
+		for (final String filename : Utils.listFiles(dirName, ".xsparql", true)) {
 			data.add(new Object[]{filename});
 		}
 		return data;

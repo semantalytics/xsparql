@@ -35,10 +35,6 @@
  */ 
 package org.sourceforge.xsparql.rewriter;
 
-import static org.junit.Assert.fail;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.io.Reader;
 import java.util.logging.Logger;
 
@@ -48,140 +44,82 @@ import org.antlr.runtime.RuleReturnScope;
 import org.antlr.runtime.tree.CommonTree;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.sourceforge.xsparql.rewriter.Helper;
-import org.sourceforge.xsparql.rewriter.XSPARQL;
-import org.sourceforge.xsparql.rewriter.XSPARQLLexer;
-import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 import org.sourceforge.xsparql.test.Utils;
 
 public class RewriterTest {
 	private final static Logger logger = Logger.getLogger(RewriterTest.class.toString());
 
 	@Ignore  @Test
-	public void testShouldProcessQuery() {
-		XSPARQLProcessor processor;
-		try {
-			System.out.println("Testing important_cities.xsparql...");
-//			Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "examples/distribution_simple.xsparql");
-			Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "examples/important-cities.xsparql");
-			processor = new XSPARQLProcessor();
-			processor.setAst(true);
-			processor.process(queryReader);
-
-		} catch (RecognitionException e) {
-			fail("Exception: " + e.getMessage());
-		} catch (Exception e) {
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			PrintStream ps = new PrintStream(os);
-			e.printStackTrace(ps);
-			fail("Exception: " + os.toString());
-		}
+	public void testShouldProcessQuery() throws Exception {
+		final XSPARQLProcessor processor;
+        System.out.println("Testing important_cities.xsparql...");
+        final Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "examples/important-cities.xsparql");
+        processor = new XSPARQLProcessor();
+        processor.setAst(true);
+        processor.process(queryReader);
 	}
 
 
 	@Test
-	public void testXSparqlParser() {
-		try {
+	public void testXSparqlParser() throws RecognitionException, Exception {
 			System.out.println("Testing important_cities.xsparql...");
-			Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "examples/distribution_simple.xsparql");
-			//			Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "examples/important-cities.xsparql");
-			CommonTokenStream tokenStream = createTokenStream(queryReader);
+			final Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "examples/distribution_simple.xsparql");
+			final CommonTokenStream tokenStream = createTokenStream(queryReader);
 
 			//the tokens are used to build the AST tree
-			CommonTree tree = parseXSparql(tokenStream);
+			final CommonTree tree = parseXSparql(tokenStream);
 			Helper.printTree(tree);
-
-		} catch (RecognitionException e) {
-			fail("Exception: " + e.getMessage());
-		} catch (Exception e) {
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			PrintStream ps = new PrintStream(os);
-			e.printStackTrace(ps);
-			fail("Exception: " + os.toString());
-		}
 	}
 
 	@Test
-	public void testXSparqlRewriter() {
-		try {
+	public void testXSparqlRewriter() throws RecognitionException {
 			System.out.println("Testing important_cities.xsparql...");
-			Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "examples/distribution_simple.xsparql");
-			//			Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "examples/important-cities.xsparql");
-			CommonTokenStream tokenStream = createTokenStream(queryReader);
-
-			//the tokens are used to build the AST tree
-			CommonTree tree = parseXSparql(tokenStream);
+			final Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "examples/distribution_simple.xsparql");
+			final CommonTokenStream tokenStream = createTokenStream(queryReader);
+			final CommonTree tree = parseXSparql(tokenStream);
 			Helper.printTree(tree);
 
-
-		} catch (RecognitionException e) {
-			fail("Exception: " + e.getMessage());
-		} catch (Exception e) {
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			PrintStream ps = new PrintStream(os);
-			e.printStackTrace(ps);
-			fail("Exception: " + os.toString());
-		}
 	}
 
 	@Ignore @Test
-	public void testSparqlParser() {
-		try {
+	public void testSparqlParser() throws RecognitionException {
 			System.out.println("Testing important_cities.xsparql...");
-			//			Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "examples/distribution_simple.xsparql");
-			Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "prova.sparql");
-			CommonTokenStream tokenStream = createTokenStream(queryReader);
+			final Reader queryReader = Utils.loadReaderFromClasspath(getClass(), "prova.sparql");
+			final CommonTokenStream tokenStream = createTokenStream(queryReader);
 
 			//the tokens are used to build the AST tree
-			CommonTree tree = parseSparql(tokenStream);
+			final CommonTree tree = parseSparql(tokenStream);
 			Helper.printTree(tree);
 
-		} catch (RecognitionException e) {
-			fail("Exception: " + e.getMessage());
-		} catch (Exception e) {
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			PrintStream ps = new PrintStream(os);
-			e.printStackTrace(ps);
-			fail("Exception: " + os.toString());
-		}
 	}
 
 	private CommonTree parseSparql(final CommonTokenStream tokenStream)
 			throws RecognitionException {
 		logger.info("Start Parser");
-		XSPARQL parser = new XSPARQL(tokenStream);
+		final XSPARQL parser = new XSPARQL(tokenStream);
 		parser.setDebug(true);
-
 		final RuleReturnScope r = parser.forletClause();
 		final CommonTree tree = (CommonTree) r.getTree();
-
 		logger.info("There are " + parser.getNumberOfSyntaxErrors() + " parser errors");
-
 		logger.info("End Parser");
 		return tree;
 	}
 
-	private CommonTree parseXSparql(final CommonTokenStream tokenStream)
-			throws RecognitionException {
+	private CommonTree parseXSparql(final CommonTokenStream tokenStream) throws RecognitionException {
 		logger.info("Start Parser");
-		XSPARQL parser = new XSPARQL(tokenStream);
+		final XSPARQL parser = new XSPARQL(tokenStream);
 		parser.setDebug(true);
-
 		final RuleReturnScope r = parser.mainModule();
 		final CommonTree tree = (CommonTree) r.getTree();
-
 		logger.info("There are " + parser.getNumberOfSyntaxErrors() + " parser errors");
-
 		logger.info("End Parser");
 		return tree;
 	}
 
-	private CommonTokenStream createTokenStream(final Reader is) {
+	private CommonTokenStream createTokenStream(final Reader reader) {
 		logger.info("Start Lexer");
-		final XSPARQLLexer lexer = new XSPARQLLexer(is);
-
+		final XSPARQLLexer lexer = new XSPARQLLexer(reader);
 		final CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-
 		logger.info("End Lexer");
 		return tokenStream;
 	}

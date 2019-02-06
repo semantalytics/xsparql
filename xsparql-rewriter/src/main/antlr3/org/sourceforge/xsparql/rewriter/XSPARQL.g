@@ -197,8 +197,8 @@ tokens {
   */
   private void trace() {
     if(this.debug) {
-      StackTraceElement[] stack = Thread.currentThread().getStackTrace();
-      StringBuffer sb = new StringBuffer();
+      final StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+      final StringBuffer sb = new StringBuffer();
 
       // add a number of spaces dependant on the current depth of the parse tree
       for(int i = 0; i < stack.length; i ++) {
@@ -206,7 +206,6 @@ tokens {
       }
 
       sb.append(stack[2].getMethodName());
-      // stack[1].getMethodName() would be "trace"
 
       sb.append(" - ");
       sb.append(getCurrentInputSymbol(input));
@@ -1681,6 +1680,7 @@ minusGraphPattern
   ;
 
 /* SPARQL 1.1 [67] */
+/* GroupOrUnionGraphPattern	  ::=  	GroupGraphPattern ( 'UNION' GroupGraphPattern )* */
 /* SPARQL [25] */
 groupOrUnionGraphPattern
 @init {trace();}

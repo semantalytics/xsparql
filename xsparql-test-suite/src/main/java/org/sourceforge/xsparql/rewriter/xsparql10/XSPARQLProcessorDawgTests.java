@@ -36,38 +36,39 @@
 
 package org.sourceforge.xsparql.rewriter.xsparql10;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Ignore;
+import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 import org.sourceforge.xsparql.rewriter.XSPARQLProcessorTests;
 import org.sourceforge.xsparql.test.Utils;
 
 @RunWith(value = Parameterized.class)
 public class XSPARQLProcessorDawgTests extends XSPARQLProcessorTests {
-	public XSPARQLProcessorDawgTests(String filename){
-		processor = new XSPARQLProcessor();
-		this.filename=filename;
+
+	public XSPARQLProcessorDawgTests(final String filename) {
+		this.filename = filename;
 	}
 	
 	@Parameters(name = "{index} -> {0}")
 	public static Collection<Object[]> data() {
-		List<Object[]> data = new ArrayList<Object[]>();
-		for (String filename : Utils.listFiles(XSPARQLProcessorDawgTests.class.getClassLoader().getResource("xsparql/testcases-dawg/data-r2/").getFile(), ".xsparql", true)) {
+		final List<Object[]> data = new ArrayList<>();
+		final String dirName = XSPARQLProcessorDawgTests.class.getClassLoader().getResource("xsparql/testcases-dawg/data-r2/").getFile();
+		for (final String filename : Utils.listFiles(dirName, ".xsparql", true)) {
 			System.out.println(filename);
 			data.add(new Object[]{filename});
 		}
 		return data;
 	}
 
-	@Test public void shouldParseQuery() { super.shouldParseQuery(); }
-	@Test public void shouldRewriteQuery() {super.shouldRewriteQuery(); }
-	@Test public void shouldSimplifyQuery() { super.shouldSimplifyQuery(); }
+	@Test public void shouldParseQuery() throws RecognitionException { super.shouldParseQuery(); }
+	@Test public void shouldRewriteQuery() throws IOException, RecognitionException {super.shouldRewriteQuery(); }
+	@Test public void shouldSimplifyQuery() throws RecognitionException { super.shouldSimplifyQuery(); }
 
 }

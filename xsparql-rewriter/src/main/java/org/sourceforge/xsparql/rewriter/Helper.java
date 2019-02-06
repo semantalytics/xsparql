@@ -166,6 +166,7 @@ public class Helper {
    * @param spaces a string containing a number of spaces dependant on the
    *               indentation level
    */
+  /*
   private static void printTree(final Tree tree, final String spaces) {
 
     if (tree == null) {
@@ -178,6 +179,7 @@ public class Helper {
       }
     }
   }
+  */
 
   /**
    * Print an AST to the console

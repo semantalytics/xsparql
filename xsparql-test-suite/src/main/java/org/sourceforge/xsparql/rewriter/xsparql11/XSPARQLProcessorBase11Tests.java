@@ -36,37 +36,39 @@
 
 package org.sourceforge.xsparql.rewriter.xsparql11;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 import org.sourceforge.xsparql.rewriter.XSPARQLProcessorTests;
 import org.sourceforge.xsparql.test.Utils;
 
 @RunWith(value = Parameterized.class)
 public class XSPARQLProcessorBase11Tests extends XSPARQLProcessorTests {
-	public XSPARQLProcessorBase11Tests(String filename){
-		processor = new XSPARQLProcessor();
-		this.filename=filename;
+
+	public XSPARQLProcessorBase11Tests(final String filename) {
+		this.filename = filename;
 	}
 	
 	@Parameters(name = "{index} -> {0}")
 	public static Collection<Object[]> data() {
-		List<Object[]> data = new ArrayList<Object[]>();
-		for (String filename : Utils.listFiles(XSPARQLProcessorBase11Tests.class.getClassLoader().getResource("xsparql/base-1.1").getFile(), ".xsparql", true)) {
+		List<Object[]> data = new ArrayList<>();
+		final String dirName = XSPARQLProcessorBase11Tests.class.getClassLoader().getResource("xsparql/base-1.1").getFile();
+		for (final String filename : Utils.listFiles(dirName, ".xsparql", true)) {
 			data.add(new Object[]{filename});
 		}
 		return data;
 	}
 
-	@Test public void shouldParseQuery() { super.shouldParseQuery(); }
-	@Test public void shouldRewriteQuery() {super.shouldRewriteQuery(); }
-	@Test public void shouldSimplifyQuery() { super.shouldSimplifyQuery(); }
+	@Test public void shouldParseQuery() throws RecognitionException { super.shouldParseQuery(); }
+	@Test public void shouldRewriteQuery() throws IOException, RecognitionException {super.shouldRewriteQuery(); }
+	@Test public void shouldSimplifyQuery() throws RecognitionException { super.shouldSimplifyQuery(); }
 		
 	/**
 	 * Test method for

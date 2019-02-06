@@ -44,8 +44,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.logging.LogManager;
 
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -56,23 +54,23 @@ import org.slf4j.LoggerFactory;
 import org.sourceforge.xsparql.test.Utils;
 
 public class XSPARQLProcessorTests {
+
 	private static final Logger logger  = LoggerFactory.getLogger(XSPARQLProcessorTests.class);
-	protected XSPARQLProcessor processor;
+	protected final XSPARQLProcessor processor;
 //	protected String filename = "src/main/resources/xsparql/testcases-dawg-sparql-1.1/aggregates/agg01.xsparql";
 	protected String filename = "src/main/resources/xsparql/axel.xsparql";
 //	protected String filename = "src/main/resources/xsparql/testcases-dawg-sparql-1.1/entailment/plainLit.xsparql";
 
-	public XSPARQLProcessorTests() {
-		super();
+    public XSPARQLProcessorTests() {
 		processor = new XSPARQLProcessor();
 		processor.setAst(true);
 	}
 
 	@Test
-	public void shouldParseQuery() {
-		try{
+	public void shouldParseQuery() throws RecognitionException {
+
 		    logger.debug("Parsing {}", filename);
-			BufferedReader is = Utils.loadReaderFromClasspath(filename);
+			final BufferedReader is = Utils.loadReaderFromClasspath(filename);
 		    final XSPARQLLexer lexer = new XSPARQLLexer(is);
 		    lexer.setDebug(true);
 	
@@ -83,105 +81,81 @@ public class XSPARQLProcessorTests {
 		    CommonTree tree = processor.parse(tokenStream);
 		    assertEquals(0, processor.getNumberOfSyntaxErrors());
 		    Helper.printTree(tree);
-		} catch (RecognitionException e) {
-			logger.error("Error while parsing the query "+filename, e);
-			fail();
-		}
 	}
 
 	@Test
-	public void shouldRewriteQuery() {
-		try{
-			BufferedReader is = Utils.loadReaderFromClasspath(filename);
+	public void shouldRewriteQuery() throws IOException, RecognitionException {
+
+			final BufferedReader is = Utils.loadReaderFromClasspath(filename);
 			
 		    final XSPARQLLexer lexer = new XSPARQLLexer(is);
 		    final CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 	
-		    CommonTree tree = processor.parse(tokenStream);
-		    assumeTrue(processor.getNumberOfSyntaxErrors()==0);
-			try {
-				System.out.println("Query: " + new String(Files.readAllBytes(new File(filename).toPath()) ));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			Helper.printTree(tree);
+		    final CommonTree queryTree = processor.parse(tokenStream);
+		    assumeTrue(processor.getNumberOfSyntaxErrors() == 0);
+            System.out.println("Query: " + new String(Files.readAllBytes(new File(filename).toPath()) ));
+			Helper.printTree(queryTree);
 		    
 		    logger.debug("Start Rewriter for {}", filename);
 		    processor.setDebugVersion(true);
 		    processor.setVerbose(true);
-			tree=processor.rewrite(tokenStream, tree);
-		    Helper.printTree(tree);
+			final CommonTree rewrittenTree = processor.rewrite(tokenStream, queryTree);
+		    Helper.printTree(rewrittenTree);
 	
 		    assertEquals(0, processor.getNumberOfSyntaxErrors());
-		} catch (RecognitionException e) {
-			logger.error("Error while parsing the query " + filename, e);
-			fail();
-		}
 	}
 
 	@Test
-	public void shouldSimplifyQuery() {
-		try{
-			BufferedReader is = Utils.loadReaderFromClasspath(filename);
+	public void shouldSimplifyQuery() throws RecognitionException {
+
+			final BufferedReader is = Utils.loadReaderFromClasspath(filename);
 			
 		    final XSPARQLLexer lexer = new XSPARQLLexer(is);
 		    final CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 	
-		    CommonTree tree = processor.parse(tokenStream);
-		    Helper.printTree(tree);
-		    assumeTrue(processor.getNumberOfSyntaxErrors()==0);
+		    final CommonTree queryTree = processor.parse(tokenStream);
+			System.out.println("Query tree:");
+		    Helper.printTree(queryTree);
+		    assumeTrue(processor.getNumberOfSyntaxErrors() == 0);
 		    
-			tree = processor.rewrite(tokenStream, tree);
-		    Helper.printTree(tree);
-			assumeTrue(processor.getNumberOfSyntaxErrors()==0);
+			final CommonTree rewrittenTree = processor.rewrite(tokenStream, queryTree);
+			System.out.println("Rewritten tree:");
+		    Helper.printTree(rewrittenTree);
+			assumeTrue(processor.getNumberOfSyntaxErrors() == 0);
 	
 		    logger.debug("Start Simplifier for {}", filename);
 		    processor.setDebug(true);
 		    processor.setVerbose(true);
-			tree = processor.simplify(tokenStream, tree);
+			CommonTree simplifiedTree = processor.simplify(tokenStream, rewrittenTree);
 		    assertEquals(0, processor.getNumberOfSyntaxErrors());
-		    Helper.printTree(tree);
-		} catch (RecognitionException e) {
-			logger.error("Error while parsing the query "+filename, e);
-			e.printStackTrace();
-			fail();
-		}
+		    System.out.println("Simplified tree:");
+		    Helper.printTree(simplifiedTree);
 	}
 
 	@Test
-	public void shouldSerialiseQuery() {
-		try{
+	public void shouldSerialiseQuery() throws RecognitionException, Exception {
 			BufferedReader is = Utils.loadReaderFromClasspath(filename);
 			
 		    final XSPARQLLexer lexer = new XSPARQLLexer(is);
 		    final CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 	
 		    CommonTree tree = processor.parse(tokenStream);
-		    assumeTrue(processor.getNumberOfSyntaxErrors()==0);
+		    assumeTrue(processor.getNumberOfSyntaxErrors() == 0);
 		    Helper.printTree(tree);
 		    
 			tree = processor.rewrite(tokenStream, tree);
-			assumeTrue(processor.getNumberOfSyntaxErrors()==0);
+			assumeTrue(processor.getNumberOfSyntaxErrors() == 0);
 		    Helper.printTree(tree);
 	
 		    logger.debug("Start Simplifier for {}", filename);
 			tree = processor.simplify(tokenStream, tree);
-			assumeTrue(processor.getNumberOfSyntaxErrors()==0);
+			assumeTrue(processor.getNumberOfSyntaxErrors() == 0);
 		    Helper.printTree(tree);
 
 			processor.setVerbose(true);
 			String query = processor.serialize(tokenStream, tree);
 			System.out.println(query);
 		    assertEquals(0, processor.getNumberOfSyntaxErrors());
-		} catch (RecognitionException e) {
-			logger.error("Error while parsing the query "+filename, e);
-			e.printStackTrace();
-			fail();
-		} catch (Exception e) {
-			logger.error("Error while serialising the query "+filename, e);
-			e.printStackTrace();
-			fail();
-		}
 	}
 
 	public void shouldNotParseQuery() {
@@ -194,7 +168,7 @@ public class XSPARQLProcessorTests {
 	
 		    logger.debug("Start Parser for {}", filename);
 		    processor.parse(tokenStream);
-		    assertTrue(processor.getNumberOfSyntaxErrors()>0);
+		    assertTrue(processor.getNumberOfSyntaxErrors() > 0);
 		} catch (RecognitionException e) {
 			logger.error("Error while parsing the query "+filename, e);
 			fail();
