@@ -100,7 +100,7 @@ public class XSPARQLProcessorTests {
 		    CommonTree tree = processor.parse(tokenStream);
 		    assumeTrue(processor.getNumberOfSyntaxErrors()==0);
 			try {
-				System.out.println("Query: " + Files.readAllLines(new File(filename).toPath()) );
+				System.out.println("Query: " + new String(Files.readAllBytes(new File(filename).toPath()) ));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
