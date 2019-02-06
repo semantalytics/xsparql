@@ -2703,7 +2703,10 @@ pathMod
   | s=PLUS
   -> QSTRING[$s.token, $s.text]
   ;
-  
+
+/* SPARQL11 [94] https://www.w3.org/TR/sparql11-query/ */
+/* PathPrimary ::= iri | 'a' | '!' PathNegatedPropertySet | '(' Path ')' */
+
 pathPrimary
   : resource
 //  : iRIref
@@ -2717,28 +2720,30 @@ pathPrimary
   -> QSTRING[$l.token, $l.text] path QSTRING[$r.token, $r.text]
   ;
 
+/* SPARQL11 [95] https://www.w3.org/TR/sparql11-query/ */
+/* PathNegatedPropertySet ::= PathOneInPropertySet | '(' ( PathOneInPropertySet ( '|' PathOneInPropertySet )* )? ')' */
+
 pathNegatedPropertySet
   : pathOneInPropertySet 
   | l=LPAR ( pathOneInPropertySet p+=pathNegatedPropertySetSub* )? r=RPAR
   -> QSTRING[$l.token, $l.text] (pathOneInPropertySet $p+)? QSTRING[$r.token, $r.text]
 //  -> QSTRING[$l.token, $l.text] pathOneInPropertySet ( QSTRING["|"] pathOneInPropertySet )* )?  QSTRING[$r.token, $r.text]
   ;
-  
+
 pathNegatedPropertySetSub
-  : u=UNIONSYMBOL pathOneInPropertySet
-  -> QSTRING[$u.token, $u.text] pathOneInPropertySet
+  : u=UNIONSYMBOL pathOneInPropertySet -> QSTRING[$u.token, $u.text] pathOneInPropertySet
   ;
 
+/* SPARQL11 [96] https://www.w3.org/TR/sparql11-query/ */
+/* PathOneInPropertySet	  ::=  	iri | 'a' | '^' ( iri | 'a' ) */
+
 pathOneInPropertySet
-  : i=IRIREF
-  -> QSTRING[$i.token, $i.text]
-  | sparqlPrefixedName 
-  | a=A
-  -> QSTRING[$a.token, $a.text]
-  | c=CARET iRIref 
-  -> QSTRING[$c.token, $c.text] iRIref
-  | c=CARET A 
-  -> QSTRING[$c.token, $c.text] QSTRING[$a.token, $a.text]
+  : i=IRIREF -> QSTRING[$i.token, $i.text]
+  | sparqlPrefixedName
+  | a=A -> QSTRING[$a.token, $a.text]
+  | c=CARET iRIref -> QSTRING[$c.token, $c.text] iRIref
+  | c=CARET A -> QSTRING[$c.token, $c.text]
+  | CARET sparqlPrefixedName
   ;
 
 propertyList
@@ -3463,7 +3468,6 @@ sparqlPrefixedName
   : p=PNAME_LN  -> QSTRING[$p.token, $p.text+" "]
   | p=PNAME_NS  -> QSTRING[$p.token, $p.text+" "]
   ;
-
 
 qname
   : prefixedName
