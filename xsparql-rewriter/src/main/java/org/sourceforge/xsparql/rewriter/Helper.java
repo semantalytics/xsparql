@@ -185,11 +185,7 @@ public class Helper {
    * @param tree The AST to print
    */
   static void printTree(final Tree tree) {
-    System.err.println("Tree");
-    System.err.println();
-    //printTree(tree, "");
-    System.err.println(new TreePrinter().print(tree));
-
+    System.out.println("\n" + new TreePrinter().print(tree));
   }
 
   /**
