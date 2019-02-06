@@ -11,7 +11,7 @@ public class TreePrinter {
     private final PrintStream ps = new PrintStream(os);
 
     public String print(final Tree tree) {
-
+        ps.println("Root");
         walk(tree, "");
         return os.toString();
     }
