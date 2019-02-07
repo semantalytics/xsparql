@@ -1,8 +1,7 @@
-prefix :     <http://example.org/ns#>
-prefix xsd:  <http://www.w3.org/2001/xmlschema#>
+prefix : <http://example.org/ns#>
 
 <results>
-{for * from <src/main/resources/xsparql/testcases-dawg/data-r2/basic/data-4.ttl> where{ :x a $c . }
+{for * from <src/main/resources/xsparql/testcases-dawg/data-r2/basic/data-4.ttl> where { :x a $c . }
 
 return 
  <result>

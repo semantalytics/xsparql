@@ -1,14 +1,13 @@
-prefix dc:   <http://purl.org/dc/elements/1.1/> 
-prefix :     <http://example.org/book/> 
-prefix ns:   <http://example.org/ns#> 
+prefix dc: <http://purl.org/dc/elements/1.1/>
+prefix ns: <http://example.org/ns#>
+prefix : <http://example.org/book/>
 
 <results>
 {for $book $title $price
-from <src/main/resources/xsparql/testcases-sparql-1.1/bindings/data-01.ttl> where{
+from <src/main/resources/xsparql/testcases-sparql-1.1/bindings/data-01.ttl> where {
    $book dc:title $title ;
          ns:price $price .
-}
-values $book {
+} values $book {
  (:book1)
 }
 return 
