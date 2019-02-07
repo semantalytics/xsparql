@@ -243,7 +243,11 @@ tokens {
 
 // $<XQuery
 
-/* XQuery [1] */
+/* XQuery10 https://www.w3.org/TR/2010/REC-xquery-20101214/ */
+/* XQuery30 https://www.w3.org/TR/xquery-30/#terminal-symbols */
+
+/* XQuery10 [1] Module ::= VersionDecl? (LibraryModule | MainModule) */
+/* XQuery30 [1] Module ::= VersionDecl? (LibraryModule | MainModule) */
 module
 @init {trace();}
   :  versionDecl? (libraryModule | mainModule);
@@ -461,28 +465,28 @@ enclosedExpr_
   : LCURLY expr RCURLY
   ;
 
-/* XQuery [30] */
-//queryBody  :  expr;
+/* XQuery10 [30] QueryBody ::= Expr */
+/* XQuery30 [38] QueryBody ::= Expr */
 queryBody
 @init{trace();}
-  : exprSingle (COMMA exprSingle)*
-  -> ^(T_QUERY_BODY ^(T_BODY_PART exprSingle)+ T_EPILOGUE)
+  : exprSingle (COMMA exprSingle)* -> ^(T_QUERY_BODY ^(T_BODY_PART exprSingle)+ T_EPILOGUE)
   ;
 
-/* XQuery [31] */
+/* XQuery10 [31]  */
 expr
 @init {trace();}
   : exprSingle (COMMA! exprSingle)*;
 
-/* XQuery [32] */
+/* XQuery10 [32] ExprSingle ::=	FLWORExpr | QuantifiedExpr | TypeswitchExpr | IfExpr | OrExpr */
+/* XQuery30 [40] ExprSingle ::= FLWORExpr | QuantifiedExpr | TypeswitchExpr | IfExpr | OrExpr | SwitchExpr | TryCatchExpr */
 exprSingle
 @init{trace();}
   : flworExpr
   | quantifiedExpr
   | typeSwitchExpr
-  | constructQuery // INSERT NONSTANDARD
-  | orExpr
   | ifExpr
+  | orExpr
+  | constructQuery // INSERT NONSTANDARD
   ;
 
 /* XQuery [33] */
@@ -704,7 +708,8 @@ orderModifier
   : (ASCENDING | DESCENDING)? (EMPTY (GREATEST | LEAST))? (COLLATION uriliteral)?
   ;
 
-/* XQuery [42] */
+/* XQuery10 [42] QuantifiedExpr ::= ("some" | "every") "$" VarName TypeDeclaration? "in" ExprSingle ("," "$" VarName TypeDeclaration? "in" ExprSingle)* "satisfies" ExprSingle */
+/* XQuery30 [70] QuantifiedExpr ::= ("some" | "every") "$" VarName TypeDeclaration? "in" ExprSingle ("," "$" VarName TypeDeclaration? "in" ExprSingle)* "satisfies" ExprSingle */
 quantifiedExpr
 @init {trace();}
   : (op=SOME | op=EVERY) v1=VAR t1=typeDeclaration? IN e1=exprSingle
@@ -1409,6 +1414,7 @@ prefixDecl
 
 
 /* SPARQL 1.1 [8] */
+/* SubSelect ::= SelectClause WhereClause SolutionModifier ValuesClause */
 subSelect
 @init {trace();}
 @after {if(state.backtracking==0){ subQueryInScopeVars.pop(); } }
@@ -1577,35 +1583,38 @@ triplesTemplate
   ;
 
 /* SPARQL 1.1 [53] */
+/* GroupGraphPattern ::= '{' ( SubSelect | GroupGraphPatternSub ) '}' */
 groupGraphPattern
 @init {trace();}
-  : LCURLY! (subSelect|groupGraphPatternSub) RCURLY!
-//  | LCURLY RCURLY
+  : LCURLY! (subSelect | groupGraphPatternSub) RCURLY!
   ;
 
 /* SPARQL 1.1 [54] */
+/* GroupGraphPatternSub ::= TriplesBlock? ( GraphPatternNotTriples '.'? TriplesBlock? )* */
 /* SPARQL [20] as groupGraphPattern */
 groupGraphPatternSub
 @init {trace();}
-  : triplesBlock? ((graphPatternNotTriples | filter) DOT!? triplesBlock?)*
-//  | ((graphPatternNotTriples | filter) DOT!? triplesBlock?)+
+  : triplesBlock? (( graphPatternNotTriples | filter) DOT!? triplesBlock? )*
   ;
+  //TODO why is filter included here????
 
 /* SPARQL 1.1 [55] */
+/* TriplesBlock ::= TriplesSameSubjectPath ( '.' TriplesBlock? )? */
 /* SPARQL [21] */
 triplesBlock
 @init {trace();}
-  : triplesSameSubjectPath (DOT! triplesBlock?)?
+  : triplesSameSubjectPath ( DOT! triplesBlock? )?
   ;
 
-/* SPARQL 1.1 [56] */
-/* SPARQL [22] */
+/* SPARQL1.1 [56] */
+/* GraphPatternNotTriples ::= GroupOrUnionGraphPattern | OptionalGraphPattern | MinusGraphPattern | GraphGraphPattern | ServiceGraphPattern | Filter | Bind | InlineData */
+/* SPARQL1.0 [22] */
 graphPatternNotTriples
 @init {trace();}
-  : optionalGraphPattern
-  | groupOrUnionGraphPattern
-  | graphGraphPattern
+  : groupOrUnionGraphPattern
+  | optionalGraphPattern
   | minusGraphPattern
+  | graphGraphPattern
   | serviceGraphPattern
   | bind
   | inlineData
@@ -1674,18 +1683,19 @@ dataBlockValue
   ;
 
 /* SPARQL 1.1 [66] */
+/* 	MinusGraphPattern ::= 'MINUS' GroupGraphPattern */
 minusGraphPattern
 @init {trace();}
   : MINUS^ groupGraphPattern
   ;
 
-/* SPARQL 1.1 [67] */
+/* SPARQL11 [67] */
 /* GroupOrUnionGraphPattern	  ::=  	GroupGraphPattern ( 'UNION' GroupGraphPattern )* */
-/* SPARQL [25] */
+/* SPARQL10 [25] */
 groupOrUnionGraphPattern
 @init {trace();}
-  : (groupGraphPattern -> groupGraphPattern) 
-    ((UNION groupGraphPattern)+ -> ^(UNION ^(T_UNION $groupOrUnionGraphPattern) ^(T_UNION groupGraphPattern)+))? 
+  : (groupGraphPattern -> groupGraphPattern)
+  ((UNION groupGraphPattern)+ -> ^(UNION ^(T_UNION $groupOrUnionGraphPattern) ^(T_UNION groupGraphPattern)+))?
   ;
 
 /* SPARQL 1.1 [68] */
