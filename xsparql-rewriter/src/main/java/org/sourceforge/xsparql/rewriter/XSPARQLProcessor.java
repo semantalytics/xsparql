@@ -281,7 +281,7 @@ public class XSPARQLProcessor {
   CommonTree parse(final CommonTokenStream tokenStream)
       throws RecognitionException {
     logger.info("Start Parser");
-    XSPARQL parser = new XSPARQL(tokenStream);
+    final XSPARQL parser = new XSPARQL(tokenStream);
     parser.setDebug(this.debug);
 
     final RuleReturnScope r = parser.mainModule();
