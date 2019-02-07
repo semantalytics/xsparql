@@ -2319,7 +2319,7 @@ serviceGraphPattern
 
 groupOrUnionGraphPattern
   : ^(u=UNION ^(T_UNION g1=groupGraphPattern) (^(T_UNION g2+=groupGraphPattern))+)
-  -> QSTRING[" { "] $g1 (QSTRING[$u.token," } \n" + $u.text + " { "] $g2)+ QSTRING[" } "]
+  -> QSTRING[" { "] $g1 (QSTRING[$u.token," } \n" + $u.text + " { "] $g2) + QSTRING[" } "]
 //  | groupGraphPattern
 //  -> QSTRING[" { "] groupGraphPattern QSTRING[" } "]
 //  | subSelect
