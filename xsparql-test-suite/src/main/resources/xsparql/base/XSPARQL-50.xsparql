@@ -13,7 +13,7 @@ declare variable $user := 'jacktrades';
 
 let $lastfm := fn:concat("http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&amp;api_key=16307daa8ce0d0cc1dab015e0fdab8ec&amp;user=", $user)
 
-  for $artist in doc($lastfm)//artist
+  for $artist in doc($lastfm)//artist[position lt 2]
   return
   let $artistName := data($artist//name)
   let $uri := xs:anyURI(fn:concat("http://dbpedia.org/resource/", fn:encode-for-uri(fn:replace($artistName, " ", "_"))))
