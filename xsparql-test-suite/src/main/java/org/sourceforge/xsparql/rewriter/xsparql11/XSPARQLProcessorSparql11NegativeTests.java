@@ -40,29 +40,42 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.antlr.runtime.RecognitionException;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 import org.sourceforge.xsparql.rewriter.XSPARQLProcessorTests;
 import org.sourceforge.xsparql.test.Utils;
 
 @RunWith(value = Parameterized.class)
 public class XSPARQLProcessorSparql11NegativeTests extends XSPARQLProcessorTests {
 
+	private static final String TEST_DIR = "xsparql/base-1.1-negative";
+
 	public XSPARQLProcessorSparql11NegativeTests(final String filename) {
 		this.filename = filename;
+		this.processor = new XSPARQLProcessor();
 	}
-	
+
+	@Before
+	public void setUp() {
+		processor.setAst(true);
+	}
+
 	@Parameters(name = "{index} -> {0}")
 	public static Collection<Object[]> data() {
 		final List<Object[]> data = new ArrayList<>();
-		final String dirName = XSPARQLProcessorSparql11NegativeTests.class.getClassLoader().getResource("xsparql/base-1.1-negative").getFile();
+		final ClassLoader classLoader = XSPARQLProcessorSparql11NegativeTests.class.getClassLoader();
+		final String dirName = classLoader.getResource(TEST_DIR).getFile();
+
 		for (final String filename : Utils.listFiles(dirName, ".xsparql", true)) {
 			data.add(new Object[]{filename});
 		}
 		return data;
 	}
 
-	@Test public void shouldNotParseQuery() { super.shouldNotParseQuery(); }
+	@Test public void shouldNotParseQuery() throws RecognitionException { super.shouldNotParseQuery(); }
 }

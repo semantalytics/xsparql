@@ -46,6 +46,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.sourceforge.xsparql.rewriter.XSPARQLProcessor;
 import org.sourceforge.xsparql.rewriter.XSPARQLProcessorTests;
 import org.sourceforge.xsparql.test.Utils;
 
@@ -56,6 +57,7 @@ public class XSPARQLProcessorSparql11Tests extends XSPARQLProcessorTests {
 	private static final String TEST_EXTENSION = ".xsparql";
 
 	public XSPARQLProcessorSparql11Tests(final String filename) {
+		this.processor = new XSPARQLProcessor();
 		this.filename = filename;
 	}
 	

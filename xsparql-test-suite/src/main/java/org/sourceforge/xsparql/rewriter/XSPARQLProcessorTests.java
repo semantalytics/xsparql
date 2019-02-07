@@ -37,7 +37,6 @@ package org.sourceforge.xsparql.rewriter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.junit.Assume.*;
 
 import java.io.BufferedReader;
@@ -48,25 +47,16 @@ import java.nio.file.Files;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sourceforge.xsparql.test.Utils;
 
-public class XSPARQLProcessorTests {
+public abstract class XSPARQLProcessorTests {
 
 	private static final Logger logger  = LoggerFactory.getLogger(XSPARQLProcessorTests.class);
-	protected final XSPARQLProcessor processor;
-//	protected String filename = "src/main/resources/xsparql/testcases-dawg-sparql-1.1/aggregates/agg01.xsparql";
-	protected String filename = "src/main/resources/xsparql/axel.xsparql";
-//	protected String filename = "src/main/resources/xsparql/testcases-dawg-sparql-1.1/entailment/plainLit.xsparql";
+	protected XSPARQLProcessor processor;
+	protected String filename;
 
-    public XSPARQLProcessorTests() {
-		processor = new XSPARQLProcessor();
-		processor.setAst(true);
-	}
-
-	@Test
 	public void shouldParseQuery() throws RecognitionException {
 
 		    logger.debug("Parsing {}", filename);
@@ -83,7 +73,6 @@ public class XSPARQLProcessorTests {
 		    Helper.printTree(tree);
 	}
 
-	@Test
 	public void shouldRewriteQuery() throws IOException, RecognitionException {
 
 			final BufferedReader is = Utils.loadReaderFromClasspath(filename);
@@ -105,7 +94,6 @@ public class XSPARQLProcessorTests {
 		    assertEquals(0, processor.getNumberOfSyntaxErrors());
 	}
 
-	@Test
 	public void shouldSimplifyQuery() throws RecognitionException {
 
 			final BufferedReader is = Utils.loadReaderFromClasspath(filename);
@@ -132,7 +120,6 @@ public class XSPARQLProcessorTests {
 		    Helper.printTree(simplifiedTree);
 	}
 
-	@Test
 	public void shouldSerialiseQuery() throws RecognitionException, Exception {
 			BufferedReader is = Utils.loadReaderFromClasspath(filename);
 			
@@ -158,8 +145,7 @@ public class XSPARQLProcessorTests {
 		    assertEquals(0, processor.getNumberOfSyntaxErrors());
 	}
 
-	public void shouldNotParseQuery() {
-		try{
+	public void shouldNotParseQuery() throws RecognitionException {
 			BufferedReader is = Utils.loadReaderFromClasspath(filename);
 		    logger.debug("Start Lexer for {}", filename);
 		    final XSPARQLLexer lexer = new XSPARQLLexer(is);
@@ -169,9 +155,5 @@ public class XSPARQLProcessorTests {
 		    logger.debug("Start Parser for {}", filename);
 		    processor.parse(tokenStream);
 		    assertTrue(processor.getNumberOfSyntaxErrors() > 0);
-		} catch (RecognitionException e) {
-			logger.error("Error while parsing the query "+filename, e);
-			fail();
-		}
 	}
 }
