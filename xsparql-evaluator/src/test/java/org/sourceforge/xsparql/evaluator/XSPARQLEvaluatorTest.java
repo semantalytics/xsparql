@@ -60,9 +60,9 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class XSPARQLEvaluatorTest {
 
-  private String filename;
+  private final String filename;
 
-  public XSPARQLEvaluatorTest(String filename) {
+  public XSPARQLEvaluatorTest(final String filename) {
     this.filename = filename;
   }
 
