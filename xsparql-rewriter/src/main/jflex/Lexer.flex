@@ -86,21 +86,22 @@ import java.util.Stack;
 %{
 
   private boolean debug = false;
-
   private static final java.util.Map<Integer, String> states = new java.util.HashMap<>();
+  private Stack<Integer> stateStack = new Stack<>();
 
   static {
 
-         java.lang.reflect.Field [] classFields = org.sourceforge.xsparql.rewriter.XSPARQLLexer.class.getFields();
+         java.lang.reflect.Field [] classFields = org.sourceforge.xsparql.rewriter.XSPARQLLexer.class.getDeclaredFields();
          for (int i = 0; i < classFields.length; i++) {
                try {
-                 final String s = classFields[i].getName();
-                 states.put(i, s);
-                 } catch (Exception e) {}
+                 final int fieldValue = classFields[i].getInt(null);
+                 final String fieldName = classFields[i].getName();
+                 states.put(fieldValue, fieldName);
+                 } catch (Exception e) { }
            }
   }
   
-  public void setDebug(boolean debug) {
+  public void setDebug(final boolean debug) {
     this.debug = debug;
   }
 
@@ -125,20 +126,15 @@ import java.util.Stack;
 	  return "JFlex lexer - unknown source";
  	}
 
-   /**
-    * Stack for Lexer states
-    */
-   private Stack<Integer> stateStack = new Stack<Integer>();
-
    /*
     * Push current state to stack and change to state
     *
     * @param state The state to switch to
     */
-   private void pushStateAndSwitch(int state) {
+   private void pushStateAndSwitch(final int state) {
       stateStack.push(yystate());
       if(this.debug) {
-         System.out.println("Push state");
+         System.out.println("Push state => " + getStateName(state));
       }
       switchState(state);
    }
@@ -147,9 +143,9 @@ import java.util.Stack;
     * Pop stack state and switch to that state
     */
    private void popState() {
-      int state = stateStack.pop().intValue();
+      final int state = stateStack.pop().intValue();
       if(this.debug) {
-         System.out.println("Pop state");
+         System.out.println("Pop state <= " + getStateName(state));
       }
       switchState(state);
    }
@@ -157,9 +153,9 @@ import java.util.Stack;
    /*
     * Switch to another state without any stack interaction
     */
-   private void switchState(int state) {
+   private void switchState(final int state) {
       if(this.debug) {
-         System.out.println("Switch state " + getStateName(state));
+         System.out.println("Switch state <=> " + getStateName(state));
       }
       yybegin(state);
    }
@@ -179,8 +175,8 @@ import java.util.Stack;
         return this.yycolumn;
     }
 
-    private Token symbol(int type, String text) {
-        CommonToken token = new CommonToken(type, text);
+    private Token symbol(final int type, final String text) {
+        final CommonToken token = new CommonToken(type, text);
         token.setLine(getLine());
         token.setCharPositionInLine(getColumn());
 
@@ -190,8 +186,8 @@ import java.util.Stack;
         return token;
     }
 
-    private Token symbol(int type) {
-        CommonToken token = new CommonToken(type, yytext());
+    private Token symbol(final int type) {
+        final CommonToken token = new CommonToken(type, yytext());
         token.setLine(getLine());
         token.setCharPositionInLine(getColumn());
 
@@ -241,51 +237,53 @@ import java.util.Stack;
   in the Lexical Rules Section.
 */
 
+/* SPARQL10 http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
+/* SPARQL11 https://www.w3.org/TR/sparql11-query/ */
+
 /* A line terminator is a \r (carriage return), \n (line feed), or \r\n. */
 LineTerminator    = \r|\n|\r\n
 
 /* White space is a line terminator, space, tab, or line feed. */
 
-/* SPARQL10 [93] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
-/* SPARQL11 [162] https://www.w3.org/TR/sparql11-query/ */
+/* SPARQL10 [93] */
+/* SPARQL11 [162] */
 WhiteSpace = {LineTerminator} | [ \t\f]
 
-/* SPARQL10 [95] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
-/* SPARQL11 [164] https://www.w3.org/TR/sparql11-query/ */
+/* SPARQL10 [95] */
+/* SPARQL11 [164] */
 PN_CHARS_BASE = [A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]
 
-/* SPARQL10 [96] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
-/* SPARQL11 [165] https://www.w3.org/TR/sparql11-query/ */
+/* SPARQL10 [96] */
+/* SPARQL11 [165] */
 PN_CHARS_U = {PN_CHARS_BASE} | _
 
-/* SPARQL10 [98] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
-/* SPARQL11 [167] https://www.w3.org/TR/sparql11-query/ */
+/* SPARQL10 [98]  */
+/* SPARQL11 [167] */
 PN_CHARS = {PN_CHARS_U} | - | {digit} | \u00B7 | [\u0300-\u036F] | [\u203F-\u2040]
 
-/* SPARQL10 [99] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
-/* SPARQL11 [168] https://www.w3.org/TR/sparql11-query/ */
+/* SPARQL10 [99] */
+/* SPARQL11 [168] */
 PN_PREFIX = {PN_CHARS_BASE} (({PN_CHARS}|\.)* {PN_CHARS})?
 
-/* SPARQL10 [100] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
-/* SPARQL11 [169] https://www.w3.org/TR/sparql11-query/ */
+/* SPARQL10 [100] */
+/* SPARQL11 [169] */
 PN_LOCAL = ( {PN_CHARS_U} | [0-9] ) (({PN_CHARS}|\.)* {PN_CHARS})?
 
-/* SPARQL10 [70] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
-/* SPARQL11 [139] https://www.w3.org/TR/sparql11-query/ */
+/* SPARQL10 [70] */
+/* SPARQL11 [139] */
 /* TODO not sure if this is correct */
 iri = < ([^<>\"\{\}\|\^`\\])* >
 
-/* SPARQL10 [75] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
-/* SPARQL11 [144] https://www.w3.org/TR/sparql11-query/ */
+/* SPARQL10 [75] */
+/* SPARQL11 [144] */
 var = [\$][a-zA-Z]([a-zA-Z0-9\_\-\.]*[a-zA-Z0-9\_\-]+)?
 
-/* SPARQL10 [97] http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
-/* SPARQL11 [166] https://www.w3.org/TR/sparql11-query/ */
+/* SPARQL10 [97] */
+/* SPARQL11 [166] */
 /* included in definition of var */
 /* VARNAME */
 
 digit = [0-9]
-
 
 %%
 
@@ -682,43 +680,36 @@ digit = [0-9]
 
 <SPARQL> {
 
-   {iri}          {  popState();
-                     return symbol(XSPARQL.IRIREF, yytext().substring(1, yytext().length()-1)); }
+   {iri}          {  popState(); return symbol(XSPARQL.IRIREF, yytext().substring(1, yytext().length()-1)); }
 
-   {PN_PREFIX}?:/[^\:\{]
-                  { return symbol(XSPARQL.PNAME_NS, yytext()); }
+   //{PN_PREFIX}?:/[^\:\{] { return symbol(XSPARQL.PNAME_NS, yytext()); }
+   {PN_PREFIX}?:/[^\:\{] { return symbol(XSPARQL.PNAME_NS, yytext()); }
 
    "named"        { return symbol(XSPARQL.NAMED, yytext()); }
 
    \)            { popState(); return symbol(XSPARQL.RPAR, yytext()); }  // hack to allow from in XPath expressions
    \}            { popState(); return symbol(XSPARQL.RCURLY, yytext()); }  // hack to allow from in XPath expressions
 
-   {PN_PREFIX}    {  popState();
-                     return symbol(XSPARQL.NCNAME, yytext()); }
+   {PN_PREFIX}    {  popState(); return symbol(XSPARQL.NCNAME, yytext()); }
 
 }
 
 <SPARQL, SPARQL_WHERE, SPARQL_CONSTRUCT, SPARQL_VALUES>
-   {var}          { popState();
-                    return symbol(XSPARQL.VAR, yytext()); }
+   {var}          { popState(); return symbol(XSPARQL.VAR, yytext()); }
 
 <SPARQL_PRE_WHERE>
-   \{             { switchState(SPARQL_WHERE);
-                    return symbol(XSPARQL.LCURLY, yytext()); }
+   \{             { switchState(SPARQL_WHERE); return symbol(XSPARQL.LCURLY, yytext()); }
 
 
 <SPARQL_PRE_CONSTRUCT>{
-   \{             { switchState(SPARQL_CONSTRUCT);
-                    return symbol(XSPARQL.LCURLY, yytext()); }
-   "where"        { switchState(SPARQL_PRE_WHERE);
-   					return symbol(XSPARQL.WHERE, yytext()); }
+   \{             { switchState(SPARQL_CONSTRUCT); return symbol(XSPARQL.LCURLY, yytext()); }
+   "where"        { switchState(SPARQL_PRE_WHERE); return symbol(XSPARQL.WHERE, yytext()); }
 }
 
 <SPARQL_WHERE> {
    {iri}          { return symbol(XSPARQL.IRIREF, yytext()); }
 
-   \{             { pushStateAndSwitch(SPARQL_WHERE);
-                    return symbol(XSPARQL.LCURLY, yytext()); }
+   \{             { pushStateAndSwitch(SPARQL_WHERE); return symbol(XSPARQL.LCURLY, yytext()); }
 
    \>             { return symbol(XSPARQL.GREATERTHAN, yytext()); }
 }
