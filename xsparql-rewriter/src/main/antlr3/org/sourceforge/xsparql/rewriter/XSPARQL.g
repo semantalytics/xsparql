@@ -1847,16 +1847,14 @@ verb_ @init {trace();}
   //| iriConstruct
   ;
 
-
 /* SPARQL 1.1 [79] */
+/* 	ObjectList ::= Object ( ',' Object )* */
 objectList @init {trace();}
-  : object (COMMA object)*
-  -> ^(T_OBJECT object)+
+  : object (COMMA object)* -> ^(T_OBJECT object)+
   ;
 
 objectList_ @init {trace();}
-  : object_ (COMMA object_)*
-  -> ^(T_OBJECT object_)+
+  : object_ (COMMA object_)* -> ^(T_OBJECT object_)+
   ;
 
 /* SPARQL 1.1 [80] */

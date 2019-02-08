@@ -635,8 +635,8 @@ scope SubQueryScope{
       externalFunctionAbbrev = xsparqlAbbrev;
 
       if (this.sparqlmethod.equals("arq")) {
-        this.evaluationFunction = externalFunctionAbbrev+":_sparqlQuery";
-        this.sparqlResultsFunctionNode = xsparqlAbbrev+":_sparqlResultsFromNode";
+        this.evaluationFunction = externalFunctionAbbrev + ":_sparqlQuery";
+        this.sparqlResultsFunctionNode = xsparqlAbbrev + ":_sparqlResultsFromNode";
         this.iterationFunction = sparqlResultsFunctionNode; 
 
       }
@@ -654,7 +654,7 @@ scope SubQueryScope{
   // stores the variable as a joinVariable for the scoped Dataset and creates a
   // tree with with text of the variable as a string
   public CommonTree addJoinVar(int tok, String text) {
-    $sparqlForClause::joinVars += text+",";
+    $sparqlForClause::joinVars += text + ",";
 
     return new CommonTree(new CommonToken(tok, text));
   }       
@@ -759,7 +759,7 @@ scope SubQueryScope{
 
     CommonTree res = (CommonTree) adaptor.nil();
     
-    logger.info("generatePop: "+$VariableScope::scopedDataset+", "+$VariableScope::sparqlClause);
+    logger.info("generatePop: " + $VariableScope::scopedDataset + ", " + $VariableScope::sparqlClause);
 
     if($VariableScope::sparqlClause && $VariableScope::scopedDataset) 
       {
@@ -1423,7 +1423,7 @@ scope {
 @after {
   logger.info("Creating new variable scope: sparqlForClause-1");
 
-  if(state.backtracking==0){
+  if(state.backtracking == 0) {
     outerQuery--;
   }
   if($VariableScope::scopedDataset) {
@@ -1438,8 +1438,8 @@ scope {
                                         auxResultPos); 
   scopedDataset.add(sd); 
 }
-  : ^(fo=T_SPARQL_FOR distinct? var+=varOrFunction+ { addVariablesToScope($var, Types.SPARQL); 
-//                                                      addGeneratedVariablesToScope($var); 
+  : ^(fo=T_SPARQL_FOR distinct? var+=varOrFunction+ { addVariablesToScope($var, Types.SPARQL);
+//                                                    addGeneratedVariablesToScope($var);
                                                       addPositionVariableToScope(auxResultPos); }
      ) datasetClause* e=endpointClause? sWhereClause solutionmodifier? valuesClause?
 
@@ -2197,7 +2197,7 @@ groupByCondition
   | l=LPAR expression r=RPAR
   -> QSTRING[$l.token, $l.text] expression QSTRING[$r.token, $r.text]
   | l=LPAR expression a=AS v=VAR r=RPAR
-  -> QSTRING[$l.token, $l.text] expression QSTRING[$a.token, " "+$a.text+" "] QSTRING[$v.token, $v.text] QSTRING[$r.token, $r.text]
+  -> QSTRING[$l.token, $l.text] expression QSTRING[$a.token, " " + $a.text + " "] QSTRING[$v.token, $v.text] QSTRING[$r.token, $r.text]
   | v=VAR
   -> QSTRING[$v.token, $v.text+ " "]
   ;
@@ -2746,15 +2746,14 @@ propertyList_
   : propertyListNotEmpty_?
   ;
 
-objectList_
-  : ^(T_OBJECT o1=object_) (^(T_OBJECT o+=object_))*
-  -> $o1 ($o)*
+objectList
+  : ^(T_OBJECT o1=object) (^(T_OBJECT o+=object))* -> $o1 (QSTRING[" , "] $o)*
   ;
 
-objectList
-  : ^(T_OBJECT o1=object) (^(T_OBJECT o+=object))*
-  -> $o1 (QSTRING[" , "] $o)*
+objectList_
+  : ^(T_OBJECT o1=object_) (^(T_OBJECT o+=object_))* -> $o1 ($o)*
   ;
+
 
 subject_
   : //VAR
@@ -3363,11 +3362,11 @@ iRIrefOrFunction
 
 rdfLiteral
   : q=QSTRING
-  -> QSTRING[$q.token, "\"\""+$q.text+"\"\""]
+  -> QSTRING[$q.token, "\"\"" + $q.text + "\"\""]
   | q=QSTRING a=AT n=NCNAME
-  -> QSTRING[$q.token, "\"\""+$q.text+"\"\""] QSTRING[$a.token, $a.text] QSTRING[$n.token, $n.text]
+  -> QSTRING[$q.token, "\"\"" + $q.text + "\"\""] QSTRING[$a.token, $a.text] QSTRING[$n.token, $n.text]
   | q=QSTRING c1=CARET c2=CARET ( o=IRIREF |  o=PNAME_LN)
-  -> QSTRING[$q.token, "\"\""+$q.text+"\"\""] QSTRING[$c1.token, "^^"] QSTRING[$o.token, $o.text]
+  -> QSTRING[$q.token, "\"\"" + $q.text + "\"\""] QSTRING[$c1.token, "^^"] QSTRING[$o.token, $o.text]
   ;
 
 sNumericLiteral

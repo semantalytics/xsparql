@@ -49,10 +49,6 @@ import org.w3c.dom.Document;
 
 /**
  * Library of Java methods for usage from within XQuery queries when using Saxon
- * 
- * @author Stefan Bischof
- * @author Nuno Lopes
- * 
  */
 @Deprecated
 public class Sparql {
@@ -60,98 +56,79 @@ public class Sparql {
   /**
    * Evaluates a SPARQL query.
    * 
-   * @param queryString
-   *          query to be executed
+   * @param queryString query to be executed
    * @return XML results of the query
    */
   @Deprecated
-  public static Document _sparqlQuery(String queryString) {
+  public static Document _sparqlQuery(final String queryString) {
 
-    SPARQLQuery query = new SPARQLQuery(queryString);
+    final SPARQLQuery query = new SPARQLQuery(queryString);
 
     return query.getResultsAsXML();
-
   }
-
-  // ----------------------------------------------------------------------------------------------------
-  // constructed Dataset
 
   /**
    * Saves string s to a local file.
    * 
-   * @param prefix
-   *          Turtle preamble
-   * @param n3
-   *          Turtle content
+   * @param prefix Turtle preamble
+   * @param n3 Turtle content
    * @return URI of local file containing string s
    */
   @Deprecated
-  public static String turtleGraphToURI(String prefix, String n3) {
+  public static String turtleGraphToURI(final String prefix, final String n3) {
 
     return EvaluatorExternalFunctions.turtleGraphToURI(prefix, n3);
 
   }
 
-
-  // ----------------------------------------------------------------------------------------------------
-  // Scoped Dataset
-
   /**
    * Evaluates a SPARQL query, storing the bindings to be reused later. Used for
    * the ScopedDataset.
    * 
-   * @param q
-   *          query to be executed
-   * @param id
-   *          solution id
+   * @param q query to be executed
+   * @param id solution id
    * @return XML results of the query
    */
   @Deprecated
-  public static Document createScopedDataset(String q, String id) {
+  public static Document createScopedDataset(final String q, final String id) {
 
-    ResultSet results = EvaluatorExternalFunctions.createScopedDataset(q, id);
-
-    String xml = ResultSetFormatter.asXMLString(results);
+    final ResultSet results = EvaluatorExternalFunctions.createScopedDataset(q, id);
+    final String xml = ResultSetFormatter.asXMLString(results);
 
     return Helper.parseXMLString(xml);
-
   }
 
   /**
    * Evaluates a SPARQL query, using previously stored dataset and bindings.
    * Used for the ScopedDataset.
    * 
-   * @param q
-   *          query to be executed
-   * @param id
-   *          solution id
-   * @param joinVars
-   *          joining variables that will be put in the initialBinding
-   * @param pos
-   *          current iteration
+   * @param q query to be executed
+   * @param id solution id
+   * @param joinVars joining variables that will be put in the initialBinding
+   * @param pos current iteration
    * @return XML results of the query
    */
   @Deprecated
-  public static Document sparqlScopedDataset(String q, String id,
-      String joinVars, int pos) {
+  public static Document sparqlScopedDataset(final String q,
+                                             final String id,
+                                             final String joinVars,
+                                             final int pos) {
 
-    ResultSet results2 = EvaluatorExternalFunctions.sparqlScopedDataset(q, id,
+    final ResultSet results2 = EvaluatorExternalFunctions.sparqlScopedDataset(q, id,
         joinVars, pos);
 
-    String xml = ResultSetFormatter.asXMLString(results2);
+    final String xml = ResultSetFormatter.asXMLString(results2);
 
     return Helper.parseXMLString(xml);
-
   }
 
   /**
    * Deletes stored dataset and solutions.
    * 
-   * @param id
-   *          solution id
+   * @param id solution id
    */
   @Deprecated
-  public static void deleteScopedDataset(String id) {
+  public static void deleteScopedDataset(final String id) {
 
     EvaluatorExternalFunctions.deleteScopedDataset(id);
   }
@@ -159,14 +136,11 @@ public class Sparql {
   /**
    * Deletes the last results from the stack.
    * 
-   * @param id
-   *          solution id
+   * @param id solution id
    */
   @Deprecated
-  public static void scopedDatasetPopResults(String id) {
+  public static void scopedDatasetPopResults(final String id) {
 
     EvaluatorExternalFunctions.scopedDatasetPopResults(id);
-
   }
-
 }
