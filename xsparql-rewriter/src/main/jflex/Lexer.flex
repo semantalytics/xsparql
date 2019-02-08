@@ -151,7 +151,7 @@ import java.util.Stack;
    private void pushStateAndSwitch(final int state) {
       stateStack.push(yystate());
       if(this.debug) {
-         System.out.println("Push state => " + getStateName(state));
+         System.out.println("Push state (" + getStateName(state) + ") => " + stateStack.stream().map(XSPARQLLexer::getStateName).collect(java.util.stream.Collectors.joining(" / ")));
       }
       switchState(state);
    }
@@ -162,7 +162,7 @@ import java.util.Stack;
    private void popState() {
       final int state = stateStack.pop().intValue();
       if(this.debug) {
-         System.out.println("Pop state <= " + getStateName(state));
+         System.out.println("Pop state (" + getStateName(state) + ") => " + stateStack.stream().map(XSPARQLLexer::getStateName).collect(java.util.stream.Collectors.joining(" / ")));
       }
       switchState(state);
    }

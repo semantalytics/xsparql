@@ -299,39 +299,49 @@ tokens {
 /* XQuery10 https://www.w3.org/TR/2010/REC-xquery-20101214/ */
 /* XQuery30 https://www.w3.org/TR/xquery-30/#terminal-symbols */
 
-/* XQuery10 [1] Module ::= VersionDecl? (LibraryModule | MainModule) */
-/* XQuery30 [1] Module ::= VersionDecl? (LibraryModule | MainModule) */
+/* XQuery10 [1] */
+/* Module ::= VersionDecl? (LibraryModule | MainModule) */
+/* XQuery30 [1] */
+/* Module ::= VersionDecl? (LibraryModule | MainModule) */
 module
 @init {trace();}
   :  versionDecl? (libraryModule | mainModule);
 
-/* XQuery [2] */
+/* XQuery 1.0 [2] */
+/* VersionDecl ::= "xquery" "version" StringLiteral ("encoding" StringLiteral)? Separator */
+/* XQuery 3.0 [2] */
+/* VersionDecl ::= "xquery" (("encoding" StringLiteral) | ("version" StringLiteral ("encoding" StringLiteral)?)) Separator */
 versionDecl
 @init {trace();}
-  :  XQUERY VERSION v=stringliteral (ENCODING e=stringliteral)? separator
-  -> ^(T_VERSION $v ^(ENCODING $e?))
+  :  XQUERY VERSION v=stringliteral (ENCODING e=stringliteral)? separator -> ^(T_VERSION $v ^(ENCODING $e?))
   ;
 
-/* XQuery [3] */
+/* XQuery 1.0 [3] */
+/* MainModule ::= Prolog QueryBody */
+/* XQuery 3.0 [3] */
+/* MainModule ::= Prolog QueryBody */
 mainModule
 @init {trace();}
   : { graphoutput=false; } prolog queryBody
   -> ^(T_MAIN prolog? queryBody) // if you don't make prolog optional you could get a org.antlr.runtime.tree.RewriteEmptyStreamException during runtime
   ;
 
-/* XQuery [4] */
+/* XQuery 1.0 [4] */
+/* LibraryModule ::= ModuleDecl Prolog */
 libraryModule
 @init {trace();}
   :  moduleDecl prolog;
 
-/* XQuery [5] */
+/* XQuery 1.0 [5] */
+/* ModuleDecl ::= "module" "namespace" NCName "=" URILiteral Separator */
 moduleDecl
 @init {trace();}
   :  MODULE NAMESPACE NCNAME EQUALS uriliteral separator
   -> ^(T_MODULE_DECL NCNAME uriliteral)
   ;
 
-/* XQuery [6] */
+/* XQuery 1.0 [6] */
+/* Prolog ::= ((DefaultNamespaceDecl | Setter | NamespaceDecl | Import) Separator)* ((VarDecl | FunctionDecl | OptionDecl) Separator)* */
 prolog
 @init {trace();}
   :  baseDecl?
@@ -350,7 +360,8 @@ prolog
      )*
   ;
 
-/* XQuery [7] */
+/* XQuery 1.0 [7] */
+/* Setter ::= BoundarySpaceDecl | DefaultCollationDecl | BaseURIDecl | ConstructionDecl | OrderingModeDecl | EmptyOrderDecl | CopyNamespacesDecl */
 setter
 options {
 k=3; // DECLARE DEFAULT is ambiguous
@@ -365,47 +376,49 @@ k=3; // DECLARE DEFAULT is ambiguous
   | copyNamespacesDecl
   ;
 
-/* XQuery [8] */
+/* XQuery 1.0 [8] */
 // renamed because of ANTLR keyword clash
+/* Import ::= SchemaImport | ModuleImport */
 importa
 @init {trace();}
   : schemaImport | moduleImport
   ;
 
-/* XQuery [9] */
+/* XQuery 1.0 [9] */
+/* Separator ::= ";" */
 separator
 @init {trace();}
   :  SEMICOLON;
 
-/* XQuery [10] */
+/* XQuery 1.0 [10] */
 namespaceDecl
 @init {trace();}
   : DECLARE NAMESPACE NCNAME EQUALS QSTRING
   -> ^(T_NAMESPACE NCNAME QSTRING)
   ;
 
-/* XQuery [11] */
+/* XQuery 1.0 [11] */
 boundarySpaceDecl
 @init {trace();}
   : DECLARE BOUNDARYSPACE (x=PRESERVE | x=STRIP)
   -> ^(T_BOUNDARYSPACE_DECL $x)
   ;
 
-/* XQuery [12] */
+/* XQuery 1.0 [12] */
 defaultNamespaceDecl
 @init {trace();}
   : DECLARE DEFAULT (x=ELEMENT | x=FUNCTION) NAMESPACE QSTRING
   -> ^(T_DEFAULT_DECL $x NAMESPACE QSTRING)
   ;
 
-/* XQuery [13] */
+/* XQuery 1.0 [13] */
 optionDecl
 @init {trace();}
   : DECLARE OPTION qname stringliteral
   -> ^(T_OPTION_DECL qname stringliteral)
   ;
 
-/* XQuery [14] */
+/* XQuery 1.0 [14] */
 orderingModeDecl
 @init {trace();}
   : DECLARE ORDERING (x=ORDERED | x=UNORDERED)
@@ -518,8 +531,9 @@ enclosedExpr_
   : LCURLY expr RCURLY
   ;
 
-/* XQuery10 [30] QueryBody ::= Expr */
-/* XQuery30 [38] QueryBody ::= Expr */
+/* XQuery 1.0 */
+/* XQuery 3.0 [38] */
+/* QueryBody ::= Expr */
 queryBody
 @init{trace();}
   : exprSingle (COMMA exprSingle)* -> ^(T_QUERY_BODY ^(T_BODY_PART exprSingle)+ T_EPILOGUE)
@@ -530,8 +544,10 @@ expr
 @init {trace();}
   : exprSingle (COMMA! exprSingle)*;
 
-/* XQuery10 [32] ExprSingle ::=	FLWORExpr | QuantifiedExpr | TypeswitchExpr | IfExpr | OrExpr */
-/* XQuery30 [40] ExprSingle ::= FLWORExpr | QuantifiedExpr | TypeswitchExpr | IfExpr | OrExpr | SwitchExpr | TryCatchExpr */
+/* XQuery 1.0 [32] */
+/* ExprSingle ::= FLWORExpr | QuantifiedExpr | TypeswitchExpr | IfExpr | OrExpr */
+/* XQuery 3.0 [40] */
+/* ExprSingle ::= FLWORExpr | QuantifiedExpr | TypeswitchExpr | IfExpr | OrExpr | SwitchExpr | TryCatchExpr */
 exprSingle
 @init{trace();}
   : flworExpr
@@ -718,7 +734,8 @@ positionalVar
 @init {trace();}
   : AT! VAR;
 
-/* XQuery [36] */
+/* XQuery 1.0 [36] */
+/* LetClause ::= "let" "$" VarName TypeDeclaration? ":=" ExprSingle ("," "$" VarName TypeDeclaration? ":=" ExprSingle)* */
 letClause
 @init {trace();}
   : LET! singleLetClause (COMMA! singleLetClause)*;
@@ -726,8 +743,7 @@ letClause
 
 singleLetClause
 @init {trace();}
-  :  {trace();} VAR typeDeclaration? ASSIGN exprSingle
-  -> ^(T_LET ^(VAR typeDeclaration?) exprSingle)
+  :  {trace();} VAR typeDeclaration? ASSIGN exprSingle -> ^(T_LET ^(VAR typeDeclaration?) exprSingle)
   ;
 
 /* XQuery [37] */
@@ -761,8 +777,9 @@ orderModifier
   : (ASCENDING | DESCENDING)? (EMPTY (GREATEST | LEAST))? (COLLATION uriliteral)?
   ;
 
-/* XQuery10 [42] QuantifiedExpr ::= ("some" | "every") "$" VarName TypeDeclaration? "in" ExprSingle ("," "$" VarName TypeDeclaration? "in" ExprSingle)* "satisfies" ExprSingle */
-/* XQuery30 [70] QuantifiedExpr ::= ("some" | "every") "$" VarName TypeDeclaration? "in" ExprSingle ("," "$" VarName TypeDeclaration? "in" ExprSingle)* "satisfies" ExprSingle */
+/* XQuery 1.0 [42] */
+/* XQuery 3.0 [70] */
+/* QuantifiedExpr ::= ("some" | "every") "$" VarName TypeDeclaration? "in" ExprSingle ("," "$" VarName TypeDeclaration? "in" ExprSingle)* "satisfies" ExprSingle */
 quantifiedExpr
 @init {trace();}
   : (op=SOME | op=EVERY) v1=VAR t1=typeDeclaration? IN e1=exprSingle
@@ -1128,15 +1145,15 @@ constructor
   | computedConstructor
   ;
 
-/* XQuery [95] */
+/* XQuery 1.0 [95] */
+/* DirectConstructor ::= DirElemConstructor | DirCommentConstructor | DirPIConstructor directConstructor */
 directConstructor
 @init {trace();}
   : dirElemConstructor
-//  | dirCommentConstructor
-//  | dirPIConstructor
   ;
+  /* dirCommentConstructor, dirPIConstructor not used */
 
-/* XQuery [96] */
+/* XQuery 1.0 [96] */
 dirElemConstructor
 @init {trace();}
   :    {trace();} LESSTHAN qname dirAttributeList (ENDTAG| (GREATERTHAN dirElemContent* ENDELM qname WHITESPACE? GREATERTHAN))

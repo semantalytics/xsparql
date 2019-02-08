@@ -68,7 +68,7 @@ public abstract class XSPARQLProcessorTests {
 
 		    logger.debug("Start Parser for {}", filename);
 		    processor.setDebug(true);
-		    CommonTree tree = processor.parse(tokenStream);
+		    final CommonTree tree = processor.parse(tokenStream);
 		    assertEquals(0, processor.getNumberOfSyntaxErrors());
 		    Helper.printTree(tree);
 	}
