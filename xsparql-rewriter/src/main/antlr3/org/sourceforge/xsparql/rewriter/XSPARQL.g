@@ -129,12 +129,71 @@ tokens {
 
   //SPARQL 1.1 keywords
   SELECT;
-  COUNT;AVG;MAX;MIN;SUM;SAMPLE;GROUP_CONCAT;SEPARATOR;
-  BIND;EXISTS;NOTKW;MINUS;SERVICE;SILENT;UNDEF;VALUES;
-  SUBSTR;REPLACE;IRI;URI;BNODE;RAND;ABS;CEIL;FLOOR;ROUND;CONCAT;STRLEN;
-  UCASE;LCASE;ENCODE_FOR_URI;CONTAINS;STRSTARTS;STRENDS;STRBEFORE;STRAFTER;
-  ISNUMERIC;YEAR;MONTH;DAY;HOURS;MINUTES;SECONDS;TIMEZONE;TZ;NOW;UID;STRUUID;MD5;
-  SHA1;SHA256;SHA384;SHA512;COALESCE;IF;STRLANG;STRDT;SAME_TERM;ISNUMERIC;
+  COUNT;
+  AVG;
+  MAX;
+  MIN;
+  SUM;
+  SAMPLE;
+  GROUP_CONCAT;
+  SEPARATOR;
+
+  BIND;
+  EXISTS;
+  NOTKW;
+  MINUS;
+  SERVICE;
+  SILENT;
+  UNDEF;
+  VALUES;
+
+  SUBSTR;
+  REPLACE;
+  IRI;
+  URI;
+  BNODE;
+  RAND;
+  ABS;
+  CEIL;
+  FLOOR;
+  ROUND;
+  CONCAT;
+  STRLEN;
+
+  UCASE;
+  LCASE;
+  ENCODE_FOR_URI;
+  CONTAINS;
+  STRSTARTS;
+  STRENDS;
+  STRBEFORE;
+  STRAFTER;
+
+  ISNUMERIC;
+  YEAR;
+  MONTH;
+  DAY;
+  HOURS;
+  MINUTES;
+  SECONDS;
+  TIMEZONE;
+  TZ;
+  NOW;
+  UID;
+  STRUUID;
+  MD5;
+
+  SHA1;
+  SHA256;
+  SHA384;
+  SHA512;
+  COALESCE;
+  IF;
+  STRLANG;
+  STRDT;
+  SAME_TERM;
+  ISNUMERIC;
+
     
   T_SUBSELECT;
   
@@ -172,11 +231,9 @@ tokens {
 @members {
 
   public static boolean graphoutput = false;
-
   public static boolean sparqlnamespaces = false;
-
   private boolean debug = false;
-  
+
   public void setDebug(boolean debug) {
     this.debug = debug;
   }
@@ -211,28 +268,24 @@ tokens {
       sb.append(getCurrentInputSymbol(input));
       System.out.println(sb);
     }
-
   }
 
   private Set<String> wherevariables = new HashSet<String>();
   private boolean inwhere = false;
   private Stack<Boolean> subQueryInScopeVars = new Stack<Boolean>();
 
-
-
   /**
-  * Returs a tree from a stringSet
+  * Returns a tree from a stringSet
   */
-  private static CommonTree createTree(Set<String> s) {
-    org.antlr.runtime.tree.CommonTree ret = new org.antlr.runtime.tree.CommonTree();
+  private static CommonTree createTree(final Set<String> s) {
+    final org.antlr.runtime.tree.CommonTree ret = new org.antlr.runtime.tree.CommonTree();
     
-    for(String st : s) {
+    for(final String st : s) {
       ret.addChild(new CommonTree(new CommonToken(VAR, st)));
     }
 
     return ret;
   }
-
 }
 
 
@@ -1374,7 +1427,6 @@ stringliteral
 // $<SPARQL 1.1
 
 /* SPARQL 1.1 [1] */
-/* SPARQL [1] */
 // QueryUnit   ::=   Query
 // root SPARQL rule -> not needed in XSPARQL
 
@@ -1387,19 +1439,16 @@ stringliteral
 // not needed in XSPARQL
 
 /* SPARQL 1.1 [4] */
-/* SPARQL [2] */
 // STANDARD: move to XQuery prolog
 //prologue : baseDecl? prefixDecl*;
 
 /* SPARQL 1.1 [5] */
-/* SPARQL [3] */
 baseDecl
 @init {trace();}
   : BASE i=IRIREF 
   -> ^(T_NAMESPACE BASE $i); // TODO not default, base
 
 /* SPARQL 1.1 [6] */
-/* SPARQL [4] */
 prefixDecl
 @init {trace();}
   : PREFIX p=PNAME_NS i=IRIREF
@@ -1408,7 +1457,6 @@ prefixDecl
   ;
 
 /* SPARQL 1.1 [7] */
-/* SPARQL [5] */
 // Select is not supported in XSPARQL
 //selectQuery : ...
 
@@ -1423,6 +1471,7 @@ subSelect
   ;
   
 /* SPARQL 1.1 [9] */
+/* SelectClause	  ::=  	'SELECT' ( 'DISTINCT' | 'REDUCED' )? ( ( Var | ( '(' Expression 'AS' Var ')' ) )+ | '*' ) */
 selectClause
 @init {trace(); }
 @after {}
@@ -1431,7 +1480,6 @@ selectClause
   ;
   
 /* SPARQL 1.1 [10] */
-/* SPARQL [6] */
 constructQuery
 @init {trace(); wherevariables = new HashSet<String>();}
   : c=CONSTRUCT constructTemplate datasetClause* sWhereClause solutionmodifier //valuesClause
@@ -1443,45 +1491,38 @@ constructQuery
   ;
 
 /* SPARQL 1.1 [11] */
-/* SPARQL [7] */
 // Describe is not supported in XSPARQL
 //describeQuery : ...
 
 /* SPARQL 1.1 [12] */
-/* SPARQL [8] */
 // Ask is not supported in XSPARQL
 //askQuery : ...
 
 /* SPARQL 1.1 [13] */
-/* SPARQL [9] */
 datasetClause
 @init {trace();}
   : FROM^ (defaultGraphClause | namedGraphClause )
   ;
 
 /* SPARQL 1.1 [14] */
-/* SPARQL [10] */
 defaultGraphClause
 @init {trace();}
   : sourceSelector
   ;
 
 /* SPARQL 1.1 [15] */
-/* SPARQL [11] */
 namedGraphClause
 @init {trace();}
   : NAMED sourceSelector
   ;
 
 /* SPARQL 1.1 [16] */
-/* SPARQL [12] */
 sourceSelector
 @init {trace();}
   : IRIREF | VAR
   ;
 
 /* SPARQL 1.1 [17] */
-/* SPARQL [13] */
 // name clash with XQuery whereClause
 sWhereClause
 @init {trace(); inwhere=true;}
@@ -1491,7 +1532,6 @@ sWhereClause
   ;
 
 /* SPARQL 1.1 [18] */
-/* SPARQL [14] */
 solutionmodifier
 @init {trace();}
   : // ORIGINAL: orderclause? limitoffsetclause?
@@ -1529,14 +1569,12 @@ havingCondition
   ;
 
 /* SPARQL 1.1 [23] */
-/* SPARQL [16] */
 orderclause
 @init {trace();}
   : ORDER BY orderCondition+ -> ^(T_ORDER_BY orderCondition+)
   ;
 
 /* SPARQL 1.1 [24] */
-/* SPARQL [17] */
 orderCondition
 @init {trace();}
   : (ASC | DESC) brackettedExpression
@@ -1546,7 +1584,6 @@ orderCondition
   ;
 
 /* SPARQL 1.1 [25] */
-/* SPARQL [15] */
 limitoffsetclauses
 @init {trace();}
   : limitclause offsetclause?
@@ -1554,14 +1591,12 @@ limitoffsetclauses
   ;
   
 /* SPARQL 1.1 [26] */
-/* SPARQL [18] */
 limitclause
 @init {trace();}
   : LIMIT^ INTEGER
   ;
 
 /* SPARQL 1.1 [27] */
-/* SPARQL [19] */
 offsetclause
 @init {trace();}
   : OFFSET^ INTEGER
@@ -1576,7 +1611,8 @@ valuesClause
 /* SPARQL 1.1 [28->51] */
 // SPARQL 1.1 Update -> not needed in XSPARQL
 
-/* SPARQL 1.1 [53] */
+/* SPARQL 1.1 [52] */
+/* 	TriplesTemplate	  ::=  	TriplesSameSubject ( '.' TriplesTemplate? )? */
 triplesTemplate
 @init {trace(); inwhere=true;}
   : triplesSameSubject ( DOT! triplesTemplate? )?
@@ -1591,7 +1627,6 @@ groupGraphPattern
 
 /* SPARQL 1.1 [54] */
 /* GroupGraphPatternSub ::= TriplesBlock? ( GraphPatternNotTriples '.'? TriplesBlock? )* */
-/* SPARQL [20] as groupGraphPattern */
 groupGraphPatternSub
 @init {trace();}
   : triplesBlock? (( graphPatternNotTriples | filter) DOT!? triplesBlock? )*
@@ -1600,7 +1635,6 @@ groupGraphPatternSub
 
 /* SPARQL 1.1 [55] */
 /* TriplesBlock ::= TriplesSameSubjectPath ( '.' TriplesBlock? )? */
-/* SPARQL [21] */
 triplesBlock
 @init {trace();}
   : triplesSameSubjectPath ( DOT! triplesBlock? )?
@@ -1608,7 +1642,6 @@ triplesBlock
 
 /* SPARQL1.1 [56] */
 /* GraphPatternNotTriples ::= GroupOrUnionGraphPattern | OptionalGraphPattern | MinusGraphPattern | GraphGraphPattern | ServiceGraphPattern | Filter | Bind | InlineData */
-/* SPARQL1.0 [22] */
 graphPatternNotTriples
 @init {trace();}
   : groupOrUnionGraphPattern
@@ -1621,14 +1654,12 @@ graphPatternNotTriples
   ;
 
 /* SPARQL 1.1 [57] */
-/* SPARQL [23] */
 optionalGraphPattern
 @init {trace();}
   : OPTIONAL^ groupGraphPattern
   ;
 
 /* SPARQL 1.1 [58] */
-/* SPARQL [24] */
 graphGraphPattern
 @init {trace();}
   : GRAPH^ varOrIRIref groupGraphPattern
@@ -1691,7 +1722,6 @@ minusGraphPattern
 
 /* SPARQL11 [67] */
 /* GroupOrUnionGraphPattern	  ::=  	GroupGraphPattern ( 'UNION' GroupGraphPattern )* */
-/* SPARQL10 [25] */
 groupOrUnionGraphPattern
 @init {trace();}
   : (groupGraphPattern -> groupGraphPattern)
@@ -1699,14 +1729,14 @@ groupOrUnionGraphPattern
   ;
 
 /* SPARQL 1.1 [68] */
-/* SPARQL [26] */
+/* Filter ::= 'FILTER' Constraint */
 filter
 @init {trace();}
   : FILTER^ constraint
   ;
 
 /* SPARQL 1.1 [69] */
-/* SPARQL [27] */
+/* Constraint ::= BrackettedExpression | BuiltInCall | FunctionCall */
 constraint
 @init {trace();}
   : brackettedExpression
@@ -1715,20 +1745,22 @@ constraint
   ;
 
 /* SPARQL 1.1 [70] */
-/* SPARQL [28] */
+/* FunctionCall ::= iri ArgList */
 sFunctionCall
 @init {trace();}
   : iRIref arglist
   ;
 
 /* SPARQL 1.1 [71] */
-/* SPARQL [29] */
+/*  ArgList ::= NIL | '(' 'DISTINCT'? Expression ( ',' Expression )* ')' */
+/* TODO Check this appears to be missing NIL and distinct */
 arglist
 @init {trace();}
   : LPAR! (expression (COMMA! expression)*)? RPAR!
   ;
 
 /* SPARQL 1.1 [72] */
+/* ExpressionList ::= NIL | '(' Expression ( ',' Expression )* ')'  */
 expressionList
 @init{trace();}
   : nil
@@ -1736,14 +1768,14 @@ expressionList
   ;
 
 /* SPARQL 1.1 [73] */
-/* SPARQL [30] */
+/* ConstructTemplate ::= '{' ConstructTriples? '}' */
 constructTemplate
 @init {trace();}
   : LCURLY! constructTriples? RCURLY!
   ;
 
 /* SPARQL 1.1 [74] */
-/* SPARQL [31] */
+/* ConstructTriples ::= TriplesSameSubject ( '.' ConstructTriples? )? */
 constructTriples
 @init {trace();}
   : (triplesSameSubject_) => triplesSameSubject_ (DOT! constructTriples?)?
@@ -1751,36 +1783,29 @@ constructTriples
   ;
 
 /* SPARQL 1.1 [75] */
-/* SPARQL [32] */
-//triplesSameSubject  : varOrTerm propertyListNotEmpty | triplesNode propertyList;
-
+/* TriplesSameSubject ::= VarOrTerm PropertyListNotEmpty | TriplesNode PropertyList */
 triplesSameSubject @init {trace();}
-  : subject propertyListNotEmpty
-  -> ^(T_SUBJECT subject propertyListNotEmpty)
-  | triplesNode propertyListNotEmpty?
-  -> ^(T_SUBJECT triplesNode propertyListNotEmpty?)
+  : subject propertyListNotEmpty -> ^(T_SUBJECT subject propertyListNotEmpty)
+  | triplesNode propertyListNotEmpty? -> ^(T_SUBJECT triplesNode propertyListNotEmpty?)
   ;
 
 triplesSameSubject_ @init {trace();}
-  : subject_ propertyListNotEmpty_
-  -> ^(T_SUBJECT subject_ propertyListNotEmpty_)
+  : subject_ propertyListNotEmpty_ -> ^(T_SUBJECT subject_ propertyListNotEmpty_)
   | triplesNode_ propertyListNotEmpty_? // inline propertyList because of EmptyRewriteException
   -> ^(T_SUBJECT triplesNode_ propertyListNotEmpty_?)
   ;
 
 /* SPARQL 1.1 [76] */
-/* SPARQL [34] */
-// propertyList @init {trace();}
-//   : propertyListNotEmpty?
-//   ;
+/* PropertyList	  ::=  	PropertyListNotEmpty? */
 
 /* SPARQL 1.1 [77] */
-/* SPARQL [33] */
 propertyListNotEmpty @init {trace();}
   : verb objectList (SEMICOLON (verb objectList)? )*
   -> ^(T_VERB verb objectList)+
   ;
 
+/* SPARQL 1.1 [77] */
+/* PropertyListNotEmpty	  ::=  	Verb ObjectList ( ';' ( Verb ObjectList )? )* */
 propertyListNotEmpty_ @init {trace();}
   : verb_ objectList_ (SEMICOLON (verb_ objectList_)?)*
   -> ^(T_VERB verb_ objectList_)+
@@ -1792,9 +1817,6 @@ propertyListNotEmpty_ @init {trace();}
 //   ;
 
 /* SPARQL 1.1 [78] */
-/* SPARQL [37] */
-//verb  : varOrIRIref | A;
-
 verb @init {trace();}
   : //rdfPredicate
     varOrIRIref
@@ -1810,7 +1832,6 @@ verb_ @init {trace();}
 
 
 /* SPARQL 1.1 [79] */
-/* SPARQL [35] */
 objectList @init {trace();}
   : object (COMMA object)*
   -> ^(T_OBJECT object)+
@@ -1822,7 +1843,6 @@ objectList_ @init {trace();}
   ;
 
 /* SPARQL 1.1 [80] */
-/* SPARQL [36] */
 //object  : graphNode;
 
 object @init {trace();}
@@ -1885,8 +1905,7 @@ propertyListPathNotEmpty
   ;
 
 propertyListPathNotEmptySub  
-  : SEMICOLON (vp objectList)?
-  -> ^(T_VERB vp objectList)?
+  : SEMICOLON (vp objectList)? -> ^(T_VERB vp objectList)?
   ;
   
 vp
@@ -1984,7 +2003,6 @@ pathOneInPropertySet
   ;
   
 /* SPARQL 1.1 [98] */
-/* SPARQL [38] */
 triplesNode @init {trace();}
   : collection
   | blankNodePropertyList
@@ -1996,7 +2014,6 @@ triplesNode_ @init {trace();}
   ;
 
 /* SPARQL 1.1 [99] */
-/* SPARQL [39] */
 blankNodePropertyList
 @init {trace();}
   : LBRACKET propertyListNotEmpty RBRACKET
@@ -2024,7 +2041,6 @@ blanckNodePropertyListPath
   ;
 
 /* SPARQL 1.1 [102] */
-/* SPARQL [40] */
 collection
 @init {trace();}
   : LPAR graphNode+ RPAR
@@ -2042,7 +2058,6 @@ collectionPath
   ;
 
 /* SPARQL 1.1 [104] */
-/* SPARQL [41] */
 graphNode
 @init {trace();}
   : varOrTerm | triplesNode
@@ -2062,7 +2077,6 @@ graphNodePath
   ;
 
 /* SPARQL 1.1 [106] */
-/* SPARQL [42] */
 varOrTerm
 @init {trace();}
   : VAR
@@ -2077,7 +2091,6 @@ varOrTerm_
   | graphTerm_
   ;
 
-/* SPARQL [42a] */
 literalConstruct
 @init{trace();}
   : (e1=enclosedExpr              -> ^(T_LITERAL_CONSTRUCT $e1))
@@ -2095,7 +2108,6 @@ literalConstruct
   ;
 
 /* SPARQL 1.1 [107] */
-/* SPARQL [43] */
 varOrIRIref
 @init {trace();}
   : v=VAR {if(inwhere) { if(subQueryInScopeVars.empty()) wherevariables.add($v.text); else if(subQueryInScopeVars.peek()) wherevariables.add($v.text);}}
@@ -2109,7 +2121,6 @@ varOrIRIref_
   | iriConstruct
   ;
 
-/* SPARQL [43a] */
 iriConstruct
 @init{trace();}
   : LESSTHANLCURLY expr RCURLYGREATERTHAN
@@ -2123,11 +2134,9 @@ iriConstruct
   ;
 
 /* SPARQL 1.1 [108] */
-/* SPARQL [44] */
 //var  : VAR;
 
 /* SPARQL 1.1 [109] */
-/* SPARQL [45] */
 graphTerm
   : iRIref
   | rdfLiteral
@@ -2148,56 +2157,48 @@ graphTerm_
 //  | iriConstruct
   ;
 
-/* SPARQL [45a] */
 blankConstruct
 @init{trace();}
   : BNODE_CONSTRUCT enclosedExpr
   ;
 
 /* SPARQL 1.1 [110] */
-/* SPARQL [46] */
 expression
 @init{trace();}
   : conditionalOrExpression
   ;
 
 /* SPARQL 1.1 [111] */
-/* SPARQL [47] */
 conditionalOrExpression
 @init{trace();}
   : conditionalAndExpression (ORSYMBOL^ conditionalAndExpression)*
   ;
 
 /* SPARQL 1.1 [112] */
-/* SPARQL [48] */
 conditionalAndExpression
 @init{trace();}
   : valueLogical (ANDSYMBOL^ valueLogical)*
   ;
 
 /* SPARQL 1.1 [113] */
-/* SPARQL [49] */
 valueLogical
 @init{trace();}
   : relationalExpression
   ;
 
 /* SPARQL 1.1 [114] */
-/* SPARQL [50] */
 relationalExpression
 @init{trace();}
   : numericExpression (((EQUALS | HAFENEQUALS | LESSTHAN | GREATERTHAN | LESSTHANEQUALS | GREATERTHANEQUALS)^ numericExpression) | ((IN | NOTKW IN)^ expressionList))?
   ;
 
 /* SPARQL 1.1 [115] */
-/* SPARQL [51] */
 numericExpression
 @init{trace();}
   : additiveExpression
   ;
 
 /* SPARQL 1.1 [116] */
-/* SPARQL [52] */
 additiveExpression
 @init{trace();}
   : multiplicativeExpression
@@ -2209,14 +2210,12 @@ additiveExpression
   ;
 
 /* SPARQL 1.1 [117] */
-/* SPARQL [53] */
 multiplicativeExpression
 @init{trace();}
   : unaryExpression (STAR^ unaryExpression | SLASH^ unaryExpression )*
   ;
 
 /* SPARQL 1.1 [118] */
-/* SPARQL [54] */
 unaryExpression
 @init{trace();}
   : NOT primaryExpression
@@ -2226,7 +2225,6 @@ unaryExpression
   ;
 
 /* SPARQL 1.1 [119] */
-/* SPARQL [55] */
 primaryExpression
 @init{trace();}
   : brackettedExpression
@@ -2241,14 +2239,12 @@ primaryExpression
   ;
 
 /* SPARQL 1.1 [120] */
-/* SPARQL [56] */
 brackettedExpression
 @init{trace();}
   : LPAR expression RPAR
   ;
 
 /* SPARQL 1.1 [121] */
-/* SPARQL [57] */
 builtInCall
 @init{trace();}
   : STR LPAR expression RPAR
@@ -2310,7 +2306,6 @@ builtInCall
   ;
   
 /* SPARQL 1.1 [122] */
-/* SPARQL [58] */
 regexExpression
 @init{trace();}
   : REGEX LPAR expression COMMA expression (COMMA  expression)? RPAR
@@ -2353,14 +2348,12 @@ aggregate
   ;
 
 /* SPARQL 1.1 [128] */
-/* SPARQL [59] */
 iRIrefOrFunction
 @init{trace();}
   : iRIref arglist? -> ^(T_FUNCTION_CALL iRIref ^(T_PARAMS arglist?))
   ;
 
 /* SPARQL 1.1 [129] */
-/* SPARQL [60] */
 // doesn't look like the original one
 rdfLiteral
 @init{trace();}
@@ -2368,7 +2361,6 @@ rdfLiteral
   ;
 
 /* SPARQL 1.1 [130] */
-/* SPARQL [61] */
 //numericLiteral  : numericlitaralUnsigned | numericLiteralPositive | numericLiteralNegative;
 sNumericLiteral  
 @init{trace();}
@@ -2378,15 +2370,12 @@ sNumericLiteral
   ;
   
 /* SPARQL 1.1 [131] */
-/* SPARQL [62] */
 //numericLiteralunsigned  : INTEGER | DECIMAL | DOUBLE;
 
 /* SPARQL 1.1 [132] */
-/* SPARQL [63] */
 //numericLiteralPositive  : INTEGER_POSITIVE | DECIMAL_POSITIVE | DOUBLE_POSITIVE;
 
 /* SPARQL 1.1 [133] */
-/* SPARQL [64] */
 //numericLiteralNegative  : INTEGER_NEGATIVE | DECIMAL_NEGATIVE | DOUBLE_NEGATIVE;
 
 /* SPARQL [65] */
@@ -2404,7 +2393,6 @@ string
   ;
 
 /* SPARQL 1.1 [136] */
-/* SPARQL [67] */
 iRIref
 @init{trace();}
   : IRIREF
@@ -2412,7 +2400,6 @@ iRIref
   ;
 
 /* SPARQL 1.1 [137] */
-/* SPARQL [68] */
 prefixedName
 @init{trace();}
   : PNAME_LN 
@@ -2420,8 +2407,7 @@ prefixedName
   ;
 
 /* SPARQL 1.1 [138] */
-/* SPARQL [69] */
-blankNode  
+blankNode
   : blank
   ;
 
@@ -2439,28 +2425,10 @@ nil
 
 
 // $>
-
-
-
-
-
-
-
 /* ------------------------------------------------------------------------- */
 /* Unclassified/XSPARQL                                                      */
 /* ------------------------------------------------------------------------- */
-
 // $<XSPARQL
-
-
-
-
-
-
-
-
-
-
 
 subject_
 options {
