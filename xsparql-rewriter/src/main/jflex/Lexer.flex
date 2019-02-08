@@ -86,21 +86,38 @@ import java.util.Stack;
 %{
 
   private boolean debug = false;
-  private static final java.util.Map<Integer, String> states = new java.util.HashMap<>();
+  private static final java.util.Map<Integer, String> stateMap = new java.util.HashMap<>();
   private Stack<Integer> stateStack = new Stack<>();
+  private static final String[] stateFieldNames = new String[] {
+            "YYINITIAL",
+            "xmlStartTag",
+            "xmlEndTag",
+            "xmlElementContents",
+            "cdata",
+            "SPARQL",
+            "SPARQL_PRE_WHERE",
+            "SPARQL_WHERE",
+            "SPARQL_PRE_CONSTRUCT",
+            "SPARQL_CONSTRUCT",
+            "SPARQL_VALUES",
+            "XQueryComment"
+  };
 
   static {
 
-         java.lang.reflect.Field [] classFields = org.sourceforge.xsparql.rewriter.XSPARQLLexer.class.getDeclaredFields();
-         for (int i = 0; i < classFields.length; i++) {
-               try {
-                 final int fieldValue = classFields[i].getInt(null);
-                 final String fieldName = classFields[i].getName();
-                 states.put(fieldValue, fieldName);
-                 } catch (Exception e) { }
-           }
+         for (int i = 0; i < stateFieldNames.length - 1; i++) {
+            try {
+                final java.lang.reflect.Field field = org.sourceforge.xsparql.rewriter.XSPARQLLexer.class.getDeclaredField(stateFieldNames[i]);
+                field.setAccessible(true);
+                stateMap.put(field.getInt(null), stateFieldNames[i]);
+            } catch(IllegalAccessException e) {
+                System.out.println(e);
+            } catch(NoSuchFieldException e) {
+                System.out.println("Unable to find state mapping for state " + stateFieldNames[i]);
+            }
+         }
   }
-  
+
   public void setDebug(final boolean debug) {
     this.debug = debug;
   }
@@ -155,7 +172,7 @@ import java.util.Stack;
     */
    private void switchState(final int state) {
       if(this.debug) {
-         System.out.println("Switch state <=> " + getStateName(state));
+         System.out.println("Switch state => " + getStateName(state));
       }
       yybegin(state);
    }
@@ -164,7 +181,7 @@ import java.util.Stack;
     * Get the name of a state, like getTokenName
     */
    private static String getStateName(final int state) {
-           return states.getOrDefault(state, "UNKNOWN STATE");
+           return stateMap.getOrDefault(state, "UNKNOWN STATE");
    }
 
     private int getLine() {
@@ -237,7 +254,6 @@ import java.util.Stack;
   in the Lexical Rules Section.
 */
 
-/* SPARQL10 http://www.w3.org/TR/rdf-sparql-query/#rPrefixedName */
 /* SPARQL11 https://www.w3.org/TR/sparql11-query/ */
 
 /* A line terminator is a \r (carriage return), \n (line feed), or \r\n. */
@@ -245,40 +261,31 @@ LineTerminator    = \r|\n|\r\n
 
 /* White space is a line terminator, space, tab, or line feed. */
 
-/* SPARQL10 [93] */
 /* SPARQL11 [162] */
 WhiteSpace = {LineTerminator} | [ \t\f]
 
-/* SPARQL10 [95] */
 /* SPARQL11 [164] */
 PN_CHARS_BASE = [A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]
 
-/* SPARQL10 [96] */
 /* SPARQL11 [165] */
 PN_CHARS_U = {PN_CHARS_BASE} | _
 
-/* SPARQL10 [98]  */
 /* SPARQL11 [167] */
 PN_CHARS = {PN_CHARS_U} | - | {digit} | \u00B7 | [\u0300-\u036F] | [\u203F-\u2040]
 
-/* SPARQL10 [99] */
 /* SPARQL11 [168] */
 PN_PREFIX = {PN_CHARS_BASE} (({PN_CHARS}|\.)* {PN_CHARS})?
 
-/* SPARQL10 [100] */
 /* SPARQL11 [169] */
 PN_LOCAL = ( {PN_CHARS_U} | [0-9] ) (({PN_CHARS}|\.)* {PN_CHARS})?
 
-/* SPARQL10 [70] */
 /* SPARQL11 [139] */
 /* TODO not sure if this is correct */
 iri = < ([^<>\"\{\}\|\^`\\])* >
 
-/* SPARQL10 [75] */
 /* SPARQL11 [144] */
 var = [\$][a-zA-Z]([a-zA-Z0-9\_\-\.]*[a-zA-Z0-9\_\-]+)?
 
-/* SPARQL10 [97] */
 /* SPARQL11 [166] */
 /* included in definition of var */
 /* VARNAME */
@@ -363,11 +370,8 @@ digit = [0-9]
 "le"                     { return symbol(XSPARQL.LE, yytext()); }
 "gt"                     { return symbol(XSPARQL.GT, yytext()); }
 "for"                    { return symbol(XSPARQL.FOR, yytext()); }
-"endpoint"               { pushStateAndSwitch(SPARQL);
-                           return symbol(XSPARQL.ENDPOINT, yytext()); }
-"from"                   { pushStateAndSwitch(SPARQL);
-                           return symbol(XSPARQL.FROM, yytext()); }
-                           
+"endpoint"               { pushStateAndSwitch(SPARQL); return symbol(XSPARQL.ENDPOINT, yytext()); }
+"from"                   { pushStateAndSwitch(SPARQL); return symbol(XSPARQL.FROM, yytext()); }
 "limit"                  { return symbol(XSPARQL.LIMIT, yytext()); }
 "offset"                 { return symbol(XSPARQL.OFFSET, yytext()); }
 "distinct"               { return symbol(XSPARQL.DISTINCT, yytext()); }
@@ -388,10 +392,8 @@ digit = [0-9]
 "then"                   { return symbol(XSPARQL.THEN, yytext()); }
 "else"                   { return symbol(XSPARQL.ELSE, yytext()); }
 "return"                 { return symbol(XSPARQL.RETURN, yytext()); }
-"construct"              { pushStateAndSwitch(SPARQL_PRE_CONSTRUCT);
-                           return symbol(XSPARQL.CONSTRUCT, yytext()); }
-"where"/{WhiteSpace}*\{  { pushStateAndSwitch(SPARQL_PRE_WHERE);
-                           return symbol(XSPARQL.WHERE, yytext()); }
+"construct"              { pushStateAndSwitch(SPARQL_PRE_CONSTRUCT); return symbol(XSPARQL.CONSTRUCT, yytext()); }
+"where"/{WhiteSpace}*\{  { pushStateAndSwitch(SPARQL_PRE_WHERE); return symbol(XSPARQL.WHERE, yytext()); }
 "where"                  { return symbol(XSPARQL.WHERE, yytext()); }
 "greatest"               { return symbol(XSPARQL.GREATEST, yytext()); }
 "least"                  { return symbol(XSPARQL.LEAST, yytext()); }
@@ -405,10 +407,8 @@ digit = [0-9]
 "option"                 { return symbol(XSPARQL.OPTION, yytext()); }
 "function"               { return symbol(XSPARQL.FUNCTION, yytext()); }
 "base-uri"               { return symbol(XSPARQL.BASEURI, yytext()); }
-"prefix"                 { pushStateAndSwitch(SPARQL);
-                           return symbol(XSPARQL.PREFIX, yytext()); }
-"base"                   { pushStateAndSwitch(SPARQL);
-						   return symbol(XSPARQL.BASE, yytext()); }
+"prefix"                 { pushStateAndSwitch(SPARQL); return symbol(XSPARQL.PREFIX, yytext()); }
+"base"                   { pushStateAndSwitch(SPARQL); return symbol(XSPARQL.BASE, yytext()); }
 "and"                    { return symbol(XSPARQL.AND, yytext()); }
 "or"                     { return symbol(XSPARQL.OR, yytext()); }
 "to"                     { return symbol(XSPARQL.TO, yytext()); }
@@ -458,7 +458,7 @@ digit = [0-9]
 "group_concat"         	 { return symbol(XSPARQL.GROUP_CONCAT, yytext()); }
 "separator"         	 { return symbol(XSPARQL.SEPARATOR, yytext()); }
 
-/*SPARLQ 1.1*/
+/*SPARQL 1.1*/
 "select"	 		{ return symbol(XSPARQL.SELECT, yytext()); }
 "exists"	 		{ return symbol(XSPARQL.EXISTS, yytext()); }
 "not"		 		{ return symbol(XSPARQL.NOTKW, yytext()); }
