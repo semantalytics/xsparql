@@ -49,13 +49,14 @@ import org.apache.log4j.Logger;
  * arrow <code>-&gt;</code> symbol.
  */
 public abstract class AbstractMyTreeRewriter extends TreeRewriter {
+
   private static Logger logger = LogManager.getLogger(AbstractMyTreeRewriter.class);
 
-  public AbstractMyTreeRewriter(TreeNodeStream input) {
+  public AbstractMyTreeRewriter(final TreeNodeStream input) {
     super(input);
   }
 
-  public AbstractMyTreeRewriter(TreeNodeStream input,
+  public AbstractMyTreeRewriter(final TreeNodeStream input,
       RecognizerSharedState state) {
     super(input, state);
   }
@@ -80,15 +81,9 @@ public abstract class AbstractMyTreeRewriter extends TreeRewriter {
         return t;
       }
 
-      // -------------------------------------------------------------------------
-      // Commented out the output
       if (r != null && !t.equals(r.getTree()) && r.getTree() != null) { // show
-        // any
-        // transformations
         logger.info(((CommonTree) t).toStringTree() + " -> "
             + ((CommonTree) r.getTree()).toStringTree());
-        // System.out.println(((CommonTree)t).toStringTree()+" -> "+
-        // ((CommonTree)r.getTree()).toStringTree());
       }
 
       if (r != null && r.getTree() != null) {

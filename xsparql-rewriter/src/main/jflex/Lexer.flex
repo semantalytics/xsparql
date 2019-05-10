@@ -609,6 +609,9 @@ digit = [0-9]
 <YYINITIAL, xmlElementContents>
    \>             { return symbol(XSPARQL.GREATERTHAN, yytext()); }
 
+   \{             { pushStateAndSwitch(YYINITIAL);
+                    return symbol(XSPARQL.LCURLY, yytext()); }
+
 
 <YYINITIAL, xmlStartTag, xmlEndTag, xmlElementContents, SPARQL_CONSTRUCT, SPARQL_WHERE, SPARQL_VALUES>
    \}             { popState();
